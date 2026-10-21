@@ -63,10 +63,18 @@ Test the complete replacement login and recovery flow before disabling passwords
 
 The first successful mailbox verification of an unverified account is an account
 ownership transition: Better Auth removes its password credential and existing
-sessions; TickTack also revokes existing passkeys, API keys, pending device grants,
+sessions; TickTack also revokes outstanding password reset tokens, passkeys, API keys, pending device grants,
 MCP authorization codes, and live WebSocket access. Email address changes revoke
 these access paths too. Explain and approve this effect before migrating an owner.
 New credentials and sessions issued after that transition can be used normally.
+
+Legacy OAuth provider links remain valid in legacy mode. Installations using
+OAuth must switch every API instance to passwordless mode and drain legacy
+requests before performing mailbox ownership migrations. Passwordless mode
+blocks provider sign-in, callbacks and linking; it does not delete provider links.
+Returning to legacy mode can reactivate those retained links. Review that risk
+before rollback. An installation with no configured OAuth providers can stage
+the additive release in legacy mode without enabling any provider.
 
 After the owner verifies the mailbox, the owner must enroll and test their own
 passkeys through the normal browser flow. Verify a second-device or mailbox

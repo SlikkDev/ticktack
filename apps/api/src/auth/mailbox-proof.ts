@@ -8,7 +8,11 @@ export function rememberMailboxProof(
   ctx: AuthEndpointContext | null,
   user: unknown,
 ) {
-  if (ctx?.path !== "/magic-link/verify" || !user || typeof user !== "object")
+  if (
+    !["/magic-link/verify", "/sign-in/email-otp"].includes(ctx?.path || "") ||
+    !user ||
+    typeof user !== "object"
+  )
     return;
   if (
     "id" in user &&
@@ -17,7 +21,8 @@ export function rememberMailboxProof(
     typeof user.email === "string"
   ) {
     // Keep the mailbox resolved from the consumed token, never a later lookup by ID.
-    if (!proofs.has(ctx)) proofs.set(ctx, { id: user.id, email: user.email });
+    if (ctx && !proofs.has(ctx))
+      proofs.set(ctx, { id: user.id, email: user.email });
   }
 }
 
@@ -25,8 +30,9 @@ export function assertMailboxProof(
   ctx: AuthEndpointContext | null,
   user: MailboxProof,
 ) {
-  if (ctx?.path !== "/magic-link/verify") return;
-  const proof = proofs.get(ctx);
+  if (!["/magic-link/verify", "/sign-in/email-otp"].includes(ctx?.path || ""))
+    return;
+  const proof = ctx ? proofs.get(ctx) : undefined;
   if (
     !proof ||
     proof.id !== user.id ||

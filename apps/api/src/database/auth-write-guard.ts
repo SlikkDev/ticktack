@@ -1,3 +1,8 @@
+import {
+  assertPasswordProof,
+  assertCredentialWrite,
+  assertPasswordChangeSession,
+} from "../auth/legacy-proof";
 import type { AuthEndpointContext } from "@better-auth/core/context";
 import { APIError } from "better-auth/api";
 import { and, eq, gt, isNull, or } from "drizzle-orm";
@@ -30,7 +35,20 @@ export async function guardAuthInsert(
 ) {
   const user = await lockAuthUser(tx, userId);
   assertMailboxProof(ctx, user);
-  if (ctx.path === "/magic-link/verify") return;
+  if (["/magic-link/verify", "/sign-in/email-otp"].includes(ctx.path || ""))
+    return;
+  if (ctx.path === "/sign-in/email") {
+    await assertPasswordProof(tx, ctx, user);
+    return;
+  }
+  if (model === "session" && ctx.path === "/change-password") {
+    await assertPasswordChangeSession(tx, ctx, user);
+    return;
+  }
+  if (model === "credential") {
+    await assertCredentialWrite(tx, ctx, user);
+    return;
+  }
   if (ctx.path === "/device/token") {
     assertDeviceGrant(ctx, user);
     return;
