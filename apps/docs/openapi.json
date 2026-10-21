@@ -547,6 +547,12 @@
       "Config": {
         "type": "object",
         "properties": {
+          "passwordlessAuth": {
+            "type": "boolean"
+          },
+          "hasPasskeys": {
+            "type": "boolean"
+          },
           "isCloud": {
             "type": "boolean"
           },
@@ -611,6 +617,8 @@
           }
         },
         "required": [
+          "passwordlessAuth",
+          "hasPasskeys",
           "isCloud",
           "disableRegistration",
           "disablePasswordRegistration",
@@ -8441,6 +8449,110 @@
           },
           "429": {
             "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/auth/magic-link/confirm": {
+      "post": {
+        "operationId": "confirmMagicLink",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Confirm an emailed sign-in link",
+        "description": "Explicitly redeem a single-use emailed link from the trusted web application. Sets the session cookie without exposing the session token in the response.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "minLength": 20,
+                    "maxLength": 256
+                  }
+                },
+                "required": [
+                  "token"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or expired link",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Untrusted origin or registration not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Passwordless authentication is not enabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many attempts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         }
       }

@@ -1,5 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { authClient } from "@/lib/auth-client";
+import { getConfig } from "@/fetchers/config/get-config";
 
 export const Route = createFileRoute("/auth")({
   beforeLoad: async ({ location }) => {
@@ -14,8 +15,20 @@ export const Route = createFileRoute("/auth")({
     const isPasswordRecovery = [
       "/auth/forgot-password",
       "/auth/reset-password",
+      "/auth/magic-link",
     ].includes(location.pathname.replace(/\/$/, ""));
-    if (session && !isPasswordRecovery) {
+    const reauthentication =
+      location.pathname.replace(/\/$/, "") === "/auth/sign-in" &&
+      new URLSearchParams(location.searchStr).get("reauth") === "true";
+    if (
+      ["/auth/forgot-password", "/auth/reset-password"].includes(
+        location.pathname.replace(/\/$/, ""),
+      ) &&
+      (await getConfig()).passwordlessAuth
+    ) {
+      throw redirect({ to: "/auth/sign-in", search: { reauth: "true" } });
+    }
+    if (session && !isPasswordRecovery && !reauthentication) {
       throw redirect({
         to: "/dashboard",
       });

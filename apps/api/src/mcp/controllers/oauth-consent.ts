@@ -139,6 +139,7 @@ export async function decideMcpAuthorizationRequest(params: {
       redirectUri: request.redirectUri,
     },
     params.requestId,
+    session.session.id,
   );
   await publishEvent("mcp.authorization_code_issued", {
     clientId: request.clientId,

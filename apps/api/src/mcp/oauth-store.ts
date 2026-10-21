@@ -2,6 +2,8 @@ import { and, count, eq, gt, sql } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 import db from "../database";
 import { mcpOauthStateTable } from "../database/schema";
+import { sessionTable } from "../database/schema";
+import { lockAuthUser } from "../database/auth-write-guard";
 
 export type OauthStateKind = "client" | "code" | "request";
 export const OAUTH_STATE_LIMITS = {
@@ -33,6 +35,7 @@ export async function putState(
   payload: unknown,
   expiresAt: Date,
   consumeRequestId?: string,
+  authorization?: { userId: string; sessionId?: string },
 ): Promise<void> {
   const serialized = JSON.stringify(payload);
   if (
@@ -55,6 +58,25 @@ export async function putState(
     );
     if (!lock.rows[0]?.acquired) return "busy";
     const now = new Date(Number(lock.rows[0].nowMs));
+    if (authorization) {
+      const user = await lockAuthUser(tx, authorization.userId);
+      if (authorization.sessionId) {
+        const [session] = await tx
+          .select({ id: sessionTable.id })
+          .from(sessionTable)
+          .where(
+            and(
+              eq(sessionTable.id, authorization.sessionId),
+              eq(sessionTable.userId, user.id),
+              gt(sessionTable.expiresAt, now),
+            ),
+          );
+        if (!session)
+          throw new HTTPException(401, { message: "Sign in again" });
+      }
+      (payload as Record<string, unknown>).authRevokedAt =
+        user.authRevokedAt?.toISOString() ?? null;
+    }
     await sweepExpired(tx);
     const [rate] = await tx
       .select()

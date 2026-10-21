@@ -701,6 +701,26 @@
 				"description": "Vous reviendrez ici juste après pour l'examiner.",
 				"submit": "Se connecter"
 			}
+		},
+		"passwordless": {
+			"addPasskey": "Add a passkey",
+			"checkEmail": "If this address has access or a pending invitation, a sign-in link will arrive shortly. The link expires after five minutes.",
+			"confirm": "Sign in to TickTack",
+			"confirmDescription": "Continue only if you requested this sign-in link.",
+			"confirmRemove": "Confirm removal",
+			"confirmTitle": "Confirm sign-in",
+			"invalidLink": "This link is invalid, expired, or already used. Request a new sign-in link.",
+			"manageFailed": "Could not update passkeys. Sign in again with a verified email address, then retry within five minutes.",
+			"passkeyFailed": "Passkey sign-in was not completed. Try again or use an email link.",
+			"passkeyName": "Passkey name (optional)",
+			"passkeysDescription": "Use your device’s screen lock to sign in. Add a second passkey for another device.",
+			"passkeysTitle": "Passkeys",
+			"reauthenticate": "Sign in again to manage passkeys",
+			"recoveryHint": "Keep access to your email for recovery. Removing a passkey does not delete it from your device’s password manager.",
+			"returnToSignIn": "Return to sign-in",
+			"subtitle": "Sign in with an email link or a passkey.",
+			"unnamedPasskey": "Passkey",
+			"usePasskey": "Sign in with a passkey"
 		}
 	},
 	"settings": {

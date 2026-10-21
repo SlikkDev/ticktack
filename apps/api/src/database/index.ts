@@ -36,6 +36,8 @@ import {
 } from "./relations";
 import { resolveDatabaseConnectionString } from "./resolve-database-url";
 import {
+  passkeyTable,
+  authThrottleTable,
   dataMigrationTable,
   storageCleanupTable,
   accountTable,
@@ -87,6 +89,8 @@ import {
 config();
 
 export const schema = {
+  passkeyTable,
+  authThrottleTable,
   dataMigrationTable,
   storageCleanupTable,
   accountTable,

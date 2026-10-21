@@ -2,7 +2,10 @@ import { createHash } from "node:crypto";
 import { and, count, eq } from "drizzle-orm";
 import { beforeEach, describe, expect, it } from "vite-plus/test";
 import db from "../../apps/api/src/database";
-import { mcpOauthStateTable } from "../../apps/api/src/database/schema";
+import {
+  sessionTable,
+  mcpOauthStateTable,
+} from "../../apps/api/src/database/schema";
 import mcp from "../../apps/api/src/mcp";
 import {
   createAuthorizationRequest,
@@ -117,7 +120,9 @@ describe("MCP OAuth HTTP resource bounds", () => {
 
   it("allows retrying consent after capacity recovers without issuing multiple codes", async () => {
     const { user } = await createWorkspaceMember();
-    mockAuthenticatedSession(user);
+    const sessionMock = mockAuthenticatedSession(user);
+    const authentication = await sessionMock({ headers: new Headers() });
+    await db.insert(sessionTable).values(authentication!.session);
     const client = await registerClient({ redirectUris: [redirectUri] });
     const id = await createAuthorizationRequest({
       clientId: client.clientId,

@@ -17,6 +17,7 @@ import { Route as TestErrorRouteImport } from './routes/test-error'
 import { Route as LayoutAuthenticatedRouteImport } from './routes/_layout/_authenticated'
 import { Route as AuthCheckEmailRouteImport } from './routes/auth/check-email'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
+import { Route as AuthMagicLinkRouteImport } from './routes/auth/magic-link'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
@@ -107,6 +108,11 @@ const AuthCheckEmailRoute = AuthCheckEmailRouteImport.update({
 const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthMagicLinkRoute = AuthMagicLinkRouteImport.update({
+  id: '/magic-link',
+  path: '/magic-link',
   getParentRoute: () => AuthRoute,
 } as any)
 const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
@@ -459,6 +465,7 @@ export interface FileRoutesByFullPath {
   '/test-error': typeof TestErrorRoute
   '/auth/check-email': typeof AuthCheckEmailRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/magic-link': typeof AuthMagicLinkRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
@@ -519,6 +526,7 @@ export interface FileRoutesByTo {
   '/test-error': typeof TestErrorRoute
   '/auth/check-email': typeof AuthCheckEmailRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/magic-link': typeof AuthMagicLinkRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
@@ -581,6 +589,7 @@ export interface FileRoutesById {
   '/_layout/_authenticated': typeof LayoutAuthenticatedRouteWithChildren
   '/auth/check-email': typeof AuthCheckEmailRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/magic-link': typeof AuthMagicLinkRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
@@ -644,6 +653,7 @@ export interface FileRouteTypes {
     | '/test-error'
     | '/auth/check-email'
     | '/auth/forgot-password'
+    | '/auth/magic-link'
     | '/auth/reset-password'
     | '/auth/sign-in'
     | '/auth/sign-up'
@@ -704,6 +714,7 @@ export interface FileRouteTypes {
     | '/test-error'
     | '/auth/check-email'
     | '/auth/forgot-password'
+    | '/auth/magic-link'
     | '/auth/reset-password'
     | '/auth/sign-in'
     | '/auth/sign-up'
@@ -765,6 +776,7 @@ export interface FileRouteTypes {
     | '/_layout/_authenticated'
     | '/auth/check-email'
     | '/auth/forgot-password'
+    | '/auth/magic-link'
     | '/auth/reset-password'
     | '/auth/sign-in'
     | '/auth/sign-up'
@@ -887,6 +899,13 @@ declare module '@tanstack/react-router' {
       path: '/forgot-password'
       fullPath: '/auth/forgot-password'
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/auth/magic-link': {
+      id: '/auth/magic-link'
+      path: '/magic-link'
+      fullPath: '/auth/magic-link'
+      preLoaderRoute: typeof AuthMagicLinkRouteImport
       parentRoute: typeof AuthRoute
     }
     '/auth/reset-password': {
@@ -1499,6 +1518,7 @@ const LayoutRouteWithChildren =
 interface AuthRouteChildren {
   AuthCheckEmailRoute: typeof AuthCheckEmailRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
+  AuthMagicLinkRoute: typeof AuthMagicLinkRoute
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
   AuthSignInRoute: typeof AuthSignInRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
@@ -1508,6 +1528,7 @@ interface AuthRouteChildren {
 const AuthRouteChildren: AuthRouteChildren = {
   AuthCheckEmailRoute: AuthCheckEmailRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
+  AuthMagicLinkRoute: AuthMagicLinkRoute,
   AuthResetPasswordRoute: AuthResetPasswordRoute,
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,

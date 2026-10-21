@@ -1,0 +1,1 @@
+ALTER TABLE "user" ADD COLUMN "auth_revoked_at" timestamp;

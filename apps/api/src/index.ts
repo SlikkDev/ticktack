@@ -1,3 +1,4 @@
+import { registerAuthenticatedConnection } from "./ws/register-authenticated";
 import integrationSync from "./integration-sync";
 import { syncWorkspaceAccess } from "./ws/workspace-access";
 import { drainPasswordResetDeliveries } from "./utils/password-reset-delivery";
@@ -14,11 +15,13 @@ import { eq, sql } from "drizzle-orm";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Hono } from "hono";
 import { compress } from "hono/compress";
+import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { HTTPException } from "hono/http-exception";
 import activity from "./activity";
 import admin from "./admin";
 import { auth } from "./auth";
+import { magicLinkConfirmation } from "./auth/magic-link-confirm";
 import { organizationRoutes } from "./auth-openapi";
 import billing from "./billing";
 import calendarFeed, { publicCalendarFeed } from "./calendar-feed";
@@ -450,6 +453,8 @@ export function createApp() {
     return c.json(result);
   });
 
+  api.use("/auth/passkey/*", bodyLimit({ maxSize: 64 * 1024 }));
+  api.use("/auth/sign-in/magic-link", bodyLimit({ maxSize: 4096 }));
   api.use("/auth/*", async (c, next) => {
     const apiKeyHeader = c.req.header("x-api-key")?.trim();
     if (!apiKeyHeader) return next();
@@ -746,6 +751,8 @@ export function createApp() {
     },
   );
 
+  const magicLinkApi = api.route("/auth", magicLinkConfirmation);
+
   api.on(["POST", "GET", "PUT", "PATCH", "DELETE"], "/auth/*", async (c) => {
     const authHeader = c.req.header("Authorization");
     const apiKeyHeader = c.req.header("x-api-key")?.trim();
@@ -895,17 +902,26 @@ export function createApp() {
       assertWebSocketOrigin(c.req.raw.headers);
 
       const userId = c.get("userId");
+      const credential = {
+        sessionId: c.get("session")?.id,
+        apiKeyId: c.get("apiKey")?.id,
+      };
+      let closed = false;
       let conn: ReturnType<typeof addUserConnection> | null = null;
 
       return {
         onOpen(_evt, ws) {
-          if (userId) {
-            conn = addUserConnection(userId, ws);
-            void syncWorkspaceAccess(userId, ws);
-          }
+          void registerAuthenticatedConnection(userId, credential, () => {
+            if (!closed) conn = addUserConnection(userId, ws);
+          })
+            .then(() => {
+              if (!closed) void syncWorkspaceAccess(userId, ws);
+            })
+            .catch(() => ws.close(1008, "Authorization expired"));
         },
         onMessage: handleWebSocketMessage,
         onClose() {
+          closed = true;
           if (conn && userId) {
             removeUserConnection(userId, conn);
           }
@@ -943,22 +959,30 @@ export function createApp() {
 
       const windowId = c.req.query("windowId");
       const initiatorId = windowId ? `${userId}:${windowId}` : userId;
+      const credential = {
+        sessionId: c.get("session")?.id,
+        apiKeyId: c.get("apiKey")?.id,
+      };
+      let closed = false;
       let conn: ReturnType<typeof addConnection> | null = null;
 
       return {
         onOpen(_evt, ws) {
-          if (projectId && workspaceId) {
-            conn = addConnection(
-              projectId,
-              ws,
-              userId,
-              initiatorId,
-              workspaceId,
-            );
-          }
+          void registerAuthenticatedConnection(userId, credential, () => {
+            if (!closed && projectId && workspaceId) {
+              conn = addConnection(
+                projectId,
+                ws,
+                userId,
+                initiatorId,
+                workspaceId,
+              );
+            }
+          }).catch(() => ws.close(1008, "Authorization expired"));
         },
         onMessage: handleWebSocketMessage,
         onClose() {
+          closed = true;
           if (conn && projectId) {
             removeConnection(projectId, conn);
           }
@@ -987,6 +1011,7 @@ export function createApp() {
     gitlabIntegrationApi,
     invitationApi,
     invitationPublicApi,
+    magicLinkApi,
     labelApi,
     notificationApi,
     notificationPreferencesApi,
@@ -1120,6 +1145,7 @@ const {
   gitlabIntegrationApi,
   invitationApi,
   invitationPublicApi,
+  magicLinkApi,
   labelApi,
   mattermostIntegrationApi,
   notificationApi,
@@ -1186,6 +1212,7 @@ export type AppType =
   | typeof adminApi
   | typeof publicProjectApi
   | typeof invitationPublicApi
+  | typeof magicLinkApi
   | typeof oauthApi;
 
 export default app;

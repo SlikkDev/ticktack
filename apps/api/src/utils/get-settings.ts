@@ -5,11 +5,14 @@ import { isStorageConfigured } from "../storage/s3";
 import { resolveFileSecret } from "./file-secret";
 import { isGithubSsoConfigured } from "./github-sso-env";
 import { isCloud } from "./is-cloud";
+import { isPasswordlessAuth } from "../auth/passwordless-config";
 
 config();
 
 function getSettings() {
   return {
+    passwordlessAuth: isPasswordlessAuth(),
+    hasPasskeys: isPasswordlessAuth() || process.env.ENABLE_PASSKEYS === "true",
     isCloud: isCloud(),
     disableRegistration: process.env.DISABLE_REGISTRATION === "true",
     disablePasswordRegistration:

@@ -1,4 +1,5 @@
 import { and, eq, gt } from "drizzle-orm";
+import { isPasswordlessAuth } from "../auth/passwordless-config";
 import db from "../database";
 import { invitationTable, userTable, workspaceTable } from "../database/schema";
 
@@ -21,7 +22,8 @@ export async function checkRegistrationAllowed(
   invitationId?: string,
   options?: { allowInvitationByEmail?: boolean; emailVerified?: boolean },
 ): Promise<RegistrationCheckResult> {
-  const isRegistrationDisabled = process.env.DISABLE_REGISTRATION === "true";
+  const isRegistrationDisabled =
+    isPasswordlessAuth() || process.env.DISABLE_REGISTRATION === "true";
 
   if (!isRegistrationDisabled) {
     return {

@@ -2214,6 +2214,86 @@
 						}
 					},
 					"required": ["authorize", "expired", "signIn"]
+				},
+				"passwordless": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"subtitle": {
+							"type": "string"
+						},
+						"checkEmail": {
+							"type": "string"
+						},
+						"usePasskey": {
+							"type": "string"
+						},
+						"passkeyFailed": {
+							"type": "string"
+						},
+						"confirmTitle": {
+							"type": "string"
+						},
+						"confirmDescription": {
+							"type": "string"
+						},
+						"confirm": {
+							"type": "string"
+						},
+						"invalidLink": {
+							"type": "string"
+						},
+						"returnToSignIn": {
+							"type": "string"
+						},
+						"passkeysTitle": {
+							"type": "string"
+						},
+						"passkeysDescription": {
+							"type": "string"
+						},
+						"manageFailed": {
+							"type": "string"
+						},
+						"unnamedPasskey": {
+							"type": "string"
+						},
+						"confirmRemove": {
+							"type": "string"
+						},
+						"passkeyName": {
+							"type": "string"
+						},
+						"addPasskey": {
+							"type": "string"
+						},
+						"recoveryHint": {
+							"type": "string"
+						},
+						"reauthenticate": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"subtitle",
+						"checkEmail",
+						"usePasskey",
+						"passkeyFailed",
+						"confirmTitle",
+						"confirmDescription",
+						"confirm",
+						"invalidLink",
+						"returnToSignIn",
+						"passkeysTitle",
+						"passkeysDescription",
+						"manageFailed",
+						"unnamedPasskey",
+						"confirmRemove",
+						"passkeyName",
+						"addPasskey",
+						"recoveryHint",
+						"reauthenticate"
+					]
 				}
 			},
 			"required": [
@@ -2231,7 +2311,8 @@
 				"passwordReset",
 				"page",
 				"device",
-				"mcp"
+				"mcp",
+				"passwordless"
 			]
 		},
 		"settings": {

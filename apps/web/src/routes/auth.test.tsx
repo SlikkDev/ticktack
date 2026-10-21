@@ -1,17 +1,21 @@
 import { beforeEach, expect, it, vi } from "vite-plus/test";
 import { Route } from "./auth";
 
-const mocks = vi.hoisted(() => ({ getSession: vi.fn() }));
+const mocks = vi.hoisted(() => ({ getSession: vi.fn(), getConfig: vi.fn() }));
+vi.mock("@/fetchers/config/get-config", () => ({ getConfig: mocks.getConfig }));
 vi.mock("@/lib/auth-client", () => ({ authClient: mocks }));
 vi.mock("@tanstack/react-router", () => ({
   createFileRoute: () => (options: unknown) => ({ options }),
   redirect: ({ to }: { to: string }) => new Error(`Redirect to ${to}`),
 }));
 const beforeLoad = Route.options.beforeLoad as (context: {
-  location: { pathname: string };
+  location: { pathname: string; searchStr?: string };
 }) => Promise<unknown>;
 
-beforeEach(() => mocks.getSession.mockReset());
+beforeEach(() => {
+  mocks.getSession.mockReset();
+  mocks.getConfig.mockResolvedValue({ passwordlessAuth: false });
+});
 
 it.each([
   "/auth/reset-password",
@@ -45,3 +49,25 @@ it("allows signed-out visitors to recover their password", async () => {
     session: null,
   });
 });
+
+it.each(["/auth/reset-password", "/auth/forgot-password"])(
+  "redirects obsolete password recovery %s in passwordless mode",
+  async (pathname) => {
+    mocks.getSession.mockResolvedValue({ data: null });
+    mocks.getConfig.mockResolvedValue({ passwordlessAuth: true });
+    await expect(beforeLoad({ location: { pathname } })).rejects.toThrow(
+      "Redirect to /auth/sign-in",
+    );
+  },
+);
+it.each([
+  { pathname: "/auth/magic-link" },
+  { pathname: "/auth/sign-in", searchStr: "?reauth=true" },
+])(
+  "allows existing users to prove mailbox ownership or reauthenticate",
+  async (location) => {
+    const session = { user: { id: "existing-user" } };
+    mocks.getSession.mockResolvedValue({ data: session });
+    await expect(beforeLoad({ location })).resolves.toEqual({ session });
+  },
+);

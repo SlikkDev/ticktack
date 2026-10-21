@@ -2,6 +2,8 @@ import { z } from "../openapi";
 
 export const configSchema = z
   .object({
+    passwordlessAuth: z.boolean(),
+    hasPasskeys: z.boolean(),
     isCloud: z.boolean(),
     disableRegistration: z.boolean(),
     disablePasswordRegistration: z.boolean(),

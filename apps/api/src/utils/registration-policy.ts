@@ -1,4 +1,5 @@
 import { APIError } from "better-auth/api";
+import { isPasswordlessAuth } from "../auth/passwordless-config";
 import {
   checkRegistrationAllowed,
   userExistsByEmail,
@@ -39,6 +40,7 @@ export async function assertEmailCodeRecipientAllowed(
 
 export async function assertGuestRegistrationAllowed(): Promise<void> {
   if (
+    isPasswordlessAuth() ||
     process.env.DISABLE_GUEST_ACCESS === "true" ||
     process.env.DISABLE_REGISTRATION === "true" ||
     process.env.DISABLE_PASSWORD_REGISTRATION === "true" ||
@@ -62,6 +64,19 @@ export async function assertUserRegistrationAllowed(
 ): Promise<void> {
   if (user.isAnonymous) {
     await assertGuestRegistrationAllowed();
+    return;
+  }
+  if (isPasswordlessAuth()) {
+    const invitation = await checkRegistrationAllowed(user.email, undefined, {
+      allowInvitationByEmail: context?.path === "/magic-link/verify",
+      emailVerified: user.emailVerified === true,
+    });
+    if (!invitation.allowed || !(await hasRegisteredUsers())) {
+      throw new APIError("FORBIDDEN", {
+        code: "REGISTRATION_NOT_ALLOWED",
+        message: "A verified mailbox and a valid invitation are required.",
+      });
+    }
     return;
   }
   if (!(await hasRegisteredUsers())) return;

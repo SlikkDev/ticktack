@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/react";
+import "./lib/magic-link-fragment";
 
 const dsn = import.meta.env.VITE_SENTRY_DSN;
 

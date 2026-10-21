@@ -11,6 +11,8 @@ import {
 
 function config(overrides: Partial<GetConfigResponse> = {}) {
   return {
+    passwordlessAuth: false,
+    hasPasskeys: false,
     isCloud: false,
     disableRegistration: false,
     disablePasswordRegistration: false,
@@ -34,6 +36,24 @@ function config(overrides: Partial<GetConfigResponse> = {}) {
 }
 
 describe("auth methods", () => {
+  it("offers only magic links and passkeys in passwordless mode", () => {
+    const instance = config({
+      passwordlessAuth: true,
+      hasPasskeys: true,
+      disableRegistration: true,
+      disablePasswordRegistration: true,
+      hasGoogleSignIn: true,
+    });
+    expect(getProviders(instance)).toEqual([]);
+    expect(getEmailMethod(instance)).toBe("magic-link");
+    expect(getSignUpEmailMethod(instance, false)).toBe("magic-link");
+    expect(getSignUpEmailMethod(instance, true)).toBeNull();
+    expect(getSignInFooter(instance, "magic-link", [])).toBe("inviteOnly");
+  });
+
+  it("rejects redirect paths with browser-normalized backslashes", () => {
+    expect(getSafeRedirectPath("/\\untrusted.example")).toBeUndefined();
+  });
   it("lists configured providers in a fixed order", () => {
     expect(
       getProviders(

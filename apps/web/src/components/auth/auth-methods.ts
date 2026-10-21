@@ -1,7 +1,7 @@
 import type { GetConfigResponse } from "@/fetchers/config/get-config";
 
 export type AuthProvider = "google" | "github" | "discord" | "custom";
-export type EmailMethod = "code" | "password";
+export type EmailMethod = "code" | "password" | "magic-link";
 export type SignInFooter =
   | "createAccount"
   | "inviteOnly"
@@ -12,7 +12,7 @@ export type SignInFooter =
 type Config = GetConfigResponse | undefined;
 
 export function getProviders(config: Config): AuthProvider[] {
-  if (!config) return [];
+  if (!config || config.passwordlessAuth) return [];
   const providers: [AuthProvider, boolean][] = [
     ["google", config.hasGoogleSignIn],
     ["github", config.hasGithubSignIn],
@@ -24,6 +24,7 @@ export function getProviders(config: Config): AuthProvider[] {
 
 export function getEmailMethod(config: Config): EmailMethod | null {
   if (!config || config.disableLoginForm) return null;
+  if (config.passwordlessAuth) return "magic-link";
   return config.hasSmtp && !config.disableEmailOtpSignIn ? "code" : "password";
 }
 
@@ -31,6 +32,8 @@ export function getSignUpEmailMethod(
   config: Config,
   isInstanceAdminSetup: boolean,
 ): EmailMethod | null {
+  if (config?.passwordlessAuth)
+    return isInstanceAdminSetup ? null : getEmailMethod(config);
   if (isInstanceAdminSetup) return "password";
   if (config?.disablePasswordRegistration) return null;
   return getEmailMethod(config);
@@ -58,13 +61,16 @@ export function getSignInFooter(
 }
 
 export function getSafeRedirectPath(path: string | undefined) {
-  return path?.startsWith("/") && !path.includes("//") ? path : undefined;
+  return path?.startsWith("/") && !/[\\\r\n]/.test(path) && !path.includes("//")
+    ? path
+    : undefined;
 }
 
 export function getSignInSubtitleKey(
   emailMethod: EmailMethod | null,
   providers: AuthProvider[],
 ) {
+  if (emailMethod === "magic-link") return "auth:passwordless.subtitle";
   if (emailMethod === "code") {
     return providers.length > 0
       ? "auth:signIn.subtitle.emailOrProvider"

@@ -38,6 +38,7 @@ export const userTable = pgTable("user", {
     .notNull(),
   image: text("image"),
   locale: text("locale"),
+  authRevokedAt: timestamp("auth_revoked_at", { mode: "date" }),
   createdAt: timestamp("created_at", { mode: "date" })
     .default(utcNow)
     .notNull(),
@@ -51,6 +52,36 @@ export const userTable = pgTable("user", {
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires", { mode: "date" }),
 });
+
+export const passkeyTable = pgTable(
+  "passkey",
+  {
+    id: text("id").primaryKey(),
+    name: text("name"),
+    publicKey: text("public_key").notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => userTable.id, { onDelete: "cascade" }),
+    credentialID: text("credential_id").notNull().unique(),
+    counter: integer("counter").notNull(),
+    deviceType: text("device_type").notNull(),
+    backedUp: boolean("backed_up").notNull(),
+    transports: text("transports"),
+    createdAt: timestamp("created_at", { mode: "date" }),
+    aaguid: text("aaguid"),
+  },
+  (table) => [index("passkey_user_id_idx").on(table.userId)],
+);
+
+export const authThrottleTable = pgTable(
+  "auth_throttle",
+  {
+    key: text("key").primaryKey(),
+    count: integer("count").notNull(),
+    expiresAt: timestamp("expires_at", { mode: "date" }).notNull(),
+  },
+  (table) => [index("auth_throttle_expires_at_idx").on(table.expiresAt)],
+);
 
 export const sessionTable = pgTable(
   "session",

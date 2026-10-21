@@ -3,13 +3,14 @@ import { HTTPException } from "hono/http-exception";
 import { describe, expect, it, vi } from "vite-plus/test";
 
 const mocks = vi.hoisted(() => {
+  const rows = new Map<string, { payload: unknown; expiresAt: Date }>();
   const insertedSessions: Array<Record<string, unknown>> = [];
   const getSession = vi.fn(async ({ headers }: { headers: Headers }) => {
     const cookie = new Headers(headers).get("cookie") ?? "";
     if (cookie.includes("victim_session=1")) {
       return {
         user: { id: "victim-user" },
-        session: { token: "victim-cookie-token" },
+        session: { id: "victim-session", token: "victim-cookie-token" },
       };
     }
     return null;
@@ -20,23 +21,55 @@ const mocks = vi.hoisted(() => {
       return row;
     }),
   }));
-  return { getSession, insert, insertedSessions };
+  return { getSession, insert, insertedSessions, rows };
 });
 
 vi.mock("../../apps/api/src/auth", () => ({
   auth: { api: { getSession: mocks.getSession } },
 }));
 
-vi.mock("../../apps/api/src/database", () => ({
-  default: { insert: mocks.insert },
-}));
+vi.mock("../../apps/api/src/database", async () => {
+  const schema = await import("../../apps/api/src/database/schema");
+  const { PgDialect } = await import("drizzle-orm/pg-core");
+  const tx = {
+    insert: mocks.insert,
+    select: () => ({
+      from: () => ({
+        where: () => ({
+          for: async () => [{ id: "victim-user", authRevokedAt: null }],
+        }),
+      }),
+    }),
+    delete: () => ({
+      where: (
+        condition: Parameters<InstanceType<typeof PgDialect>["sqlToQuery"]>[0],
+      ) => ({
+        returning: async () => {
+          const [, key] = new PgDialect().sqlToQuery(condition).params;
+          const storageKey = `code:${key}`;
+          const row = mocks.rows.get(storageKey);
+          mocks.rows.delete(storageKey);
+          return row ? [row] : [];
+        },
+      }),
+    }),
+  };
+  return {
+    schema,
+    default: {
+      ...tx,
+      transaction: async (callback: (value: typeof tx) => unknown) =>
+        callback(tx),
+    },
+  };
+});
 
 vi.mock("../../apps/api/src/mcp/tools", () => ({
   registerMcpTools: vi.fn(),
 }));
 
 vi.mock("../../apps/api/src/mcp/oauth-store", () => {
-  const rows = new Map<string, { payload: unknown; expiresAt: Date }>();
+  const rows = mocks.rows;
   const keyOf = (kind: string, key: string) => `${kind}:${key}`;
   return {
     putState: async (

@@ -19,6 +19,7 @@ import {
 } from "@/components/auth/auth-methods";
 import { AuthPage } from "@/components/auth/auth-page";
 import { EmailCodeForm } from "@/components/auth/email-code-form";
+import { MagicLinkForm } from "@/components/auth/magic-link-form";
 import { InvitationNotice } from "@/components/auth/invitation-notice";
 import { PasswordSignUpForm } from "@/components/auth/password-sign-up-form";
 import { ProviderButtons } from "@/components/auth/provider-buttons";
@@ -87,7 +88,9 @@ function SignUp() {
     !config?.disableRegistration ||
     Boolean(invitationId) ||
     isInstanceAdminSetup;
-  const emailMethod = getSignUpEmailMethod(config, isInstanceAdminSetup);
+  const emailMethod = selfServiceAllowed
+    ? getSignUpEmailMethod(config, isInstanceAdminSetup)
+    : null;
   const providers = selfServiceAllowed ? getProviders(config) : [];
   const getName = useProviderName(config?.customOAuthName);
   const providerSignIn = useProviderSignIn({
@@ -99,15 +102,20 @@ function SignUp() {
   const guest = useGuestSignIn(captcha, () => navigate({ to: "/dashboard" }));
   const busy = providerSignIn.pending !== null || guest.isPending;
   const showGuest =
-    config?.hasGuestAccess && !invitationId && !isInstanceAdminSetup;
+    selfServiceAllowed &&
+    config?.hasGuestAccess &&
+    !invitationId &&
+    !isInstanceAdminSetup;
 
   const description = isInstanceAdminSetup
     ? t("auth:signUp.instanceAdminSubtitle")
-    : emailMethod === "code"
-      ? t("auth:signUp.subtitle.email")
-      : emailMethod === "password"
-        ? t("auth:signUp.subtitle.password")
-        : t("auth:signUp.subtitle.providers");
+    : emailMethod === "magic-link"
+      ? t("auth:passwordless.subtitle")
+      : emailMethod === "code"
+        ? t("auth:signUp.subtitle.email")
+        : emailMethod === "password"
+          ? t("auth:signUp.subtitle.password")
+          : t("auth:signUp.subtitle.providers");
 
   const notice = invitationId ? (
     <InvitationNotice
@@ -136,6 +144,15 @@ function SignUp() {
         notice={notice}
       >
         {isConfigLoading ? <AuthFormSkeleton /> : null}
+        {emailMethod === "magic-link" ? (
+          <MagicLinkForm
+            destination={destination}
+            defaultEmail={search.email}
+            captcha={captcha}
+            disabled={busy}
+            withName
+          />
+        ) : null}
         {emailMethod === "code" ? (
           <EmailCodeForm
             withName

@@ -16,6 +16,7 @@ import { serve } from "../../apps/api/node_modules/@hono/node-server";
 import type { NodeWebSocket } from "../../apps/api/node_modules/@hono/node-ws";
 import { auth } from "../../apps/api/src/auth";
 import { createApp } from "../../apps/api/src/index";
+import { registerAuthenticatedConnection } from "../../apps/api/src/ws/register-authenticated";
 import { broadcastToUser } from "../../apps/api/src/ws";
 import { handleWebSocketMessage } from "../../apps/api/src/ws/security";
 import { mockAuthenticatedSession } from "./helpers/auth";
@@ -36,6 +37,19 @@ const WebSocket: new (
   url: string,
   options: { headers: Record<string, string> },
 ) => Socket = nodeWsRequire("ws").WebSocket;
+
+vi.mock("../../apps/api/src/ws/register-authenticated", async (original) => {
+  const actual =
+    await original<
+      typeof import("../../apps/api/src/ws/register-authenticated")
+    >();
+  return {
+    ...actual,
+    registerAuthenticatedConnection: vi.fn(
+      actual.registerAuthenticatedConnection,
+    ),
+  };
+});
 
 vi.mock("../../apps/api/src/ws/security", async (original) => {
   const actual =
@@ -81,6 +95,7 @@ beforeEach(async () => {
   projectId = project.id;
   const sessionMock = mockAuthenticatedSession(member.user);
   const session = await auth.api.getSession({ headers: new Headers() });
+  await db.insert(schema.sessionTable).values(session!.session);
   sessionMock.mockImplementation(async ({ headers }) => {
     const h = new Headers(headers);
     return h.get("authorization") === "Bearer valid-test-session" ||
@@ -108,6 +123,44 @@ afterEach(async () => {
 
 describe.each(["project", "user"])("%s WebSocket", (endpoint) => {
   const path = () => (endpoint === "user" ? "user" : projectId);
+  it("rejects a handshake paused across mailbox ownership revocation", async () => {
+    const original = await vi.importActual<
+      typeof import("../../apps/api/src/ws/register-authenticated")
+    >("../../apps/api/src/ws/register-authenticated");
+    let release!: () => void, reached!: () => void;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const paused = new Promise<void>((resolve) => {
+      reached = resolve;
+    });
+    vi.mocked(registerAuthenticatedConnection).mockImplementationOnce(
+      async (...args) => {
+        reached();
+        await gate;
+        return original.registerAuthenticatedConnection(...args);
+      },
+    );
+    const opening = connect(path(), {
+      cookie: "test-session=valid",
+      origin: "http://localhost:5173",
+    });
+    await paused;
+    const { socket } = await opening;
+    const closed = once(socket, "close");
+    const messages: string[] = [];
+    socket.on("message", (data) => messages.push(data.toString()));
+    const context = await auth.$context;
+    await context.adapter.update({
+      model: "user",
+      where: [{ field: "id", value: userId }],
+      update: { email: "replacement@example.com", emailVerified: false },
+    });
+    release();
+    expect((await closed)[0]).toBe(1008);
+    expect(messages).toEqual([]);
+  });
+
   it("consumes a single quota and rate-limit unit per API-key handshake", async () => {
     const key = `ws-key-${userId}`;
     const [row] = await db
@@ -133,6 +186,30 @@ describe.each(["project", "user"])("%s WebSocket", (endpoint) => {
     expect(saved.requestCount).toBe(1);
     expect((await connect(path(), { "x-api-key": key })).status).toBe(429);
   });
+  it("preserves API-key socket access after a temporary ban expires", async () => {
+    await db
+      .update(schema.userTable)
+      .set({ banned: true, banExpires: new Date(Date.now() - 1000) })
+      .where(eq(schema.userTable.id, userId));
+    const key = `expired-ban-key-${userId}`;
+    await db.insert(schema.apikeyTable).values({
+      referenceId: userId,
+      userId,
+      key: createHash("sha256").update(key).digest("base64url"),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    const { socket, status } = await connect(path(), { "x-api-key": key });
+    expect(status).toBe(101);
+    const ping = once(socket, "pong");
+    socket.ping("test");
+    await ping;
+    await vi.waitFor(() =>
+      expect(registerAuthenticatedConnection).toHaveResolved(),
+    );
+    expect(socket.readyState).toBe(1);
+  });
+
   it("rejects missing, null, hostile and lookalike browser origins", async () => {
     for (const origin of [
       undefined,
@@ -225,6 +302,11 @@ it("preserves user event delivery after keepalive", async () => {
     origin: "http://localhost:5173",
   });
   expect(status).toBe(101);
+  // The upgrade is quarantined until its original credential is rechecked.
+  const synchronized = once(socket, "message");
+  expect(JSON.parse((await synchronized)[0].toString()).type).toBe(
+    "WORKSPACE_ACCESS_SYNC",
+  );
   socket.send('{"type":"ping"}');
   const message = once(socket, "message");
   broadcastToUser(userId, {

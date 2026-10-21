@@ -40,8 +40,9 @@ export const sendMagicLinkEmail = async (
       subject,
       html: emailTemplate,
     });
-  } catch (error) {
-    console.error("Error sending magic link email", error);
+  } catch {
+    // Transport errors may embed credentials, recipients or the login token.
+    throw new Error("Magic-link email delivery failed");
   }
 };
 
@@ -60,8 +61,8 @@ export const sendOtpEmail = async (
       subject,
       html: emailTemplate,
     });
-  } catch (error) {
-    console.error("Error sending OTP email", error);
+  } catch {
+    throw new Error("Email-code delivery failed");
   }
 };
 
@@ -119,9 +120,9 @@ export const sendWorkspaceInvitationEmail = async (
       html: emailTemplate,
     });
     return { success: true };
-  } catch (error) {
-    console.error("Error sending workspace invitation email", error);
-    throw error;
+  } catch {
+    console.error("Workspace invitation email delivery failed");
+    throw new Error("Workspace invitation email delivery failed");
   }
 };
 

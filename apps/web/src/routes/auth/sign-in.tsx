@@ -22,6 +22,8 @@ import {
 import { AuthPage } from "@/components/auth/auth-page";
 import { AutoLoginRedirect } from "@/components/auth/auto-login-redirect";
 import { EmailCodeForm } from "@/components/auth/email-code-form";
+import { MagicLinkForm } from "@/components/auth/magic-link-form";
+import { PasskeySignIn } from "@/components/auth/passkey-sign-in";
 import { InvitationNotice } from "@/components/auth/invitation-notice";
 import { PasswordSignInForm } from "@/components/auth/password-sign-in-form";
 import { ProviderButtons } from "@/components/auth/provider-buttons";
@@ -44,6 +46,7 @@ const signInSearchSchema = z.object({
   email: z.string().optional(),
   redirect: z.string().optional(),
   error: z.string().optional(),
+  reauth: z.literal("true").optional(),
 });
 
 export const Route = createFileRoute("/auth/sign-in")({
@@ -187,6 +190,17 @@ function SignIn() {
           ) : null
         }
       >
+        {emailMethod === "magic-link" ? (
+          <MagicLinkForm
+            destination={destination}
+            defaultEmail={search.email}
+            captcha={captcha}
+            disabled={busy}
+          />
+        ) : null}
+        {config?.hasPasskeys ? (
+          <PasskeySignIn onSuccess={() => void navigate({ to: destination })} />
+        ) : null}
         {emailMethod === "code" ? (
           <EmailCodeForm
             defaultEmail={search.email}

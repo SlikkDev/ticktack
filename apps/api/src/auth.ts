@@ -5,6 +5,18 @@ import {
 } from "./utils/auth-email-locale";
 import { revokeUserConnections, revokeWorkspaceConnections } from "./ws";
 import { apiKey } from "@better-auth/api-key";
+import { passkey } from "@better-auth/passkey";
+import {
+  getPasswordlessConfig,
+  isPasswordlessAuth,
+  isPasswordlessBlockedPath,
+} from "./auth/passwordless-config";
+import {
+  requirePasskeyManagementSession,
+  requirePasskeyUserVerification,
+} from "./auth/passkey-policy";
+import { interactiveMagicLink } from "./auth/magic-link-url";
+import { consumeAuthLimit } from "./auth/throttle";
 import {
   isSmtpConfigured,
   OTP_EXPIRY_SECONDS,
@@ -102,6 +114,8 @@ import { authCaptchaPaths, verifyTurnstile } from "./utils/verify-turnstile";
 
 config();
 
+const passwordlessConfig = getPasswordlessConfig();
+
 const githubSso = getGithubSsoOAuthCredentials();
 
 const isRegistrationDisabled = process.env.DISABLE_REGISTRATION === "true";
@@ -109,6 +123,7 @@ const isPasswordRegistrationDisabled =
   process.env.DISABLE_PASSWORD_REGISTRATION === "true";
 const isLoginFormDisabled = process.env.DISABLE_LOGIN_FORM === "true";
 const isEmailOtpSignInDisabled =
+  passwordlessConfig.passwordless ||
   process.env.DISABLE_EMAIL_OTP_SIGN_IN === "true";
 const isWorkspaceCreationDisabled =
   process.env.DISABLE_WORKSPACE_CREATION === "true";
@@ -161,6 +176,7 @@ function isEmailCodeSignInAvailable() {
 
 // Reads env at call time (not module scope) so tests can stub it.
 async function shouldDeliverSignInEmail(email: string) {
+  if (isPasswordlessAuth()) return canSendSignInEmail(email);
   if (process.env.DISABLE_PASSWORD_REGISTRATION === "true") {
     return userExistsByEmail(email);
   }
@@ -200,6 +216,7 @@ export const auth = betterAuth({
   trustedOrigins,
   secret: authSecret,
   basePath: "/api/auth",
+  disabledPaths: passwordlessConfig.passwordless ? ["/magic-link/verify"] : [],
   database: authDatabaseAdapter({
     provider: "pg",
     schema: {
@@ -216,6 +233,7 @@ export const auth = betterAuth({
       teamMember: schema.teamMemberTable,
       apikey: schema.apikeyTable,
       deviceCode: schema.deviceCodeTable,
+      passkey: schema.passkeyTable,
     },
   }),
   user: {
@@ -247,7 +265,7 @@ export const auth = betterAuth({
     },
   },
   emailAndPassword: {
-    enabled: true,
+    enabled: !passwordlessConfig.passwordless,
     autoSignIn: true,
     revokeSessionsOnPasswordReset: true,
     resetPasswordTokenExpiresIn: 60 * 60,
@@ -281,23 +299,54 @@ export const auth = betterAuth({
       },
     },
   },
-  socialProviders: {
-    github: {
-      clientId: githubSso.clientId,
-      clientSecret: githubSso.clientSecret,
-      scope: ["user:email"],
-    },
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-    },
-    discord: {
-      clientId: process.env.DISCORD_CLIENT_ID || "",
-      clientSecret: process.env.DISCORD_CLIENT_SECRET || "",
-    },
-  },
+  socialProviders: passwordlessConfig.passwordless
+    ? {}
+    : {
+        github: {
+          clientId: githubSso.clientId,
+          clientSecret: githubSso.clientSecret,
+          scope: ["user:email"],
+        },
+        google: {
+          clientId: process.env.GOOGLE_CLIENT_ID || "",
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+        },
+        discord: {
+          clientId: process.env.DISCORD_CLIENT_ID || "",
+          clientSecret: process.env.DISCORD_CLIENT_SECRET || "",
+        },
+      },
   plugins: [
-    ...(process.env.DISABLE_GUEST_ACCESS !== "true"
+    ...(passwordlessConfig.passkeys
+      ? [
+          passkey({
+            rpID: passwordlessConfig.rpID,
+            rpName: "TickTack",
+            origin: passwordlessConfig.origin,
+            authenticatorSelection: {
+              residentKey: "required",
+              userVerification: "required",
+            },
+            registration: {
+              requireSession: true,
+              afterVerification: async ({ verification }) => {
+                requirePasskeyUserVerification(
+                  verification.registrationInfo?.userVerified === true,
+                );
+              },
+            },
+            authentication: {
+              afterVerification: async ({ verification }) => {
+                requirePasskeyUserVerification(
+                  verification.authenticationInfo.userVerified,
+                );
+              },
+            },
+          }),
+        ]
+      : []),
+    ...(!passwordlessConfig.passwordless &&
+    process.env.DISABLE_GUEST_ACCESS !== "true"
       ? [
           anonymous({
             generateName: async () => generateDemoName(),
@@ -307,7 +356,10 @@ export const auth = betterAuth({
       : []),
     lastLoginMethod(),
     magicLink({
-      disableSignUp: isPasswordRegistrationDisabled,
+      disableSignUp:
+        !passwordlessConfig.passwordless && isPasswordRegistrationDisabled,
+      storeToken: passwordlessConfig.passwordless ? "hashed" : "plain",
+      expiresIn: 300,
       sendMagicLink: async ({ email, url }, ctx) => {
         const requestedLocale = getRequestedAuthEmailLocale(
           ctx?.request?.headers ?? ctx?.headers,
@@ -322,7 +374,9 @@ export const auth = betterAuth({
           const locale = await getUserLocale(email, requestedLocale);
           const copy = getAuthEmailCopy(locale);
           await sendMagicLinkEmail(email, copy.magicLinkSubject, {
-            magicLink: url,
+            magicLink: passwordlessConfig.passwordless
+              ? interactiveMagicLink(url, clientUrl)
+              : url,
             locale,
             ...requestContext,
           });
@@ -667,6 +721,7 @@ export const auth = betterAuth({
     openAPI(),
   ],
   session: {
+    ...(passwordlessConfig.passkeys ? { freshAge: 300 } : {}),
     cookieCache: {
       // Consult the session store on every request so password recovery
       // immediately rejects revoked cookies, including caches issued before upgrade.
@@ -677,7 +732,7 @@ export const auth = betterAuth({
     // Enable in cloud; self-hosted instances opt in by setting KANEO_CLOUD.
     // Default better-auth rate-limit only kicks in for production; we keep the
     // global limits conservative and tighten signup/invite via customRules.
-    enabled: isCloud(),
+    enabled: isCloud() || passwordlessConfig.passkeys || isSmtpConfigured(),
     window: 10,
     max: 100,
     customRules: {
@@ -748,6 +803,61 @@ export const auth = betterAuth({
   },
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
+      if (
+        passwordlessConfig.passwordless &&
+        isPasswordlessBlockedPath(ctx.path)
+      ) {
+        throw new APIError("FORBIDDEN", {
+          code: "AUTH_METHOD_DISABLED",
+          message: "Use a magic link or passkey to sign in.",
+        });
+      }
+      if (passwordlessConfig.passkeys && ctx.path.startsWith("/passkey/")) {
+        if (
+          ctx.headers?.has("x-api-key") ||
+          ctx.headers?.has("authorization")
+        ) {
+          throw new APIError("FORBIDDEN", {
+            code: "COOKIE_SESSION_REQUIRED",
+            message: "Passkeys require browser authentication.",
+          });
+        }
+        await consumeAuthLimit(
+          "passkey-ip",
+          ctx.headers?.get("x-kaneo-client-ip") || "unknown",
+          30,
+          60,
+        );
+        if (
+          [
+            "/passkey/generate-register-options",
+            "/passkey/verify-registration",
+            "/passkey/delete-passkey",
+            "/passkey/update-passkey",
+          ].includes(ctx.path)
+        ) {
+          await requirePasskeyManagementSession(ctx);
+        }
+      }
+      if (
+        passwordlessConfig.passwordless &&
+        ctx.path === "/sign-in/magic-link"
+      ) {
+        await consumeAuthLimit(
+          "mail-ip",
+          ctx.headers?.get("x-kaneo-client-ip") || "unknown",
+          10,
+          60,
+        );
+        if (typeof ctx.body?.email === "string") {
+          await consumeAuthLimit(
+            "mail-address",
+            ctx.body.email.trim().toLowerCase(),
+            3,
+            900,
+          );
+        }
+      }
       if (ctx.path === "/admin/remove-user") {
         await prepareAdminUserRemoval(ctx);
       }
@@ -893,6 +1003,12 @@ export const auth = betterAuth({
       }
     }),
     after: createAuthMiddleware(async (ctx) => {
+      if (ctx.path === "/passkey/generate-authenticate-options") {
+        const options = ctx.context.returned;
+        if (options && typeof options === "object" && "challenge" in options) {
+          return ctx.json({ ...options, userVerification: "required" });
+        }
+      }
       if (
         ctx.path === "/organization/list-invitations" ||
         ctx.path === "/organization/get-full-organization"

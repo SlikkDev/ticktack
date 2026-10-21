@@ -25,6 +25,8 @@ const m = vi.hoisted(() => ({
   navigate: vi.fn(),
   getConfig: vi.fn(),
   config: {} as Record<string, unknown>,
+  search: {} as { invitationId?: string; email?: string },
+  hasUsers: true,
 }));
 vi.mock("@/components/auth/language-switcher", () => ({
   LanguageSwitcher: () => null,
@@ -40,7 +42,7 @@ vi.mock("@/lib/auth-client", () => ({
 }));
 vi.mock("@tanstack/react-router", () => ({
   createFileRoute: () => (options: unknown) => ({ options }),
-  useSearch: () => ({}),
+  useSearch: () => m.search,
   useNavigate: () => m.navigate,
   useRouter: () => ({ history: { push: vi.fn() } }),
   Link: ({ children }: { children: ReactNode }) => <a href="/">{children}</a>,
@@ -50,11 +52,14 @@ vi.mock("@/hooks/queries/config/use-get-config", () => ({
 }));
 vi.mock("@/hooks/queries/instance/use-instance-status", () => ({
   default: () => ({
-    data: { hasUsers: true, hasAdmin: true },
+    data: { hasUsers: m.hasUsers, hasAdmin: m.hasUsers },
     isLoading: false,
   }),
 }));
 vi.mock("@/components/page-title", () => ({ default: () => null }));
+vi.mock("@/components/auth/invitation-notice", () => ({
+  InvitationNotice: () => <p>Invitation notice</p>,
+}));
 vi.mock("@/components/auth/turnstile", () => ({
   Turnstile: ({ onVerify }: { onVerify: (token: string) => void }) => (
     <button type="button" onClick={() => onVerify("fresh-token")}>
@@ -74,6 +79,8 @@ afterAll(() => vi.unstubAllEnvs());
 afterEach(() => cleanup());
 beforeEach(() => {
   vi.clearAllMocks();
+  m.search = {};
+  m.hasUsers = true;
   m.config = {
     hasSmtp: false,
     hasGuestAccess: true,
@@ -86,6 +93,67 @@ beforeEach(() => {
 });
 
 describe("sign-up route", () => {
+  it.each([false, true])(
+    "hides every self-registration method on an invite-only instance with SMTP %s",
+    (hasSmtp) => {
+      m.config = { ...m.config, hasSmtp, disableRegistration: true };
+      const Page = signup.options.component as ComponentType;
+      render(<Page />);
+      expect(screen.queryByLabelText("auth:forms.email")).toBeNull();
+      expect(screen.queryByLabelText("auth:forms.password")).toBeNull();
+      expect(screen.queryByRole("button")).toBeNull();
+      expect(
+        screen.getByText("auth:signUp.registrationDisabledAlert"),
+      ).toBeInTheDocument();
+    },
+  );
+
+  it.each([false, true])(
+    "keeps invitation-backed registration available with SMTP %s",
+    (hasSmtp) => {
+      m.config = { ...m.config, hasSmtp, disableRegistration: true };
+      m.search = {
+        invitationId: "test-invitation",
+        email: "invitee@example.com",
+      };
+      const Page = signup.options.component as ComponentType;
+      render(<Page />);
+      expect(screen.getByLabelText("auth:forms.email")).toHaveValue(
+        "invitee@example.com",
+      );
+      expect(Boolean(screen.queryByLabelText("auth:forms.password"))).toBe(
+        !hasSmtp,
+      );
+    },
+  );
+
+  it("preserves the explicit local-registration restriction for invited users", () => {
+    m.config = {
+      ...m.config,
+      disableRegistration: true,
+      disablePasswordRegistration: true,
+      hasGithubSignIn: false,
+      hasCustomOAuth: false,
+    };
+    m.search = { invitationId: "test-invitation" };
+    const Page = signup.options.component as ComponentType;
+    render(<Page />);
+    expect(screen.queryByLabelText("auth:forms.email")).toBeNull();
+    expect(screen.queryByLabelText("auth:forms.password")).toBeNull();
+  });
+
+  it("preserves first-owner setup when registration is closed", () => {
+    m.hasUsers = false;
+    m.config = {
+      ...m.config,
+      disableRegistration: true,
+      disablePasswordRegistration: true,
+    };
+    const Page = signup.options.component as ComponentType;
+    render(<Page />);
+    expect(screen.getByLabelText("auth:forms.password")).toBeInTheDocument();
+  });
+
   it("still renders the route when config preloading fails", async () => {
     m.getConfig.mockRejectedValueOnce(new Error("offline"));
     const queryClient = new QueryClient({

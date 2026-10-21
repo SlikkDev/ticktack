@@ -33,6 +33,7 @@ type EmailCodeFormProps = {
   captcha: AuthCaptchaState;
   disabled?: boolean;
   onSent: (values: { email: string; name?: string }) => void;
+  magicLinkDestination?: string;
 };
 
 export function EmailCodeForm({
@@ -41,6 +42,7 @@ export function EmailCodeForm({
   captcha,
   disabled = false,
   onSent,
+  magicLinkDestination,
 }: EmailCodeFormProps) {
   const { t, i18n } = useTranslation();
   const [isPending, setIsPending] = useState(false);
@@ -63,17 +65,27 @@ export function EmailCodeForm({
     if (captcha.pending) return;
     setIsPending(true);
     try {
-      const result = await authClient.emailOtp.sendVerificationOtp(
-        { email, type: "sign-in" },
-        {
-          headers: {
-            ...captcha.headers,
-            "x-ticktack-locale": getAuthRequestLocale(
-              i18n?.resolvedLanguage ?? i18n?.language,
-            ),
-          },
+      const requestOptions = {
+        headers: {
+          ...captcha.headers,
+          "x-ticktack-locale": getAuthRequestLocale(
+            i18n?.resolvedLanguage ?? i18n?.language,
+          ),
         },
-      );
+      };
+      const result = magicLinkDestination
+        ? await authClient.signIn.magicLink(
+            {
+              email,
+              name: withName ? name.trim() : undefined,
+              callbackURL: magicLinkDestination,
+            },
+            requestOptions,
+          )
+        : await authClient.emailOtp.sendVerificationOtp(
+            { email, type: "sign-in" },
+            requestOptions,
+          );
       if (result.error) {
         if (result.error.code === "DISPOSABLE_EMAIL_NOT_ALLOWED") {
           form.setError("email", { message: t("auth:forms.disposableEmail") });

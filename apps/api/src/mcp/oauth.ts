@@ -1,7 +1,9 @@
 import { createHash, randomUUID } from "node:crypto";
 import { createId } from "@paralleldrive/cuid2";
+import { and, eq } from "drizzle-orm";
 import db from "../database";
-import { sessionTable } from "../database/schema";
+import { mcpOauthStateTable, sessionTable } from "../database/schema";
+import { lockAuthUser } from "../database/auth-write-guard";
 import { consumeState, getState, putState } from "./oauth-store";
 
 type RegisteredClient = {
@@ -16,6 +18,7 @@ type AuthCode = {
   userId: string;
   codeChallenge: string;
   redirectUri: string;
+  authRevokedAt?: string | null;
 };
 
 export type AuthorizationRequest = {
@@ -59,6 +62,7 @@ export async function registerClient(params: {
 export async function createAuthCode(
   params: AuthCode,
   requestId?: string,
+  sessionId?: string,
 ): Promise<string> {
   const code = randomUUID();
   await putState(
@@ -67,6 +71,7 @@ export async function createAuthCode(
     params,
     new Date(Date.now() + codeTtlMs),
     requestId,
+    { userId: params.userId, sessionId },
   );
   return code;
 }
@@ -111,24 +116,44 @@ export async function exchangeCode(
   codeVerifier: string,
   redirectUri: string,
 ): Promise<{ accessToken: string; expiresIn: number } | null> {
-  const stored = await consumeState<AuthCode>("code", code);
-  if (!stored) return null;
+  const preview = await getState<AuthCode>("code", code);
+  if (!preview) return null;
+  return db.transaction(async (tx) => {
+    const user = await lockAuthUser(tx, preview.userId);
+    const [row] = await tx
+      .delete(mcpOauthStateTable)
+      .where(
+        and(
+          eq(mcpOauthStateTable.kind, "code"),
+          eq(mcpOauthStateTable.key, code),
+        ),
+      )
+      .returning();
+    if (!row || row.expiresAt.getTime() <= Date.now()) return null;
+    const stored = row.payload as AuthCode;
+    if (
+      stored.userId !== user.id ||
+      (stored.authRevokedAt ?? null) !==
+        (user.authRevokedAt?.toISOString() ?? null)
+    )
+      return null;
 
-  if (stored.clientId !== clientId) return null;
-  if (stored.redirectUri !== redirectUri) return null;
-  if (!verifyPkce(codeVerifier, stored.codeChallenge)) return null;
+    if (stored.clientId !== clientId) return null;
+    if (stored.redirectUri !== redirectUri) return null;
+    if (!verifyPkce(codeVerifier, stored.codeChallenge)) return null;
 
-  const sessionToken = randomUUID();
-  const expiresIn = 30 * 24 * 60 * 60;
+    const sessionToken = randomUUID();
+    const expiresIn = 30 * 24 * 60 * 60;
 
-  await db.insert(sessionTable).values({
-    id: createId(),
-    token: sessionToken,
-    userId: stored.userId,
-    expiresAt: new Date(Date.now() + expiresIn * 1000),
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    await tx.insert(sessionTable).values({
+      id: createId(),
+      token: sessionToken,
+      userId: stored.userId,
+      expiresAt: new Date(Date.now() + expiresIn * 1000),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    return { accessToken: sessionToken, expiresIn };
   });
-
-  return { accessToken: sessionToken, expiresIn };
 }
