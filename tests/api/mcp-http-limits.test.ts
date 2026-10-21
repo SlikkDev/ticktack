@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 import mcpRoutes from "../../apps/api/src/mcp";
+import { MCP_EXECUTION_TIMEOUT_MS } from "../../apps/api/src/mcp/execution";
 import {
   MCP_BODY_BYTES,
   MCP_MAX_IN_FLIGHT,
@@ -131,7 +132,9 @@ describe.each([false, true])("MCP HTTP limits (modern: %s)", (modern) => {
       headers: original.headers,
       body,
     });
-    expect((await mcpRoutes.request(atLimit)).status).toBe(200);
+    const accepted = await mcpRoutes.request(atLimit);
+    expect(accepted.status).toBe(200);
+    await rpcBody(accepted);
     expect(fetch).toHaveBeenCalledOnce();
     fetch.mockClear();
     const overLimit = new Request(original.url, {
@@ -201,5 +204,115 @@ it("bounds slow requests and releases capacity on timeout", async () => {
     (await Promise.all(pending)).every((response) => response.status === 408),
   ).toBe(true);
   vi.stubGlobal("fetch", whoami());
-  expect((await mcpRoutes.request(request(false))).status).toBe(200);
+  const recovered = await mcpRoutes.request(request(false));
+  expect(recovered.status).toBe(200);
+  await rpcBody(recovered);
 });
+
+describe.each([false, true])(
+  "MCP execution lifetime (modern: %s)",
+  (modern) => {
+    // Keep aborted work pending until the test acknowledges cancellation. Merely
+    // sending an abort must not release a slot while the tool is still running.
+    function stalledTools() {
+      const calls: {
+        signal: AbortSignal;
+        resolve: (response: Response) => void;
+        reject: (reason: Error) => void;
+      }[] = [];
+      vi.stubGlobal(
+        "fetch",
+        vi.fn(
+          (_url, init: RequestInit) =>
+            new Promise<Response>((resolve, reject) => {
+              calls.push({ signal: init.signal!, resolve, reject });
+            }),
+        ),
+      );
+      return calls;
+    }
+
+    const finishCall = () => Response.json({ user: { id: "test-user" } });
+    const consume = async (response: Response) => {
+      await response.text();
+      return response;
+    };
+    const tick = () => vi.advanceTimersByTimeAsync(0);
+
+    it.each(["completion", "error", "disconnect", "timeout"])(
+      "holds slots until tool settlement after %s and then recovers capacity",
+      async (ending) => {
+        vi.useFakeTimers();
+        const calls = stalledTools();
+        const controllers = Array.from(
+          { length: MCP_MAX_IN_FLIGHT },
+          () => new AbortController(),
+        );
+        const pending = controllers.map((controller) =>
+          mcpRoutes
+            .request(
+              new Request(request(modern), { signal: controller.signal }),
+            )
+            .then(consume),
+        );
+        await tick();
+        expect(calls).toHaveLength(MCP_MAX_IN_FLIGHT);
+        expect((await mcpRoutes.request(request(modern))).status).toBe(429);
+
+        if (ending === "disconnect") {
+          controllers.forEach((controller) => controller.abort());
+        } else if (ending === "timeout") {
+          await vi.advanceTimersByTimeAsync(MCP_EXECUTION_TIMEOUT_MS + 1);
+        }
+        if (ending === "disconnect" || ending === "timeout") {
+          expect(calls.every((call) => call.signal.aborted)).toBe(true);
+          // Even after response cancellation, uncooperative tools retain slots.
+          expect((await mcpRoutes.request(request(modern))).status).toBe(429);
+        }
+
+        calls.forEach((call) => {
+          if (ending === "completion") call.resolve(finishCall());
+          else call.reject(new Error("Synthetic tool stopped"));
+        });
+        await Promise.all(pending);
+        // Cancelled response bodies can close before the tool's rejection has
+        // propagated through the registrar; drain those completion microtasks.
+        await tick();
+        vi.stubGlobal("fetch", whoami());
+        const recovered = await mcpRoutes.request(request(modern));
+        expect(recovered.status).toBe(200);
+        expect((await rpcBody(recovered)).result.isError).not.toBe(true);
+      },
+    );
+
+    if (!modern) {
+      it("cancels legacy response streams without freeing running tool slots", async () => {
+        vi.useFakeTimers();
+        const calls = stalledTools();
+        const responses = await Promise.all(
+          Array.from({ length: MCP_MAX_IN_FLIGHT }, () =>
+            mcpRoutes.request(request(false)),
+          ),
+        );
+        await tick();
+        expect(calls).toHaveLength(MCP_MAX_IN_FLIGHT);
+        expect(
+          responses.every((response) =>
+            response.headers.get("content-type")?.includes("text/event-stream"),
+          ),
+        ).toBe(true);
+        await Promise.all(responses.map((response) => response.body!.cancel()));
+        expect(calls.every((call) => call.signal.aborted)).toBe(true);
+        expect((await mcpRoutes.request(request(false))).status).toBe(429);
+        calls.forEach((call) =>
+          call.reject(new Error("Synthetic cancellation acknowledged")),
+        );
+        await tick();
+        vi.stubGlobal("fetch", whoami());
+        const recovered = await mcpRoutes.request(request(false));
+        expect(recovered.status).toBe(200);
+        await rpcBody(recovered);
+      });
+    }
+  },
+);

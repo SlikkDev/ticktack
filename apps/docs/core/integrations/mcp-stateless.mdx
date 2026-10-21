@@ -61,6 +61,11 @@ The body must arrive within five seconds. Each API process allows up to 16
 concurrent authenticated MCP requests; excess requests receive HTTP 429 with
 `Retry-After`.
 
+Slots remain occupied while tools are running, including legacy streaming
+responses. Disconnection, stream cancellation, or a 30-second request deadline
+aborts the tool's internal API requests; a slot is released only after that
+work settles. Each internal API request also retains its ten-second timeout.
+
 Tool arguments may contain at most 1,024 array elements and object keys in total,
 including nested values. Calls above that limit return a tool result with
 `isError: true`. Ordinary tool arguments are small, flat objects; long text

@@ -14,6 +14,7 @@ import {
   jsonResponse,
 } from "../openapi";
 import { type BanState, isBanActive } from "../utils/user-ban";
+import type { McpExecution } from "./execution";
 import {
   beginMcpAuthorization,
   decideMcpAuthorizationRequest,
@@ -49,12 +50,20 @@ const internalApiUrl = (
   .replace(/\/api\/?$/, "")
   .replace(/\/+$/, "");
 
-function createMcpServerForUser(token: string): LegacyMcpServer {
+function createMcpServerForUser(
+  token: string,
+  execution: McpExecution,
+): LegacyMcpServer {
   const server = new LegacyMcpServer(
     { name: "kaneo-mcp", version: "1.0.0" },
     { maxToolInputElements: MCP_TOOL_INPUT_ELEMENTS },
   );
-  registerMcpTools(toMcpToolRegistrar(server), internalApiUrl, token);
+  registerMcpTools(
+    toMcpToolRegistrar(server, execution),
+    internalApiUrl,
+    token,
+    execution.signal,
+  );
   return server;
 }
 
@@ -76,7 +85,9 @@ async function validateBearerToken(
   return { userId: session.user.id, token };
 }
 
-const mcp = apiRouter<BaseVariables & { mcpToken: string }>();
+const mcp = apiRouter<
+  BaseVariables & { mcpToken: string; mcpExecution: McpExecution }
+>();
 for (const path of [
   "/mcp/register",
   "/mcp/authorize",
@@ -343,8 +354,9 @@ mcp.all(
   mcpRequestBounds,
   async (c) => {
     const token = c.get("mcpToken");
+    const execution = c.get("mcpExecution");
     if (!(await isLegacyRequest(c.req.raw.clone()))) {
-      const modern = createModernMcpHandler(token, internalApiUrl);
+      const modern = createModernMcpHandler(token, internalApiUrl, execution);
       return modern.fetch(c.req.raw);
     }
 
@@ -354,7 +366,7 @@ mcp.all(
       sessionIdGenerator: undefined,
       maxRequestBodySize: MCP_BODY_BYTES,
     });
-    const server = createMcpServerForUser(token);
+    const server = createMcpServerForUser(token, execution);
     await server.connect(transport);
     return transport.handleRequest(c.req.raw);
   },

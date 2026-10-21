@@ -1,6 +1,7 @@
 import { registerTools, type ToolRegistrar } from "@kaneo/mcp/tools";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import type { z } from "zod";
+import type { McpExecution } from "./execution";
 
 export type McpToolRegistrar = ToolRegistrar;
 
@@ -12,7 +13,10 @@ type ShapeToolServer = {
   ): unknown;
 };
 
-export function toMcpToolRegistrar(server: ShapeToolServer): McpToolRegistrar {
+export function toMcpToolRegistrar(
+  server: ShapeToolServer,
+  execution?: McpExecution,
+): McpToolRegistrar {
   return {
     registerTool: (name, config, callback) =>
       server.registerTool(
@@ -21,7 +25,8 @@ export function toMcpToolRegistrar(server: ShapeToolServer): McpToolRegistrar {
           description: config.description,
           inputSchema: config.inputSchema.shape,
         },
-        (args) => callback(args),
+        (args) =>
+          execution ? execution.run(() => callback(args)) : callback(args),
       ),
   };
 }
@@ -31,6 +36,7 @@ class ApiClient {
   constructor(
     private baseUrl: string,
     private token: string,
+    private signal?: AbortSignal,
   ) {}
 
   async json<T = unknown>(path: string, init?: RequestInit): Promise<T> {
@@ -44,9 +50,11 @@ class ApiClient {
     const res = await fetch(url, {
       ...init,
       headers,
-      signal: init?.signal
-        ? AbortSignal.any([init.signal, AbortSignal.timeout(10_000)])
-        : AbortSignal.timeout(10_000),
+      signal: AbortSignal.any([
+        AbortSignal.timeout(10_000),
+        ...(this.signal ? [this.signal] : []),
+        ...(init?.signal ? [init.signal] : []),
+      ]),
     });
 
     const text = await res.text();
@@ -75,6 +83,7 @@ export function registerMcpTools(
   server: McpToolRegistrar,
   baseUrl: string,
   token: string,
+  signal?: AbortSignal,
 ): void {
-  registerTools(server, { client: new ApiClient(baseUrl, token) });
+  registerTools(server, { client: new ApiClient(baseUrl, token, signal) });
 }
