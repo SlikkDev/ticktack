@@ -46,10 +46,26 @@ HTTP MCP tools reach Kaneo’s API through `KANEO_INTERNAL_API_URL`, which defau
 | --- | --- |
 | 401 | Complete OAuth sign-in again and check that the proxy forwards the bearer token. |
 | 405 | The HTTP MCP endpoint accepts POST requests; standalone GET streams and DELETE requests are unsupported. |
+| 408 | Send the complete body within five seconds. |
+| 413 | Reduce the JSON request body to at most 256 KiB. |
 | 415 | Send JSON with the correct content type. |
 | 429 | Wait for `Retry-After` before retrying. |
 
 A tool can also fail because the user lacks permission or its arguments do not match the project. Call `list_project_columns` before assigning a status and `list_workspace_members` before assigning a user.
+
+### MCP request limits
+
+Both HTTP protocol versions accept JSON bodies up to 256 KiB, measured in
+actual bytes before protocol detection or parsing, including streamed bodies.
+The body must arrive within five seconds. Each API process allows up to 16
+concurrent authenticated MCP requests; excess requests receive HTTP 429 with
+`Retry-After`.
+
+Tool arguments may contain at most 1,024 array elements and object keys in total,
+including nested values. Calls above that limit return a tool result with
+`isError: true`. Ordinary tool arguments are small, flat objects; long text
+remains subject to the overall body limit. These limits do not change the
+separate file-upload endpoints or the local stdio transport.
 
 ### OAuth request limits
 

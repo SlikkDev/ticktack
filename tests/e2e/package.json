@@ -9,6 +9,11 @@
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",
-    "browserstack-node-sdk": "1.71.0"
+    "browserstack-node-sdk": "1.73.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "follow-redirects": "1.16.1"
+    }
   }
 }

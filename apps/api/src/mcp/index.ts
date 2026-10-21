@@ -7,7 +7,12 @@ import {
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { auth } from "../auth";
-import { apiRouter, createRoute, jsonResponse } from "../openapi";
+import {
+  apiRouter,
+  type BaseVariables,
+  createRoute,
+  jsonResponse,
+} from "../openapi";
 import { type BanState, isBanActive } from "../utils/user-ban";
 import {
   beginMcpAuthorization,
@@ -15,6 +20,11 @@ import {
   getMcpAuthorizationRequest,
   registerMcpClient,
 } from "./controllers/oauth-consent";
+import {
+  MCP_BODY_BYTES,
+  MCP_TOOL_INPUT_ELEMENTS,
+  mcpRequestBounds,
+} from "./http-limits";
 import { createModernMcpHandler } from "./modern";
 import { exchangeCode } from "./oauth";
 import { oauthRequestBounds } from "./request-bounds";
@@ -40,10 +50,10 @@ const internalApiUrl = (
   .replace(/\/+$/, "");
 
 function createMcpServerForUser(token: string): LegacyMcpServer {
-  const server = new LegacyMcpServer({
-    name: "kaneo-mcp",
-    version: "1.0.0",
-  });
+  const server = new LegacyMcpServer(
+    { name: "kaneo-mcp", version: "1.0.0" },
+    { maxToolInputElements: MCP_TOOL_INPUT_ELEMENTS },
+  );
   registerMcpTools(toMcpToolRegistrar(server), internalApiUrl, token);
   return server;
 }
@@ -66,7 +76,7 @@ async function validateBearerToken(
   return { userId: session.user.id, token };
 }
 
-const mcp = apiRouter();
+const mcp = apiRouter<BaseVariables & { mcpToken: string }>();
 for (const path of [
   "/mcp/register",
   "/mcp/authorize",
@@ -303,42 +313,52 @@ mcp.get("/.well-known/oauth-authorization-server/api", (c) =>
   }),
 );
 
-mcp.all("/mcp", async (c) => {
-  const authResult = await validateBearerToken(c.req.raw);
-  if (!authResult) {
-    const prmUrl = `${publicApiUrl}/api/.well-known/oauth-protected-resource/api/mcp`;
-    c.header("WWW-Authenticate", `Bearer resource_metadata="${prmUrl}"`);
-    return c.json(
-      {
-        error: "invalid_token",
-        error_description: "Missing or invalid token",
-      },
-      401,
-    );
-  }
+mcp.all(
+  "/mcp",
+  async (c, next) => {
+    const authResult = await validateBearerToken(c.req.raw);
+    if (!authResult) {
+      const prmUrl = `${publicApiUrl}/api/.well-known/oauth-protected-resource/api/mcp`;
+      c.header("WWW-Authenticate", `Bearer resource_metadata="${prmUrl}"`);
+      return c.json(
+        {
+          error: "invalid_token",
+          error_description: "Missing or invalid token",
+        },
+        401,
+      );
+    }
 
-  if (c.req.method !== "POST") {
-    return c.json({ error: "Method not allowed" }, 405);
-  }
+    if (c.req.method !== "POST") {
+      return c.json({ error: "Method not allowed" }, 405);
+    }
 
-  if (!isJsonContentType(c.req.header("content-type"))) {
-    return c.json({ error: "Unsupported Media Type" }, 415);
-  }
+    if (!isJsonContentType(c.req.header("content-type"))) {
+      return c.json({ error: "Unsupported Media Type" }, 415);
+    }
 
-  if (!(await isLegacyRequest(c.req.raw.clone()))) {
-    const modern = createModernMcpHandler(authResult.token, internalApiUrl);
-    return modern.fetch(c.req.raw);
-  }
+    c.set("mcpToken", authResult.token);
+    await next();
+  },
+  mcpRequestBounds,
+  async (c) => {
+    const token = c.get("mcpToken");
+    if (!(await isLegacyRequest(c.req.raw.clone()))) {
+      const modern = createModernMcpHandler(token, internalApiUrl);
+      return modern.fetch(c.req.raw);
+    }
 
-  // A fresh stateless transport lets legacy POSTs reach any replica. It also
-  // accepts session IDs issued before this change after their owner is gone.
-  const transport = new WebStandardStreamableHTTPServerTransport({
-    sessionIdGenerator: undefined,
-  });
-  const server = createMcpServerForUser(authResult.token);
-  await server.connect(transport);
-  return transport.handleRequest(c.req.raw);
-});
+    // A fresh stateless transport lets legacy POSTs reach any replica. It also
+    // accepts session IDs issued before this change after their owner is gone.
+    const transport = new WebStandardStreamableHTTPServerTransport({
+      sessionIdGenerator: undefined,
+      maxRequestBodySize: MCP_BODY_BYTES,
+    });
+    const server = createMcpServerForUser(token);
+    await server.connect(transport);
+    return transport.handleRequest(c.req.raw);
+  },
+);
 
 export default mcp;
 
