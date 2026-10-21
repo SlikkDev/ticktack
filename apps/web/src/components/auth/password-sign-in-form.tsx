@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 import { toast } from "@/lib/toast";
 import { AuthCaptcha } from "./auth-captcha";
 import {
@@ -66,18 +67,16 @@ export function PasswordSignInForm({
         { headers: captcha.headers },
       );
       if (result.error) {
-        toast.error(result.error.message || t("auth:signInForm.failedSignIn"));
+        toast.error(
+          getApiErrorMessage(result.error, t("auth:signInForm.failedSignIn")),
+        );
         setIsPending(false);
         captcha.reset();
         return;
       }
       onSuccess();
     } catch (error) {
-      toast.error(
-        error instanceof Error && error.message
-          ? error.message
-          : t("auth:signInForm.failedSignIn"),
-      );
+      toast.error(getApiErrorMessage(error, t("auth:signInForm.failedSignIn")));
       setIsPending(false);
       captcha.reset();
     }

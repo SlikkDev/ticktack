@@ -1,4 +1,5 @@
 import { getApiUrl } from "@/fetchers/get-api-url";
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 
 export async function submitMcpAuthorizationDecision(
   requestId: string,
@@ -14,7 +15,11 @@ export async function submitMcpAuthorizationDecision(
     },
   );
   if (!response.ok) {
-    throw new Error("Could not complete the authorization request.");
+    throw new ApiClientError({
+      code: "MCP_AUTHORIZATION_FAILED",
+      status: response.status,
+      message: "Could not complete the authorization request.",
+    });
   }
 
   const body = (await response.json()) as { redirect: string };

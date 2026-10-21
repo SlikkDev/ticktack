@@ -161,7 +161,10 @@ export default function CommentCard({
                     {getInitials(user?.name)}
                   </AvatarFallback>
                 </Avatar>
-                <span className="font-medium text-[13px] text-foreground transition-colors hover:text-foreground/80">
+                <span
+                  dir="auto"
+                  className="font-medium text-[13px] text-foreground transition-colors hover:text-foreground/80"
+                >
                   {user?.name}
                 </span>
               </div>
@@ -175,11 +178,14 @@ export default function CommentCard({
                   </AvatarFallback>
                 </Avatar>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-foreground leading-none">
+                  <p
+                    dir="auto"
+                    className="text-sm font-medium text-foreground leading-none"
+                  >
                     {user?.name}
                   </p>
                   {user?.email && (
-                    <p className="mt-1 text-xs text-muted-foreground">
+                    <p dir="ltr" className="mt-1 text-xs text-muted-foreground">
                       {user.email}
                     </p>
                   )}
@@ -249,7 +255,7 @@ export default function CommentCard({
         </div>
 
         {canEdit && !isEditing && (
-          <div className="absolute top-2 right-2 flex items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="absolute top-2 end-2 flex items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
@@ -294,7 +300,7 @@ export default function CommentCard({
             className={
               isEditing
                 ? "[&_.kaneo-comment-editor-content_.ProseMirror]:min-h-[3rem] [&_.kaneo-comment-editor-content_.ProseMirror]:max-h-none [&_.kaneo-comment-editor-content_.ProseMirror]:overflow-visible [&_.kaneo-comment-editor-content_.ProseMirror]:px-3 [&_.kaneo-comment-editor-content_.ProseMirror]:pt-2.5 [&_.kaneo-comment-editor-content_.ProseMirror]:pb-2"
-                : "kaneo-comment-viewer [&_.kaneo-comment-editor-content_.ProseMirror]:pt-1.5 [&_.kaneo-comment-editor-content_.ProseMirror]:pr-3.5 [&_.kaneo-comment-editor-content_.ProseMirror]:pb-3.5 [&_.kaneo-comment-editor-content_.ProseMirror]:pl-10"
+                : "kaneo-comment-viewer [&_.kaneo-comment-editor-content_.ProseMirror]:pt-1.5 [&_.kaneo-comment-editor-content_.ProseMirror]:pe-3.5 [&_.kaneo-comment-editor-content_.ProseMirror]:pb-3.5 [&_.kaneo-comment-editor-content_.ProseMirror]:ps-10"
             }
             autoFocus={isEditing}
             readOnly={!isEditing}

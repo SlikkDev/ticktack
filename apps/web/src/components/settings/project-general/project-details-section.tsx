@@ -63,6 +63,7 @@ export function ProjectDetailsSection({
                   <Input
                     size="sm"
                     className="font-mono sm:w-64"
+                    dir="ltr"
                     placeholder={t("settings:projectGeneral.keyPlaceholder")}
                     disabled={!canEdit}
                     {...field}

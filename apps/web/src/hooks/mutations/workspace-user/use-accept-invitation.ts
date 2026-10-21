@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
@@ -13,7 +14,7 @@ function useAcceptInvitation() {
       });
 
       if (error) {
-        throw new Error(error.message || "Failed to accept invitation");
+        throw new ApiClientError(error, "Failed to accept invitation");
       }
 
       return data;

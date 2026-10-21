@@ -12,7 +12,10 @@ import {
 
 const sendTrialReminderEmail = vi.fn();
 
-vi.mock("@kaneo/email", () => ({
+vi.mock("@kaneo/email", async () => ({
+  getTrialReminderSubject: (
+    await import("../../packages/email/src/templates/trial-reminder-copy")
+  ).getTrialReminderSubject,
   isSmtpConfigured: () => true,
   sendTrialReminderEmail: (...args: unknown[]) =>
     sendTrialReminderEmail(...args),
@@ -80,6 +83,7 @@ async function addWorkspaceOwnedBy(userId: string, trialEndsAt: Date | null) {
 async function seedTrial(
   trialEndsAt: Date | null,
   overrides: Partial<typeof schema.workspaceBillingTable.$inferInsert> = {},
+  locale: string | null = null,
 ) {
   const { user, workspace } = await createWorkspaceMember({
     role: "owner",
@@ -91,6 +95,13 @@ async function seedTrial(
     trialEndsAt,
     ...overrides,
   });
+
+  if (locale) {
+    await db
+      .update(schema.userTable)
+      .set({ locale })
+      .where(eq(schema.userTable.id, user.id));
+  }
 
   return { user, workspace };
 }
@@ -105,35 +116,59 @@ describe("trial reminder emails", () => {
     sendTrialReminderEmail.mockClear();
   });
 
-  it("warns the owner before the trial ends", async () => {
-    const { user } = await seedTrial(new Date(Date.now() + 2.5 * DAY));
+  it.each([null, "en-US", "he-IL"])(
+    "warns the owner before the trial ends using their %s locale",
+    async (locale) => {
+      const { user, workspace } = await seedTrial(
+        new Date(Date.now() + 2.5 * DAY),
+        {},
+        locale,
+      );
 
-    await checkTrialReminders();
+      await checkTrialReminders();
 
-    expect(recipients()).toEqual([user.email]);
-    const [, subject, data] = sendTrialReminderEmail.mock.calls[0] as [
-      string,
-      string,
-      { daysLeft: number },
-    ];
-    expect(subject).toContain("ends in 3 days");
-    expect(data.daysLeft).toBe(3);
-  });
+      expect(recipients()).toEqual([user.email]);
+      const [, subject, data] = sendTrialReminderEmail.mock.calls[0] as [
+        string,
+        string,
+        { daysLeft: number; locale: string | null },
+      ];
+      expect(subject).toBe(
+        locale === "he-IL"
+          ? `נותרו 3 ימים לתקופת הניסיון של \u2068${workspace.name}\u2069`
+          : `3 days left on your ${workspace.name} trial`,
+      );
+      expect(data.daysLeft).toBe(3);
+      expect(data.locale).toBe(locale);
+    },
+  );
 
-  it("emails once the trial has lapsed", async () => {
-    const { user } = await seedTrial(new Date(Date.now() - DAY));
+  it.each([null, "en-US", "he-IL"])(
+    "emails once the trial has lapsed using the owner's %s locale",
+    async (locale) => {
+      const { user, workspace } = await seedTrial(
+        new Date(Date.now() - DAY),
+        {},
+        locale,
+      );
 
-    await checkTrialReminders();
+      await checkTrialReminders();
 
-    expect(recipients()).toEqual([user.email]);
-    const [, subject, data] = sendTrialReminderEmail.mock.calls[0] as [
-      string,
-      string,
-      { daysLeft: number },
-    ];
-    expect(subject).toContain("has ended");
-    expect(data.daysLeft).toBe(0);
-  });
+      expect(recipients()).toEqual([user.email]);
+      const [, subject, data] = sendTrialReminderEmail.mock.calls[0] as [
+        string,
+        string,
+        { daysLeft: number; locale: string | null },
+      ];
+      expect(subject).toBe(
+        locale === "he-IL"
+          ? `תקופת הניסיון של \u2068${workspace.name}\u2069 הסתיימה`
+          : `The trial for ${workspace.name} has ended`,
+      );
+      expect(data.daysLeft).toBe(0);
+      expect(data.locale).toBe(locale);
+    },
+  );
 
   it("never sends the same reminder twice", async () => {
     await seedTrial(new Date(Date.now() - DAY));

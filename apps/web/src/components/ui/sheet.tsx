@@ -1,6 +1,7 @@
 "use client";
 
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
+import { useDirection } from "@base-ui/react/direction-provider";
 import { XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -10,6 +11,14 @@ import { i18n } from "@/lib/i18n";
 const Sheet = SheetPrimitive.Root;
 
 const SheetPortal = SheetPrimitive.Portal;
+
+type SheetSide =
+  | "right"
+  | "left"
+  | "top"
+  | "bottom"
+  | "inline-start"
+  | "inline-end";
 
 function SheetTrigger(props: SheetPrimitive.Trigger.Props) {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />;
@@ -47,8 +56,8 @@ function SheetViewport({
         "fixed inset-0 z-50 grid",
         side === "bottom" && "grid grid-rows-[1fr_auto] pt-12",
         side === "top" && "grid grid-rows-[auto_1fr] pb-12",
-        side === "left" && "flex justify-start",
-        side === "right" && "flex justify-end",
+        side === "left" && "flex justify-start rtl:justify-end",
+        side === "right" && "flex justify-end rtl:justify-start",
         variant === "inset" && "sm:p-4",
       )}
       data-slot="sheet-viewport"
@@ -61,14 +70,25 @@ function SheetPopup({
   className,
   children,
   showCloseButton = true,
-  side = "right",
+  side: sideProp = "inline-end",
   variant = "default",
   ...props
 }: SheetPrimitive.Popup.Props & {
   showCloseButton?: boolean;
-  side?: "right" | "left" | "top" | "bottom";
+  side?: SheetSide;
   variant?: "default" | "inset";
 }) {
+  const direction = useDirection();
+  const side =
+    sideProp === "inline-start"
+      ? direction === "rtl"
+        ? "right"
+        : "left"
+      : sideProp === "inline-end"
+        ? direction === "rtl"
+          ? "left"
+          : "right"
+        : sideProp;
   return (
     <SheetPortal>
       <SheetBackdrop />
@@ -81,14 +101,15 @@ function SheetPopup({
             side === "top" &&
               "data-ending-style:-translate-y-8 data-starting-style:-translate-y-8 border-b",
             side === "left" &&
-              "data-ending-style:-translate-x-8 data-starting-style:-translate-x-8 w-[calc(100%-(--spacing(12)))] max-w-md border-e",
+              "data-ending-style:-translate-x-8 data-starting-style:-translate-x-8 w-[calc(100%-(--spacing(12)))] max-w-md border-r",
             side === "right" &&
-              "col-start-2 w-[calc(100%-(--spacing(12)))] max-w-md border-s data-ending-style:translate-x-8 data-starting-style:translate-x-8",
+              "col-start-2 w-[calc(100%-(--spacing(12)))] max-w-md border-l data-ending-style:translate-x-8 data-starting-style:translate-x-8",
             variant === "inset" &&
               "before:hidden sm:rounded-2xl sm:border sm:before:rounded-[calc(var(--radius-2xl)-1px)] sm:**:data-[slot=sheet-footer]:rounded-b-[calc(var(--radius-2xl)-1px)]",
             className,
           )}
           data-slot="sheet-popup"
+          data-side={side}
           {...props}
         >
           {children}

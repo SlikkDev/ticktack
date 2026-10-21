@@ -7,7 +7,7 @@ type LoadingSkeletonProps = {
 export function LoadingSkeleton({ className }: LoadingSkeletonProps) {
   return (
     <div className={cn("flex w-full h-svh bg-sidebar", className)}>
-      <div className="w-64 bg-sidebar border-r border-border flex flex-col">
+      <div className="w-64 bg-sidebar border-e border-border flex flex-col">
         <div className="p-3 border-b border-border">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-muted rounded animate-pulse" />
@@ -44,7 +44,7 @@ export function LoadingSkeleton({ className }: LoadingSkeletonProps) {
               <div className="w-3 h-3 bg-muted rounded animate-pulse" />
               <div className="w-16 h-3 bg-muted rounded animate-pulse" />
             </div>
-            <div className="ml-4 space-y-1">
+            <div className="ms-4 space-y-1">
               {["issues", "projects", "views", "settings"].map((item) => (
                 <div
                   key={`workspace-item-${item}`}

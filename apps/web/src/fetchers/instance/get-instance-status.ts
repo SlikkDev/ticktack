@@ -1,5 +1,6 @@
 import { resolveApiBaseUrl } from "@kaneo/libs";
 import { HttpError } from "@/lib/http-error";
+import { isHebrewErrorLocale } from "@/lib/i18n/api-error-copy";
 
 export type InstanceStatus = {
   hasUsers: boolean;
@@ -17,8 +18,11 @@ export async function getInstanceStatus(): Promise<InstanceStatus> {
     const error = await HttpError.fromResponse(response);
     throw new HttpError(
       response.status,
-      `Failed to fetch instance status: ${error.message}`,
+      isHebrewErrorLocale()
+        ? error.message
+        : `Failed to fetch instance status: ${error.message}`,
       error,
+      `Failed to fetch instance status: ${error.originalMessage}`,
     );
   }
   return response.json();

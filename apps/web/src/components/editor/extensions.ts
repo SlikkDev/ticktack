@@ -1,6 +1,5 @@
 import type { AnyExtension } from "@tiptap/core";
 import Placeholder from "@tiptap/extension-placeholder";
-import { Table } from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
@@ -17,6 +16,8 @@ import { ShikiCodeBlock } from "@/components/task/extensions/shiki-code-block";
 import { TaskItemWithCheckbox } from "@/components/task/extensions/task-item-with-checkbox";
 import { EditorKeymap } from "./editor-keymap";
 import { detectCodeLanguage } from "./detect-code-language";
+import { TextDirection } from "./text-direction";
+import { createDirectionalTable } from "./directional-table";
 
 export function createEditorExtensions({
   placeholder,
@@ -41,6 +42,7 @@ export function createEditorExtensions({
       hardBreak: false,
     }),
     SafeHardBreak,
+    TextDirection,
     EditorKeymap,
     Markdown.configure({ markedOptions: { breaks: true, gfm: true } }),
     ShikiCodeBlock.configure({
@@ -63,7 +65,7 @@ export function createEditorExtensions({
     }),
     TaskItemWithCheckbox.configure({ nested: true }),
     Placeholder.configure({ placeholder }),
-    Table.configure({ resizable: true }),
+    createDirectionalTable().configure({ resizable: true }),
     TableRow,
     TableHeader,
     TableCell,

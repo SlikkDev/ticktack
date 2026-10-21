@@ -7,8 +7,11 @@ import {
 } from "lucide-react";
 import type * as React from "react";
 import { DayPicker } from "react-day-picker";
+import { he } from "react-day-picker/locale";
+import { useTranslation } from "react-i18next";
 
 import { cn } from "@/lib/cn";
+import { localeDirection } from "@/lib/i18n/direction";
 import { useUserPreferencesStore } from "@/store/user-preferences";
 
 const buttonClassNames =
@@ -22,6 +25,10 @@ function Calendar({
   weekStartsOn: weekStartsOnProp,
   ...props
 }: React.ComponentProps<typeof DayPicker>) {
+  const { i18n } = useTranslation();
+  const language = i18n?.resolvedLanguage ?? i18n?.language ?? "en-US";
+  const direction = props.dir ?? localeDirection(language);
+  const navLayout = props.navLayout;
   const preferredWeekStartsOn = useUserPreferencesStore(
     (state) => state.weekStartsOn,
   );
@@ -52,7 +59,7 @@ function Calendar({
     range_middle: "range-middle",
     range_start: "range-start",
     today:
-      "*:after:pointer-events-none *:after:absolute *:after:bottom-1 *:after:start-1/2 *:after:z-1 *:after:size-[3px] *:after:-translate-x-1/2 *:after:rounded-full *:after:bg-primary [&[data-selected]:not(.range-middle)>*]:after:bg-background [&[data-disabled]>*]:after:bg-foreground/30 *:after:transition-colors",
+      "*:after:pointer-events-none *:after:absolute *:after:bottom-1 *:after:start-1/2 *:after:z-1 *:after:size-[3px] *:after:-translate-x-1/2 rtl:*:after:translate-x-1/2 *:after:rounded-full *:after:bg-primary [&[data-selected]:not(.range-middle)>*]:after:bg-background [&[data-disabled]>*]:after:bg-foreground/30 *:after:transition-colors",
     week_number:
       "size-(--cell-size) p-0 text-xs font-medium text-muted-foreground/70",
     weekday:
@@ -84,20 +91,30 @@ function Calendar({
       className?: string;
       orientation?: "left" | "right" | "up" | "down";
     }) => {
-      if (orientation === "left") {
+      // DayPicker reverses chevrons itself only for navLayout="around".
+      // Its default/after Nav still supplies physical left/right orientations.
+      const visualOrientation =
+        direction === "rtl" && navLayout !== "around"
+          ? orientation === "left"
+            ? "right"
+            : orientation === "right"
+              ? "left"
+              : orientation
+          : orientation;
+      if (visualOrientation === "left") {
         return (
           <ChevronLeftIcon
-            className={cn(className, "rtl:rotate-180")}
+            className={className}
             {...props}
             aria-hidden="true"
           />
         );
       }
 
-      if (orientation === "right") {
+      if (visualOrientation === "right") {
         return (
           <ChevronRightIcon
-            className={cn(className, "rtl:rotate-180")}
+            className={className}
             {...props}
             aria-hidden="true"
           />
@@ -128,9 +145,11 @@ function Calendar({
       classNames={mergedClassNames}
       components={mergedComponents}
       data-slot="calendar"
+      dir={direction}
+      locale={localeDirection(language) === "rtl" ? he : undefined}
       formatters={{
         formatMonthDropdown: (date) =>
-          date.toLocaleString("default", { month: "short" }),
+          date.toLocaleString(language, { month: "short" }),
       }}
       mode="single"
       showOutsideDays={showOutsideDays}

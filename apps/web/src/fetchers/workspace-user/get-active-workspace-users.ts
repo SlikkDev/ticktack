@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { authClient } from "@/lib/auth-client";
 
 export type GetActiveWorkspaceUsersRequest = {
@@ -14,7 +15,7 @@ async function getActiveWorkspaceUsers({
   });
 
   if (error) {
-    throw new Error(error.message || "Failed to fetch workspace users");
+    throw new ApiClientError(error, "Failed to fetch workspace users");
   }
 
   return data || [];

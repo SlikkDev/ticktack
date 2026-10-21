@@ -34,6 +34,7 @@ export function SecretInput({
       <InputGroupInput
         id={id}
         type={visible ? "text" : "password"}
+        dir="ltr"
         autoComplete="off"
         autoCapitalize="off"
         spellCheck={false}

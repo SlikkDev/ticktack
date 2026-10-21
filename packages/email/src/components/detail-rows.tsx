@@ -1,5 +1,6 @@
 import { Column } from "@react-email/components";
 import React from "react";
+import { directionalStyle, useEmailDirection } from "./direction";
 import { Row } from "./row";
 import { colors } from "./tokens";
 
@@ -8,6 +9,7 @@ void React;
 export type DetailRow = {
   label: string;
   value: React.ReactNode;
+  direction?: "ltr" | "rtl" | "auto";
 };
 
 type DetailRowsProps = {
@@ -15,6 +17,7 @@ type DetailRowsProps = {
 };
 
 export function DetailRows({ rows }: DetailRowsProps) {
+  const direction = useEmailDirection();
   return (
     <>
       {rows.map((row, position) => {
@@ -31,16 +34,21 @@ export function DetailRows({ rows }: DetailRowsProps) {
           <Row key={row.label}>
             <Column
               className={divider ? "k-muted k-divider" : "k-muted"}
-              style={{ ...label, ...divider }}
+              style={{ ...directionalStyle(label, direction), ...divider }}
             >
               {row.label}
             </Column>
             <Column
-              align="right"
+              align={direction === "rtl" ? "left" : "right"}
               className={divider ? "k-text k-divider" : "k-text"}
-              style={{ ...value, ...divider }}
+              style={{ ...directionalStyle(value, direction), ...divider }}
             >
-              {row.value}
+              <span
+                dir={row.direction ?? "auto"}
+                style={{ unicodeBidi: "isolate" }}
+              >
+                {row.value}
+              </span>
             </Column>
           </Row>
         );

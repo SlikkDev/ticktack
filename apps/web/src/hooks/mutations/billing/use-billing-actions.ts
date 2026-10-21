@@ -8,6 +8,7 @@ import {
 } from "@/fetchers/billing/create-checkout";
 import { savePendingPurchase } from "@/lib/analytics/pending-purchase";
 import { track } from "@/lib/analytics/track";
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 
 export function useCreateCheckout(workspaceId: string | undefined) {
   return useMutation({
@@ -19,9 +20,7 @@ export function useCreateCheckout(workspaceId: string | undefined) {
       window.location.href = checkoutUrl;
     },
     onError: (error) => {
-      toast.error(
-        error instanceof Error ? error.message : "Could not start checkout",
-      );
+      toast.error(getApiErrorMessage(error, "Could not start checkout"));
     },
   });
 }
@@ -33,11 +32,7 @@ export function useOpenBillingPortal(workspaceId: string | undefined) {
       window.location.href = portalUrl;
     },
     onError: (error) => {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Could not open billing portal",
-      );
+      toast.error(getApiErrorMessage(error, "Could not open billing portal"));
     },
   });
 }

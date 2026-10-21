@@ -1,3 +1,4 @@
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
@@ -67,7 +68,9 @@ function InvitationsPage() {
       });
 
       if (error) {
-        toast.error(error.message || t("invitations:toast.acceptError"));
+        toast.error(
+          getApiErrorMessage(error, t("invitations:toast.acceptError")),
+        );
         return;
       }
 
@@ -91,9 +94,7 @@ function InvitationsPage() {
       });
     } catch (error) {
       toast.error(
-        error instanceof Error
-          ? error.message
-          : t("invitations:toast.acceptError"),
+        getApiErrorMessage(error, t("invitations:toast.acceptError")),
       );
     } finally {
       setAcceptingId(null);
@@ -108,7 +109,9 @@ function InvitationsPage() {
       });
 
       if (error) {
-        toast.error(error.message || t("invitations:toast.rejectError"));
+        toast.error(
+          getApiErrorMessage(error, t("invitations:toast.rejectError")),
+        );
         return;
       }
 
@@ -119,9 +122,7 @@ function InvitationsPage() {
       });
     } catch (error) {
       toast.error(
-        error instanceof Error
-          ? error.message
-          : t("invitations:toast.rejectError"),
+        getApiErrorMessage(error, t("invitations:toast.rejectError")),
       );
     } finally {
       setRejectingId(null);

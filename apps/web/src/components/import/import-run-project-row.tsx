@@ -3,6 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ImportRunStatusIcon } from "@/components/import/import-run-status-icon";
+import { ImportDiagnostic } from "@/components/import/import-diagnostic";
 import {
   IMPORT_COUNT_LABEL_KEYS,
   summarizeImportCounts,
@@ -16,6 +17,7 @@ import {
 } from "@/components/ui/collapsible";
 import type { ImportRunProject } from "@/fetchers/import/get-import-run";
 import { cn } from "@/lib/cn";
+import { getImportDiagnostic } from "@/lib/i18n/api-error-import-diagnostic";
 
 type ImportRunProjectRowProps = {
   project: ImportRunProject;
@@ -40,15 +42,19 @@ export function ImportRunProjectRow({
           t(IMPORT_COUNT_LABEL_KEYS[part.key], { count: part.count }),
         );
         return parts.length > 0
-          ? parts.join(" · ")
-          : t("settings:workspaceImport.run.noTasks");
+          ? { message: parts.join(" · ") }
+          : { message: t("settings:workspaceImport.run.noTasks") };
       }
       case "running":
-        return message ?? t("settings:workspaceImport.run.starting");
+        return message
+          ? getImportDiagnostic(message, "progress", project.name)
+          : { message: t("settings:workspaceImport.run.starting") };
       case "pending":
-        return t("settings:workspaceImport.run.waiting");
+        return { message: t("settings:workspaceImport.run.waiting") };
       default:
-        return project.error ?? t("settings:workspaceImport.run.notImported");
+        return project.error
+          ? getImportDiagnostic(project.error, "error")
+          : { message: t("settings:workspaceImport.run.notImported") };
     }
   })();
 
@@ -106,18 +112,17 @@ export function ImportRunProjectRow({
                 project.status === "pending" && "text-muted-foreground",
               )}
             >
-              {project.name}
+              <bdi>{project.name}</bdi>
             </p>
-            <p
+            <ImportDiagnostic
               className={cn(
                 "text-xs",
                 project.status === "failed"
                   ? "text-destructive-foreground"
                   : "text-muted-foreground",
               )}
-            >
-              {detail}
-            </p>
+              diagnostic={detail}
+            />
           </div>
           {warnings.length > 0 ? (
             <CollapsibleTrigger
@@ -146,7 +151,9 @@ export function ImportRunProjectRow({
                     aria-hidden="true"
                     className="mt-1.5 size-1 shrink-0 rounded-full bg-warning"
                   />
-                  <span>{warning}</span>
+                  <ImportDiagnostic
+                    diagnostic={getImportDiagnostic(warning, "warning")}
+                  />
                 </li>
               ))}
             </ul>

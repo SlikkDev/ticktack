@@ -1,4 +1,8 @@
-import { isSmtpConfigured, sendTrialReminderEmail } from "@kaneo/email";
+import {
+  getTrialReminderSubject,
+  isSmtpConfigured,
+  sendTrialReminderEmail,
+} from "@kaneo/email";
 import { and, asc, eq, gt, isNotNull, isNull, lte } from "drizzle-orm";
 import { isBillingEnabled, trialDays } from "../billing/config";
 import db from "../database";
@@ -32,17 +36,12 @@ function sleep(ms: number) {
 
 type ReminderType = "trial_ending" | "trial_expired";
 
-const REMINDERS: {
-  type: ReminderType;
-  subject: (workspaceName: string) => string;
-}[] = [
+const REMINDERS: { type: ReminderType }[] = [
   {
     type: "trial_ending",
-    subject: (name) => `Your ${name} trial ends in 3 days`,
   },
   {
     type: "trial_expired",
-    subject: (name) => `Your ${name} trial has ended`,
   },
 ];
 
@@ -82,6 +81,7 @@ async function getWorkspacesNeedingReminder(
       workspaceName: workspaceTable.name,
       trialEndsAt: workspaceBillingTable.trialEndsAt,
       email: userTable.email,
+      locale: userTable.locale,
     })
     .from(workspaceBillingTable)
     .innerJoin(
@@ -185,9 +185,11 @@ export async function checkTrialReminders(): Promise<{ degraded: boolean }> {
 
       await sendTrialReminderEmail(
         row.email,
-        reminder.subject(row.workspaceName),
+        getTrialReminderSubject(row.workspaceName, daysLeft, row.locale),
         {
           workspaceName: row.workspaceName,
+          locale: row.locale,
+          email: row.email,
           daysLeft,
           billingUrl: `${clientUrl()}/dashboard/settings/workspace/billing`,
           trialDays: trialDays(),

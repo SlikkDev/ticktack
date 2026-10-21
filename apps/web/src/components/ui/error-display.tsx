@@ -83,7 +83,7 @@ export function ErrorDisplay({
                 size="sm"
                 className="w-full"
               >
-                <RefreshCw className="w-4 h-4 mr-2" />
+                <RefreshCw className="w-4 h-4 me-2" />
                 {t("common:error.tryAgain")}
               </Button>
             )}
@@ -95,7 +95,7 @@ export function ErrorDisplay({
                 size="icon"
                 className="w-full"
               >
-                <ExternalLink className="w-4 h-4 mr-2" />
+                <ExternalLink className="w-4 h-4 me-2" />
                 {t("common:error.viewDeploymentGuide")}
               </Button>
             )}
@@ -106,7 +106,7 @@ export function ErrorDisplay({
               size="icon"
               className="w-full"
             >
-              <RefreshCw className="w-4 h-4 mr-2" />
+              <RefreshCw className="w-4 h-4 me-2" />
               {t("common:error.refreshPage")}
             </Button>
           </div>

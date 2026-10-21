@@ -67,7 +67,9 @@ export function ChannelRow({
         }
         description={
           configured && detail ? (
-            <span className="font-mono">{detail}</span>
+            <bdi dir="ltr" className="font-mono">
+              {detail}
+            </bdi>
           ) : (
             description
           )

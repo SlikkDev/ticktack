@@ -14,3 +14,5 @@ export type {
   TaskCardPriority,
 } from "./components/task-card";
 export type { NotificationEmailTask } from "./templates/notification";
+
+export { getTrialReminderSubject } from "./templates/trial-reminder-copy";

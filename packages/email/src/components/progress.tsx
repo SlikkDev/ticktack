@@ -3,6 +3,8 @@ import React from "react";
 import { Row } from "./row";
 import { colors } from "./tokens";
 
+import { directionalStyle, useEmailDirection } from "./direction";
+
 void React;
 
 type ProgressProps = {
@@ -12,6 +14,7 @@ type ProgressProps = {
 };
 
 export function Progress({ label, value, percent }: ProgressProps) {
+  const direction = useEmailDirection();
   const filled = Math.min(100, Math.max(0, Math.round(percent)));
 
   return (
@@ -20,7 +23,11 @@ export function Progress({ label, value, percent }: ProgressProps) {
         <Column className="k-text" style={labelStyle}>
           {label}
         </Column>
-        <Column align="right" className="k-text" style={valueStyle}>
+        <Column
+          align={direction === "rtl" ? "left" : "right"}
+          className="k-text"
+          style={directionalStyle(valueStyle, direction)}
+        >
           {value}
         </Column>
       </Row>

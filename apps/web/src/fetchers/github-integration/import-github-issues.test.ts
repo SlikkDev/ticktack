@@ -12,6 +12,12 @@ const { request } = vi.hoisted(() => ({ request: vi.fn() }));
 vi.mock("@kaneo/libs", () => ({
   client: { "github-integration": { "import-issues": { $post: request } } },
 }));
+vi.mock("i18next", async (importOriginal) => {
+  const { default: i18next } = await importOriginal<typeof import("i18next")>();
+  const instance = i18next.createInstance();
+  await instance.init({ lng: "en-US", resources: {} });
+  return { default: instance };
+});
 const progress = {
   runId: "run-1",
   pending: true,
@@ -113,7 +119,14 @@ describe("resumable GitHub import client", () => {
     );
     await expect(
       importGithubIssues({ projectId: "project", runId: "run-1" }),
-    ).rejects.toMatchObject({ status, message: "paused", code });
+    ).rejects.toMatchObject({
+      name: "HttpError",
+      status,
+      message:
+        status >= 500 ? "Server error. Please try again later." : "paused",
+      originalMessage: "paused",
+      code,
+    });
     expect(request).toHaveBeenCalledTimes(1);
   });
 });

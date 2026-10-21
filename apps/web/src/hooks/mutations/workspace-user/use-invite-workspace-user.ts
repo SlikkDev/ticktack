@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { track } from "@/lib/analytics/track";
@@ -33,10 +34,12 @@ function useInviteWorkspaceUser() {
       });
 
       if (error?.code === "INVITATION_EMAIL_FAILED") {
-        throw new Error(t("settings:invitationEmailFailed"));
+        const invitationError = new ApiClientError(error);
+        invitationError.message = t("settings:invitationEmailFailed");
+        throw invitationError;
       }
       if (error) {
-        throw new Error(error.message || "Failed to invite workspace member");
+        throw new ApiClientError(error, "Failed to invite workspace member");
       }
 
       return data;

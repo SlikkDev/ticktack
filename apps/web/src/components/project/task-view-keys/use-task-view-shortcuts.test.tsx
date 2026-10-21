@@ -13,13 +13,16 @@ import useBulkSelectionStore from "@/store/bulk-selection";
 import type { TaskLayout } from "./task-groups";
 import { useTaskViewShortcuts } from "./use-task-view-shortcuts";
 
-const mocks = vi.hoisted(() => ({ navigate: vi.fn() }));
+const mocks = vi.hoisted(() => ({ navigate: vi.fn(), locale: "en-US" }));
 
 vi.mock("@tanstack/react-router", () => ({
   useNavigate: () => mocks.navigate,
 }));
 vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key: string) => key }),
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: { resolvedLanguage: mocks.locale },
+  }),
 }));
 vi.mock("@/lib/toast", () => ({ toast: { message: vi.fn(), error: vi.fn() } }));
 
@@ -77,6 +80,7 @@ const focus = (taskId: string) =>
   act(() => useBulkSelectionStore.getState().setFocusedTask(taskId));
 
 beforeEach(() => {
+  mocks.locale = "en-US";
   window.history.replaceState({}, "", "/board");
 });
 
@@ -101,6 +105,22 @@ describe("useTaskViewShortcuts", () => {
 
     expect(document.activeElement?.getAttribute("data-task-id")).toBe("d");
     expect(mocks.navigate).not.toHaveBeenCalled();
+  });
+
+  it("maps Hebrew board focus and moves to the column on the pressed screen side", async () => {
+    mocks.locale = "he-IL";
+    renderView();
+    focus("a");
+
+    press({ key: "ArrowLeft", code: "ArrowLeft" });
+    expect(focused()).toBe("d");
+    await nextFrame();
+    expect(document.activeElement?.getAttribute("data-task-id")).toBe("d");
+
+    press({ key: "ArrowRight", code: "ArrowRight", altKey: true });
+    expect(callbacks.onMove).toHaveBeenLastCalledWith("d", "todo");
+    press({ key: "ArrowRight", code: "ArrowRight" });
+    expect(focused()).toBe("a");
   });
 
   it("keeps the open preview on the focused task", async () => {

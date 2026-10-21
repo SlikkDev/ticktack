@@ -1,3 +1,6 @@
+import english from "@i18n/en-US.json";
+import hebrew from "@i18n/he-IL.json";
+import i18n from "i18next";
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import createTask from "./create-task";
 
@@ -14,15 +17,52 @@ vi.mock("@kaneo/libs", () => ({
     },
   },
 }));
+vi.mock("i18next", async (importOriginal) => {
+  const { default: i18next } = await importOriginal<typeof import("i18next")>();
+  return { default: i18next.createInstance() };
+});
 
 describe("createTask", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    await i18n.init({
+      lng: "he-IL",
+      resources: { "en-US": english, "he-IL": hebrew },
+    });
     mocks.post.mockReset();
     mocks.post.mockResolvedValue({
       ok: true,
       json: async () => ({ id: "task-1" }),
     });
   });
+
+  it.each([
+    ["he-IL", hebrew.common.modals.createTask.selectProject],
+    ["en-US", "No project selected for task creation"],
+  ])(
+    "presents missing-project guidance in %s without sending a request",
+    async (locale, message) => {
+      await i18n.changeLanguage(locale);
+      await expect(
+        createTask(
+          "Task",
+          "",
+          "",
+          undefined,
+          "to-do",
+          undefined,
+          undefined,
+          "no-priority",
+        ),
+      ).rejects.toMatchObject({
+        name: "ApiClientError",
+        message,
+        originalMessage: "No project selected for task creation",
+        status: undefined,
+        code: undefined,
+      });
+      expect(mocks.post).not.toHaveBeenCalled();
+    },
+  );
 
   it.each([undefined, ""])(
     "omits the assignee when userId is %s",

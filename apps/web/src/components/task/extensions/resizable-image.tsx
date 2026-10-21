@@ -73,13 +73,15 @@ function ResizableImageNodeView({
     event.preventDefault();
 
     const startX = event.clientX;
+    const direction =
+      getComputedStyle(event.currentTarget).direction === "rtl" ? -1 : 1;
     const startWidth = imageRef.current?.getBoundingClientRect().width ?? 0;
     const handle = event.currentTarget;
     handle.setPointerCapture(event.pointerId);
     setIsResizing(true);
 
     const handleMove = (moveEvent: PointerEvent) => {
-      const next = clamp(startWidth + moveEvent.clientX - startX);
+      const next = clamp(startWidth + (moveEvent.clientX - startX) * direction);
       draftWidthRef.current = next;
       setDraftWidth(next);
     };
@@ -114,9 +116,13 @@ function ResizableImageNodeView({
       width ??
       Math.round(imageRef.current?.getBoundingClientRect().width ?? MIN_WIDTH);
     const step = event.shiftKey ? RESIZE_STEP * 4 : RESIZE_STEP;
+    const direction =
+      getComputedStyle(event.currentTarget).direction === "rtl" ? -1 : 1;
 
     updateAttributes({
-      width: clamp(current + (event.key === "ArrowLeft" ? -step : step)),
+      width: clamp(
+        current + (event.key === "ArrowLeft" ? -step : step) * direction,
+      ),
     });
   };
 

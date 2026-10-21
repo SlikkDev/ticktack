@@ -1,4 +1,5 @@
 import React from "react";
+import { isolateText } from "./direction";
 import { type EmailLocale, emailHtmlLang } from "../templates/resolve-locale";
 import { type DetailRow, DetailRows } from "./detail-rows";
 import { type DateInput, formatDateTime } from "./format-date";
@@ -28,6 +29,14 @@ type Messages = {
 };
 
 const messages: Record<EmailLocale, Messages> = {
+  he: {
+    title: "פרטי הבקשה",
+    account: "חשבון",
+    instance: "שרת",
+    requested: "מועד הבקשה",
+    device: "מכשיר",
+    browserOn: (browser, os) => `${isolateText(browser)} על ${isolateText(os)}`,
+  },
   en: {
     title: "Request details",
     account: "Account",
@@ -90,8 +99,8 @@ export function RequestDetails({
 }: RequestDetailsProps) {
   const copy = messages[locale];
   const rows: DetailRow[] = [
-    { label: copy.account, value: email },
-    { label: copy.instance, value: instance },
+    { label: copy.account, value: email, direction: "ltr" as const },
+    { label: copy.instance, value: instance, direction: "ltr" as const },
     {
       label: copy.requested,
       value: requestedAt

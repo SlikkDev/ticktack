@@ -18,8 +18,13 @@ export function selectionStartAnchor(editor: Editor) {
   const startCoords = view.coordsAtPos(start, 1);
   const endCoords = view.coordsAtPos(end, -1);
   const sameLine = Math.abs(endCoords.top - startCoords.top) < 2;
-  const left = startCoords.left;
-  const right = sameLine ? Math.max(endCoords.right, left) : left;
+  // In an RTL run the logical end can be physically left of the start.
+  const left = sameLine
+    ? Math.min(startCoords.left, endCoords.left)
+    : startCoords.left;
+  const right = sameLine
+    ? Math.max(startCoords.right, endCoords.right)
+    : startCoords.right;
   const rect = new DOMRect(
     left,
     startCoords.top,

@@ -2,7 +2,7 @@ import { useRestoreTaskFocus } from "@/components/project/task-view-keys/use-res
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useNavigate } from "@tanstack/react-router";
-import { format } from "date-fns";
+import { formatDateShort } from "@/lib/format";
 import { Calendar, CalendarClock, CalendarX, Trash2Icon } from "lucide-react";
 import { type CSSProperties, useMemo, useState, memo } from "react";
 import { useTranslation } from "react-i18next";
@@ -201,14 +201,17 @@ function TaskRow({ task, projectSlug }: TaskRowProps) {
               </div>
             )}
             {showTaskNumbers && (
-              <div className="text-xs font-mono text-muted-foreground flex-shrink-0">
+              <div
+                dir="ltr"
+                className="text-xs font-mono text-muted-foreground flex-shrink-0"
+              >
                 {projectSlug}-{task.number}
               </div>
             )}
 
             <div className="flex-1 min-w-0 flex items-center gap-2">
               <div className="flex items-center gap-2 justify-between w-full">
-                <span className="text-sm text-foreground truncate">
+                <span dir="auto" className="text-sm text-foreground truncate">
                   {task.title}
                 </span>
                 <div className="flex items-center gap-1">
@@ -236,7 +239,7 @@ function TaskRow({ task, projectSlug }: TaskRowProps) {
                   "far-future" ||
                   getDueDateStatus(task.dueDate, taskIsCompleted) ===
                     "no-due-date") && <Calendar className="w-3 h-3" />}
-                <span>{format(new Date(task.dueDate), "MMM d")}</span>
+                <span>{formatDateShort(task.dueDate)}</span>
               </div>
             )}
 

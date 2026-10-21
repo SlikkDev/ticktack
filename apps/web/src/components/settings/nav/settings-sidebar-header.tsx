@@ -26,7 +26,7 @@ export function SettingsSidebarHeader({ onLeave }: SettingsSidebarHeaderProps) {
             aria-label={t("navigation:page.backToWorkspace")}
             title={t("navigation:page.backToWorkspace")}
           >
-            <ChevronLeft aria-hidden="true" />
+            <ChevronLeft aria-hidden="true" className="rtl:rotate-180" />
             <span className="flex-1">{t("navigation:page.settingsTitle")}</span>
             <Kbd aria-hidden="true" className="hidden md:inline-flex">
               Esc

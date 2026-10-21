@@ -19,7 +19,7 @@ export function CustomFieldRow({
   onChange,
   disabled = false,
 }: CustomFieldRowProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   if (field.type === "boolean") {
     const checked = value === "true";
@@ -38,18 +38,27 @@ export function CustomFieldRow({
     );
   }
 
-  const display = formatCustomFieldValue(field.type, value, "medium");
+  const display = formatCustomFieldValue(
+    field.type,
+    value,
+    "medium",
+    i18n?.resolvedLanguage ?? i18n?.language,
+  );
   const button = (
     <PropertyValue disabled={disabled} aria-label={field.name}>
       {display ? (
         <>
-          <span className="truncate" title={display.text}>
+          <bdi
+            dir={field.type === "number" ? "ltr" : "auto"}
+            className="truncate"
+            title={display.text}
+          >
             {display.text}
-          </span>
+          </bdi>
           {!!display.more && (
-            <span className="shrink-0 text-muted-foreground">
+            <bdi dir="ltr" className="shrink-0 text-muted-foreground">
               +{display.more}
-            </span>
+            </bdi>
           )}
         </>
       ) : (
@@ -69,7 +78,7 @@ export function CustomFieldRow({
           field={field}
           value={value}
           onChange={onChange}
-          side="left"
+          side="inline-start"
         >
           {button}
         </CustomFieldPopover>

@@ -8,6 +8,9 @@ import {
 import { afterEach, expect, it, vi } from "vite-plus/test";
 import { AutoLoginRedirect } from "./auto-login-redirect";
 
+vi.mock("@/components/auth/language-switcher", () => ({
+  LanguageSwitcher: () => null,
+}));
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));

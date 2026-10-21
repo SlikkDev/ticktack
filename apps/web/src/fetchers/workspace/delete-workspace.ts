@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { authClient } from "@/lib/auth-client";
 
 type DeleteWorkspaceRequest = {
@@ -10,7 +11,7 @@ const deleteWorkspace = async ({ id }: DeleteWorkspaceRequest) => {
   });
 
   if (error) {
-    throw new Error(error.message || "Failed to delete workspace");
+    throw new ApiClientError(error, "Failed to delete workspace");
   }
 
   return data;

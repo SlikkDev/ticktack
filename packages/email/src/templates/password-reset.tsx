@@ -1,4 +1,5 @@
 import React from "react";
+import { isolateText } from "../components/direction";
 import { EmailButton } from "../components/email-button";
 import { EmailFooter } from "../components/email-footer";
 import { EmailIntro } from "../components/email-intro";
@@ -22,6 +23,20 @@ export type PasswordResetEmailProps = RequestContext & {
 };
 
 const messages = {
+  he: {
+    preview: "הקישור מאפשר לבחור סיסמה חדשה. תוקפו יפוג בעוד שעה.",
+    title: "איפוס הסיסמה שלך",
+    subtitleWithName: (name: string) =>
+      `שלום ${isolateText(name)}, יש להשתמש בכפתור כדי לבחור סיסמה חדשה. הקישור חד־פעמי ותוקפו יפוג בעוד שעה.`,
+    subtitleDefault:
+      "יש להשתמש בכפתור כדי לבחור סיסמה חדשה. הקישור חד־פעמי ותוקפו יפוג בעוד שעה.",
+    cta: "איפוס סיסמה",
+    fallback: "הכפתור לא עובד? אפשר להדביק את הקישור הזה בדפדפן:",
+    ignoreTitle: "לא ביקשת לאפס סיסמה?",
+    ignore:
+      "אפשר להתעלם מההודעה. הסיסמה לא תשתנה עד לפתיחת הקישור וקביעת סיסמה חדשה.",
+    footer: "הודעת אבטחה מטיקטק",
+  },
   en: {
     preview:
       "Use the link inside to choose a new password. It expires in 1 hour.",
@@ -35,7 +50,7 @@ const messages = {
     ignoreTitle: "Didn't ask for this?",
     ignore:
       "You can ignore this email. Your password stays the same until someone opens this link and sets a new one.",
-    footer: "Kaneo security email",
+    footer: "TickTack security email",
   },
   de: {
     preview:
@@ -51,7 +66,7 @@ const messages = {
     ignoreTitle: "Du hast das nicht angefordert?",
     ignore:
       "Dann kannst du diese E-Mail ignorieren. Dein Passwort bleibt gleich, bis jemand diesen Link öffnet und ein neues festlegt.",
-    footer: "Kaneo Sicherheits-E-Mail",
+    footer: "TickTack Sicherheits-E-Mail",
   },
   vi: {
     preview:
@@ -66,7 +81,7 @@ const messages = {
     ignoreTitle: "Bạn không yêu cầu điều này?",
     ignore:
       "Bạn có thể bỏ qua email này. Mật khẩu của bạn sẽ giữ nguyên cho đến khi có người mở liên kết này và đặt mật khẩu mới.",
-    footer: "Email bảo mật Kaneo",
+    footer: "Email bảo mật TickTack",
   },
   ja: {
     preview:
@@ -82,7 +97,7 @@ const messages = {
     ignoreTitle: "心当たりがありませんか？",
     ignore:
       "このメールは無視してかまいません。誰かがこのリンクを開いて新しいパスワードを設定しない限り、パスワードは変更されません。",
-    footer: "Kaneo セキュリティメール",
+    footer: "TickTack セキュリティメール",
   },
   "zh-tw": {
     preview: "使用信中的連結設定新密碼。連結將在 1 小時後失效。",
@@ -96,7 +111,7 @@ const messages = {
     ignoreTitle: "沒有提出這項要求？",
     ignore:
       "你可以忽略這封郵件。在有人開啟此連結並設定新密碼之前，你的密碼都不會變更。",
-    footer: "Kaneo 安全性通知",
+    footer: "TickTack 安全性通知",
   },
 } as const;
 

@@ -24,6 +24,7 @@ export function TextFieldEditor({
         autoFocus
         type={isNumber ? "number" : "text"}
         inputMode={isNumber ? "decimal" : undefined}
+        dir={isNumber ? "ltr" : "auto"}
         value={draft}
         aria-label={field.name}
         placeholder={field.defaultValue || field.name}

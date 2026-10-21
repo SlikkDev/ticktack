@@ -78,15 +78,15 @@ describe("deferred descriptions", () => {
     });
   });
   it("rejects changed versions and nonadvancing offsets", async () => {
-    for (const next of [
-      { version: "2", nextOffset: null },
-      { version: "1", nextOffset: 1 },
-    ]) {
+    for (const [next, message] of [
+      [{ version: "2", nextOffset: null }, "Description changed while loading"],
+      [{ version: "1", nextOffset: 1 }, "Description page did not advance"],
+    ] as const) {
       const load = vi
         .fn()
         .mockResolvedValueOnce({ content: "a", version: "1", nextOffset: 1 })
         .mockResolvedValueOnce({ content: "b", ...next });
-      await expect(loadDescriptionPages(load)).rejects.toThrow();
+      await expect(loadDescriptionPages(load)).rejects.toThrow(message);
       expect(load).toHaveBeenCalledTimes(2);
     }
   });
@@ -98,9 +98,24 @@ describe("deferred descriptions", () => {
     });
     await expect(
       loadDescriptionPages(load, controller.signal),
-    ).rejects.toThrow();
+    ).rejects.toMatchObject({ name: "AbortError" });
     expect(load).toHaveBeenCalledTimes(1);
   });
+  it.each([
+    { ids: ["a"], nextCursor: "a" },
+    { ids: [], nextCursor: "b" },
+  ])(
+    "stops a nonadvancing search and never returns partial matches: %j",
+    async (next) => {
+      matchRequest
+        .mockResolvedValueOnce(Response.json({ ids: ["a"], nextCursor: "a" }))
+        .mockResolvedValueOnce(Response.json(next));
+      await expect(getDescriptionMatches("project", "text")).rejects.toThrow(
+        "Description search did not advance",
+      );
+      expect(matchRequest).toHaveBeenCalledTimes(2);
+    },
+  );
   it("collects later description matches and rejects failures instead of claiming a complete search", async () => {
     const signal = new AbortController().signal;
     matchRequest

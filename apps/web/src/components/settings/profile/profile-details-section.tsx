@@ -55,9 +55,12 @@ export function ProfileDetailsSection({
           title={t("settings:informationPage.email")}
           description={t("settings:informationPage.emailHint")}
         >
-          <span className="max-w-64 truncate text-sm text-muted-foreground">
+          <bdi
+            dir="ltr"
+            className="max-w-64 truncate text-sm text-muted-foreground"
+          >
             {user?.email}
-          </span>
+          </bdi>
         </SettingsRow>
       </SettingsCard>
     </SettingsSection>

@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "@/components/providers/auth-provider/hooks/use-auth";
 import { authClient } from "@/lib/auth-client";
@@ -13,7 +14,7 @@ function useListAccounts() {
       const result = await authClient.listAccounts();
 
       if (result.error) {
-        throw new Error(result.error.message);
+        throw new ApiClientError(result.error);
       }
 
       return result.data ?? [];

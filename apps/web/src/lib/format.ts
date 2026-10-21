@@ -1,3 +1,5 @@
+/// <reference lib="es2023.intl" />
+
 import { i18n } from "./i18n";
 
 type DateInput = Date | string | number;
@@ -30,9 +32,18 @@ export function formatDate(
   options?: Intl.DateTimeFormatOptions,
   locale?: string,
 ) {
-  return new Intl.DateTimeFormat(getLocale(locale), options).format(
-    toDate(value),
-  );
+  return new Intl.DateTimeFormat(getLocale(locale), {
+    calendar: "gregory",
+    ...options,
+  }).format(toDate(value));
+}
+
+export function formatNumber(
+  value: number | bigint | Intl.StringNumericLiteral,
+  options?: Intl.NumberFormatOptions,
+  locale?: string,
+) {
+  return new Intl.NumberFormat(getLocale(locale), options).format(value);
 }
 
 export function formatDateShort(value: DateInput, locale?: string) {

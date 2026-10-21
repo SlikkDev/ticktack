@@ -6,9 +6,13 @@ export function getInvitationEmailSubject(
   workspaceName: string,
 ) {
   const values: Record<string, string> = { inviterName, workspaceName };
+  const isHebrew = locale?.toLowerCase().split("-")[0] === "he";
 
   return getWorkspaceInvitationEmailCopy(locale).subject.replace(
     /\{\{(\w+)\}\}/g,
-    (_match, key: string) => values[key] ?? "",
+    (_match, key: string) => {
+      const value = values[key] ?? "";
+      return isHebrew ? `\u2068${value}\u2069` : value;
+    },
   );
 }

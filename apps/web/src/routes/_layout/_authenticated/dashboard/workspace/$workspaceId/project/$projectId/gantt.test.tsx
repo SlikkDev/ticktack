@@ -26,6 +26,7 @@ const scrollIntoView = vi.fn();
 Element.prototype.scrollIntoView = scrollIntoView;
 
 const navigate = vi.fn();
+const localeState = vi.hoisted(() => ({ locale: "en-US" }));
 
 // A plain mutable object rather than a per-test vi.fn() mock: the Gantt
 // project selector swaps `projectId` on the same route (no remount), so
@@ -116,7 +117,9 @@ vi.mock("@/components/gantt/gantt-task-bar", () => ({
 // jumpToToday key (or its interpolated siblings) stops matching what the
 // component actually requests.
 vi.mock("react-i18next", () => ({
+  initReactI18next: { type: "3rdParty", init: vi.fn() },
   useTranslation: () => ({
+    i18n: { resolvedLanguage: localeState.locale },
     t: (key: string, options?: Record<string, unknown>) => {
       const [namespace, path] = key.split(":");
       const source = path
@@ -185,6 +188,7 @@ function mockProjectWithTask(
 }
 
 beforeEach(() => {
+  localeState.locale = "en-US";
   // Fixed "today" so the timeline range and isToday() checks are
   // deterministic regardless of when the suite runs.
   vi.useFakeTimers();
@@ -343,6 +347,32 @@ describe("Gantt jump-to-today", () => {
     expect(button).toBeDisabled();
   });
 
+  it("places the rail and scroll inset at inline start in Hebrew", () => {
+    localeState.locale = "he-IL";
+    mockProjectWithTask(
+      makeTask({
+        title: "בדיקת RTL",
+        startDate: "2026-08-28",
+        dueDate: "2026-09-02",
+      }),
+    );
+    const { container } = render(<GanttRoute />);
+    expect(container.querySelector('[dir="rtl"]')).not.toBeNull();
+    expect(
+      screen.getByTestId("gantt-scroll-container").style
+        .scrollPaddingInlineStart,
+    ).toBe("20rem");
+    expect(
+      container
+        .querySelector('[style*="inset-inline-start"]')
+        ?.getAttribute("style"),
+    ).toContain("inset-inline-start: 20rem");
+    expect(screen.getByLabelText(enUS.tasks.gantt.periodStart)).toHaveAttribute(
+      "dir",
+      "ltr",
+    );
+  });
+
   it("insets scroll-alignment by the task rail's width so a scrollIntoView center lands in the visible timeline", () => {
     mockProjectWithTask(
       makeTask({
@@ -355,7 +385,7 @@ describe("Gantt jump-to-today", () => {
 
     render(<GanttRoute />);
 
-    // The task rail renders at a fixed 20rem on desktop (see the `left`
+    // The task rail renders at a fixed 20rem on desktop (see the inline-start
     // offset used by the timeline track below it); scroll-padding has to
     // match that exactly, or "centering" on today still lands it partway
     // under the rail.
@@ -366,6 +396,6 @@ describe("Gantt jump-to-today", () => {
     // against a computed "320px" and fail regardless of whether the
     // component is correct.
     const container = screen.getByTestId("gantt-scroll-container");
-    expect(container.style.scrollPaddingLeft).toBe("20rem");
+    expect(container.style.scrollPaddingInlineStart).toBe("20rem");
   });
 });

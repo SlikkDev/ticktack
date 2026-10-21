@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
 import useImportRun from "@/hooks/queries/import/use-import-run";
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 
 type ImportRunViewProps = {
   workspaceId: string;
@@ -62,7 +63,12 @@ export function ImportRunView({
             <EmptyTitle>
               <h1>{t("settings:workspaceImport.run.loadError")}</h1>
             </EmptyTitle>
-            <EmptyDescription>{error?.message}</EmptyDescription>
+            <EmptyDescription>
+              {getApiErrorMessage(
+                error,
+                t("settings:workspaceImport.run.loadError"),
+              )}
+            </EmptyDescription>
           </EmptyHeader>
           <EmptyContent className="flex-row justify-center">
             <Button variant="outline" size="sm" onClick={onOverview}>

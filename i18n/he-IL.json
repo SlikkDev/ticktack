@@ -1,0 +1,3956 @@
+{
+	"common": {
+		"appName": "טיקטק",
+		"actions": {
+			"cancel": "ביטול",
+			"close": "סגירה",
+			"clearAll": "ניקוי הכול",
+			"delete": "מחיקה",
+			"deleting": "מוחק...",
+			"markAllRead": "סימון הכול כנקרא",
+			"remove": "הסרה",
+			"reset": "איפוס",
+			"filter": "סינון"
+		},
+		"a11y": {
+			"toggleSidebar": "פתיחה או סגירה של סרגל הצד",
+			"increaseValue": "הגדלת הערך",
+			"decreaseValue": "הקטנת הערך"
+		},
+		"sidebar": {
+			"title": "סרגל צד",
+			"mobileDescription": "הצגת סרגל הצד בנייד."
+		},
+		"empty": {
+			"loading": "טוען..."
+		},
+		"pagination": {
+			"label": "מעבר בין עמודים",
+			"previous": "הקודם",
+			"next": "הבא",
+			"previousPage": "מעבר לעמוד הקודם",
+			"nextPage": "מעבר לעמוד הבא",
+			"morePages": "עמודים נוספים"
+		},
+		"breadcrumb": {
+			"label": "נתיב ניווט",
+			"more": "עוד"
+		},
+		"language": {
+			"english": "אנגלית",
+			"german": "גרמנית",
+			"greek": "יוונית",
+			"macedonian": "מקדונית",
+			"french": "צרפתית",
+			"spanish": "ספרדית",
+			"dutch": "הולנדית",
+			"korean": "קוריאנית",
+			"chinese": "סינית",
+			"italian": "איטלקית"
+		},
+		"people": {
+			"someone": "מישהו",
+			"unknown": "לא ידוע"
+		},
+		"error": {
+			"title": "משהו השתבש",
+			"description": "העמוד קרס באופן בלתי צפוי. רענון בדרך כלל פותר את הבעיה.",
+			"troubleshooting": "שלבים לפתרון הבעיה:",
+			"tryAgain": "ניסיון חוזר",
+			"viewDeploymentGuide": "צפייה במדריך הפריסה",
+			"refreshPage": "רענון העמוד",
+			"messages": {
+				"cors": "לא ניתן להתחבר לשרת. ייתכן שהבעיה בהגדרות CORS.",
+				"network": "שגיאת רשת. יש לבדוק את החיבור לאינטרנט ולנסות שוב.",
+				"auth": "האימות נכשל. יש להתחבר שוב.",
+				"server": "שגיאת שרת. יש לנסות שוב מאוחר יותר.",
+				"unknown": "אירעה שגיאה בלתי צפויה."
+			},
+			"troubleshootingSteps": {
+				"cors": {
+					"checkApiRunning": "יש לוודא ששרת ה־API פועל",
+					"checkApiUrl": "יש לוודא ש־VITE_API_URL בקובץ .env של הממשק תואם לכתובת שרת ה־API",
+					"verifyCorsOrigins": "יש לוודא ש־CORS_ORIGINS בקובץ .env של ה־API כולל את כתובת הממשק",
+					"checkProtocol": "יש לוודא שהממשק וה־API משתמשים באותו פרוטוקול (http/https)",
+					"checkAccessibility": "יש לוודא ששרת ה־API נגיש מהדפדפן"
+				},
+				"network": {
+					"checkConnection": "יש לבדוק את החיבור לאינטרנט",
+					"verifyApiRunning": "יש לוודא ששרת ה־API פועל ונגיש",
+					"tryRefresh": "אפשר לנסות לרענן את העמוד",
+					"checkFirewall": "יש לבדוק אם קיימת בעיה בחומת האש או בשרת המתווך"
+				}
+			}
+		},
+		"modals": {
+			"createProject": {
+				"title": "יצירת פרויקט חדש",
+				"breadcrumbNew": "יצירת פרויקט חדש",
+				"workspaceFallback": "סביבת עבודה",
+				"description": "יצירת פרויקט בסביבת העבודה באמצעות שם, מזהה ובחירת סמל.",
+				"pickIcon": "בחירת סמל",
+				"searchIcons": "חיפוש סמלים...",
+				"projectName": "שם הפרויקט",
+				"keyLabel": "מזהה:",
+				"keyHint": "משמש למזהי משימות (לדוגמה, {{example}}-123)",
+				"createButton": "יצירת פרויקט",
+				"successToast": "הפרויקט נוצר בהצלחה",
+				"errorToast": "יצירת הפרויקט נכשלה"
+			},
+			"createWorkspace": {
+				"breadcrumbKaneo": "טיקטק",
+				"title": "יצירת סביבת עבודה חדשה",
+				"description": "יצירת סביבת עבודה חדשה באמצעות בחירת שם.",
+				"namePlaceholder": "שם סביבת העבודה",
+				"descriptionPlaceholder": "הוספת תיאור...",
+				"createButton": "יצירת סביבת עבודה",
+				"successToast": "סביבת העבודה נוצרה בהצלחה",
+				"errorToast": "יצירת סביבת העבודה נכשלה"
+			},
+			"createTask": {
+				"breadcrumbTask": "משימה",
+				"selectProject": "בחירת פרויקט",
+				"title": "משימה חדשה",
+				"description": "יצירת משימה חדשה באמצעות כותרת, תיאור ופרטים נוספים.",
+				"statusLoadError": "לא ניתן לטעון את הסטטוסים של הפרויקט.",
+				"taskTitlePlaceholder": "כותרת המשימה",
+				"descriptionPlaceholder": "הוספת תיאור למשימה...",
+				"chooseProjectForImages": "יש לבחור פרויקט לפני העלאת תמונות.",
+				"prepareTaskError": "הכנת המשימה נכשלה",
+				"successCreated": "המשימה נוצרה בהצלחה",
+				"successUpdated": "המשימה עודכנה בהצלחה",
+				"createError": "יצירת המשימה נכשלה",
+				"priority": "עדיפות",
+				"statusFallback": "בביצוע",
+				"startDate": "תאריך התחלה",
+				"dueDate": "תאריך יעד",
+				"clearStartDate": "ניקוי תאריך ההתחלה",
+				"clearDueDate": "ניקוי תאריך היעד",
+				"assign": "הקצאה",
+				"assignUnassigned": "ללא אחראי",
+				"assignUnassignedTitle": "ללא אחראי",
+				"labels": "תוויות",
+				"searchLabels": "חיפוש תוויות...",
+				"noLabelsFound": "לא נמצאו תוויות",
+				"createLabel": "יצירת \"{{name}}\"",
+				"chooseColor": "בחירת צבע",
+				"labelCreated": "התווית נוצרה",
+				"labelCreateError": "יצירת התווית נכשלה",
+				"createMore": "יצירת משימה נוספת",
+				"createButton": "יצירת משימה",
+				"discardTitle": "לבטל את המשימה?",
+				"discardDescription": "פרטי המשימה שלא נשמרו יאבדו.",
+				"discardButton": "ביטול המשימה",
+				"untitledTask": "משימה ללא כותרת",
+				"labelColors": {
+					"stone": "אבן",
+					"slate": "אפור כחלחל",
+					"lavender": "לבנדר",
+					"sage": "מרווה",
+					"forest": "ירוק יער",
+					"amber": "ענבר",
+					"terracotta": "חמרה",
+					"rose": "ורוד",
+					"crimson": "ארגמן"
+				}
+			}
+		},
+		"editor": {
+			"link": {
+				"label": "כתובת הקישור",
+				"placeholder": "הדבקה או הקלדה של קישור…",
+				"apply": "החלת קישור",
+				"remove": "הסרת קישור"
+			}
+		},
+		"apiErrors": {
+			"badRequest": "יש לבדוק את הפרטים שהוזנו ולנסות שוב.",
+			"forbidden": "אין לך הרשאה לבצע פעולה זו.",
+			"notFound": "הפריט המבוקש לא נמצא. ייתכן שהוא הוסר.",
+			"conflict": "הפעולה מתנגשת בפריט קיים או בשינוי שבוצע לאחרונה. יש לרענן ולנסות שוב.",
+			"rateLimited": "נשלחו יותר מדי בקשות. יש להמתין מעט ולנסות שוב.",
+			"requestTimeout": "זמן ההמתנה לבקשה הסתיים. יש לנסות שוב.",
+			"payloadTooLarge": "הקובץ גדול מדי להעלאה. יש לבחור קובץ קטן יותר ולנסות שוב.",
+			"paymentRequired": "פעולה זו דורשת מינוי פעיל או תוכנית אחרת. יש לבדוק את הגדרות החיוב של סביבת העבודה.",
+			"invalidCredentials": "כתובת הדוא״ל או הסיסמה שגויה.",
+			"emailNotVerified": "יש לאמת את כתובת הדוא״ל לפני הכניסה.",
+			"accountExists": "כבר קיים חשבון עם כתובת הדוא״ל הזו. אפשר להיכנס או להשתמש בכתובת אחרת.",
+			"passwordTooLong": "הסיסמה יכולה להכיל עד 128 תווים.",
+			"invalidToken": "הקישור או האסימון אינו תקין או שפג תוקפו. יש לבקש חדש ולנסות שוב.",
+			"emailMismatch": "יש להשתמש בכתובת הדוא״ל המשויכת להזמנה או לחשבון.",
+			"accountLinked": "החשבון הזה כבר מקושר. יש להשתמש בחשבון אחר או לבדוק את החשבונות המקושרים.",
+			"lastAccount": "יש להשאיר לפחות שיטת כניסה אחת מקושרת לחשבון.",
+			"providerUnavailable": "ספק הכניסה אינו זמין. יש לנסות שיטת כניסה אחרת או לפנות למנהל המערכת.",
+			"localSignInDisabled": "הכניסה באמצעות סיסמה מושבתת. יש להשתמש באחד מספקי הכניסה שהוגדרו.",
+			"localRegistrationDisabled": "הרשמה באמצעות סיסמה מושבתת. יש להשתמש באחד מספקי הכניסה שהוגדרו.",
+			"emailCodeRequired": "יש ליצור את החשבון באמצעות קוד אימות בדוא״ל.",
+			"captchaFailed": "בדיקת האימות נכשלה. יש להשלים אותה מחדש ולנסות שוב.",
+			"guestDisabled": "גישת אורחים מושבתת במערכת זו.",
+			"guestInvitations": "אורחים אינם יכולים להזמין חברים. יש להיכנס עם חשבון רגיל כדי להמשיך.",
+			"integrationAuthFailed": "אימות החיבור נכשל. יש לבדוק את פרטי הגישה וההרשאות שלו.",
+			"instanceAdminRequired": "פעולה זו דורשת הרשאת מנהל מערכת.",
+			"cannotChangeOwnRole": "אי אפשר לשנות את התפקיד שלך.",
+			"cannotRemoveYourself": "אי אפשר להסיר את החשבון שלך ממסך זה.",
+			"lastAdmin": "יש להשאיר במערכת לפחות מנהל אחד.",
+			"soleWorkspaceOwner": "יש להעביר את הבעלות על סביבות העבודה שלך או למחוק אותן לפני מחיקת החשבון.",
+			"activeSubscription": "יש לבטל מינויים פעילים של סביבות העבודה לפני מחיקת סביבת העבודה או החשבון.",
+			"assigneeNotMember": "יש לבחור אחראי שחבר בסביבת העבודה הזו.",
+			"assigneeNoAccess": "יש לבחור אחראי שיש לו גישה לפרויקט הזה.",
+			"dateRange": "תאריך ההתחלה חייב להיות לפני תאריך היעד או באותו יום.",
+			"invalidDate": "יש להזין תאריך תקין, לדוגמה ⁦2025-01-15⁩.",
+			"validation": {
+				"required": "יש להזין ערך בשדה {{field}}.",
+				"invalid": "יש לבדוק את הערך בשדה {{field}}.",
+				"minCharacters": "יש להזין לפחות {{limit}} תווים בשדה {{field}}.",
+				"maxCharacters": "אפשר להזין עד {{limit}} תווים בשדה {{field}}.",
+				"minItems": "יש לבחור לפחות {{limit}} פריטים בשדה {{field}}.",
+				"maxItems": "אפשר לבחור עד {{limit}} פריטים בשדה {{field}}.",
+				"minNumber": "יש להזין {{limit}} או יותר בשדה {{field}}.",
+				"maxNumber": "יש להזין {{limit}} או פחות בשדה {{field}}.",
+				"greaterThan": "יש להזין מספר גדול מ־{{limit}} בשדה {{field}}.",
+				"lessThan": "יש להזין מספר קטן מ־{{limit}} בשדה {{field}}.",
+				"email": "יש להזין כתובת דוא״ל תקינה בשדה {{field}}.",
+				"url": "יש להזין כתובת אינטרנט תקינה בשדה {{field}}.",
+				"integer": "יש להזין מספר שלם בשדה {{field}}.",
+				"option": "יש לבחור אחת מהאפשרויות הזמינות בשדה {{field}}."
+			},
+			"fields": {
+				"value": "זה",
+				"title": "כותרת",
+				"name": "שם",
+				"email": "דוא״ל",
+				"password": "סיסמה",
+				"description": "תיאור",
+				"content": "תוכן",
+				"priority": "עדיפות",
+				"status": "מצב",
+				"startDate": "תאריך התחלה",
+				"dueDate": "תאריך יעד",
+				"url": "כתובת אינטרנט",
+				"color": "צבע",
+				"key": "מפתח",
+				"assignee": "אחראי",
+				"position": "מיקום",
+				"limit": "מגבלה"
+			},
+			"workspaceNameNoUrls": "שם סביבת העבודה אינו יכול להכיל כתובות אינטרנט.",
+			"workspaceNameNoMarkup": "שם סביבת העבודה אינו יכול להכיל HTML או תווים של תבניות.",
+			"import": {
+				"originalDetails": "פרטים טכניים מקוריים",
+				"progressUnknown": "הייבוא מתבצע.",
+				"errorUnknown": "לא ניתן לייבא את הפרויקט. אפשר לעיין בפרטים המקוריים להלן.",
+				"warningUnknown": "התקבלה אזהרה במהלך הייבוא. אפשר לעיין בפרטים המקוריים להלן.",
+				"starting": "הייבוא מתחיל",
+				"readingProject": "קריאת {{name}}",
+				"savingProject": "שמירת {{name}}",
+				"readingBoard": "קריאת הלוח",
+				"readingTeam": "קריאת הצוות",
+				"readingIssues": "קריאת המשימות",
+				"readingComments": "קריאת התגובות",
+				"readingMetadata": "קריאת המצבים, התוויות והחברים",
+				"readingProjectBoard": "קריאת הפרויקט והלוח",
+				"readingIssuesCount": "קריאת משימות ({{amount}} עד כה)",
+				"readingCommentsCount": "קריאת תגובות ({{amount}} עד כה)",
+				"readingTasksTotal": "קריאת משימות ({{amount}} מתוך {{total}})",
+				"readingCommentsTotal": "קריאת תגובות ({{amount}} מתוך {{total}})",
+				"readingLinksTotal": "קריאת קישורים בין משימות ({{amount}} מתוך {{total}})",
+				"readingDetailsTotal": "קריאת פרטי המשימות ({{amount}} מתוך {{total}})",
+				"readingWorkItems": "קריאת פריטי עבודה ({{amount}})",
+				"readingWorkItemsTotal": "קריאת פריטי עבודה ({{amount}} מתוך {{total}})",
+				"stopped": "הייבוא הופסק.",
+				"interrupted": "הייבוא נקטע לפני שהסתיים. יש להתחיל אותו מחדש.",
+				"unexpected": "הייבוא הופסק עקב שגיאה לא צפויה.",
+				"saveFailed": "טיקטק לא הצליח לשמור את הפרויקט הזה.",
+				"restarting": "טיקטק מופעל מחדש. יש להתחיל את הייבוא שוב בעוד דקה.",
+				"sourceAuth": "לא ניתן להיכנס אל {{source}}. יש לבדוק את פרטי הגישה וההרשאות.",
+				"sourceNotFound": "הפריט המבוקש לא נמצא ב־{{source}} (HTTP 404). יש לבדוק את הכתובת.",
+				"sourceRateLimited": "{{source}} מגביל את מספר הבקשות. יש לנסות שוב בעוד כמה דקות.",
+				"sourceServerError": "{{source}} החזיר שגיאה (HTTP {{status}}). יש לנסות שוב מאוחר יותר.",
+				"sourceRefused": "{{source}} דחה את הבקשה (HTTP {{status}}).",
+				"sourceUnreachable": "לא ניתן להתחבר אל {{source}} בכתובת {{host}}.",
+				"sourceTimeout": "{{source}} לא השיב בזמן. יש לנסות שוב.",
+				"sourceUnreadable": "{{source}} שלח תשובה שלא ניתן לקרוא.",
+				"warningMembers": "לא ניתן לקרוא את רשימת החברים בסביבת העבודה, לכן אחראים וכותבי תגובות מועברים לפי שם בלבד.",
+				"warningKaneoLinks": "גרסת Kaneo הזו אינה מספקת קישורים בין משימות, ולכן הם אינם מועתקים.",
+				"warningKaneoComments": "גרסת Kaneo הזו אינה מספקת תגובות, ולכן הן אינן מועתקות.",
+				"warningCustomFieldsUnreadable": "לא ניתן לקרוא שדות מותאמים אישית באמצעות מפתח ה־API הזה, ולכן הם אינם מופיעים כאן.",
+				"warningJiraBoard": "Jira לא סיפק את הלוח של הפרויקט, ולכן העמודות מבוססות על המצבים שלו.",
+				"warningTrelloNames": "Trello אינו משתף כתובות דוא״ל של חברים, ולכן אחראים מותאמים לחברים בטיקטק לפי שם מלא.",
+				"warningPlaneMembers": "Plane לא סיפק את רשימת חברי הפרויקט לאסימון הזה, ולכן ייתכן שחסרות כתובות דוא״ל של אחראים.",
+				"warningAssigneeEmail": "משימות שכתובת הדוא״ל של האחראי שלהן אינה זמינה: {{amount}}. ייתכן שהאחראים לא יועברו.",
+				"warningCustomFields": "השדות המותאמים האישית הבאים אינם מועתקים: {{names}}.",
+				"warningIntegrationLinks": "משימות עם קישורים לחיבורים חיצוניים שאינם מועתקים: {{amount}}.",
+				"warningAssets": "משימות המפנות לתמונות או לקבצים במערכת המקור: {{amount}}. הקבצים אינם מועתקים וייתכן שלא יוצגו.",
+				"warningExternalLinks": "קישורים למשימות בפרויקטים או בלוחות אחרים שאינם מועתקים: {{amount}}.",
+				"warningIssueAttachments": "משימות עם קבצים מצורפים שאינם מיובאים: {{amount}}.",
+				"warningAttachments": "קבצים מצורפים שלא יובאו: {{amount}}.",
+				"warningManyAssignees": "פריטים עם יותר מאחראי אחד: {{amount}}. בטיקטק יש אחראי אחד לכל משימה, ולכן נשמר רק האחראי הראשון.",
+				"warningTrelloAttachments": "כרטיסים עם קבצים מצורפים שלא יובאו: {{amount}}. גם שדות מותאמים אישית, נתוני Power-Up ומדבקות אינם מיובאים.",
+				"warningPlankaEmails": "כרטיסים שבהם כתובת הדוא״ל של האחראי הוסתרה: {{amount}}. יש להתחבר עם חשבון מנהל של PLANKA כדי לבצע התאמה לפי דוא״ל.",
+				"warningLabelLimit": "משימות עם יותר מ־{{limit}} תוויות: {{amount}}. יובאו רק {{limit}} התוויות הראשונות.",
+				"warningRelationLimit": "משימות עם יותר מ־{{limit}} קישורים: {{amount}}. יובאו רק {{limit}} הקישורים הראשונים.",
+				"warningRenamedColumns": "שמות עמודות שונו כדי למנוע התנגשויות: {{names}}.",
+				"renamedColumn": "{{before}} לשם {{after}}",
+				"warningUnmatched": "משימות המשויכות לאנשים שאינם חברים בסביבת העבודה: {{amount}} ({{names}}). יש להזמין אותם ולאחר מכן לשייך להם את המשימות.",
+				"moreNames": "ועוד {{amount}}",
+				"sourceAuthApiKey": "לא ניתן להיכנס אל {{source}}. יש לבדוק את מפתח ה־API.",
+				"sourceAuthPassword": "לא ניתן להיכנס אל {{source}}. יש לבדוק את שם המשתמש והסיסמה.",
+				"sourceAuthKeyToken": "לא ניתן להיכנס אל {{source}}. יש לבדוק את מפתח ה־API והאסימון.",
+				"sourceAuthJira": "לא ניתן להיכנס אל {{source}}. יש לבדוק את הדוא״ל ואת אסימון ה־API, או את אסימון הגישה האישי עבור Jira Data Center."
+			}
+		}
+	},
+	"auth": {
+		"signIn": {
+			"pageTitle": "התחברות",
+			"subtitle": {
+				"emailOrProvider": "באמצעות דוא״ל או חשבון מקושר.",
+				"email": "יש להזין כתובת דוא״ל ונשלח אליה קוד התחברות.",
+				"password": "באמצעות דוא״ל וסיסמה.",
+				"passwordOrProvider": "באמצעות סיסמה או חשבון מקושר.",
+				"providers": "יש לבחור כיצד להתחבר.",
+				"sso": "הארגון שלך מנהל את ההתחברות כאן."
+			},
+			"lastUsed": "בשימוש לאחרונה",
+			"guestError": "ההתחברות כאורח נכשלה",
+			"errors": {
+				"account_not_linked": "לא ניתן לקשר את הזהות לחשבון הקיים. יש להתחבר באמצעות דוא״ל לאימות החשבון, ואז לנסות שוב כניסה ארגונית. אם כניסה בדוא״ל אינה זמינה, יש לפנות למנהל המערכת.",
+				"oauth_code_verification_failed": "אימות OAuth נכשל. יש לנסות שוב.",
+				"registration_is_currently_disabled_you_need_a_valid_invitation_to_create_an_account_": "ההרשמה סגורה כרגע. נדרשת הזמנה תקפה ליצירת חשבון.",
+				"use_a_permanent_email_address_disposable_addresses_cannot_create_accounts_": "יש להשתמש בכתובת דוא״ל קבועה. לא ניתן ליצור חשבון עם כתובת זמנית."
+			},
+			"instanceStatusError": "לא ניתן להגיע לשרת. יש לנסות שוב בעוד רגע.",
+			"heading": "התחברות לטיקטק",
+			"submitPassword": "התחברות",
+			"invitation": {
+				"title": "{{inviterName}} הזמין אותך אל {{workspaceName}}",
+				"fallbackTitle": "קיבלת הזמנה",
+				"description": "יש להתחבר עם כתובת הדוא״ל שקיבלה את ההזמנה. לאחר מכן תתבצע הצטרפות לסביבת העבודה."
+			},
+			"footer": {
+				"newHere": "חדש בטיקטק?",
+				"createAccount": "יצירת חשבון",
+				"inviteOnly": "החשבונות כאן זמינים בהזמנה בלבד. יש לבקש הזמנה ממנהל המערכת.",
+				"providerSignUp": "חדש כאן? אפשר ליצור חשבון באמצעות אחד מספקי ההתחברות למעלה.",
+				"anyProvider": "חדש כאן? כל אחת מהאפשרויות למעלה תיצור את החשבון שלך.",
+				"contactAdmin": "יש בעיה בהתחברות? יש לפנות למנהל המערכת.",
+				"justLooking": "רק באת להציץ?"
+			},
+			"autoLogin": {
+				"title": "מתחבר לחשבון",
+				"subtitle": "מעביר לעמוד ההתחברות של הארגון.",
+				"opening": "פותח את {{provider}}…",
+				"stuck": "לא מתקדם?",
+				"continue": "המשך אל {{provider}}"
+			}
+		},
+		"providers": {
+			"google": "Google",
+			"discord": "Discord",
+			"github": "GitHub",
+			"sso": "SSO",
+			"continueWith": "המשך עם {{provider}}",
+			"error": "לא ניתן להתחבר עם {{provider}}. יש לנסות שוב."
+		},
+		"forms": {
+			"or": "או",
+			"email": "דוא״ל",
+			"password": "סיסמה",
+			"emailPlaceholder": "me@example.com",
+			"passwordPlaceholder": "••••••••",
+			"showPassword": "הצגת סיסמה",
+			"hidePassword": "הסתרת סיסמה",
+			"name": "שם",
+			"namePlaceholder": "ישראל ישראלי",
+			"invalidEmail": "יש להזין כתובת דוא״ל מלאה, כמו name@company.com.",
+			"nameRequired": "יש להזין את השם שלך.",
+			"passwordRequired": "יש להזין את הסיסמה שלך.",
+			"passwordTooShort": "יש להשתמש ב־8 תווים לפחות.",
+			"disposableEmail": "יש להשתמש בכתובת דוא״ל קבועה. לא ניתן ליצור חשבון עם כתובת זמנית.",
+			"continueWithEmail": "המשך עם דוא״ל"
+		},
+		"checkEmail": {
+			"pageTitle": "בדיקת הדוא״ל",
+			"title": "יש לבדוק את הדוא״ל",
+			"inboxMessage": "שלחנו קישור התחברות זמני. יש לבדוק את תיבת הדואר בכתובת <email>{{email}}</email>.",
+			"emailFallback": "כתובת הדוא״ל שלך",
+			"backToLogin": "חזרה להתחברות"
+		},
+		"signUp": {
+			"pageTitle": "יצירת חשבון",
+			"registrationDisabledAlert": "ההרשמה סגורה כרגע. אם קיבלת הזמנה, יש להזין את כתובת הדוא״ל שאליה נשלחה כדי ליצור חשבון.",
+			"continueAsGuest": "המשך כאורח",
+			"toggleMessage": "כבר יש לך חשבון?",
+			"toggleLink": "התחברות",
+			"instanceStatusError": "לא ניתן להגיע לשרת. יש לנסות שוב בעוד רגע.",
+			"instanceAdminTitle": "הגדרת שרת הטיקטק שלך",
+			"instanceAdminSubtitle": "החשבון הזה יהיה מנהל המערכת עם גישה מלאה.",
+			"heading": "יצירת החשבון שלך",
+			"submitPassword": "יצירת חשבון",
+			"failed": "לא ניתן ליצור את החשבון. יש לנסות שוב.",
+			"subtitle": {
+				"email": "מתחילים עם הדוא״ל שלך. נשלח קוד, ללא צורך בסיסמה.",
+				"password": "יש להזין שם, דוא״ל וסיסמה כדי להתחיל.",
+				"providers": "אפשר ליצור חשבון באמצעות חשבון מקושר."
+			},
+			"invitation": {
+				"description": "יש להשתמש בכתובת הדוא״ל שקיבלה את ההזמנה. לאחר מכן תתבצע הצטרפות לסביבת העבודה."
+			}
+		},
+		"verifyOtp": {
+			"pageTitle": "אימות קוד",
+			"validation": {
+				"codeLength": "הקוד חייב להכיל 6 ספרות"
+			},
+			"toast": {
+				"invalidCode": "קוד האימות אינו תקין",
+				"verifyFailed": "אימות הקוד נכשל",
+				"resendFailed": "שליחת הקוד מחדש נכשלה",
+				"resendSuccess": "קוד אימות חדש נשלח!"
+			},
+			"heading": "יש לבדוק את הדוא״ל",
+			"description": "שלחנו קוד בן 6 ספרות אל {{email}}. תוקפו יפוג בעוד {{minutes}} דקות.",
+			"label": "קוד אימות",
+			"submit": "אימות והמשך",
+			"didntGetIt": "הקוד לא הגיע?",
+			"resendCode": "שליחת הקוד מחדש",
+			"useDifferentEmail": "שימוש בכתובת דוא״ל אחרת",
+			"expired": "תוקף הקוד פג. יש לשלוח קוד חדש.",
+			"tooManyAttempts": "יותר מדי ניסיונות. יש לשלוח קוד חדש."
+		},
+		"otpSignIn": {
+			"sendFailed": "שליחת קוד האימות נכשלה"
+		},
+		"signInForm": {
+			"failedSignIn": "ההתחברות נכשלה"
+		},
+		"invitation": {
+			"pageTitleAccept": "אישור הזמנה",
+			"pageTitleError": "שגיאה בהזמנה",
+			"pageTitleInvalid": "הזמנה לא תקפה",
+			"joinWorkspace": "הצטרפות אל {{workspaceName}}",
+			"createAccount": "יצירת חשבון",
+			"signIn": "התחברות",
+			"toast": {
+				"acceptFailed": "אישור ההזמנה נכשל",
+				"acceptSuccess": "ההזמנה אושרה! ברוכים הבאים לצוות."
+			},
+			"description": "{{inviterName}} הזמין אותך לסביבת העבודה הזאת בטיקטק.",
+			"invitedBy": "הוזמנת על ידי",
+			"sentTo": "נשלחה אל",
+			"signedInAs": "מחובר בתור",
+			"expires": "תפוגה",
+			"notNow": "לא עכשיו",
+			"join": "הצטרפות לסביבת העבודה",
+			"switchAccount": "החלפת חשבון",
+			"goToKaneo": "מעבר לטיקטק",
+			"mismatch": {
+				"title": "התחברת עם כתובת דוא״ל אחרת",
+				"description": "ההזמנה נשלחה אל {{invitedEmail}}. התחברת בתור {{email}}."
+			},
+			"expired": {
+				"title": "תוקף ההזמנה פג",
+				"description": "יש לבקש מ־{{inviterName}} הזמנה חדשה אל {{workspaceName}}."
+			},
+			"invalid": {
+				"title": "ההזמנה כבר אינה תקפה",
+				"description": "ייתכן שכבר אושרה או בוטלה. יש לבקש הזמנה חדשה ממנהל סביבת העבודה."
+			},
+			"loadFailed": {
+				"title": "לא ניתן לטעון את ההזמנה",
+				"description": "יש לבדוק את החיבור ולרענן את העמוד."
+			}
+		},
+		"onboarding": {
+			"pageTitle": "ברוכים הבאים לטיקטק",
+			"workspaceName": "שם סביבת העבודה",
+			"workspaceNamePlaceholder": "למשל: החברה שלי, הצוות שלי",
+			"restrictedTitle": "נדרשת הזמנה",
+			"restrictedSubtitle": "רק מנהל המערכת יכול ליצור כאן סביבות עבודה. יש לבקש הזמנה ואז לרענן את העמוד.",
+			"restrictedCheckInvitations": "בדיקת הזמנות",
+			"toast": {
+				"createFailed": "יצירת סביבת העבודה נכשלה"
+			},
+			"validation": {
+				"workspaceNameRequired": "נדרש שם לסביבת העבודה",
+				"projectNameRequired": "יש לבחור שם לפרויקט הראשון שלך"
+			},
+			"cloud": {
+				"usageLabel": "מי ישתמש בסביבת העבודה?",
+				"usageSolo": "רק אני",
+				"usageSoloDescription": "מעקב אחר העבודה האישית שלך",
+				"usageTeam": "הצוות שלי",
+				"usageTeamDescription": "תכנון וביצוע עבודה יחד",
+				"invite": {
+					"emailLabel": "דוא״ל של חבר צוות {{index}}",
+					"emailPlaceholder": "teammate@company.com",
+					"addAnother": "הוספת כתובת נוספת",
+					"remove": "הסרת כתובת דוא״ל {{index}}",
+					"skip": "דילוג בינתיים",
+					"invalidEmail": "יש להזין כתובת דוא״ל תקינה",
+					"sent_one": "ההזמנה נשלחה",
+					"sent_other": "נשלחו {{count}} הזמנות",
+					"failed": "לא ניתן להזמין את {{email}}: {{message}}",
+					"sent_two": "נשלחו {{count}} הזמנות"
+				},
+				"plan": {
+					"trialUsed": "כבר השתמשת בתקופת הניסיון. יש לבחור מסלול כדי להתחיל ליצור פרויקטים ומשימות.",
+					"recommended": "מומלץ",
+					"continueTrial": "התחלת ניסיון חינם"
+				}
+			},
+			"projectNameDefault": "הפרויקט הראשון שלי",
+			"starterTasks": {
+				"drag": {
+					"title": "גרירת הכרטיס הזה לעמודה הבאה",
+					"description": "כרטיסים עוברים בין עמודות ככל שהעבודה מתקדמת. אפשר לגרור את הכרטיס לעמודה הבאה, או לפתוח אותו ולשנות את הסטטוס."
+				},
+				"details": {
+					"title": "פתיחת המשימה והוספת תת־משימה",
+					"description": "משימה יכולה לכלול תיאור, תתי־משימות, תוויות, אחראי ותאריך יעד. כדאי לנסות להוסיף כאן תת־משימה."
+				},
+				"invite": {
+					"title": "הזמנת הצוות שלך",
+					"description": "טיקטק עובד הכי טוב כשכולם בפנים. אפשר לפתוח את **חברי הצוות** בסרגל הצד כדי להזמין אנשים בדוא״ל."
+				},
+				"integrations": {
+					"title": "חיבור GitHub, GitLab או Gitea",
+					"description": "סנכרון סוגיות והעברת משימות אוטומטית כשבקשות משיכה נפתחות ומתמזגות. ההגדרה נמצאת תחת **הגדרות הפרויקט**."
+				},
+				"create": {
+					"title": "יצירת משימה משלך",
+					"description": "אפשר להשתמש ב־**+** לצד שם העמודה, או ללחוץ על **T** ואז **C**. אפשר למחוק את משימות ההיכרות כשמוכנים."
+				}
+			},
+			"progress": "שלב {{current}} מתוך {{total}}",
+			"welcome": "ברוכים הבאים, {{name}}",
+			"settingUp": "מגדיר את {{name}}",
+			"continue": "המשך",
+			"signedInAs": "מחובר בתור {{email}}",
+			"signOut": "התנתקות",
+			"workspace": {
+				"title": "בחירת שם לסביבת העבודה",
+				"description": "כאן הפרויקטים שלך יישמרו. אפשר להשתמש בשם הצוות או החברה ולשנות אותו בהמשך."
+			},
+			"usage": {
+				"title": "למי זה מיועד?",
+				"description": "נתאים את {{name}} לצרכים שלך. תמיד אפשר להזמין אנשים בהמשך."
+			},
+			"project": {
+				"title": "יצירת הפרויקט הראשון",
+				"description": "נוסיף כמה משימות היכרות כדי לעזור לך להתמצא. אפשר לשנות או למחוק אותן בכל עת.",
+				"label": "שם הפרויקט",
+				"numbered": "המשימות ימוספרו"
+			},
+			"invite": {
+				"title": "צירוף הצוות",
+				"description": "הצוות יקבל דוא״ל להצטרפות אל {{name}}. אפשר לדלג כדי להתרשם קודם.",
+				"label": "כתובות הדוא״ל של הצוות",
+				"send_one": "שליחת הזמנה אחת ({{count}})",
+				"send_other": "שליחת {{count}} הזמנות",
+				"sendNone": "שליחת הזמנות",
+				"send_two": "שליחת {{count}} הזמנות"
+			},
+			"plan": {
+				"title": "איך תרצה להתחיל?",
+				"descriptionTrial_one": "כל מסלול כולל פרויקטים ומשימות ללא הגבלה. אפשר לנסות את {{name}} בחינם ליום אחד ({{count}}), או להירשם עכשיו.",
+				"descriptionTrial_other": "כל מסלול כולל פרויקטים ומשימות ללא הגבלה. אפשר לנסות את {{name}} בחינם למשך {{count}} ימים, או להירשם עכשיו.",
+				"choose": "בחירת מסלול",
+				"description": {
+					"team": "חברים, תפקידים והרשאות ללא הגבלה",
+					"personal": "לאדם אחד"
+				},
+				"perUserMonth": "למשתמש / חודש",
+				"perMonth": "לחודש",
+				"subscribe": "הרשמה למסלול {{plan}}",
+				"checkout": "המשך לתשלום",
+				"trialNote": "לא נדרש כרטיס לתקופת הניסיון. התשלום מתבצע באמצעות Creem.",
+				"paymentNote": "התשלום מתבצע באמצעות Creem.",
+				"descriptionTrial_two": "כל מסלול כולל פרויקטים ומשימות ללא הגבלה. אפשר לנסות את {{name}} בחינם למשך {{count}} ימים, או להירשם עכשיו."
+			},
+			"ready": {
+				"eyebrow": "הכול מוכן",
+				"title": "{{name}} מוכן",
+				"description": "הנה מה שהגדרנו. אפשר לשנות הכול בהמשך.",
+				"workspace": "סביבת עבודה",
+				"project": "הפרויקט הראשון",
+				"projectValue_one": "{{name}}, עם משימת היכרות אחת ({{count}})",
+				"projectValue_other": "{{name}}, עם {{count}} משימות היכרות",
+				"invitations": "הזמנות",
+				"invitationsValue_one": "נשלחה לאדם אחד ({{count}})",
+				"invitationsValue_other": "נשלחו ל־{{count}} אנשים",
+				"open": "פתיחת {{name}}",
+				"projectValue_two": "{{name}}, עם {{count}} משימות היכרות",
+				"invitationsValue_two": "נשלחו ל־{{count}} אנשים"
+			},
+			"preview": {
+				"live": "תצוגה חיה של {{name}}",
+				"liveNoName": "תצוגה חיה",
+				"ready": "{{name}} מוכן",
+				"untitled": "סביבת העבודה שלך"
+			}
+		},
+		"profileSetup": {
+			"pageTitle": "השלמת הפרופיל",
+			"completeTitle": "השלמת הפרופיל שלך",
+			"subtitle": "יש להזין את השם שלך כדי להתחיל",
+			"yourName": "השם שלך",
+			"namePlaceholder": "למשל: ישראל ישראלי",
+			"saving": "שומר...",
+			"continue": "המשך",
+			"welcome": "ברוכים הבאים, {{name}}!",
+			"redirecting": "מעביר ללוח הבקרה שלך...",
+			"toast": {
+				"updateSuccess": "הפרופיל עודכן בהצלחה",
+				"updateFailed": "עדכון הפרופיל נכשל"
+			},
+			"validation": {
+				"nameRequired": "נדרש שם",
+				"nameShort": "השם חייב להכיל לפחות 2 תווים"
+			}
+		},
+		"passwordReset": {
+			"forgotPassword": "שכחת סיסמה?",
+			"requestTitle": "איפוס הסיסמה שלך",
+			"requestSubtitle": "יש להזין דוא״ל ונשלח קישור לאיפוס הסיסמה.",
+			"sendLink": "שליחת קישור לאיפוס",
+			"requestError": "לא ניתן לבקש קישור לאיפוס. יש לנסות שוב.",
+			"unavailable": "איפוס סיסמה אינו זמין. יש לפנות למנהל המערכת.",
+			"configError": "לא ניתן להגיע לשרת. יש לרענן את העמוד כדי לנסות שוב.",
+			"resetTitle": "בחירת סיסמה חדשה",
+			"newPassword": "סיסמה חדשה",
+			"confirmPassword": "אישור הסיסמה החדשה",
+			"passwordMismatch": "הסיסמאות אינן זהות.",
+			"passwordLength": "יש להשתמש ב־8 עד 128 תווים.",
+			"invalidLink": "הקישור לא תקף או שתוקפו פג. יש לבקש קישור חדש כדי להמשיך.",
+			"requestNewLink": "בקשת קישור חדש",
+			"resetError": "לא ניתן לאפס את הסיסמה. יש לנסות שוב.",
+			"success": "הסיסמה אופסה. אפשר להתחבר עם הסיסמה החדשה.",
+			"backToSignIn": "חזרה להתחברות",
+			"sentTitle": "יש לבדוק את תיבת הדואר",
+			"sentDescription": "אם קיים חשבון עבור {{email}}, קישור לאיפוס הסיסמה בדרך אליו. תוקפו יפוג בעוד שעה.",
+			"sentHelpTitle": "ההודעה לא הגיעה?",
+			"sentHelpDescription": "יש לבדוק את תיקיית דואר הזבל, או לבקש קישור נוסף בעוד דקה.",
+			"rememberedIt": "נזכרת בסיסמה?",
+			"resetDescription": "יש להשתמש ב־8 עד 128 תווים. מכשירים אחרים ינותקו מהחשבון.",
+			"updatePassword": "עדכון סיסמה",
+			"changedMind": "שינית את דעתך?",
+			"invalidLinkTitle": "תוקף הקישור פג",
+			"successTitle": "הסיסמה עודכנה"
+		},
+		"page": {
+			"terms": "תנאי שימוש",
+			"privacy": "פרטיות"
+		},
+		"device": {
+			"connect": {
+				"title": "חיבור מכשיר",
+				"description": "יש להזין את הקוד המוצג במסוף או באפליקציה כדי לקשר אותם לחשבון הטיקטק שלך.",
+				"label": "קוד מכשיר",
+				"submit": "המשך",
+				"noCode": "עדיין אין קוד? יש להתחיל את ההתחברות מהאפליקציה שלך.",
+				"codeRequired": "יש להזין את הקוד שמוצג במכשיר שלך.",
+				"invalidCode": "הקוד אינו תקף או שתוקפו פג."
+			},
+			"approve": {
+				"pageTitle": "אישור מכשיר",
+				"title": "לחבר את המכשיר הזה?",
+				"description": "מכשיר מבקש להתחבר בתור {{email}}. יש לאשר רק אם התחלת את התהליך בעצמך.",
+				"matchCode": "יש לוודא שזה הקוד שמופיע במכשיר שלך",
+				"deny": "דחייה",
+				"approve": "אישור",
+				"failed": "לא ניתן לעדכן את הבקשה. יש לנסות שוב."
+			},
+			"approved": {
+				"title": "המכשיר חובר",
+				"description": "אפשר לחזור למסוף או לאפליקציה ולסגור את הלשונית הזאת."
+			},
+			"denied": {
+				"title": "הבקשה נדחתה",
+				"description": "לא חובר שום מכשיר. אפשר לסגור את הלשונית הזאת."
+			},
+			"missing": {
+				"title": "אין קוד מכשיר",
+				"description": "יש לפתוח את העמוד מהמכשיר שלך, או להזין את הקוד ידנית.",
+				"enterCode": "הזנת קוד"
+			},
+			"signIn": {
+				"title": "התחברות לחיבור המכשיר שלך",
+				"description": "לאחר ההתחברות נחזור לכאן לאישור.",
+				"submit": "התחברות"
+			}
+		},
+		"mcp": {
+			"authorize": {
+				"title": "אישור לקוח MCP",
+				"description": "הלקוח יוכל לפעול בשמך בכל סביבת עבודה שיש לך גישה אליה. יש להמשיך רק אם התחלת את החיבור בעצמך.",
+				"client": "לקוח",
+				"unknownClient": "לקוח MCP",
+				"selfReported": "דיווח עצמי",
+				"redirect": "מחזיר אותך אל",
+				"signedInAs": "מחובר בתור",
+				"deny": "דחייה",
+				"allow": "אישור גישה"
+			},
+			"expired": {
+				"title": "תוקף הבקשה פג",
+				"description": "יש לחזור ללקוח ה־MCP ולהתחבר שוב."
+			},
+			"signIn": {
+				"title": "התחברות לאישור הלקוח הזה",
+				"description": "לאחר ההתחברות נחזור לכאן לבדיקה.",
+				"submit": "התחברות"
+			}
+		}
+	},
+	"settings": {
+		"advancedSettings": "הגדרות מתקדמות",
+		"advancedSettingsDescription": "הצגת אפשרויות נוספות, כמו כללי סנכרון של חיבורים. בדפדפן הזה בלבד.",
+		"syncRules": {
+			"title": "מה מסתנכרן",
+			"sharedHint": "הכללים האלה חלים על כל מי שמשתמש בפרויקט. הסתרת ההגדרות המתקדמות אינה משביתה אותם.",
+			"outgoing": "מטיקטק אל המאגר",
+			"incoming": "מהמאגר אל טיקטק",
+			"outgoingHint": "בחירת המשימות בטיקטק שיכולות להסתנכרן. הסרת תווית תואמת משהה את הסנכרון בשני הכיוונים של משימה קיימת.",
+			"incomingHint": "בחירת הסוגיות שניתן לייבא או ליצור מהן משימות. יש להשתמש בשמות התוויות המדויקים במאגר. קישורים קיימים כפופים לכלל המשימה בטיקטק.",
+			"all": "כל המשימות והסוגיות",
+			"filtered": "רק תוויות תואמות",
+			"any": "אחת מהתוויות שנבחרו",
+			"every": "כל התוויות שנבחרו",
+			"matchLabels": "התאמת תוויות",
+			"repositoryLabel": "שם התווית במאגר",
+			"addLabel": "הוספת תווית",
+			"removeLabel": "הסרת {{name}}",
+			"noLabels": "יש ליצור תוויות בסביבת העבודה לפני הגדרת מסנן משימות.",
+			"selectLabel": "יש לבחור לפחות תווית אחת לתצוגה מקדימה של הכלל.",
+			"unavailableLabel": "תווית לא זמינה",
+			"impactTitle": "מה ישתנה",
+			"impact": "משימות תואמות: {{matching}} / {{total}} · ייצוא חדש: {{create}} · קישורים להשהיה: {{pause}} · קישורים לבדיקה: {{review}}",
+			"preserveHint": "השהיה שומרת את שתי הרשומות ואת הקישור ביניהן. חידוש הסנכרון מחייב השוואה; תגובות קודמות לעולם אינן נשלחות מחדש.",
+			"previewing": "בודק את השפעת הסנכרון…",
+			"saveError": "לא ניתן להחיל את הכללים. ייתכן שהחיבור או היקף המשימות השתנו. יש לרענן את התצוגה המקדימה ולנסות שוב.",
+			"refreshPreview": "רענון התצוגה המקדימה",
+			"rulesChanged": "הכללים השמורים השתנו בזמן העריכה. הטיוטה שלך נשמרה. יש לבדוק את הכללים הנוכחיים למעלה לפני החלת הטיוטה, או לטעון את הכללים השמורים.",
+			"loadSavedRules": "טעינת הכללים השמורים",
+			"missingLabels": "תווית שנבחרה בסביבת העבודה אינה זמינה. הסנכרון יישאר מושהה עד לתיקון הכלל.",
+			"removeMissingLabels": "הסרת תוויות לא זמינות",
+			"apply": "החלת כללי הסנכרון",
+			"saved": "כללי הסנכרון נשמרו",
+			"loading": "טוען את כללי הסנכרון…",
+			"loadError": "לא ניתן לטעון את כללי הסנכרון.",
+			"advancedHint": "יש להפעיל הגדרות מתקדמות בהעדפות כדי לערוך את הכללים האלה.",
+			"paused": "הסנכרון מושהה",
+			"pausedHint": "הרשומות והקישורים נשמרים. משימות שיתאימו שוב לכלל ידרשו בדיקה לפני חידוש הסנכרון.",
+			"reviewRequired": "תואם לכלל · נדרשת בדיקה",
+			"excluded": "מחוץ לכלל הנוכחי",
+			"review": "בדיקה וחידוש",
+			"previous": "הקודם",
+			"next": "הבא",
+			"reviewTitle": "בדיקה לפני חידוש הסנכרון",
+			"reviewHint": "יש להשוות את הכותרת, התיאור והמצב הפתוח או הסגור הנוכחיים. יש לבחור מאיזה צד לשמור את השדות האלה. התוויות והתגובות הקודמות נשארות ללא שינוי.",
+			"resumeError": "לא ניתן לחדש את הסנכרון. ייתכן שהמשימה, הסוגיה או הכלל השתנו, או שהספק אינו זמין. הסנכרון נשאר מושהה; יש לרענן את ההשוואה.",
+			"refreshComparison": "רענון ההשוואה",
+			"repository": "מאגר",
+			"open": "פתוח",
+			"closed": "סגור",
+			"noDescription": "אין תיאור",
+			"useRepository": "שמירת הערכים מהמאגר",
+			"useKaneo": "שמירת הערכים מטיקטק",
+			"exportPending": "ייצוא המשימות התואמות",
+			"inactiveHint": "החיבור הזה מושהה. לא ייוצאו משימות עד להפעלתו מחדש.",
+			"allIssues": "כל הסוגיות",
+			"allTasks": "כל המשימות",
+			"edit": "עריכה",
+			"hidePaused": "הסתרה",
+			"issuesLabelled": "סוגיות עם התוויות",
+			"joinAnd": "וגם",
+			"joinOr": "או",
+			"kaneoToProvider": "מטיקטק אל {{provider}}",
+			"pausedSummary_one": "משימה אחת ({{count}}) הפסיקה להסתנכרן כי היא כבר לא תאמה לכללי הסנכרון.",
+			"pausedSummary_other": "{{count}} משימות הפסיקו להסתנכרן כי הן כבר לא תאמו לכללי הסנכרון.",
+			"providerToKaneo": "מ־{{provider}} אל טיקטק",
+			"reviewPaused": "בדיקה",
+			"tasksLabelled": "משימות עם התוויות",
+			"pausedSummary_two": "{{count}} משימות הפסיקו להסתנכרן כי הן כבר לא תאמו לכללי הסנכרון."
+		},
+		"account": "חשבון",
+		"administration": "ניהול מערכת",
+		"developer": "למפתחים",
+		"information": "פרופיל",
+		"notifications": "התראות",
+		"preferences": "העדפות",
+		"apiKeys": "מפתחות API",
+		"adminUsers": {
+			"title": "משתמשים",
+			"subtitle": "כל בעלי החשבונות בשרת הטיקטק הזה.",
+			"directoryTitle": "כל המשתמשים",
+			"searchCount_one": "משתמש תואם אחד ({{count}})",
+			"searchCount_other": "{{count}} משתמשים תואמים",
+			"refreshing": "מרענן משתמשים",
+			"searchPlaceholder": "חיפוש לפי שם או דוא״ל",
+			"searchLabel": "חיפוש משתמשים",
+			"loadError": "לא ניתן לטעון משתמשים.",
+			"retry": "ניסיון חוזר",
+			"emptyTitle": "לא נמצאו משתמשים",
+			"emptyDescription": "כדאי לנסות שם או כתובת דוא״ל אחרים.",
+			"clearSearch": "ניקוי החיפוש",
+			"you": "אתה",
+			"previous": "הקודם",
+			"next": "הבא",
+			"pagination": "עמוד {{current}} מתוך {{total}}",
+			"columns": {
+				"user": "משתמש",
+				"role": "תפקיד",
+				"status": "סטטוס",
+				"joined": "הצטרפות",
+				"actions": "פעולות"
+			},
+			"roles": {
+				"admin": "מנהל מערכת",
+				"user": "משתמש"
+			},
+			"status": {
+				"active": "פעיל",
+				"deactivated": "מושבת"
+			},
+			"actions": {
+				"open": "פעולות עבור {{name}}",
+				"edit": "עריכה",
+				"deactivate": "השבתה",
+				"reactivate": "הפעלה מחדש"
+			},
+			"edit": {
+				"title": "עריכת משתמש",
+				"description": "עדכון פרטי החשבון והגישה שלו בכל המערכת.",
+				"name": "שם מלא",
+				"email": "כתובת דוא״ל",
+				"role": "תפקיד במערכת",
+				"selfRoleHint": "לא ניתן לשנות את התפקיד שלך במערכת.",
+				"save": "שמירת שינויים",
+				"saving": "שומר…"
+			},
+			"confirm": {
+				"working": "מבצע…",
+				"deactivate": {
+					"title": "להשבית את החשבון הזה?",
+					"description": "{{name}} ינותק מהחשבון ולא יוכל להתחבר עד שמנהל מערכת יפעיל את החשבון מחדש.",
+					"action": "השבתת החשבון"
+				},
+				"reactivate": {
+					"title": "להפעיל מחדש את החשבון הזה?",
+					"description": "{{name}} יוכל שוב להתחבר ולגשת לסביבות העבודה שלו.",
+					"action": "הפעלת החשבון מחדש"
+				},
+				"delete": {
+					"title": "למחוק את החשבון הזה לצמיתות?",
+					"description": "הפעולה מוחקת לצמיתות את {{name}}, את ההתחברויות, החברויות והנתונים המשויכים לחשבון. לא ניתן לבטל אותה.",
+					"action": "מחיקה לצמיתות"
+				}
+			},
+			"toast": {
+				"updated": "המשתמש עודכן",
+				"updateError": "עדכון המשתמש נכשל",
+				"deactivated": "המשתמש הושבת",
+				"reactivated": "המשתמש הופעל מחדש",
+				"deleted": "המשתמש נמחק",
+				"actionError": "עדכון סטטוס המשתמש נכשל"
+			},
+			"searchCount_two": "{{count}} משתמשים תואמים"
+		},
+		"adminWorkspaces": {
+			"title": "סביבות עבודה",
+			"subtitle": "כל סביבות העבודה בשרת הטיקטק הזה, כולל אלה שאינך חבר בהן.",
+			"directoryTitle": "כל סביבות העבודה",
+			"searchCount_one": "סביבת עבודה תואמת אחת ({{count}})",
+			"searchCount_other": "{{count}} סביבות עבודה תואמות",
+			"refreshing": "מרענן סביבות עבודה",
+			"searchPlaceholder": "חיפוש לפי שם או מזהה כתובת",
+			"searchLabel": "חיפוש סביבות עבודה",
+			"loadError": "לא ניתן לטעון סביבות עבודה.",
+			"retry": "ניסיון חוזר",
+			"emptyTitle": "לא נמצאו סביבות עבודה",
+			"emptyDescription": "כדאי לנסות שם או מזהה כתובת אחרים.",
+			"clearSearch": "ניקוי החיפוש",
+			"previous": "הקודם",
+			"next": "הבא",
+			"pagination": "עמוד {{current}} מתוך {{total}}",
+			"noOwner": "אין בעלים",
+			"manage": "ניהול",
+			"manageLabel": "ניהול {{name}}",
+			"columns": {
+				"workspace": "סביבת עבודה",
+				"owners": "בעלים",
+				"members": "חברים",
+				"projects": "פרויקטים",
+				"created": "נוצרה",
+				"actions": "פעולות"
+			},
+			"members": {
+				"title": "החברים ב־{{name}}",
+				"description": "שינוי תפקידים, גישה לפרויקטים ובעלות, גם אם אינך חבר בסביבת העבודה הזאת.",
+				"count_one": "חבר אחד ({{count}})",
+				"count_other": "{{count}} חברים",
+				"add": "הוספת חבר",
+				"loadError": "לא ניתן לטעון את החברים.",
+				"empty": "אין חברים בסביבת העבודה הזאת.",
+				"roleLabel": "התפקיד של {{name}}",
+				"editAccess": "שינוי הגישה לפרויקטים של {{name}} ({{access}})",
+				"actions": "פעולות עבור {{name}}",
+				"makeOwner": "הגדרה כבעלים",
+				"remove": "הסרה מסביבת העבודה",
+				"count_two": "{{count}} חברים"
+			},
+			"addMember": {
+				"title": "הוספת חבר",
+				"description": "הוספת משתמש קיים אל {{name}}. תהיה לו גישה לכל הפרויקטים עד שתוגבל.",
+				"user": "משתמש",
+				"userPlaceholder": "חיפוש שם או דוא״ל…",
+				"searching": "מחפש משתמשים…",
+				"usersError": "לא ניתן לטעון משתמשים.",
+				"noUsers": "לא נמצאו משתמשים",
+				"alreadyMember": "כבר חבר",
+				"role": "תפקיד",
+				"submit": "הוספת חבר",
+				"adding": "מוסיף…"
+			},
+			"confirm": {
+				"working": "מבצע…",
+				"transfer": {
+					"title": "להגדיר את {{name}} כבעלים?",
+					"description": "{{name}} יהיה הבעלים היחיד של {{workspace}}. כל מי שמחזיק בבעלות כעת יהפוך למנהל.",
+					"action": "הגדרה כבעלים"
+				},
+				"remove": {
+					"title": "להסיר את {{name}}?",
+					"description": "{{name}} יאבד את הגישה אל {{workspace}} ואל הפרויקטים שלה. החשבון שלו יישאר במערכת.",
+					"action": "הסרת חבר"
+				}
+			},
+			"toast": {
+				"added": "החבר נוסף",
+				"addError": "הוספת החבר נכשלה",
+				"roleUpdated": "התפקיד עודכן",
+				"roleError": "עדכון התפקיד נכשל",
+				"removed": "החבר הוסר",
+				"removeError": "הסרת החבר נכשלה",
+				"ownershipTransferred": "הבעלות הועברה",
+				"transferError": "העברת הבעלות נכשלה"
+			},
+			"searchCount_two": "{{count}} סביבות עבודה תואמות"
+		},
+		"informationPage": {
+			"pageTitle": "פרופיל",
+			"title": "פרופיל",
+			"subtitle": "כך חברי הצוות שלך רואים אותך.",
+			"sectionTitle": "פרטים",
+			"profilePicture": "תמונת פרופיל",
+			"fullName": "שם",
+			"fullNamePlaceholder": "הזנת השם שלך",
+			"email": "דוא״ל",
+			"updateError": "עדכון הפרופיל נכשל",
+			"validation": {
+				"nameRequired": "נדרש שם",
+				"nameShort": "השם חייב להכיל לפחות 2 תווים"
+			},
+			"avatar": {
+				"hint": "תמונות מרובעות נראות הכי טוב.",
+				"remove": "הסרה",
+				"updateSuccess": "תמונת הפרופיל עודכנה",
+				"updateError": "עדכון תמונת הפרופיל נכשל",
+				"removeSuccess": "תמונת הפרופיל הוסרה",
+				"removeError": "הסרת תמונת הפרופיל נכשלה",
+				"upload": "העלאה"
+			},
+			"deleteAccount": {
+				"sectionTitle": "פעולות מסוכנות",
+				"title": "מחיקת חשבון",
+				"description": "סביבות עבודה שרק אתה חבר בהן יימחקו יחד עם החשבון. בסביבות אחרות המשימות שלך יישארו ללא אחראי, והתגובות שלך יוסרו.",
+				"modalTitle": "למחוק את החשבון שלך?",
+				"modalDescription": "הפעולה מוחקת את החשבון לצמיתות ולא ניתן לבטל אותה.",
+				"confirmLabel": "יש להקליד {{email}} לאישור",
+				"confirm": "מחיקת חשבון",
+				"success": "החשבון שלך נמחק",
+				"error": "מחיקת החשבון נכשלה",
+				"sessionTooOld": "מטעמי אבטחה, יש להתנתק ולהתחבר מחדש לפני מחיקת החשבון."
+			},
+			"emailHint": "זו הכתובת המשמשת אותך להתחברות."
+		},
+		"notificationsPage": {
+			"pageTitle": "התראות",
+			"title": "התראות",
+			"subtitle": "על מה טיקטק יעדכן אותך, והיכן העדכונים יגיעו אליך.",
+			"statusConnected": "מחובר",
+			"statusPaused": "מושהה",
+			"emailTitle": "דוא״ל",
+			"accountEmailNoAddress": "אין כתובת דוא״ל זמינה לחשבון",
+			"saveChanges": "שמירת שינויים",
+			"disconnect": "ניתוק",
+			"ntfyTitle": "ntfy",
+			"ntfyDescription": "שליחת התראות לנושא ntfy בטלפון או במחשב שלך.",
+			"serverUrl": "כתובת השרת",
+			"topic": "נושא",
+			"token": "אסימון",
+			"ntfyServerPlaceholder": "https://ntfy.example.com",
+			"ntfyTopicPlaceholder": "team-alerts",
+			"ntfyTokenPlaceholder": "רק אם השרת שלך דורש זאת",
+			"ntfyTokenHintConfigured": "כבר מוגדר אסימון ({{masked}}). יש להזין אסימון חדש כדי להחליפו.",
+			"ntfyTokenHintOptional": "יש להשתמש באסימון אם שרת ה־ntfy שלך דורש אימות.",
+			"connectNtfy": "חיבור ntfy",
+			"gotifyTitle": "Gotify",
+			"gotifyDescription": "שליחת התראות לשרת ה־Gotify שלך.",
+			"gotifyTokenLabel": "אסימון אפליקציה",
+			"gotifyServerPlaceholder": "https://gotify.example.com",
+			"gotifyTokenPlaceholder": "אסימון האפליקציה של Gotify",
+			"gotifyTokenHintConfigured": "כבר מוגדר אסימון אפליקציה ({{masked}}). יש להזין אסימון חדש כדי להחליפו.",
+			"gotifyTokenHintRequired": "נדרש. יש להשתמש באסימון אפליקציה משרת ה־Gotify שלך.",
+			"connectGotify": "חיבור Gotify",
+			"webhookTitle": "Webhook מותאם אישית",
+			"webhookDescription": "שליחת כל התראה לנקודת הקצה שלך בפורמט JSON.",
+			"endpointUrl": "כתובת נקודת הקצה",
+			"signingSecret": "סוד חתימה",
+			"webhookUrlPlaceholder": "https://example.com/webhooks/kaneo",
+			"webhookSecretPlaceholder": "סוד משותף אופציונלי",
+			"webhookSecretHintConfigured": "כבר מוגדר סוד חתימה ({{masked}}). יש להזין סוד חדש כדי להחליפו.",
+			"webhookSecretHintOptional": "טיקטק חותם על גוף הבקשה כאשר מוגדר סוד.",
+			"connectWebhook": "חיבור Webhook",
+			"eventPreferencesTitle": "קבלת התראות על",
+			"eventPreferencesDescription": "לא נשלחות אליך התראות על תגובות, אזכורים ושינויי סטטוס שביצעת בעצמך.",
+			"eventTaskAssignments": "הקצאות",
+			"eventComments": "תגובות ואזכורים",
+			"eventCommentsHint": "תגובות חדשות במשימות שלך, וכל מי שמאזכר אותך באמצעות @.",
+			"eventStatusChanges": "שינויי סטטוס",
+			"eventDueDateReminders": "תזכורות לתאריך יעד",
+			"reminderLeadTimeLabel": "תזכורת לפני תאריך היעד",
+			"reminderLeadTimeInvalid": "יש להזין מספר שלם בין 1 ל־{{max}}.",
+			"saveEventPreferences": "שמירת סוגי ההתראות",
+			"allProjects": "כל הפרויקטים",
+			"noProjectsInWorkspace": "עדיין אין פרויקטים זמינים בסביבת העבודה הזאת.",
+			"toastEmailSaved": "הגדרות ההתראות בדוא״ל נשמרו",
+			"toastEmailSaveFailed": "שמירת הגדרות הדוא״ל נכשלה",
+			"toastNtfySaved": "הגדרות ntfy נשמרו",
+			"toastNtfySaveFailed": "שמירת הגדרות ntfy נכשלה",
+			"toastNtfyDisconnected": "ntfy נותק",
+			"toastNtfyDisconnectFailed": "ניתוק ntfy נכשל",
+			"toastGotifySaved": "הגדרות Gotify נשמרו",
+			"toastGotifySaveFailed": "שמירת הגדרות Gotify נכשלה",
+			"toastGotifyDisconnected": "Gotify נותק",
+			"toastGotifyDisconnectFailed": "ניתוק Gotify נכשל",
+			"toastWebhookSaved": "הגדרות ה־Webhook נשמרו",
+			"toastWebhookSaveFailed": "שמירת הגדרות ה־Webhook נכשלה",
+			"toastWebhookDisconnected": "ה־Webhook נותק",
+			"toastWebhookDisconnectFailed": "ניתוק ה־Webhook נכשל",
+			"toastRuleSaved": "כלל ההתראות עבור {{workspaceName}} נשמר",
+			"toastRuleSaveFailed": "שמירת כלל ההתראות של סביבת העבודה נכשלה",
+			"toastRuleRemoved": "כלל ההתראות עבור {{workspaceName}} הוסר",
+			"toastRuleRemoveFailed": "הסרת כלל ההתראות של סביבת העבודה נכשלה",
+			"toastPreferencesSaved": "העדפות ההתראות נשמרו",
+			"toastPreferencesSaveFailed": "שמירת העדפות ההתראות נכשלה",
+			"toastRuleSavedGeneric": "כלל ההתראות של סביבת העבודה נשמר",
+			"toastRuleRemovedGeneric": "כלל ההתראות של סביבת העבודה הוסר",
+			"loadFailed": "לא ניתן לטעון את הגדרות ההתראות.",
+			"eventTaskAssignmentsHint": "כאשר מישהו מקצה לך משימה.",
+			"eventStatusChangesHint": "כאשר אחת המשימות שלך עוברת לעמודה אחרת.",
+			"eventDueDateRemindersHint": "לפני תאריך היעד של אחת המשימות שלך. על משימות באיחור נשלחות התראות נפרדות.",
+			"reminderLeadTimeUnitLabel": "יחידת זמן לתזכורת",
+			"reminderLeadTimeUnitHoursBefore_one": "שעה לפני",
+			"reminderLeadTimeUnitHoursBefore_other": "שעות לפני",
+			"reminderLeadTimeUnitDaysBefore_one": "יום לפני",
+			"reminderLeadTimeUnitDaysBefore_other": "ימים לפני",
+			"channelsTitle": "ערוצים",
+			"channelsDescription": "התראות תמיד מוצגות בטיקטק. אפשר לחבר ערוץ כדי לקבל אותן גם במקום אחר.",
+			"statusOn": "פעיל",
+			"emailToggleLabel": "שליחת התראות בדוא״ל",
+			"connect": "חיבור",
+			"configure": "הגדרה",
+			"done": "סיום",
+			"connectChannel": "חיבור {{channel}}",
+			"configureChannel": "הגדרת {{channel}}",
+			"optional": "אופציונלי",
+			"sendingLabel": "שליחה",
+			"sendingDescription": "אפשר לכבות כדי להשהות את הערוץ ולשמור את ההגדרות שלו.",
+			"disconnectTitle": "לנתק את {{channel}}?",
+			"disconnectDescription": "ההתראות יפסיקו להישלח אל {{channel}}, וההגדרות השמורות שלו יוסרו.",
+			"disconnecting": "מנתק...",
+			"workspacesTitle": "סביבות עבודה",
+			"workspacesDescription": "בחירת סביבות העבודה והפרויקטים שיכולים להשתמש בערוצים שלך.",
+			"statusSending": "שולח",
+			"onlyInKaneo": "רק בטיקטק",
+			"projectCount_one": "פרויקט אחד ({{count}})",
+			"projectCount_other": "{{count}} פרויקטים",
+			"ruleSummary": "{{channels}} · {{projects}}",
+			"setUp": "הגדרה",
+			"configureWorkspace": "הגדרת התראות עבור {{workspaceName}}",
+			"setUpWorkspace": "הגדרת התראות עבור {{workspaceName}}",
+			"ruleDialogTitle": "התראות של {{workspaceName}}",
+			"ruleDialogDescription": "לאן ניתן לשלוח התראות מסביבת העבודה הזאת.",
+			"ruleActiveLabel": "שליחה",
+			"ruleActiveDescription": "אפשר לכבות כדי להשהות את השליחה מסביבת העבודה ולשמור את ההגדרות שלה.",
+			"ruleChannels": "ערוצים",
+			"channelNotConnected": "לא מחובר",
+			"channelOff": "כבוי",
+			"ruleProjects": "פרויקטים",
+			"someProjects": "רק חלק",
+			"save": "שמירה",
+			"stopSending": "הפסקת שליחה",
+			"stopSendingTitle": "להפסיק לשלוח מ־{{workspaceName}}?",
+			"stopSendingDescription": "התראות מסביבת העבודה הזאת יוצגו רק בטיקטק.",
+			"stopping": "מפסיק...",
+			"reminderLeadTimeUnitHoursBefore_two": "שעות לפני",
+			"reminderLeadTimeUnitDaysBefore_two": "ימים לפני",
+			"projectCount_two": "{{count}} פרויקטים"
+		},
+		"preferencesPage": {
+			"title": "העדפות",
+			"subtitle": "איך טיקטק נראה ופועל עבורך.",
+			"appearanceTitle": "כללי",
+			"theme": "ערכת נושא",
+			"selectTheme": "בחירת ערכת נושא",
+			"themeLight": "בהירה",
+			"themeDark": "כהה",
+			"themeSystem": "לפי הגדרות המערכת",
+			"language": "שפה",
+			"selectLanguage": "בחירת שפה",
+			"firstDayOfWeek": "היום הראשון בשבוע",
+			"firstDayOfWeekDescription": "משמש ביומנים ובבוררי תאריכים.",
+			"selectFirstDayOfWeek": "בחירת היום הראשון",
+			"weekStartsOnSunday": "יום ראשון",
+			"weekStartsOnMonday": "יום שני",
+			"weekStartsOnSaturday": "שבת",
+			"defaultView": "תצוגת ברירת מחדל",
+			"defaultViewDescription": "התצוגה שבה נפתחים פרויקטים.",
+			"selectViewMode": "בחירת מצב תצוגה",
+			"board": "לוח",
+			"list": "רשימה",
+			"gantt": "גאנט",
+			"sidebarDefault": "השארת סרגל הצד פתוח",
+			"sidebarDefaultDescription": "התחלה עם סרגל צד מורחב.",
+			"displayOptions": "פרטי משימות",
+			"displayOptionsDescription": "מה מוצג בכרטיסים ובשורות של הלוחות והרשימות שלך.",
+			"taskNumbers": "מספרי משימות",
+			"assignees": "אחראים",
+			"dueDates": "תאריכי יעד",
+			"labels": "תוויות",
+			"priority": "עדיפות",
+			"projectBackgrounds": "רקעים לפרויקטים",
+			"projectBackgroundsDescription": "הצגת תמונת הרקע שנבחרה לפרויקט מאחורי הלוח שלו.",
+			"advancedTitle": "מתקדם"
+		},
+		"developerPage": {
+			"pageTitle": "מפתחות API",
+			"title": "מפתחות API",
+			"subtitle": "מתן גישה לטיקטק בשמך לסקריפטים, לממשק שורת הפקודה וללקוחות MCP.",
+			"unnamedKey": "ללא שם",
+			"newKey": "מפתח חדש",
+			"keysTitle": "מפתחות",
+			"keysNote": "מפתח יכול לבצע כל פעולה שבאפשרותך לבצע. יש למחוק מפתחות שכבר אינם בשימוש.",
+			"emptyTitle": "עדיין אין מפתחות API",
+			"emptyDescription": "אפשר ליצור מפתח לשימוש בממשק שורת הפקודה, בלקוח MCP או בסקריפטים שלך.",
+			"loadError": "לא ניתן לטעון מפתחות API. יש לנסות שוב."
+		},
+		"apiKey": {
+			"createdModal": {
+				"title": "העתקת המפתח שלך",
+				"description": "לא ניתן יהיה לראות אותו שוב לאחר סגירת החלון.",
+				"copy": "העתקה",
+				"copied": "הועתק",
+				"done": "סיום",
+				"copyError": "לא ניתן להעתיק את המפתח. יש לבחור אותו ולהעתיק ידנית."
+			},
+			"table": {
+				"deleteConfirmTitle": "למחוק את ״{{name}}״?",
+				"deleteConfirmDescription": "כל מה שמשתמש במפתח הזה יפסיק לפעול. לא ניתן לבטל את הפעולה.",
+				"delete": "מחיקת מפתח",
+				"deleting": "מוחק…",
+				"toastDeleted": "מפתח ה־API נמחק",
+				"toastDeleteError": "לא ניתן למחוק את מפתח ה־API"
+			},
+			"createDialog": {
+				"title": "מפתח API חדש",
+				"description": "המפתח יכול לבצע כל פעולה שבאפשרותך לבצע.",
+				"nameLabel": "שם",
+				"namePlaceholder": "מפתח ה־API שלי",
+				"nameDescription": "כדי שיהיה קל לזכור היכן הוא בשימוש.",
+				"expirationLabel": "תפוגה",
+				"expiration1d": "יום אחד",
+				"expiration7d": "7 ימים",
+				"expiration30d": "30 ימים",
+				"expiration90d": "90 ימים",
+				"expirationNever": "ללא הגבלה",
+				"create": "יצירת מפתח",
+				"creating": "יוצר…",
+				"failedCreate": "לא ניתן ליצור את מפתח ה־API",
+				"validation": {
+					"nameRequired": "יש להזין שם",
+					"nameShort": "יש להשתמש ב־3 תווים לפחות"
+				}
+			},
+			"row": {
+				"created": "נוצר ב־{{date}}",
+				"expires": "תוקף עד {{date}}",
+				"expired": "התוקף פג ב־{{date}}",
+				"neverExpires": "ללא תאריך תפוגה",
+				"expiredBadge": "התוקף פג",
+				"actions": "פעולות עבור {{name}}"
+			}
+		},
+		"workspaceGeneral": {
+			"pageTitle": "הגדרות כלליות",
+			"title": "כללי",
+			"subtitle": "השם של {{name}} והבעלות עליה.",
+			"workspaceInfoTitle": "סביבת עבודה",
+			"nameLabel": "שם",
+			"namePlaceholder": "הזנת שם סביבת העבודה",
+			"descriptionLabel": "תיאור",
+			"descriptionPlaceholder": "על מה הצוות שלך עובד?",
+			"dangerZone": "פעולות מסוכנות",
+			"deleteWorkspace": "מחיקת סביבת עבודה",
+			"deleteWorkspaceDescription": "מחיקה לצמיתות של {{name}}, הפרויקטים והמשימות שלה.",
+			"deleteModalTitle": "למחוק את סביבת העבודה?",
+			"deleteModalDescription": "הפעולה מוחקת לצמיתות את {{name}} ואת כל הפרויקטים והמשימות שלה. לא ניתן לבטל אותה.",
+			"deleteModalConfirm": "מחיקת סביבת עבודה",
+			"toastUpdateError": "עדכון סביבת העבודה נכשל",
+			"toastDeleted": "סביבת העבודה נמחקה בהצלחה",
+			"toastDeleteError": "מחיקת סביבת העבודה נכשלה",
+			"validation": {
+				"nameRequired": "נדרש שם לסביבת העבודה",
+				"nameShort": "שם סביבת העבודה חייב להכיל לפחות 2 תווים"
+			},
+			"transferOwnership": {
+				"toastSuccess": "הבעלות הועברה",
+				"toastError": "העברת הבעלות נכשלה",
+				"title": "העברת בעלות",
+				"pickerLabel": "הבעלים החדש",
+				"noEligibleMembers": "יש להזמין לפחות חבר נוסף אחד לפני שניתן להעביר בעלות.",
+				"pickerHint": "הבעלים החדש יקבל את הבעלות. לך תישאר גישת מנהל.",
+				"pickerPlaceholder": "בחירת חבר",
+				"button": "העברה",
+				"dialogTitle": "להעביר בעלות?",
+				"dialogDescription": "{{name}} יהיה הבעלים היחיד של {{workspace}}. תישאר לך גישת מנהל, אך תאבד גישה לפעולות המוגבלות לבעלים, כמו מחיקת סביבת העבודה או העברת הבעלות שוב.",
+				"transferring": "מעביר…",
+				"confirm": "העברת בעלות"
+			},
+			"ownershipTitle": "בעלות",
+			"ownershipSubtitle": "רק הבעלים רואה את האפשרות הזאת."
+		},
+		"workspaceRoles": {
+			"pageTitle": "תפקידים",
+			"title": "תפקידים",
+			"subtitle": "הגדרת הפעולות שחברים יכולים לבצע ב־{{workspaceName}}.",
+			"thisWorkspace": "סביבת העבודה הזאת",
+			"noAccess": "נדרשות הרשאות מנהל או בעלים לניהול תפקידי סביבת העבודה.",
+			"sectionTitle": "תפקידי סביבת העבודה",
+			"sectionSubtitle": "אפשר לערוך את תפקידי ברירת המחדל או להוסיף תפקיד מותאם. שם התפקיד שהוקצה לחברים נשמר גם לאחר עריכה.",
+			"newRole": "תפקיד חדש",
+			"loading": "טוען…",
+			"loadError": "טעינת התפקידים נכשלה.",
+			"emptyTitle": "עדיין אין תפקידים",
+			"emptyDescription": "תפקידי ברירת המחדל יופיעו כאן לאחר יצירתם הראשונית בסביבת העבודה.",
+			"defaultBadge": "ברירת מחדל",
+			"permissionCount_one": "הרשאה אחת ({{count}})",
+			"permissionCount_other": "{{count}} הרשאות",
+			"nameLabel": "שם",
+			"nameHint": "באותיות קטנות באנגלית. לא ניתן לשנות בהמשך.",
+			"namePlaceholder": "למשל: reviewer",
+			"discard": "ביטול השינויים",
+			"createRole": "יצירת תפקיד",
+			"deleteRole": "מחיקת תפקיד",
+			"defaultRoleHelp": "תפקיד ברירת מחדל: השם שמור ולא ניתן למחוק את השורה.",
+			"unsavedChanges": "יש שינויים שלא נשמרו",
+			"allChangesSaved": "כל השינויים נשמרו",
+			"saveChanges": "שמירת שינויים",
+			"defaultRoleDescriptions": {
+				"viewer": "יכול לצפות במשימות ולהגיב עליהן.",
+				"member": "יכול ליצור ולנהל משימות ופרויקטים.",
+				"admin": "בעל גישה מלאה לסביבת העבודה."
+			},
+			"resources": {
+				"project": "פרויקטים",
+				"task": "משימות",
+				"label": "תוויות",
+				"workspace": "סביבת עבודה",
+				"organization": "ניהול סביבת העבודה",
+				"member": "חברים",
+				"invitation": "הזמנות",
+				"team": "צוותים",
+				"ac": "תפקידים והרשאות"
+			},
+			"permissions": {
+				"project": {
+					"create": {
+						"label": "יצירה",
+						"description": "יכול ליצור פרויקטים חדשים"
+					},
+					"read": {
+						"label": "קריאה",
+						"description": "יכול לצפות בפרויקטים"
+					},
+					"update": {
+						"label": "עדכון",
+						"description": "יכול לערוך הגדרות פרויקט"
+					},
+					"delete": {
+						"label": "מחיקה",
+						"description": "יכול למחוק פרויקטים"
+					},
+					"share": {
+						"label": "שיתוף",
+						"description": "יכול לשתף פרויקטים"
+					}
+				},
+				"task": {
+					"create": {
+						"label": "יצירה",
+						"description": "יכול ליצור משימות"
+					},
+					"read": {
+						"label": "קריאה",
+						"description": "יכול לצפות במשימות"
+					},
+					"update": {
+						"label": "עדכון",
+						"description": "יכול לערוך משימות"
+					},
+					"delete": {
+						"label": "מחיקה",
+						"description": "יכול למחוק משימות"
+					},
+					"assign": {
+						"label": "הקצאה",
+						"description": "יכול להקצות משימות לחברים"
+					}
+				},
+				"label": {
+					"create": {
+						"label": "יצירה",
+						"description": "יכול ליצור תוויות"
+					},
+					"read": {
+						"label": "קריאה",
+						"description": "יכול לצפות בתוויות"
+					},
+					"update": {
+						"label": "עדכון",
+						"description": "יכול לערוך תוויות"
+					},
+					"delete": {
+						"label": "מחיקה",
+						"description": "יכול למחוק תוויות"
+					}
+				},
+				"workspace": {
+					"read": {
+						"label": "קריאה",
+						"description": "יכול לצפות בהגדרות סביבת העבודה"
+					},
+					"update": {
+						"label": "עדכון",
+						"description": "יכול לעדכן את הגדרות סביבת העבודה"
+					},
+					"delete": {
+						"label": "מחיקה",
+						"description": "יכול למחוק את סביבת העבודה"
+					},
+					"manage_settings": {
+						"label": "ניהול הגדרות",
+						"description": "יכול לנהל את הגדרות סביבת העבודה"
+					}
+				},
+				"organization": {
+					"update": {
+						"label": "עריכת הגדרות ניהול סביבת העבודה",
+						"description": "שינוי הגדרות סביבת העבודה דרך שירות החשבונות."
+					},
+					"delete": {
+						"label": "מחיקת סביבת עבודה",
+						"description": "מחיקת סביבת העבודה לצמיתות דרך שירות החשבונות."
+					}
+				},
+				"member": {
+					"create": {
+						"label": "הוספת חברים",
+						"description": "הוספת משתמשים לסביבת העבודה הזאת."
+					},
+					"update": {
+						"label": "שינוי תפקידי חברים",
+						"description": "שינוי התפקידים שהוקצו לחברי סביבת העבודה."
+					},
+					"delete": {
+						"label": "הסרת חברים",
+						"description": "הסרת משתמשים מסביבת העבודה הזאת."
+					}
+				},
+				"invitation": {
+					"create": {
+						"label": "הזמנת חברים",
+						"description": "שליחת הזמנות לסביבת העבודה."
+					},
+					"cancel": {
+						"label": "ביטול הזמנות",
+						"description": "ביטול הזמנות ממתינות לסביבת העבודה."
+					}
+				},
+				"team": {
+					"create": {
+						"label": "יצירת צוותים",
+						"description": "יצירת צוותים בסביבת העבודה הזאת."
+					},
+					"update": {
+						"label": "עריכת צוותים",
+						"description": "שינוי צוותים וחברות בצוותים."
+					},
+					"delete": {
+						"label": "מחיקת צוותים",
+						"description": "מחיקת צוותים בסביבת העבודה הזאת."
+					}
+				},
+				"ac": {
+					"create": {
+						"label": "יצירת תפקידים",
+						"description": "יצירת תפקידים בסביבת העבודה והקצאת הרשאות להם."
+					},
+					"read": {
+						"label": "צפייה בתפקידים",
+						"description": "קריאת התפקידים וההרשאות של סביבת העבודה."
+					},
+					"update": {
+						"label": "שינוי הרשאות תפקיד",
+						"description": "שינוי הרשאות תפקיד, כולל גישת ניהול."
+					},
+					"delete": {
+						"label": "מחיקת תפקידים",
+						"description": "מחיקת תפקידים מותאמים בסביבת העבודה."
+					}
+				}
+			},
+			"validation": {
+				"nameRequired": "נדרש שם לתפקיד",
+				"nameExists": "כבר קיים תפקיד בשם הזה",
+				"permissionRequired": "יש לבחור לפחות הרשאה אחת"
+			},
+			"toast": {
+				"created": "התפקיד נוצר",
+				"createError": "יצירת התפקיד נכשלה",
+				"updated": "התפקיד עודכן",
+				"updateError": "עדכון התפקיד נכשל",
+				"deleted": "התפקיד נמחק",
+				"deleteError": "מחיקת התפקיד נכשלה"
+			},
+			"deleteDialog": {
+				"title": "מחיקת תפקיד",
+				"description": "הפעולה תמחק לצמיתות את התפקיד \"{{role}}\". חברים שהתפקיד הוקצה להם יאבדו את ההרשאות שלו."
+			},
+			"permissionCount_two": "{{count}} הרשאות"
+		},
+		"workspaceLabels": {
+			"pageTitle": "תוויות",
+			"title": "תוויות",
+			"subtitle": "התוויות משותפות לכל הפרויקטים בסביבת העבודה הזאת.",
+			"createLabel": "יצירת תווית",
+			"editLabel": "עריכת תווית",
+			"deleteLabel": "מחיקת תווית",
+			"saveLabel": "שמירה",
+			"nameLabel": "שם",
+			"namePlaceholder": "שם התווית",
+			"colorLabel": "צבע",
+			"createDescription": "פרויקטים בסביבת העבודה הזאת יוכלו להוסיף אותה למשימות שלהם.",
+			"editDescription": "השינויים יופיעו בכל משימה עם התווית הזאת.",
+			"deleteConfirmTitle": "למחוק את ״{{name}}״?",
+			"deleteConfirmDescription": "התווית תוסר מכל המשימות שמשתמשות בה. לא ניתן לבטל את הפעולה.",
+			"createSuccess": "התווית נוצרה",
+			"updateSuccess": "התווית עודכנה",
+			"deleteSuccess": "התווית נמחקה",
+			"createError": "יצירת התווית נכשלה",
+			"updateError": "עדכון התווית נכשל",
+			"deleteError": "מחיקת התווית נכשלה",
+			"nameRequired": "נדרש שם לתווית",
+			"deletionPending": "מסיר ממשימות…",
+			"resumeDeletion": "חידוש המחיקה",
+			"subtitleWithWorkspace": "התוויות משותפות לכל הפרויקטים ב־{{workspaceName}}.",
+			"newLabel": "תווית חדשה",
+			"sectionTitle": "תוויות סביבת העבודה",
+			"sectionDescription": "שינוי השם או הצבע של תווית מעדכן כל משימה שמשתמשת בה.",
+			"editNamed": "עריכת {{name}}",
+			"rowActions": "פעולות עבור {{name}}",
+			"preview": "בתוך משימה",
+			"previewPlaceholder": "תווית",
+			"resume": "המשך",
+			"emptyTitle": "עדיין אין תוויות",
+			"emptyDescription": "אפשר להוסיף תוויות כדי למיין ולסנן משימות בין פרויקטים.",
+			"loadError": "לא ניתן לטעון תוויות. יש לנסות שוב."
+		},
+		"workspaceImport": {
+			"pageTitle": "ייבוא",
+			"title": "ייבוא",
+			"subtitle": "העברת הפרויקטים שלך מכלי אחר אל {{workspace}}. טיקטק רק קורא מהמקור.",
+			"opensInNewTab": "(נפתח בלשונית חדשה)",
+			"retry": "ניסיון חוזר",
+			"notAllowed": {
+				"title": "רק מנהלי סביבת העבודה יכולים לייבא",
+				"description": "הייבוא יוצר פרויקטים ולכן דורש הרשאות לניהול הגדרות סביבת העבודה וליצירת פרויקטים. יש לבקש ממנהל סביבת העבודה לבצע אותו."
+			},
+			"sources": {
+				"title": "בחירת מקור",
+				"description": "יש לבחור את הכלי שממנו עוברים. כל פרויקט שנבחר יהפוך כאן לפרויקט חדש.",
+				"connect": "חיבור",
+				"connectTo": "חיבור {{source}}",
+				"linear": {
+					"description": "צוותים, סוגיות, תוויות, תתי־סוגיות ותגובות. יש להדביק מפתח API אישי.",
+					"intro": "כל צוות ב־Linear הופך לפרויקט, עם שלבי העבודה שלו כעמודות."
+				},
+				"jira": {
+					"description": "פרויקטים, סוגיות, תתי־משימות, קישורים ותגובות. בענן או ב־Data Center.",
+					"intro": "כל פרויקט ב־Jira הופך כאן לפרויקט, עם שלבי העבודה שלו כעמודות."
+				},
+				"trello": {
+					"description": "לוחות, רשימות, כרטיסים, רשימות סימון ותגובות. אישור גישה בלחיצה אחת.",
+					"intro": "כל לוח ב־Trello הופך לפרויקט, עם הרשימות שלו כעמודות."
+				},
+				"plane": {
+					"description": "פרויקטים, פריטי עבודה, תתי־סוגיות ותגובות. בענן או באירוח עצמי.",
+					"intro": "כל פרויקט ב־Plane הופך כאן לפרויקט, עם הסטטוסים שלו כעמודות."
+				},
+				"planka": {
+					"description": "לוחות, רשימות, כרטיסים, רשימות סימון ותגובות משרת ה־PLANKA שלך.",
+					"intro": "כל לוח ב־PLANKA הופך לפרויקט, עם הרשימות שלו כעמודות."
+				},
+				"kaneo": {
+					"pickerName": "שרת Kaneo אחר",
+					"description": "העברת פרויקטים בין Kaneo Cloud לשרת באירוח עצמי.",
+					"intro": "פרויקטים מכל סביבות העבודה שהמפתח יכול לגשת אליהן. כל פרויקט שנבחר מועתק לכאן."
+				}
+			},
+			"history": {
+				"title": "ייבואים אחרונים",
+				"description": "הייבוא ימשיך לפעול בשרת גם לאחר יציאה מהעמוד.",
+				"started": "התחיל {{time}}",
+				"empty": "עדיין אין ייבואים. פעולות ייבוא שתתחיל יופיעו כאן.",
+				"loadError": "לא ניתן לטעון את הייבואים האחרונים."
+			},
+			"status": {
+				"importing": "מייבא {{current}} מתוך {{total}}",
+				"warnings_one": "הסתיים עם אזהרה אחת ({{count}})",
+				"warnings_other": "הסתיים עם {{count}} אזהרות",
+				"partial": "יובאו {{done}} מתוך {{total}}",
+				"failed": "נכשל",
+				"imported": "יובא",
+				"warnings_two": "הסתיים עם {{count}} אזהרות"
+			},
+			"steps": {
+				"label": "שלבי הייבוא",
+				"connect": "חיבור",
+				"import": "ייבוא",
+				"done": "(הושלם)"
+			},
+			"back": {
+				"allSources": "כל המקורות",
+				"changeKey": "החלפת מפתח",
+				"overview": "סקירת הייבוא"
+			},
+			"connect": {
+				"title": "ייבוא מ־{{source}}",
+				"sectionTitle": "חיבור",
+				"sectionDescription": "טיקטק רק קורא מ־{{source}}. המפתח משמש לייבוא הזה ואינו נשמר.",
+				"cancel": "ביטול",
+				"continue": "המשך",
+				"whereToFind": "היכן למצוא אותו",
+				"showSecret": "הצגת {{field}}",
+				"hideSecret": "הסתרת {{field}}"
+			},
+			"linear": {
+				"apiKeyLabel": "מפתח API אישי",
+				"apiKeyDescription": "הרשאת קריאה מספיקה. אפשר לבטל את המפתח לאחר הייבוא.",
+				"openSettings": "פתיחת הגדרות Linear",
+				"stepOpen": "ב־Linear יש לפתוח את Settings ואז את Security and access.",
+				"stepCreate": "תחת Personal API keys יש ליצור מפתח עם הרשאת Read.",
+				"stepPaste": "יש להעתיק אותו ולהדביק למעלה."
+			},
+			"jira": {
+				"urlLabel": "כתובת אתר Jira",
+				"urlDescription": "יש להעתיק אותה מהדפדפן. גם Data Center נתמך.",
+				"urlPlaceholder": "https://your-site.atlassian.net",
+				"emailLabel": "דוא״ל",
+				"emailDescription": "כתובת הדוא״ל של חשבון Atlassian שלך. עבור Jira Data Center יש להשאיר את השדה ריק.",
+				"tokenLabel": "אסימון API",
+				"tokenDescription": "בענן: יש ליצור אסימון ב־id.atlassian.com. ב־Data Center: יש להשתמש באסימון גישה אישי.",
+				"tokenPlaceholder": "הדבקת אסימון",
+				"openSettings": "פתיחת אסימוני API של Atlassian",
+				"stepOpen": "יש לפתוח את id.atlassian.com, ואז את Security ואת API tokens.",
+				"stepCreate": "יש ליצור אסימון API ולהעתיק אותו.",
+				"stepPaste": "יש להדביק אותו יחד עם כתובת הדוא״ל המשמשת להתחברות ל־Jira.",
+				"nameMatchTip": "Jira מסתיר לעיתים קרובות כתובות דוא״ל, ולכן ייתכן שהאחראים יותאמו לאנשים כאן לפי שם מלא."
+			},
+			"trello": {
+				"apiKeyLabel": "מפתח API",
+				"apiKeyDescription": "ב־Power-Up שבבעלותך יש לפתוח את לשונית Trello Auth וליצור מפתח API (לא בלשונית OAuth 2.0) בכתובת",
+				"apiKeyPlaceholder": "הדבקת מפתח API",
+				"authorizeLabel": "אישור גישה לטיקטק",
+				"authorizeDescription": "פותח את Trello בלשונית חדשה. הרשאת קריאה בלבד, שתוקפה פג לאחר יום.",
+				"authorizeNeedsKey": "יש להזין תחילה את מפתח ה־API. הרשאת קריאה בלבד, שתוקפה פג לאחר יום.",
+				"authorizeButton": "אישור גישה ב־Trello",
+				"tokenLabel": "אסימון",
+				"tokenDescription": "יש ללחוץ על Allow ב־Trello ואז להדביק את האסימון שיוצג.",
+				"tokenPlaceholder": "הדבקת אסימון"
+			},
+			"plane": {
+				"urlLabel": "כתובת סביבת העבודה",
+				"urlDescription": "יש להעתיק אותה מהדפדפן בזמן השימוש ב־Plane. גם אירוח עצמי נתמך.",
+				"urlPlaceholder": "https://app.plane.so/your-workspace",
+				"tokenLabel": "אסימון גישה אישי",
+				"tokenDescription": "בהגדרות הפרופיל, Developer ואז Personal Access Tokens."
+			},
+			"planka": {
+				"urlLabel": "כתובת PLANKA",
+				"urlDescription": "הכתובת שבה פותחים את PLANKA.",
+				"signInLabel": "התחברות באמצעות",
+				"signInDescription": "יש להשתמש במפתח API אם החשבון שלך מתחבר באמצעות SSO.",
+				"signInApiKey": "מפתח API",
+				"signInPassword": "דוא״ל וסיסמה",
+				"apiKeyLabel": "מפתח API",
+				"apiKeyDescription": "נוצר ב־PLANKA תחת הגדרות החשבון שלך.",
+				"apiKeyPlaceholder": "הדבקת מפתח API",
+				"usernameLabel": "דוא״ל או שם משתמש",
+				"usernameDescription": "החשבון המשמש אותך להתחברות ל־PLANKA.",
+				"passwordLabel": "סיסמה",
+				"passwordDescription": "משמשת רק להתחברות לצורך הייבוא הזה.",
+				"adminTip": "יש להשתמש בחשבון מנהל ב־PLANKA. כתובות דוא״ל מוצגות שם רק למנהלים, והחברים בכרטיסים מותאמים לאנשים כאן לפי דוא״ל."
+			},
+			"kaneo": {
+				"urlLabel": "כתובת Kaneo",
+				"urlDescription": "השרת שממנו עוברים.",
+				"apiKeyLabel": "מפתח API",
+				"apiKeyDescription": "בשרת Kaneo המקור יש לפתוח את Settings ואז את API Keys.",
+				"apiKeyPlaceholder": "הדבקת מפתח API"
+			},
+			"select": {
+				"selectAll": "בחירת הכול",
+				"clear": "ניקוי",
+				"back": "חזרה",
+				"commentsLabel": "ייבוא תגובות",
+				"commentsDescription": "שומר את הכותב ואת התאריך המקוריים של כל תגובה.",
+				"membersNote": "האחראים מותאמים לחברי {{workspace}} לפי דוא״ל. יש להזמין את הצוות לפני הייבוא כדי שהמשימות יישארו מוקצות להם.",
+				"membersNoteTrello": "האחראים מותאמים לחברי {{workspace}} לפי דוא״ל, או לפי שם מלא במקרה של Trello. יש להזמין את הצוות לפני הייבוא כדי שהמשימות יישארו מוקצות להם.",
+				"membersNoteJira": "האחראים מותאמים לחברי {{workspace}} לפי דוא״ל, או לפי שם מלא כאשר Jira מסתיר את הדוא״ל. יש להזמין את הצוות לפני הייבוא כדי שהמשימות יישארו מוקצות להם.",
+				"inviteMembers": "הזמנת חברים"
+			},
+			"units": {
+				"team": {
+					"step": "בחירת צוותים",
+					"section": "צוותים",
+					"pick": "יש לבחור את הצוותים להעברה.",
+					"found_one": "נמצא צוות אחד ({{count}}). בחירתו תיצור פרויקט חדש ב־{{workspace}}.",
+					"found_other": "נמצאו {{count}} צוותים. כל צוות שנבחר יהפוך לפרויקט חדש ב־{{workspace}}.",
+					"empty": "לא נמצאו צוותים. יש לוודא שהמפתח יכול לגשת לצוותים שברצונך לייבא.",
+					"limit": "ניתן לבחור עד {{max}} צוותים בכל ייבוא.",
+					"importButton_one": "ייבוא צוות אחד ({{count}})",
+					"importButton_other": "ייבוא {{count}} צוותים",
+					"progress_one": "יובאו {{done}} מתוך {{count}} צוות",
+					"progress_other": "יובאו {{done}} מתוך {{count}} צוותים",
+					"runTitle_one": "{{source}}, צוות אחד ({{count}})",
+					"runTitle_other": "{{source}}, {{count}} צוותים",
+					"allImported_one": "יובא צוות אחד ({{count}}).",
+					"allImported_other": "כל {{count}} הצוותים יובאו.",
+					"someImported_one": "יובאו {{done}} מתוך {{count}} צוות.",
+					"someImported_other": "יובאו {{done}} מתוך {{count}} צוותים.",
+					"found_two": "נמצאו {{count}} צוותים. כל צוות שנבחר יהפוך לפרויקט חדש ב־{{workspace}}.",
+					"importButton_two": "ייבוא {{count}} צוותים",
+					"progress_two": "יובאו {{done}} מתוך {{count}} צוותים",
+					"runTitle_two": "{{source}}, {{count}} צוותים",
+					"allImported_two": "כל {{count}} הצוותים יובאו.",
+					"someImported_two": "יובאו {{done}} מתוך {{count}} צוותים."
+				},
+				"board": {
+					"step": "בחירת לוחות",
+					"section": "לוחות",
+					"pick": "יש לבחור את הלוחות להעברה.",
+					"found_one": "נמצא לוח אחד ({{count}}). בחירתו תיצור פרויקט חדש ב־{{workspace}}.",
+					"found_other": "נמצאו {{count}} לוחות. כל לוח שנבחר יהפוך לפרויקט חדש ב־{{workspace}}.",
+					"empty": "לא נמצאו לוחות. יש לוודא שהמפתח יכול לגשת ללוחות שברצונך לייבא.",
+					"limit": "ניתן לבחור עד {{max}} לוחות בכל ייבוא.",
+					"importButton_one": "ייבוא לוח אחד ({{count}})",
+					"importButton_other": "ייבוא {{count}} לוחות",
+					"progress_one": "יובאו {{done}} מתוך {{count}} לוח",
+					"progress_other": "יובאו {{done}} מתוך {{count}} לוחות",
+					"runTitle_one": "{{source}}, לוח אחד ({{count}})",
+					"runTitle_other": "{{source}}, {{count}} לוחות",
+					"allImported_one": "יובא לוח אחד ({{count}}).",
+					"allImported_other": "כל {{count}} הלוחות יובאו.",
+					"someImported_one": "יובאו {{done}} מתוך {{count}} לוח.",
+					"someImported_other": "יובאו {{done}} מתוך {{count}} לוחות.",
+					"found_two": "נמצאו {{count}} לוחות. כל לוח שנבחר יהפוך לפרויקט חדש ב־{{workspace}}.",
+					"importButton_two": "ייבוא {{count}} לוחות",
+					"progress_two": "יובאו {{done}} מתוך {{count}} לוחות",
+					"runTitle_two": "{{source}}, {{count}} לוחות",
+					"allImported_two": "כל {{count}} הלוחות יובאו.",
+					"someImported_two": "יובאו {{done}} מתוך {{count}} לוחות."
+				},
+				"project": {
+					"step": "בחירת פרויקטים",
+					"section": "פרויקטים",
+					"pick": "יש לבחור את הפרויקטים להעברה.",
+					"found_one": "נמצא פרויקט אחד ({{count}}). בחירתו תיצור פרויקט חדש ב־{{workspace}}.",
+					"found_other": "נמצאו {{count}} פרויקטים. כל פרויקט שנבחר יהפוך לפרויקט חדש ב־{{workspace}}.",
+					"empty": "לא נמצאו פרויקטים. יש לוודא שהמפתח יכול לגשת לפרויקטים שברצונך לייבא.",
+					"limit": "ניתן לבחור עד {{max}} פרויקטים בכל ייבוא.",
+					"importButton_one": "ייבוא פרויקט אחד ({{count}})",
+					"importButton_other": "ייבוא {{count}} פרויקטים",
+					"progress_one": "יובאו {{done}} מתוך {{count}} פרויקט",
+					"progress_other": "יובאו {{done}} מתוך {{count}} פרויקטים",
+					"runTitle_one": "{{source}}, פרויקט אחד ({{count}})",
+					"runTitle_other": "{{source}}, {{count}} פרויקטים",
+					"allImported_one": "יובא פרויקט אחד ({{count}}).",
+					"allImported_other": "כל {{count}} הפרויקטים יובאו.",
+					"someImported_one": "יובאו {{done}} מתוך {{count}} פרויקט.",
+					"someImported_other": "יובאו {{done}} מתוך {{count}} פרויקטים.",
+					"found_two": "נמצאו {{count}} פרויקטים. כל פרויקט שנבחר יהפוך לפרויקט חדש ב־{{workspace}}.",
+					"importButton_two": "ייבוא {{count}} פרויקטים",
+					"progress_two": "יובאו {{done}} מתוך {{count}} פרויקטים",
+					"runTitle_two": "{{source}}, {{count}} פרויקטים",
+					"allImported_two": "כל {{count}} הפרויקטים יובאו.",
+					"someImported_two": "יובאו {{done}} מתוך {{count}} פרויקטים."
+				}
+			},
+			"counts": {
+				"tasks_one": "משימה אחת ({{count, number}})",
+				"tasks_other": "{{count, number}} משימות",
+				"columns_one": "עמודה אחת ({{count, number}})",
+				"columns_other": "{{count, number}} עמודות",
+				"labels_one": "תווית אחת ({{count, number}})",
+				"labels_other": "{{count, number}} תוויות",
+				"comments_one": "תגובה אחת ({{count, number}})",
+				"comments_other": "{{count, number}} תגובות",
+				"tasks_two": "{{count, number}} משימות",
+				"columns_two": "{{count, number}} עמודות",
+				"labels_two": "{{count, number}} תוויות",
+				"comments_two": "{{count, number}} תגובות"
+			},
+			"run": {
+				"importingTitle": "מייבא מ־{{source}}",
+				"finishedTitle": "הייבוא הסתיים",
+				"failedTitle": "הייבוא נכשל",
+				"leavePage": "אפשר לצאת מהעמוד. הייבוא ימשיך לפעול בשרת.",
+				"started": "התחיל {{time}}",
+				"took_one": "נמשך דקה אחת ({{count}})",
+				"took_other": "נמשך {{count}} דקות",
+				"tookUnderMinute": "נמשך פחות מדקה",
+				"totals": "יובאו {{parts, list}}",
+				"nothingImported": "לא יובא דבר",
+				"keyInMemory": "המפתח שלך ל־{{source}} נשמר בזיכרון בלבד עד לסיום הייבוא.",
+				"finishedNote": "לא נשלחו התראות על המשימות שיובאו. הכותב והתאריך המקוריים של התגובות נשמרים.",
+				"finishedNoteNoComments": "לא נשלחו התראות על המשימות שיובאו.",
+				"importMore": "ייבוא נוסף",
+				"goToProjects": "מעבר לפרויקטים",
+				"open": "פתיחה",
+				"openProject": "פתיחת {{name}}",
+				"waiting": "ממתין",
+				"queued": "בתור",
+				"starting": "מתחיל",
+				"importingBadge": "מייבא",
+				"failedBadge": "נכשל",
+				"warnings_one": "אזהרה אחת ({{count}})",
+				"warnings_other": "{{count}} אזהרות",
+				"noTasks": "אין משימות",
+				"notImported": "לא יובא",
+				"failedNames_one": "הייבוא של {{names, list}} נכשל, ולכן לא נוצר עבורו דבר.",
+				"failedNames_other": "הייבוא של {{names, list}} נכשל, ולכן לא נוצר עבורם דבר.",
+				"loadError": "לא ניתן לטעון את הייבוא הזה",
+				"took_two": "נמשך {{count}} דקות",
+				"warnings_two": "{{count}} אזהרות",
+				"failedNames_two": "הייבוא של {{names, list}} נכשל, ולכן לא נוצר עבורם דבר."
+			},
+			"toast": {
+				"finished": "הייבוא מ־{{source}} הסתיים",
+				"partial": "הייבוא מ־{{source}} הסתיים עם שגיאות",
+				"failed": "הייבוא מ־{{source}} נכשל"
+			},
+			"entry": {
+				"projectsEmpty": "ייבוא מכלי אחר",
+				"createProjectPrompt": "עוברים מ־Jira, Linear, Trello או Plane?",
+				"createProjectLink": "ייבוא הפרויקטים שלך"
+			}
+		},
+		"projectGeneral": {
+			"pageTitle": "הגדרות פרויקט",
+			"title": "כללי",
+			"subtitle": "השם, המזהה והמראה של {{name}}.",
+			"projectInfoTitle": "פרויקט",
+			"iconLabel": "סמל",
+			"iconHint": "מוצג בסרגל הצד וברשימות הפרויקטים.",
+			"pickIconTitle": "בחירת סמל",
+			"searchIconsPlaceholder": "חיפוש סמלים...",
+			"projectNameLabel": "שם",
+			"projectNamePlaceholder": "שם הפרויקט",
+			"keyLabel": "מזהה",
+			"keyHint": "מופיע בתחילת כל מזהה משימה, למשל {{slug}}-123.",
+			"keyPlaceholder": "PRO",
+			"descriptionLabel": "תיאור",
+			"descriptionPlaceholder": "למה מיועד הפרויקט הזה?",
+			"backgroundLabel": "רקע הלוח",
+			"backgroundHint": "תמונה מאחורי הלוח. כל משתמש יכול להסתיר את הרקעים.",
+			"backgroundUnavailable": "העלאת תמונות אינה מוגדרת בשרת הזה.",
+			"backgroundUpload": "העלאה",
+			"backgroundReplace": "החלפה",
+			"backgroundRemove": "הסרת תמונה",
+			"backgroundUploadSuccess": "רקע הפרויקט עודכן",
+			"backgroundUploadError": "עדכון רקע הפרויקט נכשל",
+			"backgroundRemoveSuccess": "רקע הפרויקט הוסר",
+			"backgroundRemoveError": "הסרת רקע הפרויקט נכשלה",
+			"dangerZone": "אזור מסוכן",
+			"deleteProject": "מחיקת פרויקט",
+			"deleteProjectDescription": "מחיקה לצמיתות של {{name}} וכל המשימות שלו.",
+			"deleteModalTitle": "למחוק את הפרויקט?",
+			"deleteModalDescription": "הפעולה תמחק לצמיתות את {{name}} וכל המשימות שלו. לא ניתן לבטל אותה.",
+			"deleteModalConfirm": "מחיקת פרויקט",
+			"toastUpdateError": "עדכון הפרויקט נכשל",
+			"toastDeleted": "הפרויקט נמחק בהצלחה",
+			"toastDeleteError": "מחיקת הפרויקט נכשלה",
+			"validation": {
+				"nameRequired": "נדרש שם לפרויקט",
+				"keyRequired": "נדרש מזהה",
+				"keyMax": "המזהה יכול להכיל עד 8 תווים",
+				"iconRequired": "נדרש סמל"
+			},
+			"moveProject": "העברה לסביבת עבודה אחרת",
+			"moveProjectDescription": "המשימות, העמודות והתוויות יעברו יחד איתו.",
+			"moveProjectPlaceholder": "בחירת סביבת עבודה",
+			"moveTargetsError": "לא ניתן לבדוק לאילו סביבות עבודה אפשר להעביר את הפרויקט. יש לרענן כדי לנסות שוב.",
+			"moveProjectAction": "העברה",
+			"moveModalConfirm": "העברת פרויקט",
+			"toastMoved": "הפרויקט הועבר בהצלחה",
+			"toastMovedWithUnassigned": "הפרויקט הועבר בהצלחה. הוסרה הקצאת האחראי מ־{{taskCount}} משימות.",
+			"toastMoveError": "העברת הפרויקט נכשלה",
+			"tasksTitle": "משימות",
+			"moveTargetLabel": "סביבת עבודה",
+			"moveDialogTitle": "להעביר לסביבת עבודה אחרת?",
+			"moveDialogDescription": "משימות שהוקצו לאנשים שאינם בסביבת העבודה החדשה יישארו ללא אחראי, וכל המינויים להתראות על הפרויקט יוסרו.",
+			"moving": "מעביר..."
+		},
+		"projectIntegrations": {
+			"pageTitle": "חיבורים",
+			"title": "חיבורים",
+			"subtitle": "חיבור הפרויקט לשירות אחסון הקוד ולצ׳אט של הצוות.",
+			"githubSectionTitle": "חיבור GitHub",
+			"githubSectionSubtitle": "סנכרון דו־כיווני בין משימות לסוגיות ב־GitHub.",
+			"giteaSectionTitle": "חיבור Gitea",
+			"giteaSectionSubtitle": "סנכרון משימות עם שרת Gitea עצמאי: סוגיות, בקשות משיכה ו־webhooks.",
+			"gitlabSectionTitle": "חיבור GitLab",
+			"gitlabSectionSubtitle": "סנכרון משימות עם GitLab.com או עם שרת עצמאי.",
+			"discordSectionTitle": "חיבור Discord",
+			"discordSectionSubtitle": "שליחת עדכונים על משימות הפרויקט לערוץ Discord באמצעות webhook.",
+			"genericWebhookSectionTitle": "חיבורי Webhook",
+			"genericWebhookSectionSubtitle": "שליחת אירועי משימות הפרויקט לכל נקודת קצה של HTTP בפורמט JSON.",
+			"slackSectionTitle": "חיבור Slack",
+			"slackSectionSubtitle": "שליחת עדכונים על משימות הפרויקט לערוץ Slack באמצעות webhook נכנס.",
+			"mattermostSectionTitle": "חיבור Mattermost",
+			"mattermostSectionSubtitle": "שליחת עדכונים על משימות הפרויקט לערוץ Mattermost באמצעות webhook נכנס.",
+			"telegramSectionTitle": "חיבור Telegram",
+			"telegramSectionSubtitle": "שליחת עדכונים על משימות הפרויקט לצ׳אט או לנושא ב־Telegram באמצעות בוט.",
+			"codeHostingTitle": "אחסון קוד",
+			"chatTitle": "צ׳אט ו־webhooks",
+			"statusConnected": "מחובר",
+			"statusPaused": "מושהה",
+			"connect": "חיבור",
+			"configure": "הגדרה",
+			"done": "סיום"
+		},
+		"projectVisibility": {
+			"pageTitle": "נראות הפרויקט",
+			"title": "נראות",
+			"subtitle": "בחירת מי יוכל לצפות ב־{{project}} מחוץ ל־{{workspace}}.",
+			"sectionTitle": "גישה",
+			"publicAccess": "קישור ציבורי",
+			"publicAccessHint": "כל מי שיש לו את הקישור יוכל לצפות בלוח ובמשימות שלו, ללא אפשרות לבצע שינויים.",
+			"publicUrl": "כתובת ציבורית",
+			"copy": "העתקת קישור",
+			"toastUpdated": "הנראות עודכנה",
+			"toastUpdateError": "עדכון הנראות נכשל",
+			"thisWorkspace": "סביבת העבודה הזאת",
+			"membersTitle": "חברי {{workspace}}",
+			"membersDescription": "כל חברי סביבת העבודה, בהתאם להרשאות התפקיד שלהם.",
+			"always": "תמיד",
+			"on": "פעיל",
+			"copied": "הועתק",
+			"copyError": "לא ניתן להעתיק את הקישור",
+			"openPublicPage": "פתיחת העמוד הציבורי",
+			"offNote": "כיבוי הקישור הציבורי יבטל את הגישה דרכו מיד."
+		},
+		"projectWorkflow": {
+			"pageTitle": "הגדרות תהליך העבודה",
+			"title": "תהליך עבודה",
+			"subtitle": "העמודות בלוח והכללים להעברת משימות ביניהן.",
+			"columnsTitle": "עמודות",
+			"columnsDescription": "אפשר לגרור כדי לשנות את הסדר. משימות בעמודת סיום נחשבות להושלמו.",
+			"automationTitle": "אוטומציות",
+			"automationDescription": "העברת משימה מקושרת כשמתרחש אירוע במאגר קוד מחובר."
+		},
+		"projectSwitcher": {
+			"selectProject": "בחירת פרויקט",
+			"noProjects": "אין פרויקטים"
+		},
+		"columnEditor": {
+			"toastCreateError": "יצירת העמודה נכשלה",
+			"toastRenameError": "עדכון העמודה נכשל",
+			"toastUpdateError": "עדכון העמודה נכשל",
+			"toastDeleteError": "מחיקת העמודה נכשלה",
+			"pickIconTitle": "בחירת סמל לעמודה",
+			"searchIconsPlaceholder": "חיפוש סמלים...",
+			"markDoneAria": "סימון {{name}} כעמודת סיום",
+			"newColumnPlaceholder": "שם העמודה",
+			"deleteAria": "מחיקת העמודה {{name}}",
+			"renameAria": "שינוי שם העמודה {{name}}",
+			"columnHeader": "עמודה",
+			"doneHeader": "סיום",
+			"addColumn": "הוספת עמודה",
+			"dragAria": "שינוי המיקום של {{name}}",
+			"deleteTitle": "למחוק את ״{{name}}״?",
+			"deleteDescription": "לא ניתן למחוק עמודות שעדיין יש בהן משימות. יש להעביר קודם את המשימות.",
+			"deleteConfirm": "מחיקת עמודה",
+			"reorderError": "שינוי סדר העמודות נכשל"
+		},
+		"customFields": {
+			"namePlaceholder": "שם השדה",
+			"selectPlaceholder": "בחירת אפשרויות",
+			"required": "חובה",
+			"creating": "יוצר...",
+			"defaultLabel": "ברירת מחדל",
+			"createSuccess": "השדה המותאם נוצר.",
+			"createError": "יצירת השדה המותאם נכשלה.",
+			"deleting": "מוחק...",
+			"deleteSuccess": "השדה המותאם נמחק.",
+			"deleteError": "מחיקת השדה המותאם נכשלה.",
+			"reorderError": "שינוי סדר השדות נכשל",
+			"moreOptions": "ועוד {{hiddenCount}}",
+			"clearDefault": "ניקוי ברירת המחדל",
+			"types": {
+				"text": "טקסט",
+				"number": "מספר",
+				"date": "תאריך",
+				"dropdown": "רשימה נפתחת",
+				"boolean": "תיבת סימון",
+				"multiselect": "רשימה נפתחת, בחירה מרובה"
+			},
+			"startsAs": "הערך ההתחלתי: ״{{value}}״",
+			"startsAt": "הערך ההתחלתי: {{value}}",
+			"startsOn": "התאריך ההתחלתי: {{date}}",
+			"startsChecked": "מסומן כברירת מחדל",
+			"startsUnchecked": "לא מסומן כברירת מחדל",
+			"dragAria": "שינוי המיקום של {{name}}",
+			"actionsAria": "פעולות עבור {{name}}",
+			"edit": "עריכה",
+			"emptyTitle": "עדיין אין שדות מותאמים",
+			"emptyDescription": "מעקב אחר פרטים כמו גודל, לקוח או תאריך השקה בכל משימה.",
+			"deleteTitle": "למחוק את ״{{name}}״?",
+			"deleteDescription": "השדה והערכים שלו בכל המשימות יוסרו. לא ניתן לבטל את הפעולה.",
+			"deleteConfirm": "מחיקת שדה",
+			"newTitle": "שדה חדש",
+			"editTitle": "עריכת שדה",
+			"dialogDescription": "השדה יתווסף לכל משימה ב־{{project}}.",
+			"dialogDescriptionFallback": "השדה יתווסף לכל משימה בפרויקט הזה.",
+			"typeLabel": "סוג",
+			"typeLocked": "לא ניתן לשנות את הסוג לאחר יצירת השדה.",
+			"nameLabel": "שם",
+			"optionsLabel": "אפשרויות",
+			"addOption": "הוספת אפשרות",
+			"dragOptionAria": "שינוי המיקום של {{option}}",
+			"renameOptionAria": "שינוי שם האפשרות {{option}}",
+			"removeOptionAria": "הסרת {{option}}",
+			"allowSeveral": "בחירה מרובה",
+			"allowSeveralDescription": "אפשר לבחור יותר מאפשרות אחת בכל משימה.",
+			"requiredDescription": "השדה תמיד יכיל ערך בכל משימה.",
+			"defaultDescription": "משימות חדשות יקבלו את הערך הזה.",
+			"noDefault": "ללא ברירת מחדל",
+			"checked": "מסומן",
+			"unchecked": "לא מסומן",
+			"issues": {
+				"optionsRequired": "יש להוסיף לפחות אפשרות אחת.",
+				"moreOptionsRequired": "יש להוסיף לפחות שתי אפשרויות כדי לאפשר בחירה מרובה.",
+				"defaultRequired": "שדות חובה מחייבים ערך ברירת מחדל."
+			},
+			"createField": "יצירת שדה",
+			"save": "שמירה",
+			"saving": "שומר...",
+			"updateSuccess": "השדה המותאם נשמר.",
+			"updateError": "שמירת השדה המותאם נכשלה."
+		},
+		"githubIntegration": {
+			"toast": {
+				"verifyError": "אימות התקנת GitHub נכשל",
+				"installAppFirst": "יש להתקין תחילה את אפליקציית GitHub במאגר הקוד הזה",
+				"missingPermsDetail": "לאפליקציית GitHub חסרות הרשאות נדרשות: {{list}}. יש לעדכן את הרשאות האפליקציה.",
+				"updated": "חיבור GitHub עודכן בהצלחה",
+				"updateError": "עדכון חיבור GitHub נכשל",
+				"removed": "חיבור GitHub הוסר בהצלחה",
+				"removeError": "הסרת חיבור GitHub נכשלה",
+				"issuesImported": "הסוגיות יובאו בהצלחה",
+				"importError": "ייבוא הסוגיות נכשל",
+				"commentOnEnabled": "טיקטק יוסיף תגובה עם קישור למשימה בסוגיות חדשות",
+				"commentOnDisabled": "תגובות עם קישור למשימה בסוגיות חדשות כבויות",
+				"settingsUpdateError": "עדכון חיבור GitHub נכשל"
+			},
+			"commentTaskLinkTitle": "הוספת תגובה עם קישור לטיקטק בסוגיות חדשות",
+			"commentTaskLinkHint": "כדי שמשתמשי GitHub יוכלו לעבור למשימה.",
+			"updatePermissions": "עדכון הרשאות",
+			"installGithubApp": "התקנת אפליקציית GitHub",
+			"importSectionHint": "ייבוא הסוגיות הפתוחות במאגר הקוד כמשימות.",
+			"importDisabledHint": "יש לחבר מחדש את מאגר הקוד כדי לאפשר ייבוא.",
+			"accountVerificationHint": "יש לחבר את חשבון ה־GitHub שלך כדי לאמת שיש לך הרשאות ניהול במאגר הקוד הזה.",
+			"enableGithubSignInHint": "יש לבקש ממנהל המערכת להפעיל התחברות באמצעות GitHub.",
+			"reverifyHint": "יש לחבר מחדש את מאגר הקוד כדי לאמת גישה ולחדש את הסנכרון.",
+			"resumeImport": "המשך הייבוא",
+			"importPaused": "ההתקדמות בייבוא נשמרה. אפשר להמשיך אותו.",
+			"importSummary": "נוצרו: {{imported}} · עודכנו: {{updated}} · דולגו: {{skipped}}",
+			"chooseRepositoryDescription": "סוגיות ובקשות משיכה ממנו יקושרו למשימות כאן.",
+			"linkAccountDescription": "מאמת שיש לך הרשאות ניהול במאגר הקוד.",
+			"linkAccountTitle": "קישור חשבון ה־GitHub שלך",
+			"linkGithub": "קישור GitHub",
+			"linked": "מקושר",
+			"verifyMissingPermissions": "לאפליקציית GitHub של טיקטק חסרות הרשאות: {{list}}.",
+			"verifyNotInstalled": "אפליקציית GitHub של טיקטק אינה מותקנת במאגר הקוד הזה.",
+			"verifyReady": "אפליקציית GitHub של טיקטק מותקנת עם כל ההרשאות הדרושות.",
+			"workflowHint": "העברת משימות כשבקשות משיכה נפתחות או מתמזגות, דרך",
+			"workflowLink": "תהליך עבודה"
+		},
+		"giteaIntegration": {
+			"validation": {
+				"baseUrlRequired": "נדרשת כתובת בסיס של Gitea",
+				"baseUrlInvalid": "יש להזין כתובת תקינה (למשל https://gitea.example.com)"
+			},
+			"toast": {
+				"verifyError": "אימות הגישה ל־Gitea נכשל",
+				"verifyFirst": "אימות הגישה נכשל. יש לבדוק את הכתובת, האסימון ומאגר הקוד",
+				"updated": "חיבור Gitea נשמר",
+				"updateError": "שמירת חיבור Gitea נכשלה",
+				"removed": "חיבור Gitea הוסר",
+				"removeError": "הסרת חיבור Gitea נכשלה",
+				"issuesImported": "הסוגיות יובאו בהצלחה",
+				"importError": "ייבוא הסוגיות נכשל",
+				"commentOnEnabled": "טיקטק יוסיף תגובה עם קישור למשימה בסוגיות חדשות",
+				"commentOnDisabled": "תגובות עם קישור למשימה בסוגיות חדשות כבויות",
+				"settingsUpdateError": "עדכון חיבור Gitea נכשל"
+			},
+			"commentTaskLinkTitle": "הוספת תגובה עם קישור לטיקטק בסוגיות חדשות",
+			"commentTaskLinkHint": "כדי שמשתמשי Gitea יוכלו לעבור למשימה.",
+			"webhookHint": "יש להוסיף את ה־webhook הזה בהגדרות מאגר הקוד כדי שהשינויים יחזרו לטיקטק.",
+			"baseUrlLabel": "כתובת Gitea",
+			"tokenLabel": "אסימון גישה אישי",
+			"tokenPlaceholder": "הדבקת אסימון",
+			"tokenPlaceholderUpdate": "הדבקת אסימון חדש להחלפת הקיים",
+			"importSectionHint": "ייבוא סוגיות ובקשות משיכה פתוחות כמשימות.",
+			"importDisabledHint": "ייבוא דורש גישה מאומתת. יש לבדוק את מצב האסימון למעלה.",
+			"browseModalHint": "מאגרי קוד שהאסימון שלך מאפשר לגשת אליהם.",
+			"browseNeedsCredentials": "יש להזין כתובת Gitea ואסימון כדי לעיין במאגרים.",
+			"browseEmpty": "האסימון הזה אינו מאפשר צפייה באף מאגר קוד.",
+			"chooseRepositoryDescription": "יש להזין owner/name או לבחור מהרשימה.",
+			"webhookEvents": "יש להפעיל אירועי push, pull request, issue, issue comment ו־create."
+		},
+		"gitlabIntegration": {
+			"validation": {
+				"baseUrlRequired": "נדרשת כתובת בסיס של GitLab",
+				"baseUrlInvalid": "יש להזין כתובת תקינה (למשל https://gitlab.com)",
+				"pathInvalid": "יש להזין את הנתיב המלא, למשל group/project"
+			},
+			"toast": {
+				"verifyError": "אימות הגישה ל־GitLab נכשל",
+				"verifyFirst": "אימות הגישה נכשל. יש לבדוק את הכתובת, האסימון ונתיב הפרויקט",
+				"updated": "חיבור GitLab נשמר",
+				"updateError": "שמירת חיבור GitLab נכשלה",
+				"removed": "חיבור GitLab הוסר",
+				"removeError": "הסרת חיבור GitLab נכשלה",
+				"issuesImported": "הסוגיות יובאו בהצלחה",
+				"importError": "ייבוא הסוגיות נכשל",
+				"commentOnEnabled": "טיקטק יוסיף תגובה עם קישור למשימה בסוגיות שנפתחות ב־GitLab",
+				"commentOnDisabled": "תגובות עם קישור למשימה בסוגיות שנפתחות ב־GitLab כבויות",
+				"settingsUpdateError": "עדכון חיבור GitLab נכשל"
+			},
+			"commentTaskLinkTitle": "הוספת תגובה עם קישור לטיקטק בסוגיות שנפתחות ב־GitLab",
+			"commentTaskLinkHint": "כדי שמשתמשי GitLab יוכלו לעבור למשימה.",
+			"webhookHint": "יש להוסיף את ה־webhook הזה בהגדרות הפרויקט כדי שהשינויים יחזרו לטיקטק.",
+			"baseUrlLabel": "כתובת GitLab",
+			"tokenTypeLabel": "סוג האסימון",
+			"tokenTypePrivate": "אסימון גישה אישי, של פרויקט או של קבוצה",
+			"tokenTypeBearer": "אסימון OAuth2",
+			"tokenLabel": "אסימון גישה",
+			"tokenPlaceholder": "הדבקת אסימון",
+			"tokenPlaceholderUpdate": "הדבקת אסימון חדש להחלפת הקיים",
+			"projectPathLabel": "נתיב הפרויקט",
+			"importSectionHint": "ייבוא סוגיות ובקשות מיזוג פתוחות כמשימות.",
+			"browseModalHint": "פרויקטים שהאסימון שלך מקנה חברות בהם.",
+			"searchProjects": "חיפוש פרויקטים",
+			"browseNeedsCredentials": "יש להזין כתובת GitLab ואסימון כדי לעיין בפרויקטים.",
+			"loadProjectsError": "לא ניתן לטעון את הפרויקטים.",
+			"openInGitlab": "פתיחת {{project}} ב־GitLab",
+			"importPermissionHint": "ייבוא דורש הרשאה ליצירה ולעדכון משימות.",
+			"browseEmpty": "האסימון הזה אינו מקנה חברות באף פרויקט.",
+			"chooseProjectDescription": "יש להזין את הנתיב או לבחור מהרשימה.",
+			"noSearchMatchTitle": "לא נמצאו פרויקטים תואמים",
+			"useProject": "שימוש בפרויקט",
+			"webhookEvents": "יש להפעיל אירועי push, issue, comment ו־merge request."
+		},
+		"slackIntegration": {
+			"validation": {
+				"webhookInvalid": "יש להזין כתובת webhook תקינה של Slack"
+			},
+			"toast": {
+				"saved": "חיבור Slack נשמר בהצלחה",
+				"saveError": "שמירת חיבור Slack נכשלה",
+				"enabled": "התראות Slack הופעלו",
+				"disabled": "התראות Slack הושהו",
+				"updateError": "עדכון חיבור Slack נכשל",
+				"removed": "חיבור Slack הוסר בהצלחה",
+				"removeError": "הסרת חיבור Slack נכשלה"
+			},
+			"webhookPlaceholder": "https://hooks.slack.com/services/...",
+			"webhookHint": "יש ליצור webhook נכנס ב־Slack ולהדביק אותו כאן.",
+			"connect": "חיבור Slack",
+			"update": "עדכון Slack"
+		},
+		"discordIntegration": {
+			"validation": {
+				"webhookInvalid": "יש להזין כתובת webhook תקינה של Discord"
+			},
+			"toast": {
+				"saved": "חיבור Discord נשמר בהצלחה",
+				"saveError": "שמירת חיבור Discord נכשלה",
+				"enabled": "התראות Discord הופעלו",
+				"disabled": "התראות Discord הושהו",
+				"updateError": "עדכון חיבור Discord נכשל",
+				"removed": "חיבור Discord הוסר בהצלחה",
+				"removeError": "הסרת חיבור Discord נכשלה"
+			},
+			"webhookPlaceholder": "https://discord.com/api/webhooks/...",
+			"webhookHint": "יש ליצור webhook לערוץ ב־Discord ולהדביק אותו כאן.",
+			"connect": "חיבור Discord",
+			"update": "עדכון Discord"
+		},
+		"mattermostIntegration": {
+			"validation": {
+				"webhookInvalid": "יש להזין כתובת webhook תקינה של Mattermost"
+			},
+			"toast": {
+				"saved": "חיבור Mattermost נשמר בהצלחה",
+				"saveError": "שמירת חיבור Mattermost נכשלה",
+				"enabled": "התראות Mattermost הופעלו",
+				"disabled": "התראות Mattermost הושהו",
+				"updateError": "עדכון חיבור Mattermost נכשל",
+				"removed": "חיבור Mattermost הוסר בהצלחה",
+				"removeError": "הסרת חיבור Mattermost נכשלה"
+			},
+			"webhookPlaceholder": "https://your-mattermost-server.com/hooks/...",
+			"webhookHint": "יש ליצור webhook נכנס ב־Mattermost ולהדביק אותו כאן.",
+			"connect": "חיבור Mattermost",
+			"update": "עדכון Mattermost"
+		},
+		"genericWebhookIntegration": {
+			"validation": {
+				"webhookInvalid": "יש להזין כתובת webhook תקינה",
+				"leadTimeRange": "יש לבחור פרק זמן בין 5 דקות ל־720 שעות."
+			},
+			"toast": {
+				"saved": "חיבור ה־webhook הכללי נשמר בהצלחה",
+				"saveError": "שמירת חיבור ה־webhook הכללי נכשלה",
+				"enabled": "התראות ה־webhook הכללי הופעלו",
+				"disabled": "התראות ה־webhook הכללי הושהו",
+				"updateError": "עדכון חיבור ה־webhook הכללי נכשל",
+				"removed": "חיבור ה־webhook הכללי הוסר בהצלחה",
+				"removeError": "הסרת חיבור ה־webhook הכללי נכשלה"
+			},
+			"webhookLabel": "כתובת נקודת הקצה",
+			"webhookPlaceholder": "https://example.com/webhooks/kaneo",
+			"webhookHint": "טיקטק שולח בקשות POST עם תוכן JSON עבור כל אירוע מופעל.",
+			"secretLabel": "סוד חתימה",
+			"secretPlaceholder": "סוד משותף",
+			"secretHint": "טיקטק חותם באמצעותו על כל בקשה ושולח את החתימה בכותרת X-Kaneo-Signature.",
+			"secretHintConfigured": "הסוד הנוכחי: {{secret}}. אפשר להדביק סוד חדש כדי להחליף אותו.",
+			"eventsTitle": "שליחה כאשר",
+			"events": {
+				"taskCreated": "משימה נוצרה",
+				"taskStatusChanged": "הסטטוס השתנה",
+				"taskPriorityChanged": "העדיפות השתנתה",
+				"taskTitleChanged": "הכותרת השתנתה",
+				"taskDescriptionChanged": "התיאור השתנה",
+				"taskCommentCreated": "תגובה חדשה",
+				"taskDeleted": "משימה נמחקה",
+				"taskMoved": "משימה הועברה",
+				"taskDueDateChanged": "תאריך היעד השתנה",
+				"taskAssigneeChanged": "האחראי השתנה",
+				"taskUnassigned": "האחראי למשימה הוסר",
+				"dueDateReminder": "תזכורת לתאריך יעד"
+			},
+			"reminderLeadTimeLabel": "שעות לפני תאריך היעד של המשימה",
+			"connect": "חיבור webhook",
+			"activeTitle": "שולח אירועים",
+			"reminderLeadTimeBefore": "שליחת תזכורות",
+			"reminderLeadTimeAfter": "שעות לפני תאריך היעד של המשימה",
+			"disconnectTitle": "לנתק את ה־webhook?",
+			"disconnectDescription": "טיקטק יפסיק לשלוח אירועים ויסיר את נקודת הקצה והסוד השמורים."
+		},
+		"telegramIntegration": {
+			"validation": {
+				"botTokenInvalid": "יש להזין אסימון תקין של בוט Telegram",
+				"chatIdRequired": "נדרש מזהה צ׳אט",
+				"threadIdInvalid": "יש להזין מזהה נושא תקין"
+			},
+			"toast": {
+				"saved": "חיבור Telegram נשמר בהצלחה",
+				"saveError": "שמירת חיבור Telegram נכשלה",
+				"enabled": "התראות Telegram הופעלו",
+				"disabled": "התראות Telegram הושהו",
+				"updateError": "עדכון חיבור Telegram נכשל",
+				"removed": "חיבור Telegram הוסר בהצלחה",
+				"removeError": "הסרת חיבור Telegram נכשלה"
+			},
+			"botTokenLabel": "אסימון הבוט",
+			"botTokenPlaceholder": "123456789:AAExampleBotToken",
+			"botTokenHint": "יש ליצור בוט באמצעות BotFather ולהדביק כאן את האסימון שלו.",
+			"botTokenHintConfigured": "האסימון הנוכחי: {{token}}",
+			"chatIdLabel": "מזהה צ׳אט",
+			"chatIdPlaceholder": "-1001234567890 או @team_updates",
+			"threadIdLabel": "מזהה נושא",
+			"threadIdPlaceholder": "לנושאי פורום",
+			"chatLabelLabel": "שם הצ׳אט",
+			"chatLabelPlaceholder": "עדכוני צוות הפיתוח",
+			"connect": "חיבור Telegram",
+			"loadError": "לא ניתן לטעון את הגדרות Telegram.",
+			"botTokenSavedPlaceholder": "נשמר. אפשר להדביק אסימון חדש כדי להחליף אותו."
+		},
+		"repositoryBrowser": {
+			"title": "בחירת מאגר קוד",
+			"description": "מאגרי קוד שאפליקציית GitHub של טיקטק יכולה לראות.",
+			"searchPlaceholder": "חיפוש מאגרי קוד",
+			"loadError": "לא ניתן לטעון את מאגרי הקוד.",
+			"tryAgain": "ניסיון חוזר",
+			"emptyTitle": "עדיין אין מאגרי קוד",
+			"emptyHint": "יש להתקין את אפליקציית GitHub במאגרים שלך כדי לראות אותם כאן.",
+			"installGithubApp": "התקנת אפליקציית GitHub",
+			"noSearchMatchTitle": "לא נמצאו מאגרי קוד תואמים",
+			"noSearchMatchHint": "אפשר לנסות שם אחר או לנקות את החיפוש.",
+			"emptyPageHint": "אין תוצאות בעמוד הזה. אפשר לטעון עוד כדי להמשיך לחפש.",
+			"loadMore": "טעינת עוד",
+			"manageAccess": "ניהול גישת האפליקציה",
+			"missingOne": "חסר מאגר?",
+			"searching": "מחפש…",
+			"updated": "עודכן {{time}}",
+			"useRepository": "שימוש במאגר הקוד"
+		},
+		"tasksImportExport": {
+			"exportTasks": "ייצוא משימות",
+			"importTasks": "ייבוא משימות",
+			"dialogTitle": "ייבוא משימות",
+			"dialogDescription": "העלאת קובץ JSON המכיל משימות לייבוא לפרויקט הזה.",
+			"expectedFormat": "המבנה הנדרש:",
+			"dropHint": "אפשר לגרור לכאן את קובץ ה־JSON",
+			"selectFile": "בחירת קובץ",
+			"exporting": "מייצא משימות...",
+			"exportSuccess": "המשימות יוצאו בהצלחה",
+			"exportError": "ייצוא המשימות נכשל",
+			"importing": "מייבא משימות...",
+			"importSuccess": "יובאו {{count}} משימות בהצלחה",
+			"importPartialError": "ייבוא של {{count}} משימות נכשל",
+			"importError": "ייבוא המשימות נכשל",
+			"invalidFormat": "מבנה קובץ הייבוא אינו תקין",
+			"noFileDropped": "לא נגרר שום קובץ",
+			"notJsonFile": "יש להעלות קובץ JSON",
+			"exportDescription": "הורדת כל משימות הפרויקט כקובץ.",
+			"export": "ייצוא",
+			"importDescription": "הוספת משימות מקובץ שיוצא קודם.",
+			"import": "ייבוא"
+		},
+		"workflowEditor": {
+			"toastError": "עדכון הכלל נכשל",
+			"events": {
+				"branch_push": "ענף נדחף למאגר",
+				"pr_opened": "בקשת משיכה נפתחה",
+				"pr_merged": "בקשת משיכה מוזגה",
+				"issue_opened": "סוגיה נפתחה",
+				"issue_closed": "סוגיה נסגרה"
+			},
+			"dontMove": "ללא העברה",
+			"emptyTitle": "אין מאגרי קוד מחוברים",
+			"emptyDescription": "אוטומציות דורשות מאגר קוד מחובר ב־GitHub, ב־Gitea או ב־GitLab.",
+			"openIntegrations": "פתיחת החיבורים",
+			"connectMore": "אפשר לחבר את {{providers}} תחת <link>חיבורים</link> כדי להפעיל גם עבורם אוטומציות."
+		},
+		"externalLinks": {
+			"resources": "משאבים",
+			"issue": "סוגיה",
+			"branch": "ענף",
+			"merged": "מוזג",
+			"draft": "טיוטה",
+			"open": "פתוח",
+			"addResource": "הוספת משאב",
+			"url": "כתובת URL",
+			"titleOptional": "כותרת (לא חובה)",
+			"cancel": "ביטול",
+			"adding": "מוסיף...",
+			"empty": "אין משאבים מקושרים למשימה הזאת.",
+			"remove": "הסרת {{title}}",
+			"removeError": "הסרת הקישור למשאב נכשלה."
+		},
+		"security": "אבטחה",
+		"securityPage": {
+			"pageTitle": "אבטחה",
+			"title": "אבטחה",
+			"subtitle": "אופן ההתחברות שלך לטיקטק.",
+			"sectionTitle": "התחברות",
+			"currentPassword": "הסיסמה הנוכחית",
+			"newPassword": "סיסמה חדשה",
+			"confirmPassword": "אישור הסיסמה החדשה",
+			"currentPasswordPlaceholder": "יש להזין את הסיסמה הנוכחית",
+			"newPasswordPlaceholder": "יש להזין סיסמה חדשה",
+			"confirmPasswordPlaceholder": "יש להזין שוב את הסיסמה החדשה",
+			"submit": "שינוי סיסמה",
+			"submitting": "משנה...",
+			"updateSuccess": "הסיסמה עודכנה.",
+			"updateError": "עדכון הסיסמה נכשל.",
+			"noPassword": {
+				"title": "שינוי סיסמה אינו זמין",
+				"description": "החשבון שלך משתמש בשיטת התחברות אחרת, ולכן אין סיסמה שאפשר לשנות."
+			},
+			"validation": {
+				"currentRequired": "יש להזין את הסיסמה הנוכחית.",
+				"tooShort": "הסיסמה החדשה חייבת להכיל לפחות 8 תווים.",
+				"confirmRequired": "יש לאשר את הסיסמה החדשה.",
+				"mismatch": "הסיסמאות אינן זהות.",
+				"sameAsCurrent": "הסיסמה החדשה חייבת להיות שונה מהסיסמה הנוכחית."
+			},
+			"passwordTitle": "סיסמה",
+			"passwordHint": "יש להשתמש ב־8 תווים לפחות, בסיסמה שאינה בשימוש בשום מקום אחר.",
+			"changePassword": "שינוי סיסמה",
+			"dialogTitle": "שינוי סיסמה",
+			"dialogDescription": "לפחות 8 תווים, ושונה מהסיסמה הנוכחית."
+		},
+		"calendarFeeds": {
+			"title": "הזנות יומן",
+			"subtitle": "מינוי למשימות המתוזמנות בפרויקט דרך אפליקציית היומן שלך.",
+			"labels": "הכללת התוויות הבאות בלבד",
+			"selectLabels": "הוספת תווית",
+			"noLabels": "לא נמצאו תוויות.",
+			"timeZoneHint": "תאריכים של יום שלם משתמשים באזור הזמן {{timeZone}}.",
+			"accessHint": "כל מי שיש לו קישור להזנה יכול לקרוא את הכותרות, התיאורים והתאריכים של המשימות התואמות. ביטול קישור ימנע גישה עתידית.",
+			"create": "יצירת הזנה",
+			"creating": "יוצר…",
+			"created": "הזנת היומן נוצרה.",
+			"createError": "לא ניתן ליצור את הזנת היומן.",
+			"activeFeeds": "הזנות",
+			"allScheduledTasks": "כל המשימות המתוזמנות",
+			"subscribeHint": "יש להוסיף קישור לאפליקציית היומן כמינוי. העדכונים יופיעו כשהאפליקציה תרענן את ההזנה.",
+			"copy": "העתקת קישור",
+			"copyError": "לא ניתן להעתיק את הקישור. אפשר לבחור את הכתובת ולהעתיק אותה ידנית.",
+			"revoke": "ביטול גישה",
+			"revoked": "הגישה להזנת היומן בוטלה.",
+			"revokeError": "לא ניתן לבטל את הגישה להזנת היומן.",
+			"loadError": "לא ניתן לטעון את הזנות היומן או את התוויות. יש לנסות שוב.",
+			"deletedLabel": "תווית שנמחקה",
+			"permissionRequired": "נדרשת הרשאת שיתוף פרויקט כדי לנהל הזנות יומן.",
+			"newFeed": "הזנה חדשה",
+			"dialogTitle": "הזנת יומן חדשה",
+			"dialogDescription": "משימות עם תאריך התחלה או תאריך יעד יופיעו בהזנה.",
+			"labelsHint": "השארת השדה ריק תכלול את כל המשימות המתוזמנות.",
+			"copiedLabel": "הועתק",
+			"feedActions": "פעולות הזנה",
+			"revokeConfirmTitle": "לבטל את הגישה להזנה הזאת?",
+			"revokeConfirmDescription": "אפליקציות יומן המשתמשות בקישור הזה יפסיקו לקבל עדכונים. לא ניתן לבטל את הפעולה.",
+			"revokeConfirm": "ביטול גישה להזנה",
+			"revoking": "מבטל גישה…",
+			"emptyTitle": "עדיין אין הזנות יומן",
+			"emptyDescription": "אפשר ליצור הזנה כדי לראות משימות מתוזמנות באפליקציית היומן שלך."
+		},
+		"invitationEmailFailed": "ההזמנה נשמרה, אך שליחת הדוא״ל נכשלה. יש לבדוק את הגדרות SMTP ולשלוח את ההזמנה מחדש.",
+		"billing": {
+			"pageTitle": "חיוב",
+			"subtitle": "המסלול שלך עבור {{workspace}}.",
+			"disabled": "החיוב אינו מופעל בשרת הזה. טיקטק באחסון עצמאי כולל את כל היכולות, בחינם לתמיד.",
+			"currentPlan": {
+				"title": "המסלול הנוכחי"
+			},
+			"foundingFree": {
+				"title": "מסלול חינם לתומכים הראשונים",
+				"badge": "חינם",
+				"description": "לסביבת העבודה הזאת יש גישה חינמית לטיקטק בענן כתומכת מוקדמת. תודה שהיית כאן מההתחלה."
+			},
+			"seats_one": "מספר משתמשים: {{count}}",
+			"seats_other": "מספר משתמשים: {{count}}",
+			"accessEnds": "הגישה מסתיימת",
+			"renews": "מתחדש",
+			"portalHint": "חשבוניות, אמצעי תשלום וביטול מנוהלים דרך Creem.",
+			"manage": "ניהול חיוב",
+			"opening": "פותח...",
+			"trial": {
+				"activeTitle": "ניסיון חינם",
+				"expiredTitle": "תקופת הניסיון הסתיימה",
+				"expiredDescription": "יש להירשם לאחד המסלולים למטה כדי להמשיך ליצור ולערוך. בינתיים הנתונים שלך נשמרים וניתנים לייצוא.",
+				"noDate": "יש לבחור מסלול למטה כדי להמשיך לאחר תקופת הניסיון.",
+				"badgeDaysLeft_one": "ימים שנותרו: {{count}}",
+				"badgeDaysLeft_other": "ימים שנותרו: {{count}}",
+				"badgeDaysLeft_two": "ימים שנותרו: {{count}}"
+			},
+			"choosePlan": {
+				"title": "בחירת מסלול",
+				"subtitle": "אפשר להחליף מסלול או לבטל בכל עת."
+			},
+			"interval": {
+				"monthly": "חודשי",
+				"annual": "שנתי",
+				"annualBadge": "חודשיים חינם"
+			},
+			"mostPopular": "הפופולרי ביותר",
+			"choose": "בחירת {{plan}}",
+			"starting": "מתחיל...",
+			"processedBy": "התשלומים מעובדים באופן מאובטח באמצעות Creem. המחירים אינם כוללים מס, אם חל.",
+			"adminsOnly": "רק בעלים ומנהלים של סביבת העבודה יכולים לנהל חיוב.",
+			"price": {
+				"perMonth": "/ חודש",
+				"perYear": "/ שנה",
+				"perUserMonth": "/ משתמש / חודש",
+				"perUserYear": "/ משתמש / שנה",
+				"billedMonthly": "חיוב חודשי",
+				"billedYearly": "{{price}} / חודש, בחיוב שנתי",
+				"billedYearlyPerUser": "{{price}} / משתמש / חודש, בחיוב שנתי"
+			},
+			"plans": {
+				"personal": {
+					"name": "אישי",
+					"tagline": "ליחידים"
+				},
+				"team": {
+					"name": "צוות",
+					"tagline": "לצוותים שעובדים יחד"
+				}
+			},
+			"features": {
+				"singleUser": "משתמש יחיד",
+				"unlimitedMembers": "חברי צוות ללא הגבלה",
+				"unlimitedProjects": "פרויקטים ומשימות ללא הגבלה",
+				"roles": "תפקידים והרשאות בסביבת העבודה",
+				"backups": "גיבויים ועדכונים אוטומטיים",
+				"emailSupport": "תמיכה בדוא״ל",
+				"prioritySupport": "תמיכה מועדפת בדוא״ל"
+			},
+			"status": {
+				"active": "פעיל",
+				"trialing": "ניסיון",
+				"past_due": "התשלום באיחור",
+				"scheduled_cancel": "יבוטל בקרוב",
+				"canceled": "בוטל",
+				"expired": "פג תוקף",
+				"paused": "מושהה"
+			},
+			"trialCard": {
+				"daysLeft_one": "ימים שנותרו בתקופת הניסיון: {{count}}",
+				"daysLeft_other": "ימים שנותרו בתקופת הניסיון: {{count}}",
+				"ended": "תקופת הניסיון הסתיימה",
+				"activeDescription": "אפשר לשדרג בכל עת כדי להמשיך להשתמש בסביבת העבודה לאחר תקופת הניסיון.",
+				"endingDescription": "כדאי לבחור מסלול עכשיו כדי שהצוות יוכל להמשיך לעבוד ללא הפרעה.",
+				"expiredDescription": "יש להירשם כדי להמשיך ליצור ולערוך.",
+				"viewPlans": "צפייה במסלולים",
+				"choosePlan": "בחירת מסלול",
+				"dismiss": "סגירה",
+				"daysLeft_two": "ימים שנותרו בתקופת הניסיון: {{count}}"
+			},
+			"expiredCallout": {
+				"title": "תקופת הניסיון החינמית הסתיימה",
+				"adminDescription": "עדיין אפשר לצפות בכל הנתונים, אך יצירה ועריכה מושהות עד לבחירת מסלול. שום דבר לא נמחק.",
+				"memberDescription": "עדיין אפשר לצפות בכל הנתונים, אך יצירה ועריכה מושהות עד שבעלים או מנהל של סביבת העבודה יבחר מסלול.",
+				"action": "בחירת מסלול"
+			},
+			"openFailed": "לא ניתן לפתוח את ניהול החיוב לסביבת העבודה הזאת",
+			"checkoutSuccess": {
+				"title": "תודה על ההרשמה",
+				"description": "התשלום התקבל. המסלול למטה יתעדכן לאחר האישור."
+			},
+			"seats_two": "מספר משתמשים: {{count}}"
+		},
+		"chatIntegrations": {
+			"optional": "לא חובה",
+			"webhookUrlLabel": "כתובת webhook",
+			"savedUrlPlaceholder": "נשמרה. אפשר להדביק כתובת חדשה כדי להחליף אותה.",
+			"channelLabel": "ערוץ",
+			"channelPlaceholder": "#team-updates",
+			"channelHint": "שם לצורך זיהוי ברשימה הזאת בלבד.",
+			"postWhen": "פרסום כאשר",
+			"events": {
+				"taskCreated": "משימה נוצרת",
+				"taskStatusChanged": "הסטטוס משתנה",
+				"taskPriorityChanged": "העדיפות משתנה",
+				"taskTitleChanged": "הכותרת משתנה",
+				"taskDescriptionChanged": "התיאור משתנה",
+				"taskCommentCreated": "נוספת תגובה"
+			},
+			"activeTitle": "מפרסם אל {{provider}}",
+			"activeDescription": "אפשר לכבות כדי להשהות בלי לאבד את ההגדרות.",
+			"saveChanges": "שמירת שינויים",
+			"disconnect": "ניתוק",
+			"disconnecting": "מנתק…",
+			"disconnectTitle": "לנתק את {{provider}}?",
+			"disconnectDescription": "טיקטק יפסיק לפרסם אל {{provider}} ויסיר את ההגדרות השמורות.",
+			"retry": "ניסיון חוזר"
+		},
+		"codeHosting": {
+			"browse": "עיון",
+			"changeToken": "החלפת אסימון",
+			"checking": "בודק גישה…",
+			"chooseProjectTitle": "בחירת פרויקט",
+			"chooseRepositoryTitle": "בחירת מאגר קוד",
+			"connectProject": "חיבור פרויקט",
+			"connectRepository": "חיבור מאגר קוד",
+			"copied": "הועתק",
+			"copyFailed": "לא ניתן להעתיק ללוח.",
+			"copySecret": "העתקת סוד",
+			"copyUrl": "העתקת כתובת webhook",
+			"disconnect": "ניתוק",
+			"disconnectDescription": "סנכרון המשימות עם {{target}} ייפסק. אפשר לחבר אותו שוב בהמשך.",
+			"disconnectTitle": "לנתק את {{provider}}?",
+			"disconnecting": "מנתק…",
+			"hideSecret": "הסתרת סוד",
+			"importIssues": "ייבוא סוגיות",
+			"importNeedsReconnect": "יש להתחבר מחדש כדי לאפשר ייבוא.",
+			"importTitle": "ייבוא סוגיות פתוחות",
+			"importing": "מייבא…",
+			"issuesSection": "סוגיות",
+			"lastImport": "הייבוא האחרון: {{imported}} נוצרו, {{updated}} עודכנו, {{skipped}} דולגו.",
+			"loadError": "לא ניתן לטעון את החיבור הזה.",
+			"pausedHint": "הסנכרון מושהה. יש להתחבר מחדש כדי להמשיך.",
+			"projectSection": "פרויקט",
+			"reconnect": "חיבור מחדש",
+			"repositoryPathInvalid": "יש להזין את מאגר הקוד במבנה owner/name.",
+			"repositoryPathLabel": "מאגר קוד",
+			"repositorySection": "מאגר קוד",
+			"retry": "ניסיון חוזר",
+			"saveToken": "שמירת אסימון",
+			"showSecret": "הצגת סוד",
+			"signInDescription": "יש להשתמש באסימון שמאפשר לקרוא את הפרויקט ואת הסוגיות שלו.",
+			"signInTitle": "התחברות לשרת שלך",
+			"tokenStored": "אסימון שמור",
+			"tokenTitle": "אסימון גישה",
+			"webhookSecret": "סוד",
+			"webhookSection": "הגדרת Webhook",
+			"webhookUrl": "כתובת URL"
+		},
+		"shared": {
+			"autosave": "השינויים נשמרים אוטומטית"
+		},
+		"projectCustomFields": {
+			"pageTitle": "שדות מותאמים",
+			"title": "שדות מותאמים",
+			"subtitle": "פרטים נוספים שאפשר לעקוב אחריהם בכל משימה ב־{{project}}, כמו גודל או לקוח.",
+			"subtitleFallback": "פרטים נוספים שאפשר לעקוב אחריהם בכל משימה בפרויקט הזה, כמו גודל או לקוח.",
+			"newField": "שדה חדש",
+			"fieldsTitle": "שדות",
+			"fieldsDescription": "אפשר לגרור כדי לשנות את סדר הופעת השדות במשימה."
+		}
+	},
+	"navigation": {
+		"commandPalette": {
+			"suggestions": "הצעות",
+			"commands": "פקודות",
+			"projects": "פרויקטים",
+			"search": "חיפוש",
+			"members": "חברי צוות",
+			"createTask": "יצירת משימה",
+			"createProject": "יצירת פרויקט",
+			"createWorkspace": "יצירת סביבת עבודה",
+			"lightTheme": "ערכת נושא בהירה",
+			"darkTheme": "ערכת נושא כהה",
+			"systemTheme": "לפי הגדרות המערכת",
+			"keyboardShortcuts": "קיצורי מקלדת",
+			"inputPlaceholder": "חיפוש אפליקציות ופקודות...",
+			"empty": "לא נמצאו תוצאות.",
+			"footer": {
+				"navigate": "ניווט",
+				"open": "פתיחה",
+				"close": "סגירה"
+			}
+		},
+		"sidebar": {
+			"projects": "פרויקטים",
+			"members": "חברי צוות",
+			"invitations": "הזמנות",
+			"more": "עוד",
+			"backToBoard": "חזרה ללוח",
+			"home": "דף הבית",
+			"inbox": "תיבת עדכונים",
+			"myTasks": "המשימות שלי",
+			"invitePeople": "הזמנת אנשים"
+		},
+		"projectList": {
+			"viewProject": "צפייה בפרויקט",
+			"shareProject": "שיתוף פרויקט",
+			"projectSettings": "הגדרות הפרויקט",
+			"linkCopied": "הקישור לפרויקט הועתק ללוח",
+			"addProject": "הוספת פרויקט",
+			"deleteConfirmTitle": "למחוק את הפרויקט?",
+			"deleteConfirmDescription": "הפרויקט וכל הנתונים שלו יימחקו לצמיתות. לא ניתן לבטל פעולה זו.",
+			"deletedToast": "הפרויקט נמחק",
+			"deleteProject": "מחיקת פרויקט",
+			"switcherLabel": "החלפת פרויקט או תצוגה"
+		},
+		"search": {
+			"inputPlaceholder": "חיפוש משימות, פרויקטים, תגובות...",
+			"minCharsHint": "יש להקליד לפחות 3 תווים לחיפוש",
+			"groups": {
+				"task": "משימות",
+				"project": "פרויקטים",
+				"workspace": "סביבות עבודה",
+				"comment": "תגובות",
+				"activity": "פעילויות",
+				"fallback": "תוצאות"
+			}
+		},
+		"settingsLayout": {
+			"toggleSidebar": "פתיחה או סגירה של סרגל הצד",
+			"back": "חזרה"
+		},
+		"userMenu": {
+			"signedOutSuccess": "התנתקת בהצלחה",
+			"signOutFailed": "ההתנתקות נכשלה",
+			"unnamedUser": "משתמש",
+			"settings": "הגדרות",
+			"signingOut": "מתנתק...",
+			"logOut": "התנתקות"
+		},
+		"workspaceSwitcher": {
+			"workspaces": "סביבות עבודה",
+			"switching": "מחליף...",
+			"addWorkspace": "הוספת סביבת עבודה",
+			"selectWorkspace": "בחירת סביבת עבודה"
+		},
+		"page": {
+			"projectsTitle": "פרויקטים",
+			"settingsTitle": "הגדרות",
+			"backToWorkspace": "חזרה לסביבת העבודה",
+			"settingsWorkspaceTab": "סביבת עבודה"
+		},
+		"projectSettings": {
+			"projectLabel": "פרויקט"
+		},
+		"shortcuts": {
+			"categories": {
+				"general": "כללי",
+				"navigation": "ניווט",
+				"create": "יצירה",
+				"views": "תצוגות",
+				"tasks": "משימות",
+				"list": "לוח ורשימה",
+				"inbox": "תיבת עדכונים",
+				"filters": "מסננים",
+				"editor": "עורך"
+			},
+			"items": {
+				"openCommandMenu": "פתיחת תפריט הפקודות",
+				"openSearch": "חיפוש",
+				"openShortcuts": "קיצורי מקלדת",
+				"submit": "שמירה או שליחה",
+				"back": "סגירה או חזרה",
+				"switchWorkspace": "החלפת סביבת עבודה",
+				"logOut": "התנתקות",
+				"showDisplayOptions": "אפשרויות תצוגה",
+				"dismissToasts": "סגירת כל ההודעות הקופצות",
+				"toggleSidebar": "פתיחה או סגירה של סרגל הצד",
+				"goToHome": "מעבר לדף הבית",
+				"goToInbox": "מעבר לתיבת העדכונים",
+				"goToMyTasks": "מעבר למשימות שלי",
+				"goToProjects": "מעבר לפרויקטים",
+				"goToSettings": "מעבר להגדרות",
+				"goToTasks": "מעבר למשימות",
+				"goToBacklog": "מעבר לצבר המשימות",
+				"goToProject": "מעבר לפרויקט 1–9",
+				"openTask": "פתיחת משימה",
+				"openProject": "פתיחת פרויקט",
+				"createTask": "יצירת משימה",
+				"createProject": "יצירת פרויקט",
+				"toggleLayout": "מעבר בין לוח לרשימה",
+				"deleteTask": "מחיקת משימה",
+				"copyTaskUrl": "העתקת כתובת המשימה",
+				"copyBranchName": "העתקת שם הענף",
+				"nextTask": "הפריט הבא",
+				"previousTask": "הפריט הקודם",
+				"openFocusedTask": "פתיחת הפריט שבמיקוד",
+				"selectAll": "בחירת הכול",
+				"clearSelection": "ניקוי הבחירה",
+				"changeStatus": "שינוי סטטוס",
+				"changePriority": "שינוי עדיפות",
+				"assignTask": "הקצאה",
+				"assignToMe": "הקצאה לעצמי",
+				"changeLabels": "שינוי תוויות",
+				"setDueDate": "הגדרת תאריך יעד",
+				"removeDueDate": "הסרת תאריך יעד",
+				"renameTask": "שינוי שם",
+				"editDescription": "עריכת תיאור",
+				"commentOnTask": "הוספת תגובה",
+				"moveToProject": "העברה לפרויקט אחר",
+				"createSubtask": "יצירת תת־משימה",
+				"setParent": "הגדרת משימת אב",
+				"openParent": "פתיחת משימת האב",
+				"openSubtask": "פתיחת תת־משימה",
+				"markBlockedBy": "סימון כחסומה על ידי",
+				"markBlocking": "סימון כחוסמת",
+				"markRelated": "סימון כקשורה",
+				"addLink": "הוספת קישור",
+				"toggleResources": "הצגה או הסתרה של משאבים",
+				"copyTaskId": "העתקת מזהה המשימה",
+				"copyTaskTitle": "העתקת כותרת המשימה",
+				"copyAsMarkdown": "העתקה כ־Markdown",
+				"peekTask": "תצוגה מקדימה של המשימה שבמיקוד",
+				"selectTask": "בחירת משימה",
+				"selectGroup": "בחירת הכול בקבוצה",
+				"copyPageUrl": "העתקת כתובת העמוד",
+				"focusRight": "מיקוד בעמודה מימין",
+				"focusLeft": "מיקוד בעמודה משמאל",
+				"moveTaskTop": "העברה לראש הקבוצה",
+				"moveTaskUp": "העברה מקום אחד למעלה",
+				"moveTaskDown": "העברה מקום אחד למטה",
+				"moveTaskBottom": "העברה לסוף הקבוצה",
+				"moveTaskLeft": "העברה לעמודה משמאל",
+				"moveTaskRight": "העברה לעמודה מימין",
+				"toggleGroup": "כיווץ או הרחבת קבוצה",
+				"toggleAllGroups": "כיווץ או הרחבת כל הקבוצות",
+				"deleteNotification": "מחיקת התראה",
+				"deleteReadNotifications": "מחיקת כל ההתראות שנקראו",
+				"toggleNotificationRead": "סימון כנקרא או כלא נקרא",
+				"markAllNotificationsRead": "סימון הכול כנקרא",
+				"addFilter": "הוספת מסנן",
+				"clearAllFilters": "ניקוי כל המסננים",
+				"clearLastFilter": "ניקוי המסנן האחרון",
+				"editorBold": "מודגש",
+				"editorItalic": "נטוי",
+				"editorUnderline": "קו תחתון",
+				"editorStrike": "קו חוצה",
+				"editorAttach": "צירוף תמונה או קובץ",
+				"editorInlineCode": "קוד בתוך שורה",
+				"editorLink": "הפיכת טקסט לקישור",
+				"editorQuote": "ציטוט",
+				"editorParagraph": "טקסט רגיל",
+				"editorHeading1": "כותרת 1",
+				"editorHeading2": "כותרת 2",
+				"editorHeading3": "כותרת 3",
+				"editorChecklist": "רשימת סימון",
+				"editorToggleChecklist": "שינוי הסימון של פריט ברשימה",
+				"editorBulletList": "רשימת תבליטים",
+				"editorNumberedList": "רשימה ממוספרת",
+				"editorCodeBlock": "בלוק קוד",
+				"editorUndo": "ביטול פעולה",
+				"editorRedo": "ביצוע מחדש"
+			},
+			"title": "קיצורי מקלדת",
+			"searchPlaceholder": "חיפוש לפי פעולה או מקש",
+			"results_one": "תוצאות: {{count}}",
+			"results_other": "{{count}} תוצאות",
+			"noResults": "לא נמצאו קיצורים תואמים",
+			"then": "ואז",
+			"or": "או",
+			"thenEllipsis": "ואז…",
+			"results_two": "{{count}} תוצאות"
+		}
+	},
+	"notifications": {
+		"newCount_one": "התראות חדשות: {{count}}",
+		"newCount_other": "{{count}} חדשות",
+		"emptyTitle": "אין עדיין התראות",
+		"emptySubtitle": "עדכונים ופעילות יופיעו כאן.",
+		"clearAll": "ניקוי כל ההתראות",
+		"clearDialogTitle": "לנקות את כל ההתראות?",
+		"clearDialogDescription": "כל ההתראות יימחקו לצמיתות. לא ניתן לבטל פעולה זו.",
+		"reminderLeadTime": {
+			"minutes_one": "{{count}} דקה",
+			"minutes_other": "{{count}} דקות",
+			"hours_one": "{{count}} שעה",
+			"hours_other": "{{count}} שעות",
+			"days_one": "{{count}} יום",
+			"days_other": "{{count}} ימים",
+			"minutes_two": "{{count}} דקות",
+			"hours_two": "{{count}} שעות",
+			"days_two": "{{count}} ימים"
+		},
+		"events": {
+			"task_created": {
+				"title": "נוצרה משימה חדשה",
+				"content": "המשימה \"{{taskTitle}}\" נוצרה"
+			},
+			"workspace_created": {
+				"title": "נוצרה סביבת עבודה",
+				"content": "סביבת העבודה \"{{workspaceName}}\" נוצרה בהצלחה"
+			},
+			"task_status_changed": {
+				"title": "סטטוס המשימה השתנה",
+				"content": "הסטטוס של המשימה \"{{taskTitle}}\" השתנה מ־\"{{oldStatus}}\" ל־\"{{newStatus}}\""
+			},
+			"task_assignee_changed": {
+				"title": "המשימה הוקצתה לך",
+				"content": "הוקצתה לך המשימה: {{taskTitle}}"
+			},
+			"task_mention": {
+				"title": "{{mentionerName}} הזכיר אותך",
+				"content": "{{mentionerName}} הזכיר אותך ב־{{taskTitle}}"
+			},
+			"task_comment": {
+				"title": "{{commenterName}} הגיב למשימה שלך",
+				"content": "תגובה חדשה על {{taskTitle}}: {{commentPreview}}"
+			},
+			"due_date_reminder": {
+				"title": "תאריך היעד של המשימה מתקרב",
+				"content": "תאריך היעד של {{taskTitle}} יחול בעוד {{leadTime}}"
+			},
+			"task_overdue": {
+				"title": "המשימה באיחור",
+				"content": "תאריך היעד של {{taskTitle}} חלף"
+			},
+			"time_entry_created": {
+				"title": "מעקב הזמן התחיל",
+				"contentWithTask": "מעקב הזמן התחיל במשימה: {{taskTitle}}",
+				"contentWithoutTask": "מעקב הזמן התחיל במשימה"
+			}
+		},
+		"inbox": {
+			"pageTitle": "תיבת עדכונים",
+			"unread": "לא נקרא",
+			"today": "היום",
+			"earlier": "קודם לכן",
+			"filters": {
+				"label": "סינון התראות",
+				"all": "הכול",
+				"unread": "לא נקרא",
+				"mentions": "אזכורים"
+			},
+			"emptyFilter": "אין כאן כלום",
+			"loadError": "לא ניתן לטעון את ההתראות.",
+			"selectPrompt": "יש לבחור התראה כדי לקרוא אותה",
+			"back": "תיבת עדכונים",
+			"openTask": "פתיחת משימה",
+			"recentActivity": "פעילות אחרונה",
+			"taskUnavailable": "המשימה כבר אינה זמינה.",
+			"taskLoadError": "לא ניתן לטעון את המשימה.",
+			"actionError": "לא ניתן לעדכן את תיבת העדכונים. יש לנסות שוב.",
+			"readCleared": "ההתראות שנקראו נמחקו"
+		},
+		"newCount_two": "{{count}} חדשות"
+	},
+	"activity": {
+		"assignedToSelf": "הקצה את המשימה לעצמו",
+		"unassigned": "הסיר את הקצאת המשימה",
+		"assignedTo": "הקצה את המשימה ל־{{name}}",
+		"changedStatus": "שינה סטטוס מ־{{from}} ל־{{to}}",
+		"changedPriority": "שינה עדיפות מ־{{from}} ל־{{to}}",
+		"clearedDueDate": "ניקה את תאריך היעד",
+		"setDueDate": "קבע תאריך יעד ל־{{date}}",
+		"changedDueDate": "שינה את תאריך היעד מ־{{from}} ל־{{to}}",
+		"changedTitle": "שינה את הכותרת מ־\"{{from}}\" ל־\"{{to}}\"",
+		"moved": "העביר את המשימה מ־\"{{from}}\" ל־\"{{to}}\"",
+		"movedFromOtherProject": "העביר את המשימה מפרויקט אחר אל \"{{to}}\"",
+		"created": "יצר את המשימה",
+		"githubUser": "משתמש GitHub",
+		"comment": {
+			"viewGithubProfile": "צפייה בפרופיל GitHub",
+			"commentedOnForge": "הגיב ב־{{forge}}",
+			"cannotBeEmpty": "לא ניתן לשמור תגובה ריקה",
+			"mustBeLoggedInToEdit": "יש להתחבר כדי לערוך תגובות",
+			"updated": "התגובה עודכנה",
+			"failedToUpdate": "עדכון התגובה נכשל",
+			"edit": "עריכת תגובה",
+			"editPlaceholder": "עריכת תגובה...",
+			"save": "שמירה",
+			"added": "התגובה נוספה",
+			"failedToAdd": "הוספת התגובה נכשלה",
+			"leavePlaceholder": "כתיבת תגובה...",
+			"attachFile": "צירוף קובץ",
+			"submitShortcut": "שליחת תגובה",
+			"editor": {
+				"uploadsOnlyOnSavedTasks": "העלאת קבצים זמינה רק במשימות שנשמרו.",
+				"uploadingFile": "מעלה קובץ...",
+				"imageUploaded": "התמונה הועלתה",
+				"fileAttached": "הקובץ צורף",
+				"failedToUploadFile": "העלאת הקובץ נכשלה",
+				"plaintext": "טקסט פשוט",
+				"autoDetect": "זיהוי אוטומטי",
+				"slashGroupText": "טקסט",
+				"slashGroupLists": "רשימות",
+				"slashGroupInsert": "הוספה",
+				"slashParagraph": "טקסט",
+				"slashHeading": "כותרת",
+				"slashBulletList": "רשימת תבליטים",
+				"slashTaskList": "רשימת משימות",
+				"slashOrderedList": "רשימה ממוספרת",
+				"slashQuote": "ציטוט",
+				"slashCodeBlock": "בלוק קוד",
+				"slashTable": "טבלה",
+				"slashFile": "קובץ",
+				"searchParagraph": "טקסט פסקה רגיל text paragraph normal",
+				"searchHeading": "כותרת heading title h2",
+				"searchBulletList": "רשימה תבליטים לא ממוספרת list bullet unordered",
+				"searchTaskList": "משימות רשימת סימון תיבת סימון todo to-do checklist checkbox task list",
+				"searchOrderedList": "רשימה ממוספרת מסודרת list ordered numbered",
+				"searchQuote": "ציטוט quote blockquote",
+				"searchCodeBlock": "קוד מקטע code snippet",
+				"searchTable": "טבלה רשת table grid",
+				"searchFile": "קובץ קבצים מצורפים תמונה צילום העלאה file attachment image photo picture upload",
+				"embedErrorInvalidUrl": "יש להזין כתובת תקינה",
+				"embedErrorYoutubeOnly": "ניתן להטמיע רק קישורי YouTube.",
+				"embedVideo": "הטמעת סרטון",
+				"keepAsLink": "השארה כקישור",
+				"hintTab": "Tab",
+				"hintEsc": "Esc",
+				"pasteUrl": "הדבקת כתובת",
+				"asLink": "כקישור",
+				"embed": "הטמעה",
+				"noCommands": "אין פקודות",
+				"ariaCommentContent": "תוכן התגובה",
+				"ariaCommentEditor": "עורך תגובות",
+				"ariaCopyCode": "העתקת קוד",
+				"ariaCopied": "הועתק",
+				"copy": "העתקה",
+				"copied": "הועתק",
+				"dropImageToUpload": "יש לשחרר את התמונה כדי להעלות אותה",
+				"previewImageAlt": "תצוגה מקדימה של תמונה",
+				"codeLang": {
+					"bash": "Bash",
+					"csharp": "C#",
+					"cpp": "C++",
+					"css": "CSS",
+					"go": "Golang",
+					"graphql": "GraphQL",
+					"html": "HTML",
+					"json": "JSON",
+					"java": "Java",
+					"javascript": "JavaScript",
+					"markdown": "Markdown",
+					"mermaid": "Mermaid",
+					"plaintext": "טקסט פשוט",
+					"python": "Python",
+					"rust": "Rust",
+					"sql": "SQL",
+					"swift": "Swift",
+					"typescript": "TypeScript",
+					"yaml": "YAML"
+				},
+				"table": {
+					"addColumnBefore": "הוספת עמודה לפני",
+					"addColumnAfter": "הוספת עמודה אחרי",
+					"deleteColumn": "מחיקת עמודה",
+					"addRowBefore": "הוספת שורה מעל",
+					"addRowAfter": "הוספת שורה מתחת",
+					"deleteRow": "מחיקת שורה",
+					"deleteTable": "מחיקת טבלה"
+				},
+				"mermaid": {
+					"renderFailed": "לא ניתן להציג את תרשים ה־Mermaid"
+				}
+			},
+			"importedFrom": "יובא מ־{{source}}",
+			"importedBy": "יובא על ידי {{name}}"
+		}
+	},
+	"tasks": {
+		"checklistProgress": "הושלמו {{completed}} מתוך {{total}} פריטים ברשימת הסימון",
+		"title": "משימות",
+		"status": {
+			"label": "סטטוס",
+			"to-do": "לביצוע",
+			"in-progress": "בביצוע",
+			"in-review": "בבדיקה",
+			"done": "הושלם",
+			"archived": "בארכיון",
+			"planned": "מתוכנן"
+		},
+		"priority": {
+			"label": "עדיפות",
+			"no-priority": "ללא עדיפות",
+			"low": "נמוכה",
+			"medium": "בינונית",
+			"high": "גבוהה",
+			"urgent": "דחופה"
+		},
+		"view": {
+			"board": "לוח",
+			"list": "רשימה",
+			"backlog": "צבר משימות",
+			"gantt": "גאנט",
+			"heading": "תצוגה"
+		},
+		"common": {
+			"selectTask": "בחירת משימה",
+			"loadingTask": "טוען משימה...",
+			"taskNotFound": "המשימה לא נמצאה",
+			"taskNotFoundDescription": "המשימה המבוקשת אינה קיימת או שנמחקה.",
+			"ticketAmbiguous": "מזהה המשימה מתאים ליותר ממשימה אחת",
+			"ticketAmbiguousDescription": "{{ticketId}} מתאים למשימות ביותר מפרויקט אחד בסביבת העבודה. יש לשנות את המזהה של אחד הפרויקטים כדי לתקן את הקישור.",
+			"ticketNotFoundDescription": "אין בסביבת העבודה משימה עם המזהה {{ticketId}}, או שאין לך גישה אליה.",
+			"customFields": "שדות מותאמים אישית"
+		},
+		"detail": {
+			"subtaskOf": "תת־משימה של",
+			"activity": "פעילות",
+			"noActivity": "לא נמצאה פעילות",
+			"openInFullPage": "פתיחה בעמוד מלא",
+			"titlePlaceholder": "לחיצה להוספת כותרת",
+			"addDescription": "הוספת תיאור...",
+			"editor": {
+				"ariaLabel": "עורך תיאור המשימה",
+				"placeholder": "כתיבת תיאור...",
+				"previewImage": "תצוגה מקדימה של תמונה",
+				"autoDetect": "זיהוי אוטומטי",
+				"copyCode": "העתקת קוד",
+				"copy": "העתקה",
+				"copied": "הועתק",
+				"attachFile": "צירוף קובץ",
+				"dropToUpload": "יש לשחרר את התמונה כדי להעלות אותה",
+				"checkbox": {
+					"markIncomplete": "סימון המשימה כלא הושלמה",
+					"markComplete": "סימון המשימה כהושלמה"
+				},
+				"upload": {
+					"loading": "מעלה קובץ...",
+					"failed": "העלאת הקובץ נכשלה",
+					"imageSuccess": "התמונה הועלתה",
+					"fileSuccess": "הקובץ צורף"
+				},
+				"slash": {
+					"groups": {
+						"text": "טקסט",
+						"lists": "רשימות",
+						"insert": "הוספה"
+					},
+					"empty": "אין פקודות",
+					"commands": {
+						"paragraph": "טקסט",
+						"heading-2": "כותרת",
+						"bullet-list": "רשימת תבליטים",
+						"task-list": "רשימת משימות",
+						"ordered-list": "רשימה ממוספרת",
+						"blockquote": "ציטוט",
+						"code-block": "בלוק קוד",
+						"table": "טבלה",
+						"file": "קובץ"
+					}
+				},
+				"languages": {
+					"bash": "Bash",
+					"csharp": "C#",
+					"cpp": "C++",
+					"css": "CSS",
+					"clojure": "Clojure",
+					"cypher": "Cypher",
+					"dart": "Dart",
+					"diff": "Diff",
+					"elixir": "Elixir",
+					"excel": "Excel",
+					"go": "Golang",
+					"graphql": "GraphQL",
+					"html": "HTML",
+					"haskell": "Haskell",
+					"json": "JSON",
+					"java": "Java",
+					"javascript": "JavaScript",
+					"kotlin": "Kotlin",
+					"makefile": "Makefile",
+					"markdown": "Markdown",
+					"mermaid": "Mermaid",
+					"ocaml": "OCaml",
+					"php": "PHP",
+					"perl": "Perl",
+					"plaintext": "טקסט פשוט",
+					"python": "Python",
+					"r": "R",
+					"reasonml": "ReasonML",
+					"ruby": "Ruby",
+					"rust": "Rust",
+					"sql": "SQL",
+					"swift": "Swift",
+					"toml": "TOML",
+					"terraform": "Terraform",
+					"typescript": "TypeScript",
+					"xml": "XML",
+					"yaml": "YAML"
+				},
+				"embed": {
+					"choice": {
+						"embedVideo": "הטמעת סרטון",
+						"keepAsLink": "השארה כקישור"
+					},
+					"inputPlaceholder": "הדבקת כתובת",
+					"embeddedContent": "תוכן מוטמע",
+					"asLink": "כקישור",
+					"submit": "הטמעה",
+					"errors": {
+						"invalidUrl": "יש להזין כתובת תקינה",
+						"onlyYoutube": "ניתן להטמיע רק קישורי YouTube."
+					},
+					"onlyYoutubeInline": "ניתן להטמיע רק כתובות YouTube. יש להשתמש במצב קישור במקום."
+				},
+				"mermaid": {
+					"renderFailed": "לא ניתן להציג את תרשים ה־Mermaid"
+				},
+				"image": {
+					"large": "גדול",
+					"medium": "בינוני",
+					"reset": "איפוס גודל",
+					"resizeHandle": "שינוי גודל התמונה",
+					"small": "קטן"
+				},
+				"saved": "נשמר",
+				"saving": "שומר…",
+				"saveFailed": "לא ניתן לשמור את השינויים",
+				"retrySave": "ניסיון חוזר"
+			}
+		},
+		"entity": {
+			"task": "משימה"
+		},
+		"relations": {
+			"title": "קשרים",
+			"tasksInProject": "משימות בפרויקט",
+			"linkError": "קישור המשימה נכשל",
+			"empty": "אין משימות קשורות",
+			"searchPlaceholder": "חיפוש משימות לקישור...",
+			"noTasksFound": "לא נמצאו משימות",
+			"openTask": "פתיחת משימה",
+			"removeRelation": "הסרת קשר",
+			"related": "קשורה",
+			"blocks": "חוסמת",
+			"selectTask": "בחירת משימה לקישור",
+			"types": {
+				"blocks": "חוסמת",
+				"blocked_by": "חסומה על ידי",
+				"related": "קשורה אל"
+			},
+			"blockedBy": "חסומה על ידי",
+			"parentPlaceholder": "הגדרת משימת אב…"
+		},
+		"subtasks": {
+			"progress": "הושלמו {{completed}} מתוך {{total}} תתי־משימות",
+			"noCompletionColumn": "בפרויקט הזה אין עמודה מתאימה להשלמה או לפתיחה מחדש של תת־המשימה.",
+			"title": "תתי־משימות",
+			"inputPlaceholder": "כותרת תת־המשימה...",
+			"addAction": "הוספה",
+			"empty": "אין עדיין תתי־משימות",
+			"createError": "יצירת תת־המשימה נכשלה",
+			"deleteSuccess": "המשימה נמחקה בהצלחה",
+			"deleteError": "מחיקת המשימה נכשלה",
+			"deleteDialogTitle": "למחוק את המשימה?",
+			"deleteDialogDescription": "המשימה וכל הנתונים שלה יימחקו לצמיתות. לא ניתן לבטל פעולה זו.",
+			"deleteAction": "מחיקת משימה",
+			"completeAria": "סימון תת־המשימה כהושלמה"
+		},
+		"properties": {
+			"title": "מאפיינים",
+			"labels": "תוויות",
+			"addLabels": "הוספת תוויות",
+			"copyTaskLink": "העתקת קישור למשימה",
+			"copyTaskBranch": "העתקת שם הענף של המשימה",
+			"taskLinkCopied": "הקישור למשימה הועתק",
+			"taskBranchCopied": "שם הענף הועתק",
+			"start": "התחלה",
+			"startDate": "תאריך התחלה",
+			"noDate": "ללא תאריך",
+			"dates": "תאריכים",
+			"project": "פרויקט"
+		},
+		"move": {
+			"title": "העברת משימה",
+			"projectLabel": "פרויקט היעד",
+			"projectPlaceholder": "בחירת פרויקט",
+			"statusLabel": "סטטוס היעד",
+			"statusHintKeep": "תהליך העבודה בפרויקט הזה כבר תומך בסטטוס הנוכחי.",
+			"statusHintAdjust": "יש לבחור את הסטטוס לשימוש בפרויקט היעד.",
+			"action": "העברת משימה",
+			"success": "המשימה הועברה בהצלחה",
+			"error": "העברת המשימה נכשלה"
+		},
+		"popover": {
+			"assignee": {
+				"unassigned": "ללא אחראי",
+				"updateError": "עדכון האחראי למשימה נכשל"
+			},
+			"status": {
+				"updateError": "עדכון סטטוס המשימה נכשל"
+			},
+			"priority": {
+				"updateError": "עדכון עדיפות המשימה נכשל"
+			},
+			"dueDate": {
+				"updateError": "עדכון תאריך היעד של המשימה נכשל",
+				"clear": "ניקוי תאריך"
+			},
+			"startDate": {
+				"updateError": "עדכון תאריך ההתחלה של המשימה נכשל",
+				"clear": "ניקוי תאריך ההתחלה"
+			},
+			"labels": {
+				"searchPlaceholder": "חיפוש תוויות...",
+				"empty": "לא נמצאו תוויות",
+				"create": "יצירת \"{{name}}\"",
+				"chooseColor": "בחירת צבע",
+				"updateError": "עדכון התווית נכשל",
+				"createSuccess": "התווית נוצרה ונוספה",
+				"createError": "יצירת התווית נכשלה",
+				"colors": {
+					"stone": "אבן",
+					"slate": "אפור כחלחל",
+					"lavender": "לבנדר",
+					"sage": "מרווה",
+					"forest": "ירוק יער",
+					"amber": "ענבר",
+					"terracotta": "חמרה",
+					"rose": "ורוד",
+					"crimson": "ארגמן"
+				},
+				"editLabels": "עריכת תוויות"
+			}
+		},
+		"backlog": {
+			"pageTitle": "צבר המשימות של {{name}}",
+			"noTasksToMove": "אין משימות מתוכננות להעברה",
+			"moveAllConfirm": "להעביר את כל {{count}} המשימות המתוכננות אל ״לביצוע״?",
+			"moveAllSuccess": "{{count}} משימות הועברו אל ״לביצוע״",
+			"plan": "תכנון",
+			"moveAllTooltip": "העברת כל המשימות המתוכננות אל ״לביצוע״",
+			"moveAll": "העברת הכול",
+			"addTask": "הוספת משימה",
+			"sections": {
+				"planned": "מתוכננות",
+				"archived": "בארכיון"
+			},
+			"noTasksInSection": "אין משימות בקטגוריה {{section}}",
+			"filters": {
+				"dueThisWeek": "תאריך יעד השבוע",
+				"dueNextWeek": "תאריך יעד בשבוע הבא",
+				"noDueDate": "ללא תאריך יעד"
+			}
+		},
+		"sort": {
+			"direction": "כיוון",
+			"ascending": "סדר עולה",
+			"descending": "סדר יורד",
+			"fields": {
+				"position": "ידני (מיקום)",
+				"createdAt": "תאריך יצירה",
+				"priority": "עדיפות",
+				"dueDate": "תאריך יעד",
+				"title": "כותרת",
+				"number": "מספר משימה"
+			}
+		},
+		"boardFilters": {
+			"noValuesUsedYet": "עדיין לא נעשה שימוש בערכים",
+			"noCustomFieldValues": "אין ערכים בשדות המותאמים אישית",
+			"allCustomFieldValues": "כל הערכים",
+			"selectedCount": "נבחרו {{count}}",
+			"subjects": {
+				"status": "סטטוס",
+				"priority": "עדיפות",
+				"assignee": "אחראי",
+				"dueDate": "תאריך יעד",
+				"labels": "תוויות"
+			},
+			"operators": {
+				"isAnyOf": "הוא אחד מ־",
+				"includeAnyOf": "כוללים אחד מ־",
+				"is": "הוא",
+				"isNot": "אינו",
+				"isNoneOf": "אינו אף אחד מ־",
+				"include": "כוללים",
+				"exclude": "אינם כוללים"
+			}
+		},
+		"calendar": {
+			"pageTitle": "{{name}} – לוח שנה",
+			"title": "לוח שנה",
+			"previousMonth": "החודש הקודם",
+			"nextMonth": "החודש הבא",
+			"today": "היום",
+			"noTasks": "אין משימות מתוזמנות",
+			"noTasksSubtitle": "אפשר להוסיף למשימות תאריך התחלה, תאריך יעד או את שניהם כדי להציב אותן בלוח השנה.",
+			"moreTasks": "עוד {{count}}+",
+			"loadError": "טעינת המשימות נכשלה.",
+			"dayTasksAriaLabel": "הצגת כל המשימות לתאריך {{date}}",
+			"taskAriaLabel": "{{title}}, {{range}}: פתיחת משימה",
+			"noTasksThisMonth": "אין משימות מתוזמנות החודש"
+		},
+		"gantt": {
+			"searchPlaceholder": "חיפוש משימות מתוזמנות...",
+			"pageTitle": "{{name}} – גאנט",
+			"title": "ציר זמן גאנט",
+			"jumpToToday": "מעבר להיום",
+			"hideTasks": "הסתרת משימות",
+			"showTasks": "הצגת משימות",
+			"noTasks": "אין משימות מתוזמנות",
+			"noTasksSubtitle": "אפשר להוסיף למשימות תאריך התחלה, תאריך יעד או את שניהם כדי להציב אותן בציר הזמן של הפרויקט.",
+			"noTasksFound": "לא נמצאו משימות",
+			"taskHeader": "משימה",
+			"updateDatesError": "עדכון תאריכי המשימה נכשל",
+			"resizeStart": "שינוי תאריך ההתחלה",
+			"resizeDue": "שינוי תאריך היעד",
+			"taskAriaLabel": "{{title}}: פתיחה או גרירה להזזה",
+			"previousPeriod": "התקופה הקודמת",
+			"nextPeriod": "התקופה הבאה",
+			"periodStart": "תאריך ההתחלה של ציר הזמן",
+			"showTaskDates": "הצגת תאריכי המשימה"
+		},
+		"delete": {
+			"title": "למחוק את המשימה?",
+			"description": "המשימה וכל הנתונים שלה יימחקו לצמיתות. לא ניתן לבטל פעולה זו.",
+			"action": "מחיקת משימה",
+			"success": "המשימה נמחקה בהצלחה",
+			"error": "מחיקת המשימה נכשלה"
+		},
+		"duplicate": {
+			"titleSuffix": "{{title}} (עותק)",
+			"success": "המשימה שוכפלה בהצלחה",
+			"error": "שכפול המשימה נכשל"
+		},
+		"archive": {
+			"success": "{{count}} משימות הועברו לארכיון",
+			"confirmTitle_one": "להעביר לארכיון את המשימה שהושלמה ({{count}})?",
+			"confirmTitle_other": "להעביר לארכיון {{count}} משימות שהושלמו?",
+			"confirmDescription": "המשימות יוסרו מהלוח ויעברו לאזור הארכיון בצבר המשימות.",
+			"confirmTitle_two": "להעביר לארכיון {{count}} משימות שהושלמו?"
+		},
+		"listView": {
+			"addTask": "הוספת משימה",
+			"archiveAllTooltip": "העברת כל המשימות שהושלמו לארכיון",
+			"noTasks": "אין משימות"
+		},
+		"kanban": {
+			"addTask": "הוספת משימה",
+			"automaticallySortedHint": "ממוין אוטומטית לפי {{sort}}"
+		},
+		"pr": {
+			"merged": "מוזגה",
+			"draft": "טיוטה",
+			"open": "פתוחה",
+			"label": "בקשת משיכה",
+			"count_one": "בקשות משיכה: {{count}}",
+			"count_other": "{{count}} בקשות משיכה",
+			"count_two": "{{count}} בקשות משיכה"
+		},
+		"assignee": {
+			"label": "אחראי",
+			"unassigned": "ללא אחראי"
+		},
+		"dueDate": {
+			"label": "תאריך יעד",
+			"clear": "ניקוי תאריך",
+			"updateError": "עדכון תאריך היעד של המשימה נכשל",
+			"clearError": "ניקוי תאריך היעד נכשל"
+		},
+		"labels": {
+			"empty": "אין תוויות זמינות"
+		},
+		"update": {
+			"error": "עדכון המשימה נכשל"
+		},
+		"contextMenu": {
+			"copyLink": "העתקת קישור",
+			"copyLinkSuccess": "הקישור למשימה הועתק!"
+		},
+		"actions": {
+			"duplicate": "שכפול",
+			"archive": "העברה לארכיון",
+			"markAsPlanned": "סימון כמתוכננת",
+			"delete": "מחיקה..."
+		},
+		"bulk": {
+			"selectedCount": "נבחרו {{count}}",
+			"moveToBacklog": "העברה לצבר המשימות",
+			"moveToBacklogSuccess": "{{count}} משימות הועברו לצבר המשימות",
+			"moveToBacklogError": "העברת המשימות לצבר נכשלה",
+			"moveToBoard": "העברה ללוח",
+			"moveToBoardSuccess": "{{count}} משימות הועברו ללוח",
+			"moveToBoardError": "העברת המשימות ללוח נכשלה",
+			"delete": "מחיקת משימות",
+			"deleteConfirmTitle_one": "למחוק משימה אחת ({{count}})?",
+			"deleteConfirmTitle_other": "למחוק {{count}} משימות?",
+			"deleteConfirmDescription": "המשימות שנבחרו וכל הנתונים שלהן יימחקו לצמיתות. לא ניתן לבטל פעולה זו.",
+			"deleteSuccess": "{{count}} משימות נמחקו",
+			"deleteError": "מחיקת המשימות נכשלה",
+			"archive": "העברת משימות לארכיון",
+			"archiveSuccess": "{{count}} משימות הועברו לארכיון",
+			"archiveError": "העברת המשימות לארכיון נכשלה",
+			"updateSuccess": "{{count}} משימות עודכנו",
+			"updateError": "עדכון המשימות נכשל",
+			"assignTo": "הקצאה ל־",
+			"assignSuccess": "{{count}} משימות הוקצו",
+			"assignError": "הקצאת המשימות נכשלה",
+			"setPriority": "הגדרת עדיפות",
+			"updatePriorityError": "עדכון העדיפות נכשל",
+			"addLabel": "הוספת תווית",
+			"addLabelSuccess": "התווית נוספה ל־{{count}} משימות",
+			"addLabelError": "הוספת התווית נכשלה",
+			"updateDueDateError": "עדכון תאריך היעד נכשל",
+			"actions": "פעולות",
+			"searchActions": "חיפוש פעולות...",
+			"noActionsFound": "לא נמצאו פעולות.",
+			"changeStatus": "שינוי סטטוס",
+			"clearSelection": "ניקוי הבחירה",
+			"selectAll": "בחירת הכול",
+			"moreActions": "פעולות נוספות",
+			"statusPlaceholder": "שינוי סטטוס…",
+			"priorityPlaceholder": "הגדרת עדיפות…",
+			"assigneePlaceholder": "הקצאה ל־…",
+			"labelPlaceholder": "הוספת תווית…",
+			"columnPlaceholder": "העברה לעמודה…",
+			"deleteConfirmTitle_two": "למחוק {{count}} משימות?"
+		},
+		"editor": {
+			"table": {
+				"addColumnBefore": "הוספת עמודה לפני",
+				"addColumnAfter": "הוספת עמודה אחרי",
+				"deleteColumn": "מחיקת עמודה",
+				"addRowBefore": "הוספת שורה מעל",
+				"addRowAfter": "הוספת שורה מתחת",
+				"deleteRow": "מחיקת שורה",
+				"deleteTable": "מחיקת טבלה"
+			}
+		},
+		"customFields": {
+			"fields": "שדות",
+			"empty": "ריק",
+			"required": "חובה",
+			"enterKey": "Enter",
+			"toSave": "לשמירה",
+			"today": "היום",
+			"clear": "ניקוי",
+			"setValue": "הגדרת {{field}}…",
+			"noMatches": "אין אפשרויות תואמות",
+			"missingRequired_one": "שדות חובה ריקים: {{count}}",
+			"missingRequired_other": "{{count}} שדות חובה ריקים",
+			"saveError": "לא ניתן לשמור את {{field}}",
+			"moreFields_one": "שדות נוספים: {{count}}",
+			"moreFields_other": "עוד {{count}} שדות",
+			"manage": "ניהול שדות",
+			"missingRequired_two": "{{count}} שדות חובה ריקים",
+			"moreFields_two": "עוד {{count}} שדות"
+		},
+		"descriptionSearchLoading": "מחפש בתיאורים המלאים…",
+		"descriptionSearchError": "החיפוש בתיאורים נכשל. התוצאות עשויות להיות חלקיות.",
+		"descriptionRetry": "ניסיון חוזר",
+		"descriptionLoading": "טוען תיאור…",
+		"descriptionLoadError": "לא ניתן לטעון את התיאור. יש לנסות שוב כדי לטעון את הגרסה הנוכחית.",
+		"board": {
+			"reorderFailed": "לא ניתן להעביר את המשימה. יש לנסות שוב.",
+			"keyboardInstructions": "לחיצה על רווח לתצוגה מקדימה ועל Enter לפתיחת המשימה. יש להשתמש ב־Alt או Option עם מקשי החצים כדי להעביר אותה."
+		},
+		"toolbar": {
+			"search": "חיפוש משימות",
+			"clearSearch": "ניקוי החיפוש",
+			"taskCount_one": "משימות: {{count}}",
+			"taskCount_other": "{{count}} משימות",
+			"shownCount_one": "{{shown}} מתוך {{count}} משימות",
+			"shownCount_other": "{{shown}} מתוך {{count}} משימות",
+			"taskCount_two": "{{count}} משימות",
+			"shownCount_two": "{{shown}} מתוך {{count}} משימות"
+		},
+		"display": {
+			"title": "תצוגה",
+			"sortBy": "מיון לפי",
+			"showOnCards": "הצגה בכרטיסים",
+			"showOnRows": "הצגה בשורות",
+			"checklistProgress": "התקדמות ברשימת הסימון",
+			"projectBackground": "רקע הפרויקט",
+			"layout": "פריסה"
+		},
+		"filterBar": {
+			"label": "מסננים פעילים",
+			"removeFilter": "הסרת המסנן {{name}}",
+			"noMatches": "אין משימות שתואמות לחיפוש או למסננים שלך."
+		},
+		"filterMenu": {
+			"addFilter": "הוספת מסנן…",
+			"searchSubject": "{{name}}…",
+			"noResults": "אין תוצאות"
+		},
+		"shortcuts": {
+			"assignedToMe": "הוקצתה לך",
+			"idCopied": "מזהה המשימה הועתק",
+			"titleCopied": "כותרת המשימה הועתקה",
+			"markdownCopied": "הועתק כ־Markdown",
+			"copyFailed": "לא ניתן להעתיק ללוח.",
+			"pageUrlCopied": "כתובת העמוד הועתקה"
+		}
+	},
+	"invitations": {
+		"email": {
+			"subject": "{{inviterName}} הזמין אותך להצטרף אל {{workspaceName}} בטיקטק",
+			"preview": "הוזמנת אל {{workspaceName}} בטיקטק",
+			"title": "הצטרפות אל {{workspaceName}}",
+			"subtitle": "{{inviterName}} ({{inviterEmail}}) הזמין אותך לשתף פעולה בטיקטק.",
+			"cta": "אישור הזמנה",
+			"sameEmail": "אפשר לאשר עם כתובת הדוא״ל שקיבלה את ההודעה הזאת.",
+			"ignore": "אם ההזמנה לא הייתה צפויה, אפשר להתעלם מההודעה בבטחה.",
+			"footer": "הזמנה לסביבת עבודה בטיקטק",
+			"details": {
+				"title": "פרטי ההזמנה",
+				"sentTo": "נשלחה אל",
+				"instance": "שרת",
+				"role": "תפקיד",
+				"expires": "תפוגה"
+			}
+		},
+		"pageTitle": "הזמנות",
+		"pendingInvitations": "הזמנות ממתינות",
+		"acceptSubtitle": "אישור הזמנות להצטרפות לסביבות עבודה",
+		"noPendingTitle": "אין הזמנות ממתינות",
+		"noPendingDescription": "אין לך כרגע הזמנות ממתינות לסביבות עבודה.",
+		"continueToSetup": "המשך להגדרה",
+		"skipForNow": "דילוג בינתיים",
+		"table": {
+			"workspace": "סביבת עבודה",
+			"invitedBy": "הוזמנת על ידי",
+			"expires": "תפוגה"
+		},
+		"toast": {
+			"acceptError": "אישור ההזמנה נכשל",
+			"acceptSuccess": "ההזמנה אושרה! ברוכים הבאים לצוות.",
+			"rejectError": "דחיית ההזמנה נכשלה",
+			"rejectSuccess": "ההזמנה נדחתה"
+		}
+	},
+	"workspace": {
+		"projects": {
+			"pageTitle": "פרויקטים",
+			"createProject": "יצירת פרויקט",
+			"title": "כותרת",
+			"progress": "התקדמות",
+			"targetDate": "תאריך מתוכנן",
+			"dueDate": "תאריך יעד",
+			"status": "סטטוס",
+			"emptyTitle": "אין עדיין פרויקטים",
+			"emptyDescription": "אפשר להתחיל ביצירת הפרויקט הראשון שלך.",
+			"emptyDescriptionReadOnly": "אין עדיין פרויקטים בסביבת העבודה. יש לבקש ממנהל ליצור פרויקט.",
+			"projectStatus": {
+				"notStarted": "טרם התחיל",
+				"complete": "הושלם",
+				"inProgress": "בביצוע"
+			},
+			"noDueDate": "ללא תאריך יעד",
+			"reorderHandle": "שינוי סדר הפרויקטים",
+			"reorderError": "שינוי סדר הפרויקטים נכשל",
+			"unavailable": {
+				"noAccessTitle": "אין לך גישה לפרויקט הזה",
+				"noAccessDescription": "יש לבקש גישה ממנהל סביבת העבודה.",
+				"notFoundTitle": "הפרויקט לא נמצא",
+				"notFoundDescription": "הפרויקט אינו קיים או שנמחק.",
+				"backToWorkspace": "חזרה לסביבת העבודה"
+			}
+		},
+		"search": {
+			"pageTitle": "חיפוש",
+			"backToDashboard": "חזרה ללוח הבקרה",
+			"placeholder": "חיפוש משימות לפי כותרת או מזהה קצר (למשל DEP-23)...",
+			"hint": "חיפוש בכל הפרויקטים בסביבת העבודה. אפשר להשתמש במזהים קצרים כמו DEP-23 למציאת משימות מסוימות.",
+			"searching": "מחפש...",
+			"resultsFound_one": "מספר התוצאות שנמצאו: {{count}}",
+			"resultsFound_other": "נמצאו {{count}} תוצאות",
+			"noResultsTitle": "לא נמצאו תוצאות",
+			"noResultsDescription": "אפשר לנסות לשנות את מילות החיפוש או לחפש משהו אחר",
+			"startTitle": "התחלת חיפוש",
+			"startDescription": "יש להזין מונח חיפוש כדי למצוא משימות בכל הפרויקטים",
+			"quickSearchesLabel": "חיפושים מהירים:",
+			"suggestionHighPriority": "עדיפות גבוהה",
+			"suggestionBug": "תקלה",
+			"suggestionFeature": "יכולת חדשה",
+			"suggestionInProgress": "בביצוע",
+			"suggestionCompleted": "הושלם",
+			"resultsFound_two": "נמצאו {{count}} תוצאות"
+		},
+		"create": {
+			"pageTitle": "יצירת סביבת עבודה",
+			"heading": "יצירת סביבת עבודה חדשה",
+			"subtitle": "סביבות עבודה הן מרחבים משותפים שבהם צוותים יכולים לעבוד על פרויקטים, מחזורי עבודה ומשימות.",
+			"nameLabel": "שם סביבת העבודה",
+			"namePlaceholder": "הזנת שם לסביבת העבודה",
+			"descriptionLabel": "תיאור (לא חובה)",
+			"descriptionPlaceholder": "הוספת תיאור לסביבת העבודה",
+			"required": "חובה",
+			"creating": "יוצר...",
+			"submit": "יצירת סביבת עבודה",
+			"success": "סביבת העבודה נוצרה בהצלחה",
+			"error": "יצירת סביבת העבודה נכשלה"
+		},
+		"home": {
+			"pageTitle": "דף הבית",
+			"greeting": {
+				"morning": "בוקר טוב",
+				"afternoon": "צהריים טובים",
+				"evening": "ערב טוב"
+			},
+			"newTask": "משימה חדשה",
+			"week": {
+				"truncated": "התצוגה השבועית כוללת רק את {{shown}} המשימות הראשונות מתוך {{total}} המשימות שהוקצו לך.",
+				"more_one": "עוד {{count}}+",
+				"more_other": "עוד {{count}}+",
+				"more_two": "עוד {{count}}+"
+			},
+			"upNext": {
+				"title": "הבאות בתור",
+				"assigned_one": "משימות שהוקצו לך: {{count}}",
+				"assigned_other": "{{count}} הוקצו לך",
+				"viewAll": "הצגת הכול",
+				"assigned_two": "{{count}} הוקצו לך"
+			},
+			"projects": {
+				"title": "הפרויקטים שלך",
+				"all": "כל הפרויקטים",
+				"loadError": "לא ניתן לטעון את הפרויקטים.",
+				"tasks_one": "משימות: {{count}}",
+				"tasks_other": "{{count}} משימות",
+				"tasks_two": "{{count}} משימות"
+			},
+			"activity": {
+				"title": "פעילות",
+				"commented": "הגיב",
+				"updated": "עדכן את המשימה",
+				"empty": "לא הייתה פעילות ב־30 הימים האחרונים.",
+				"loadError": "לא ניתן לטעון את הפעילות."
+			}
+		},
+		"myWork": {
+			"empty": "לא הוקצו לך משימות",
+			"loadError": "לא ניתן לטעון את המשימות שלך.",
+			"due": {
+				"overdue": "באיחור",
+				"today": "היום",
+				"tomorrow": "מחר",
+				"thisWeek": "השבוע",
+				"later": "בהמשך",
+				"noDueDate": "ללא תאריך יעד"
+			}
+		},
+		"myTasks": {
+			"pageTitle": "המשימות שלי",
+			"emptyDescription": "כאן יופיעו משימות שהוקצו לך ברחבי סביבת העבודה.",
+			"groupBy": {
+				"label": "קיבוץ לפי",
+				"dueDate": "תאריך יעד",
+				"project": "פרויקט"
+			},
+			"truncated": "מוצגות {{shown}} המשימות הראשונות מתוך {{total}}."
+		}
+	},
+	"team": {
+		"roles": {
+			"owner": "בעלים",
+			"admin": "מנהל",
+			"member": "חבר צוות",
+			"viewer": "צופה"
+		},
+		"members": {
+			"pageTitle": "חברי צוות",
+			"inviteMember": "הזמנת חבר צוות",
+			"you": "אני"
+		},
+		"invitations": {
+			"pendingBadge": "ממתינה",
+			"expires": "תוקף עד {{date}}",
+			"linkLabel": "קישור להזמנה",
+			"copyLink": "העתקת קישור",
+			"linkCopied": "הקישור להזמנה הועתק",
+			"copyFailed": "לא ניתן להעתיק אוטומטית. יש לבחור את הקישור וללחוץ על Ctrl+C."
+		},
+		"inviteModal": {
+			"title": "הזמנת חבר צוות",
+			"emailLabel": "דוא״ל",
+			"emailPlaceholder": "colleague@company.com",
+			"sendInvitation": "שליחת הזמנה",
+			"success": "ההזמנה נשלחה בהצלחה",
+			"error": "הזמנת חבר הצוות נכשלה",
+			"createdTitle": "ההזמנה נוצרה",
+			"shareLinkDescription": "אפשר לשתף את הקישור עם {{email}} כדי לאפשר הצטרפות לסביבת העבודה.",
+			"done": "סיום"
+		},
+		"membersTable": {
+			"emptyTitle": "אין עדיין חברי צוות",
+			"emptyDescription": "אפשר להתחיל בהזמנת חבר הצוות הראשון.",
+			"columns": {
+				"name": "שם",
+				"role": "תפקיד",
+				"joined": "תאריך הצטרפות",
+				"actions": "פעולות",
+				"projects": "פרויקטים"
+			},
+			"memberRolePending": "{{role}} (ממתין)",
+			"ariaCancelInvitation": "ביטול הזמנה",
+			"ariaInvitationActions": "פעולות הזמנה",
+			"ariaRemoveMember": "הסרת חבר צוות",
+			"removeDialogTitle": "להסיר את חבר הצוות?",
+			"removeDialogDescription": "להסיר את {{name}} מסביבת העבודה? לא ניתן לבטל פעולה זו.",
+			"cancelDialogTitle": "לבטל את ההזמנה?",
+			"cancelDialogDescription": "לבטל את ההזמנה עבור {{email}}? לא ניתן לבטל פעולה זו.",
+			"removeMember": "הסרת חבר צוות",
+			"cancelInvitation": "ביטול הזמנה",
+			"removeSuccess": "חבר הצוות הוסר בהצלחה",
+			"removeError": "הסרת חבר הצוות נכשלה",
+			"cancelInviteSuccess": "ההזמנה בוטלה בהצלחה",
+			"cancelInviteError": "ביטול ההזמנה נכשל",
+			"roleUpdateSuccess": "התפקיד עודכן",
+			"roleUpdateError": "עדכון התפקיד נכשל"
+		},
+		"projectAccess": {
+			"label": "גישה לפרויקטים",
+			"description": "בחירת הפרויקטים שאדם זה יוכל לראות.",
+			"allProjects": "כל הפרויקטים",
+			"allProjectsDescription": "גישה לכל פרויקט בסביבת העבודה, כולל פרויקטים חדשים.",
+			"allProjectsUnavailable": "הגישה שלך מוגבלת, ולכן ניתן להעניק גישה רק לפרויקטים נבחרים.",
+			"selectedProjects": "פרויקטים נבחרים",
+			"selectedProjectsDescription": "גישה רק לפרויקטים שנבחרו.",
+			"projectsLabel": "פרויקטים",
+			"noProjects": "אין עדיין פרויקטים בסביבת העבודה.",
+			"archived": "בארכיון",
+			"selectAtLeastOne": "יש לבחור לפחות פרויקט אחד.",
+			"projectCount_one": "פרויקטים: {{count}}",
+			"projectCount_other": "{{count}} פרויקטים",
+			"editAria": "שינוי הגישה לפרויקטים עבור {{name}} ({{access}})",
+			"dialogTitle": "גישה לפרויקטים",
+			"dialogDescription": "בחירת הפרויקטים שאליהם תהיה ל־{{name}} גישה.",
+			"save": "שמירה",
+			"updateSuccess": "הגישה לפרויקטים עודכנה",
+			"updateError": "עדכון הגישה לפרויקטים נכשל",
+			"projectCount_two": "{{count}} פרויקטים"
+		}
+	},
+	"publicProject": {
+		"pageTitle": "תצוגה ציבורית",
+		"badge": "ציבורי",
+		"readOnly": "לקריאה בלבד",
+		"error": {
+			"title": "הפרויקט לא נמצא",
+			"description": "הפרויקט אינו קיים או אינו נגיש לציבור."
+		},
+		"taskCard": {
+			"viewDetailsAria": "צפייה בפרטי המשימה {{title}}"
+		},
+		"taskDetail": {
+			"labels": "תוויות",
+			"externalLinks": "קישורים חיצוניים",
+			"pullRequestFallback": "בקשת משיכה",
+			"issueFallback": "סוגיה",
+			"prStatusMerged": "מוזגה",
+			"prStatusDraft": "טיוטה",
+			"prStatusOpen": "פתוחה",
+			"dueWithDate": "יעד: {{date}}",
+			"created": "נוצרה",
+			"dueDateLabel": "תאריך יעד"
+		},
+		"theme": {
+			"switchToLight": "מעבר למצב בהיר",
+			"switchToDark": "מעבר למצב כהה"
+		},
+		"copyUrl": {
+			"successToast": "הכתובת הועתקה",
+			"errorToast": "העתקת הכתובת נכשלה",
+			"copied": "הועתק",
+			"share": "שיתוף"
+		},
+		"branding": {
+			"poweredBy": "מופעל באמצעות"
+		}
+	},
+	"press": {
+		"title": "ערכת מדיה",
+		"headline": "ערכת המדיה של טיקטק",
+		"intro": "סמלי טיקטק וצילומי מסך של המוצר לשימוש בכתבות, בסרטונים ובמדיה נוספת.",
+		"description": "משאבי מדיה של טיקטק: מידע על המוצר, סמלים, צילומי מסך ופרטי קשר לעיתונאים וליוצרים.",
+		"downloadKit": "הורדת כל הקבצים",
+		"boilerplateTitle": "על טיקטק",
+		"boilerplate": "טיקטק היא גרסה עברית של פלטפורמת ניהול הפרויקטים בקוד פתוח Kaneo, שיצר Andrej Acevski. צוותים יכולים לארגן משימות בתצוגות לוח ורשימה, להקצות עבודה, לקבוע עדיפויות ותאריכי יעד ולחבר את GitHub. קוד המקור זמין ברישיון MIT לאירוח עצמי. הפרויקט המקורי מציע גם שירות מנוהל בשם Kaneo Cloud.",
+		"logosTitle": "סמלים",
+		"darkLogo": "לוגו טקסט כהה",
+		"darkLogoAlt": "סמל טיקטק כהה על רקע בהיר",
+		"darkLogoDetail": "SVG",
+		"lightLogo": "לוגו טקסט בהיר",
+		"lightLogoAlt": "סמל טיקטק בהיר על רקע כהה",
+		"lightLogoDetail": "SVG",
+		"icon": "סמל האפליקציה",
+		"iconAlt": "סמל אפליקציית טיקטק",
+		"iconDetail": "PNG, 512 × 512",
+		"download": "הורדה",
+		"screenshotsTitle": "צילומי מסך",
+		"lightScreenshot": "לוח (בהיר)",
+		"lightScreenshotAlt": "לוח טיקטק בערכת נושא בהירה, עם כרטיסי משימות המסודרים לפי סטטוס",
+		"darkScreenshot": "לוח (כהה)",
+		"darkScreenshotAlt": "לוח טיקטק בערכת נושא כהה, עם כרטיסי משימות המסודרים לפי סטטוס",
+		"lightListScreenshot": "רשימה (בהירה)",
+		"lightListScreenshotAlt": "רשימת משימות בטיקטק בערכת נושא בהירה, מקובצת לפי סטטוס וכוללת אחראים, עדיפויות, תוויות ותאריכי יעד",
+		"darkListScreenshot": "רשימה (כהה)",
+		"darkListScreenshotAlt": "רשימת משימות בטיקטק בערכת נושא כהה, מקובצת לפי סטטוס וכוללת אחראים, עדיפויות, תוויות ותאריכי יעד",
+		"lightTimelineScreenshot": "ציר זמן (בהיר)",
+		"lightTimelineScreenshotAlt": "ציר זמן גאנט בטיקטק בערכת נושא בהירה, המציג משימות מתוזמנות ואת משכן",
+		"darkTimelineScreenshot": "ציר זמן (כהה)",
+		"darkTimelineScreenshotAlt": "ציר זמן גאנט בטיקטק בערכת נושא כהה, המציג משימות מתוזמנות ואת משכן",
+		"lightTaskScreenshot": "פרטי משימה (בהיר)",
+		"lightTaskScreenshotAlt": "פרטי משימה בטיקטק בערכת נושא בהירה, עם תיאור, רשימת סימון, תגובת צוות ומאפייני המשימה",
+		"darkTaskScreenshot": "פרטי משימה (כהה)",
+		"darkTaskScreenshotAlt": "פרטי משימה בטיקטק בערכת נושא כהה, עם תיאור, רשימת סימון, תגובת צוות ומאפייני המשימה",
+		"contactTitle": "פניות תקשורת",
+		"contactBody": "אפשר לפנות לצוות טיקטק לשאלות על המוצר, לראיונות או לקבלת חומרים נוספים.",
+		"usageContrast": "יש לבחור בלוגו הטקסט הבהיר לרקעים כהים ובלוגו הכהה לרקעים בהירים.",
+		"usageProportions": "יש לשמור על היחסים והצבעים המקוריים, ללא מתיחה או הוספת אפקטים.",
+		"usageSpace": "יש להשאיר מספיק מרווח סביב הסמל כדי שיהיה ברור וקריא."
+	},
+	"landing": {
+		"sponsors": {
+			"ciSponsor": "שותפים"
+		},
+		"founder": {
+			"title": "למה נוצר Kaneo, שעליו מבוסס טיקטק",
+			"intro": "Andrej יצר את Kaneo כי נמאס לו מכלי ניהול פרויקטים שהפריעו יותר משהועילו. אחרי שנים של עבודה עם פלטפורמות עמוסות ומסובכות שהסיחו את הדעת מהעבודה עצמה, הוא ידע שחייבת להיות דרך טובה יותר.",
+			"problem": "הבעיה לא הייתה מחסור ביכולות, אלא עודף שלהן. כל התראה, כפתור מיותר ותהליך עבודה מורכב הרחיקו את הצוות ממה שחשוב: בניית מוצרים טובים.",
+			"principle": "העיקרון שמנחה את הפרויקט הוא שהכלים הטובים ביותר אינם מורגשים. הם צריכים לתמוך בדרך העבודה הטבעית של הצוות, בלי לכפות עליו דרך אחרת. Kaneo בנוי על העיקרון שפחות הוא יותר: כל יכולת נועדה לפתור בעיה אמיתית, לא רק להרשים בהדגמה."
+		},
+		"hero": {
+			"cloudCta": "ניסיון ב־Kaneo Cloud",
+			"selfHostCta": "אירוח עצמי של טיקטק",
+			"trialNote": "ניסיון של 14 יום בענן. ללא צורך בכרטיס אשראי.",
+			"github": "GitHub",
+			"productHunt": "Product Hunt",
+			"title": "ניהול פרויקטים",
+			"titleAccent": "שלא הופך לפרויקט בפני עצמו.",
+			"description": "ניהול פרויקטים בקוד פתוח עם לוחות, תרשימי גאנט וחיבור ל־GitHub. אירוח עצמי בחינם כולל כניסה ארגונית, או אירוח מנוהל בשירות Kaneo Cloud של הפרויקט המקורי."
+		},
+		"navigation": {
+			"product": "המוצר",
+			"pricing": "תמחור",
+			"resources": "משאבים",
+			"docs": "תיעוד",
+			"blog": "בלוג",
+			"guides": "מדריכים",
+			"comparisons": "השוואת כלים",
+			"roadmap": "מפת דרכים",
+			"community": "קהילה",
+			"menu": "תפריט",
+			"closeMenu": "סגירת תפריט",
+			"home": "דף הבית של טיקטק",
+			"signIn": "התחברות",
+			"getStarted": "מתחילים"
+		},
+		"showcase": {
+			"label": "תצוגות המוצר של טיקטק",
+			"controls": "בחירת תצוגת מוצר",
+			"play": "הפעלת מצגת תצוגות המוצר",
+			"pause": "השהיית מצגת תצוגות המוצר",
+			"board": "לוח",
+			"list": "צבר משימות",
+			"gantt": "גאנט"
+		},
+		"features": {
+			"tasks": {
+				"label": "תתי־משימות והקשר",
+				"title": "משימות גדולות. צעדים ברורים.",
+				"description": "אפשר לפרק עבודה לתתי־משימות, להקצות כל אחת ולעקוב אחר ההתקדמות בלי לאבד את ההקשר המקורי. כל הפרטים נשארים לצד העבודה."
+			},
+			"github": {
+				"label": "חיבור ל־GitHub",
+				"title": "מפתיחת בקשת משיכה ועד להשלמה.",
+				"description": "סוגיות ותוויות מסתנכרנות בשני הכיוונים. בקשות משיכה מקושרות מעבירות משימות לבדיקה ולהשלמה עם פתיחת הקוד ומיזוגו.",
+				"link": "הגדרת GitHub"
+			},
+			"hosting": {
+				"title": "הפעלה בשרת שלך.",
+				"description": "פריסה באמצעות Docker ושמירת סביבת העבודה בתשתית שבשליטתך.",
+				"link": "אירוח עצמי של טיקטק"
+			},
+			"source": {
+				"title": "גם הקוד פתוח.",
+				"description": "אפשר לקרוא את קוד המקור, לדווח על תקלה או לתרום שינוי. הפיתוח מתבצע ב־GitHub.",
+				"link": "צפייה בקוד המקור"
+			},
+			"preview": {
+				"taskAlt": "תצוגה אינטראקטיבית של משימה ותת־משימה בטיקטק.",
+				"githubAlt": "תצוגה אינטראקטיבית של מיזוג ב־GitHub המעדכן משימה בטיקטק.",
+				"taskTitle": "פרסום דף הבית החדש",
+				"taskDescription": "עדכון הטקסט ובדיקת הפריסה לפני הגרסה הבאה.",
+				"checklistDone": "בדיקת הטקסט",
+				"checklistOpen": "בדיקת הפריסה בנייד",
+				"inProgress": "בביצוע",
+				"high": "גבוהה",
+				"date": "12 באוקטובר",
+				"design": "עיצוב",
+				"done": "הושלם",
+				"relationsAlt": "תצוגה אינטראקטיבית של תלות בין משימות בטיקטק.",
+				"inReview": "בבדיקה",
+				"trySubtasks": "אפשר לנסות לסמן תת־משימה כהושלמה.",
+				"tryGithub": "אפשר להציג מיזוג לדוגמה כדי לראות את המשימה מתעדכנת.",
+				"tryRelations": "אפשר לפתוח משימה מקושרת כדי לעקוב אחר הקשר.",
+				"mergeAction": "הדמיית מיזוג",
+				"resetAction": "איפוס התצוגה",
+				"mergedHint": "בקשת המשיכה מוזגה. המשימה עברה להושלם.",
+				"progress": "הושלמו {{completed}} מתוך {{total}} תתי־משימות",
+				"backToTask": "חזרה למשימת דף הבית",
+				"releaseNotes": "כתיבת הערות הגרסה",
+				"dependencyDescription": "דף הבית ממתין לבדיקת התצוגה בנייד. כדאי להשאיר את הערות ההשקה מקושרות לשמירת ההקשר.",
+				"mobileDescription": "בדיקת דף הבית החדש במסכים צרים לפני הפרסום.",
+				"notesDescription": "תיעוד השינויים לצורך הודעת ההשקה."
+			},
+			"relations": {
+				"label": "משימות מקושרות ותלויות",
+				"title": "רואים מה מעכב את ההתקדמות.",
+				"description": "אפשר לקשר חסמים, לעקוב אחר תלויות ולשמור עבודה קשורה בהישג יד. פתיחת משימה מקושרת מציגה את ההקשר שמאחורי הצעד הבא."
+			}
+		},
+		"seo": {
+			"title": "טיקטק — ניהול פרויקטים בקוד פתוח ובאירוח עצמי",
+			"description": "ניהול פרויקטים בקוד פתוח עם לוחות, תרשימי גאנט וחיבור ל־GitHub. אירוח עצמי בחינם כולל כניסה ארגונית, עם אפשרות לשירות Kaneo Cloud של הפרויקט המקורי."
+		},
+		"resources": {
+			"eyebrow": "התאמה לצרכים שלך",
+			"title": "דרך ברורה מהתנסות לעבודה יומיומית.",
+			"description": "אפשר להגדיר את השרת שלך, לחבר את הכלים שלך או להשוות את טיקטק למערכת הנוכחית שלך.",
+			"docker": {
+				"title": "אירוח עצמי עם Docker",
+				"description": "התקנה, גיבויים ועדכונים למערכת שבשליטתך."
+			},
+			"sso": {
+				"title": "חיבור ספק הזהות שלך",
+				"description": "הגדרת כניסה ארגונית באמצעות OIDC בגרסת האירוח העצמי החינמית."
+			},
+			"mcp": {
+				"title": "חיבור כלי הבינה המלאכותית שלך",
+				"description": "שימוש ב־MCP לעבודה עם משימות ופרויקטים באמצעות לקוח בינה מלאכותית."
+			},
+			"linear": {
+				"title": "השוואת טיקטק ו־Linear",
+				"description": "ההבדלים באירוח, ברישוי ובתהליך העבודה."
+			}
+		},
+		"product": {
+			"title": "לפני שמתחילים",
+			"description": "הפרטים המעשיים על אירוח, תכנון וחיבור הצוות.",
+			"overview": "טיקטק היא פלטפורמת ניהול פרויקטים בקוד פתוח וברישיון MIT, המבוססת על Kaneo. היא כוללת לוחות, צבר משימות, תצוגות גאנט ולוח שנה, שדות מותאמים אישית, מעקב זמן וחיבור ל־GitHub. אפשר לארח אותה בתשתית שלך; הפרויקט המקורי מציע גם את Kaneo Cloud.",
+			"hosting": {
+				"question": "האם האירוח העצמי של טיקטק חינמי?",
+				"answer": "כן. טיקטק מופצת ברישיון MIT וזמינה לאירוח עצמי בחינם, כולל כניסה ארגונית. אפשר להפעיל את האפליקציה לצד PostgreSQL באמצעות Docker Compose, או להשתמש בתרשים Helm של הפרויקט המקורי. ניהול התשתית, העדכונים והגיבויים הוא באחריותך.",
+				"link": "קריאת מדריך ההתקנה"
+			},
+			"planning": {
+				"question": "האם טיקטק כוללת תרשימי גאנט?",
+				"answer": "כן. טיקטק כוללת תצוגות גאנט ולוח שנה לצד לוחות, רשימות ותכנון צבר משימות. תאריכי התחלה ויעד מאפשרים לתכנן עבודה על ציר זמן. תקצוב, השוואות לתוכנית בסיס ודוחות התקדמות ספרינט אינם כלולים בהיקף הנוכחי.",
+				"link": "השוואת יכולות התכנון"
+			},
+			"sso": {
+				"question": "האם כניסה ארגונית כלולה?",
+				"answer": "כן. גרסת האירוח העצמי החינמית תומכת ב־Google, GitHub, Discord ובספקי OAuth/OIDC מותאמים. אפשר להגדיר את הספק בשרת שלך ללא רכישת מהדורה נוספת.",
+				"link": "הגדרת OIDC"
+			},
+			"agents": {
+				"question": "האם לקוחות בינה מלאכותית יכולים לעבוד עם טיקטק?",
+				"answer": "כן. טיקטק משתמשת בשרת ה־MCP של Kaneo דרך החבילה @kaneo/mcp ונקודת קצה ב־HTTP. לקוחות תואמים יכולים לקרוא ולעדכן משימות באמצעות מפתח API המשויך למשתמש, בכפוף להרשאות סביבת העבודה.",
+				"link": "קריאת מדריך MCP"
+			}
+		},
+		"comparison": {
+			"feature": "יכולת",
+			"yes": "כן",
+			"no": "לא"
+		},
+		"selfHostingGuide": {
+			"summary": "מה כולל אירוח עצמי, עם קישורים להגדרות Docker Compose המתוחזקות ולשלבי ההתקנה.",
+			"answer": "לאירוח עצמי של טיקטק יש להפעיל את האפליקציה ואת PostgreSQL באמצעות Docker Compose, להגדיר כתובת ציבורית וסודות, ולהציב שרת מתווך עם TLS. מדריך ההתקנה מציין לפחות 2 GB זיכרון ו־10 GB שטח דיסק. יש לתכנן עדכונים שוטפים, גיבויי מסד נתונים ואחסון לקבצים המועלים.",
+			"requirements": "המינימום המתועד הוא 2 GB זיכרון ו־10 GB שטח דיסק, עם Docker בגרסה 20.10 ומעלה ו־Docker Compose V2. יש להשאיר קיבולת נוספת לעומס העבודה, לצמיחת מסד הנתונים ולקבצים המועלים.",
+			"compose": "יש להשתמש בקובץ compose.yml המתוחזק שבמדריך Docker Compose. הוא מגדיר PostgreSQL, אמצעי אחסון קבוע למסד הנתונים, את האפליקציה ובדיקות תקינות. יש להגדיר את קובץ הסביבה לפני הפעלת השירותים. בסביבת ייצור יש לקבע גרסת תמונת קונטיינר כדי שהעדכונים יהיו מכוונים.",
+			"backups": "יש לגבות גם את PostgreSQL וגם את אחסון האובייקטים המשמש להעלאות. כדאי לבחור תדירות לפי כמות העבודה שהצוות יכול להרשות לעצמו לאבד, לשמור עותקים מחוץ לשרת האפליקציה ולבדוק שחזור לפני שהוא נדרש.",
+			"worth": "אירוח עצמי מתאים כשנדרשת שליטה בתשתית ובנתונים, ויש מי שיכול לקחת אחריות על התחזוקה. בהשוואת העלויות לשירות מנוהל יש לכלול קיבולת שרת, אחסון, גיבויים וזמן תחזוקה.",
+			"minimum": "מדריך ההתקנה מציין Docker בגרסה 20.10 ומעלה, Docker Compose V2, לפחות 2 GB זיכרון ו־10 GB שטח דיסק. הגדרת Compose כוללת PostgreSQL. Redis הוא אופציונלי כאשר פועל שרת API יחיד.",
+			"composeLink": "הגדרות Docker Compose",
+			"composeLinkDescription": "קובץ compose.yml מתוחזק עם אחסון קבוע ובדיקות תקינות.",
+			"startLink": "הפעלת השירותים ואימותם",
+			"startLinkDescription": "הפעלת המערכת, בדיקת מצבה ואימות שהאפליקציה זמינה."
+		}
+	}
+}

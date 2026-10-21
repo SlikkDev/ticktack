@@ -473,7 +473,7 @@ function Activity({
 
   return (
     <TimelineItem
-      className="m-0! min-h-7 flex-row items-start gap-2.5 py-1! pl-2"
+      className="m-0! min-h-7 flex-row items-start gap-2.5 py-1! ps-2"
       step={step}
     >
       <span className="flex h-5 w-4.5 shrink-0 items-center justify-center text-muted-foreground">

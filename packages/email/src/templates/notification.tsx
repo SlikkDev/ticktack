@@ -1,6 +1,7 @@
 import { Text } from "@react-email/components";
 import React from "react";
 import { BoardColumn, type BoardColumnIcon } from "../components/board-column";
+import { getEmailColumnName } from "../components/default-column-name";
 import { EmailButton } from "../components/email-button";
 import { EmailFooter } from "../components/email-footer";
 import { EmailIntro } from "../components/email-intro";
@@ -24,6 +25,7 @@ export type NotificationEmailTask = Omit<
 > & {
   dueDate?: DateInput;
   column?: {
+    slug?: string;
     name: string;
     icon?: BoardColumnIcon;
     count?: number;
@@ -42,11 +44,25 @@ export type NotificationEmailProps = {
 };
 
 const messages = {
+  he: {
+    preview: "יש לך התראה חדשה בטיקטק",
+    subtitle: "ההתראה נשלחה בהתאם להעדפות המסירה שלך.",
+    footer: "התראה מטיקטק",
+    actionLabel: "פתיחה בטיקטק",
+    openTask: "פתיחת המשימה",
+    manage: "ניהול התראות",
+    priority: {
+      urgent: "עדיפות דחופה",
+      high: "עדיפות גבוהה",
+      medium: "עדיפות בינונית",
+      low: "עדיפות נמוכה",
+    },
+  },
   en: {
-    preview: "You have a new Kaneo notification",
+    preview: "You have a new TickTack notification",
     subtitle: "A notification matched your delivery preferences.",
-    footer: "Kaneo notification",
-    actionLabel: "Open in Kaneo",
+    footer: "TickTack notification",
+    actionLabel: "Open in TickTack",
     openTask: "Open task",
     manage: "Manage notifications",
     priority: {
@@ -57,11 +73,11 @@ const messages = {
     },
   },
   de: {
-    preview: "Du hast eine neue Kaneo-Benachrichtigung",
+    preview: "Du hast eine neue TickTack-Benachrichtigung",
     subtitle:
       "Eine Benachrichtigung entspricht deinen Zustellungs-Einstellungen.",
-    footer: "Kaneo Benachrichtigung",
-    actionLabel: "In Kaneo öffnen",
+    footer: "TickTack Benachrichtigung",
+    actionLabel: "In TickTack öffnen",
     openTask: "Aufgabe öffnen",
     manage: "Benachrichtigungen verwalten",
     priority: {
@@ -72,10 +88,10 @@ const messages = {
     },
   },
   vi: {
-    preview: "Bạn có thông báo mới từ Kaneo",
+    preview: "Bạn có thông báo mới từ TickTack",
     subtitle: "Một thông báo khớp với tùy chọn nhận thông báo của bạn.",
-    footer: "Thông báo Kaneo",
-    actionLabel: "Mở trong Kaneo",
+    footer: "Thông báo TickTack",
+    actionLabel: "Mở trong TickTack",
     openTask: "Mở công việc",
     manage: "Quản lý thông báo",
     priority: {
@@ -86,10 +102,10 @@ const messages = {
     },
   },
   ja: {
-    preview: "Kaneo の新しい通知",
+    preview: "TickTack の新しい通知",
     subtitle: "配信設定に一致する通知がありました。",
-    footer: "Kaneo 通知",
-    actionLabel: "Kaneo で開く",
+    footer: "TickTack 通知",
+    actionLabel: "TickTack で開く",
     openTask: "タスクを開く",
     manage: "通知を管理",
     priority: {
@@ -100,10 +116,10 @@ const messages = {
     },
   },
   "zh-tw": {
-    preview: "你有一則新的 Kaneo 通知",
+    preview: "你有一則新的 TickTack 通知",
     subtitle: "有一則通知符合你的通知設定。",
-    footer: "Kaneo 通知",
-    actionLabel: "在 Kaneo 中開啟",
+    footer: "TickTack 通知",
+    actionLabel: "在 TickTack 中開啟",
     openTask: "開啟任務",
     manage: "管理通知",
     priority: {
@@ -151,7 +167,7 @@ const NotificationEmail = ({
       ) : null}
       {task?.column ? (
         <BoardColumn
-          name={task.column.name}
+          name={getEmailColumnName(task.column, emailLocale)}
           icon={task.column.icon}
           count={task.column.count}
         >
@@ -208,7 +224,12 @@ NotificationEmail.PreviewProps = {
     dueDate: "2026-10-14T00:00:00.000Z",
     dueStatus: "due-soon",
     assigneeInitials: "MK",
-    column: { name: "In progress", icon: "circle-dot", count: 3 },
+    column: {
+      slug: "in-progress",
+      name: "In Progress",
+      icon: "circle-dot",
+      count: 3,
+    },
   },
 } as NotificationEmailProps;
 

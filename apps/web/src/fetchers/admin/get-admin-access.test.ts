@@ -5,6 +5,12 @@ const { hasPermission } = vi.hoisted(() => ({ hasPermission: vi.fn() }));
 vi.mock("@/lib/auth-client", () => ({
   authClient: { admin: { hasPermission } },
 }));
+vi.mock("i18next", async (importOriginal) => {
+  const { default: i18next } = await importOriginal<typeof import("i18next")>();
+  const instance = i18next.createInstance();
+  await instance.init({ lng: "en-US", resources: {} });
+  return { default: instance };
+});
 
 import { getAdminAccess } from "./get-admin-access";
 
@@ -28,7 +34,12 @@ describe("getAdminAccess", () => {
       error: { status: 502, message: "bad gateway" },
     });
 
-    await expect(getAdminAccess()).rejects.toThrow("bad gateway");
+    await expect(getAdminAccess()).rejects.toMatchObject({
+      name: "ApiClientError",
+      status: 502,
+      message: "Server error. Please try again later.",
+      originalMessage: "bad gateway",
+    });
   });
 
   it.each([true, false])("returns the server's answer %s", async (success) => {

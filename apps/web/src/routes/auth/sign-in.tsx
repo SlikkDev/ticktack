@@ -36,6 +36,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import useGetConfig from "@/hooks/queries/config/use-get-config";
 import useInstanceStatus from "@/hooks/queries/instance/use-instance-status";
 import { authClient } from "@/lib/auth-client";
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 import { toast } from "@/lib/toast";
 
 const signInSearchSchema = z.object({
@@ -99,9 +100,10 @@ function SignIn() {
   useEffect(() => {
     if (isInstanceStatusError) {
       toast.error(
-        instanceStatusError instanceof Error
-          ? instanceStatusError.message
-          : t("auth:signIn.instanceStatusError"),
+        getApiErrorMessage(
+          instanceStatusError,
+          t("auth:signIn.instanceStatusError"),
+        ),
       );
     }
   }, [isInstanceStatusError, instanceStatusError, t]);
@@ -148,7 +150,15 @@ function SignIn() {
   const errorMessage = search.error
     ? t(
         `auth:signIn.errors.${search.error.replace(/[._]+/g, "_").toLowerCase()}`,
-        { defaultValue: search.error.replace(/_/g, " ") },
+        {
+          defaultValue: getApiErrorMessage(
+            {
+              code: search.error.toUpperCase(),
+              message: search.error.replace(/_/g, " "),
+            },
+            t("auth:signInForm.failedSignIn"),
+          ),
+        },
       )
     : null;
 

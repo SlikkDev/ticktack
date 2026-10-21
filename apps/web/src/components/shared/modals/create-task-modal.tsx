@@ -747,8 +747,11 @@ function CreateTaskModalContent({
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="text-muted-foreground font-semibold tracking-wider text-sm">
-                  {resolvedProject?.slug?.toUpperCase() ||
-                    t("common:modals.createTask.breadcrumbTask")}
+                  {resolvedProject?.slug ? (
+                    <bdi dir="ltr">{resolvedProject.slug.toUpperCase()}</bdi>
+                  ) : (
+                    t("common:modals.createTask.breadcrumbTask")
+                  )}
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem className="text-foreground font-medium text-sm">
@@ -769,6 +772,7 @@ function CreateTaskModalContent({
           <div className="flex-1 min-h-0 overflow-y-auto space-y-6 px-6">
             <textarea
               ref={titleRef}
+              dir="auto"
               rows={1}
               value={title}
               onChange={(e) => setTitle(stripLineBreaks(e.target.value))}
@@ -806,11 +810,11 @@ function CreateTaskModalContent({
                     key={label.name}
                     color={label.color}
                     variant="outline"
-                    className="flex items-center gap-1 pl-3 cursor-pointer hover:bg-accent/50 transition-colors"
+                    className="flex items-center gap-1 ps-3 cursor-pointer hover:bg-accent/50 transition-colors"
                     onClick={() => removeLabel(label.name)}
                   >
                     <span
-                      className="inline-block w-2 h-2 mr-1.5 rounded-full"
+                      className="inline-block w-2 h-2 me-1.5 rounded-full"
                       style={{
                         backgroundColor: resolveLabelColor(label.color),
                       }}
@@ -847,7 +851,7 @@ function CreateTaskModalContent({
                         <button
                           key={workspaceProject.id}
                           type="button"
-                          className="w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-accent/50 text-left transition-colors h-8"
+                          className="w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-accent/50 text-start transition-colors h-8"
                           disabled={
                             isPreparingDraft ||
                             stagedAssetsRef.current.length > 0 ||
@@ -867,7 +871,7 @@ function CreateTaskModalContent({
                             {workspaceProject.name}
                           </span>
                           {resolvedProjectId === workspaceProject.id && (
-                            <Check className="ml-auto h-4 w-4 shrink-0" />
+                            <Check className="ms-auto h-4 w-4 shrink-0" />
                           )}
                         </button>
                       ))}
@@ -951,13 +955,13 @@ function CreateTaskModalContent({
                       <button
                         key={option.value}
                         type="button"
-                        className="w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-accent/50 text-left transition-colors h-8"
+                        className="w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-accent/50 text-start transition-colors h-8"
                         onClick={() => setPriority(option.value as Priority)}
                       >
                         {getPriorityIcon(option.value)}
                         <span className="text-sm">{option.label}</span>
                         {priority === option.value && (
-                          <Check className="ml-auto h-4 w-4" />
+                          <Check className="ms-auto h-4 w-4" />
                         )}
                       </button>
                     ))}
@@ -1001,7 +1005,7 @@ function CreateTaskModalContent({
                   <div className="space-y-1">
                     <button
                       type="button"
-                      className="w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-accent/50 text-left transition-colors h-8"
+                      className="w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-accent/50 text-start transition-colors h-8"
                       onClick={() => setAssigneeId("")}
                     >
                       <div
@@ -1017,13 +1021,13 @@ function CreateTaskModalContent({
                       <span className="text-sm">
                         {t("common:modals.createTask.assignUnassigned")}
                       </span>
-                      {!selectedUser && <Check className="ml-auto h-4 w-4" />}
+                      {!selectedUser && <Check className="ms-auto h-4 w-4" />}
                     </button>
                     {assigneeOptions.map((member) => (
                       <button
                         key={member.id}
                         type="button"
-                        className="w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-accent/50 text-left transition-colors h-8"
+                        className="w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-accent/50 text-start transition-colors h-8"
                         onClick={() => setAssigneeId(member.id)}
                       >
                         <Avatar className="h-6 w-6">
@@ -1037,7 +1041,7 @@ function CreateTaskModalContent({
                         </Avatar>
                         <span className="text-sm">{member.name}</span>
                         {selectedUser?.id === member.id && (
-                          <Check className="ml-auto h-4 w-4" />
+                          <Check className="ms-auto h-4 w-4" />
                         )}
                       </button>
                     ))}
@@ -1109,6 +1113,7 @@ function CreateTaskModalContent({
                         <Search className="w-3 h-3 text-muted-foreground" />
                         <input
                           ref={searchInputRef}
+                          dir="auto"
                           value={searchValue}
                           onChange={(e) => setSearchValue(e.target.value)}
                           placeholder={t(
@@ -1129,7 +1134,7 @@ function CreateTaskModalContent({
                           <button
                             key={label.id}
                             type="button"
-                            className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-accent/50 text-left"
+                            className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-accent/50 text-start"
                             onClick={() => toggleLabel(label.name)}
                           >
                             <div className="flex-shrink-0 w-3 flex justify-center">
@@ -1157,7 +1162,7 @@ function CreateTaskModalContent({
                         {canCreateLabelCapability && isCreatingNewLabel && (
                           <button
                             type="button"
-                            className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-accent/50 text-left"
+                            className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-accent/50 text-start"
                             onClick={handleCreateNewClick}
                           >
                             <div className="flex-shrink-0 w-3 flex justify-center">
@@ -1203,7 +1208,7 @@ function CreateTaskModalContent({
                             key={color.value}
                             type="button"
                             className={cn(
-                              "w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-accent/50 text-left",
+                              "w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-accent/50 text-start",
                               selectedColor === color.value && "bg-accent/30",
                             )}
                             onClick={() =>
@@ -1216,7 +1221,7 @@ function CreateTaskModalContent({
                             />
                             <span className="truncate">{color.label}</span>
                             {selectedColor === color.value && (
-                              <Check className="w-3 h-3 ml-auto" />
+                              <Check className="w-3 h-3 ms-auto" />
                             )}
                           </button>
                         ))}
@@ -1263,7 +1268,7 @@ function CreateTaskModalContent({
             </div>
           )}
           <DialogFooter className="flex-shrink-0 border-t border-border bg-background px-6 py-4">
-            <div className="flex items-center gap-3 mr-auto">
+            <div className="flex items-center gap-3 me-auto">
               <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
                 <input
                   type="checkbox"

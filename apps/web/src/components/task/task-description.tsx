@@ -5,6 +5,8 @@ import {
   type SlashRange,
 } from "@/components/editor/slash-commands";
 import { BubbleLinkEditor } from "@/components/editor/bubble-link-editor";
+import { overlayLeft } from "@/components/editor/overlay-position";
+import { ViewportOverlay } from "@/components/editor/viewport-overlay";
 import { selectionStartAnchor } from "@/components/editor/selection-start-anchor";
 import { TableToolbar } from "@/components/editor/table-toolbar";
 import { createEditorExtensions } from "@/components/editor/extensions";
@@ -269,14 +271,27 @@ export default function TaskDescription({ taskId }: TaskDescriptionProps) {
     (editorView: Editor["view"], pos: number) => {
       const coords = editorView.coordsAtPos(pos);
       const shellRect = editorShellRef.current?.getBoundingClientRect();
+      const menuWidth = Math.min(
+        16.5 *
+          Number.parseFloat(
+            getComputedStyle(document.documentElement).fontSize,
+          ),
+        window.innerWidth - 32,
+      );
+      const left = overlayLeft(
+        coords,
+        menuWidth,
+        window.innerWidth,
+        getComputedStyle(editorView.dom).direction,
+      );
 
       if (!shellRect) {
-        return { top: coords.bottom + 8, left: coords.left };
+        return { top: coords.bottom + 8, left };
       }
 
       return {
         top: coords.bottom - shellRect.top + 8,
-        left: coords.left - shellRect.left,
+        left: left - shellRect.left,
       };
     },
     [],
@@ -1249,7 +1264,7 @@ export default function TaskDescription({ taskId }: TaskDescriptionProps) {
           role="status"
           aria-live="polite"
           className={cn(
-            "absolute right-0 -top-6 flex h-6 items-center gap-2 text-muted-foreground text-xs",
+            "absolute end-0 -top-6 flex h-6 items-center gap-2 text-muted-foreground text-xs",
             saveState === "saved" && "sr-only",
           )}
         >
@@ -1599,13 +1614,11 @@ export default function TaskDescription({ taskId }: TaskDescriptionProps) {
       )}
 
       {editor && canEdit && slashMenu && (
-        <div
+        <ViewportOverlay
           className="kaneo-tiptap-slash-menu"
-          style={{
-            top: slashMenu.top,
-            left: slashMenu.left,
-            position: "absolute",
-          }}
+          top={slashMenu.top}
+          left={slashMenu.left}
+          position="absolute"
         >
           {filteredSlashCommands.length > 0 ? (
             groupedSlashCommands.map((group) => {
@@ -1661,7 +1674,7 @@ export default function TaskDescription({ taskId }: TaskDescriptionProps) {
               {t("tasks:detail.editor.slash.empty")}
             </div>
           )}
-        </div>
+        </ViewportOverlay>
       )}
 
       {editor && canEdit && embedComposer && (
@@ -1709,6 +1722,8 @@ export default function TaskDescription({ taskId }: TaskDescriptionProps) {
             >
               <Input
                 size="sm"
+                dir="ltr"
+                inputMode="url"
                 value={embedComposer.url}
                 onChange={(event) => {
                   setEmbedComposer((current) =>

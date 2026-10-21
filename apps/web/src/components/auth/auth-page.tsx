@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { AuthLegalFooter } from "./auth-legal-footer";
+import { LanguageSwitcher } from "./language-switcher";
 
 type AuthPageProps = {
   title: string;
@@ -17,6 +18,9 @@ export function AuthPage({
   return (
     <main className="h-svh w-full overflow-y-auto bg-background">
       <div className="flex min-h-full flex-col items-center">
+        <div className="flex w-full justify-end px-4 pt-4 sm:px-6">
+          <LanguageSwitcher />
+        </div>
         <div className="flex w-full grow flex-col items-center justify-center px-4 py-12 sm:px-6">
           <div className="flex w-full max-w-[360px] flex-col">
             <div className="flex flex-col gap-5 pb-8">

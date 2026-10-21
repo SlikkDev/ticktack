@@ -4,6 +4,40 @@ import { describe, expect, it } from "vite-plus/test";
 import NotificationEmail from "./notification";
 
 describe("NotificationEmail", () => {
+  it.each([
+    ["he-IL", "to-do", "To Do", "לביצוע"],
+    ["he-IL", "in-progress", "In Progress", "בביצוע"],
+    ["he-IL", "in-review", "In Review", "בבדיקה"],
+    ["he-IL", "done", "Done", "הושלם"],
+    ["en-US", "to-do", "To Do", "To Do"],
+    ["en-US", "in-progress", "In Progress", "In Progress"],
+    ["en-US", "in-review", "In Review", "In Review"],
+    ["en-US", "done", "Done", "Done"],
+    ["he-IL", "done", "Approved by Adam", "Approved by Adam"],
+    ["he-IL", "custom", "Done", "Done"],
+    ["he-IL", "to-do", "to do", "to do"],
+    ["he-IL", undefined, "Done", "Done"],
+  ])(
+    "renders %s column %s / %s as %s without changing the input",
+    async (locale, slug, name, expected) => {
+      const column = { slug, name: name! };
+      const props = {
+        locale,
+        title: "התראה",
+        message: "עדכון משימה",
+        task: { title: "בדיקה", column },
+      };
+      const html = await render(createElement(NotificationEmail, props));
+      const text = await render(createElement(NotificationEmail, props), {
+        plainText: true,
+      });
+      expect(html).toContain(`>${expected}</span>`);
+      expect(text).toContain(expected);
+      expect(column.name).toBe(name);
+      expect(column.slug).toBe(slug);
+    },
+  );
+
   it("renders Japanese chrome for a Japanese locale", async () => {
     const html = await render(
       createElement(NotificationEmail, {
@@ -13,7 +47,7 @@ describe("NotificationEmail", () => {
         locale: "ja-JP",
       }),
     );
-    expect(html).toContain("Kaneo で開く");
+    expect(html).toContain("TickTack で開く");
     expect(html).toContain("配信設定に一致する通知がありました。");
   });
 
@@ -26,7 +60,7 @@ describe("NotificationEmail", () => {
         locale: "zh-TW",
       }),
     );
-    expect(html).toContain("在 Kaneo 中開啟");
+    expect(html).toContain("在 TickTack 中開啟");
     expect(html).toContain("有一則通知符合你的通知設定。");
   });
 

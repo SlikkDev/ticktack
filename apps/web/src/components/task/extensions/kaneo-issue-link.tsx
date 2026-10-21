@@ -89,9 +89,13 @@ function KaneoIssueLinkView({ node }: NodeViewProps) {
             className="kaneo-issue-link-chip"
           >
             {resolvedIssueKey ? (
-              <span className="kaneo-issue-link-key">{resolvedIssueKey}</span>
+              <bdi dir="ltr" className="kaneo-issue-link-key">
+                {resolvedIssueKey}
+              </bdi>
             ) : null}
-            <span className="kaneo-issue-link-title">{title}</span>
+            <bdi dir="auto" className="kaneo-issue-link-title">
+              {title}
+            </bdi>
           </a>
         </HoverCardTrigger>
         <HoverCardContent
@@ -101,14 +105,19 @@ function KaneoIssueLinkView({ node }: NodeViewProps) {
           className="kaneo-issue-link-preview"
         >
           <div className="kaneo-issue-link-preview-top">
-            <span className="kaneo-issue-link-preview-key">
+            <span
+              dir={resolvedIssueKey ? "ltr" : "auto"}
+              className="kaneo-issue-link-preview-key"
+            >
               {resolvedIssueKey || t("tasks:entity.task")}
             </span>
-            <span className="kaneo-issue-link-preview-assignee">
+            <span dir="auto" className="kaneo-issue-link-preview-assignee">
               {assignee}
             </span>
           </div>
-          <p className="kaneo-issue-link-preview-title">{title}</p>
+          <p dir="auto" className="kaneo-issue-link-preview-title">
+            {title}
+          </p>
           <div className="kaneo-issue-link-preview-meta">
             <span>{status}</span>
             <span>·</span>

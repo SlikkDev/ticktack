@@ -25,7 +25,7 @@ export function CustomFieldChip({
   disabled = false,
   className,
 }: CustomFieldChipProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   if (field.type === "boolean") {
     const checked = value === "true";
@@ -43,12 +43,17 @@ export function CustomFieldChip({
         )}
       >
         <CheckboxMark checked={checked} />
-        <span className="truncate">{field.name}</span>
+        <bdi className="truncate">{field.name}</bdi>
       </button>
     );
   }
 
-  const display = formatCustomFieldValue(field.type, value, "short");
+  const display = formatCustomFieldValue(
+    field.type,
+    value,
+    "short",
+    i18n?.resolvedLanguage ?? i18n?.language,
+  );
   const missing = field.required && isCustomFieldValueEmpty(field.type, value);
 
   const chip = (
@@ -65,16 +70,21 @@ export function CustomFieldChip({
       )}
     >
       <CustomFieldTypeIcon type={field.type} className="size-3.5 shrink-0" />
-      <span className="shrink-0">{field.name}</span>
+      <bdi className="shrink-0">{field.name}</bdi>
       {display && (
-        <span
+        <bdi
+          dir={field.type === "number" ? "ltr" : "auto"}
           className="min-w-0 max-w-40 truncate text-foreground"
           title={display.text}
         >
           {display.text}
-        </span>
+        </bdi>
       )}
-      {!!display?.more && <span className="shrink-0">+{display.more}</span>}
+      {!!display?.more && (
+        <bdi dir="ltr" className="shrink-0">
+          +{display.more}
+        </bdi>
+      )}
       {missing && (
         <>
           {!invalid && (

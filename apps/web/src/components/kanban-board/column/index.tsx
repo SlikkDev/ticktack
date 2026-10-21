@@ -74,6 +74,7 @@ function Column({
 
   return (
     <div
+      data-column-id={column.id}
       ref={setNodeRef}
       className={columnVariants({
         isDropzoneOver: isOver,

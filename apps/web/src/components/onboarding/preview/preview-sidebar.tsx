@@ -85,7 +85,7 @@ export function PreviewSidebar({
               focus === "project" ? previewFocusClassName : "bg-accent",
             )}
           >
-            <LayoutPanelLeft className="size-3.5" />
+            <LayoutPanelLeft className="size-3.5 rtl:scale-x-[-1]" />
             <span className="truncate">{projectName}</span>
           </div>
         ) : (

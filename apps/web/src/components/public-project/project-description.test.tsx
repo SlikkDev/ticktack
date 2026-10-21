@@ -32,7 +32,10 @@ it("loads deferred project text, with an explicit retry after failure", async ()
       />
     </QueryClientProvider>,
   );
-  await screen.findByRole("alert");
+  expect(await screen.findByRole("alert")).toHaveTextContent(
+    "tasks:descriptionLoadError",
+  );
+  expect(screen.queryByText("changed")).toBeNull();
   fireEvent.click(screen.getByText("tasks:descriptionRetry"));
   expect(await screen.findByText("Full project description")).toBeTruthy();
   client.clear();

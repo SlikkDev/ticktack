@@ -1,7 +1,9 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { isSupportedLocale } from "@i18n/resources";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { getStoredLocale, ticktackDefaultLocale } from "@/lib/i18n/preference";
 import { z } from "zod/v4";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 import { toast } from "@/lib/toast";
 import { AuthCaptcha } from "./auth-captcha";
 import {
@@ -41,7 +44,7 @@ export function PasswordSignUpForm({
   disabled = false,
   onSuccess,
 }: PasswordSignUpFormProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isPending, setIsPending] = useState(false);
   const schema = useMemo(
     () =>
@@ -67,14 +70,23 @@ export function PasswordSignUpForm({
       const headers: Record<string, string> = { ...captcha.headers };
       if (invitationId) headers["x-invitation-id"] = invitationId;
       const result = await authClient.signUp.email(
-        { name: name.trim(), email, password },
+        {
+          name: name.trim(),
+          email,
+          password,
+          locale: isSupportedLocale(i18n?.resolvedLanguage ?? "")
+            ? i18n.resolvedLanguage
+            : (getStoredLocale() ?? ticktackDefaultLocale),
+        },
         { headers },
       );
       if (result.error) {
         if (result.error.code === "DISPOSABLE_EMAIL_NOT_ALLOWED") {
           form.setError("email", { message: t("auth:forms.disposableEmail") });
         } else {
-          toast.error(result.error.message || t("auth:signUp.failed"));
+          toast.error(
+            getApiErrorMessage(result.error, t("auth:signUp.failed")),
+          );
         }
         setIsPending(false);
         captcha.reset();
@@ -82,11 +94,7 @@ export function PasswordSignUpForm({
       }
       onSuccess();
     } catch (error) {
-      toast.error(
-        error instanceof Error && error.message
-          ? error.message
-          : t("auth:signUp.failed"),
-      );
+      toast.error(getApiErrorMessage(error, t("auth:signUp.failed")));
       setIsPending(false);
       captcha.reset();
     }

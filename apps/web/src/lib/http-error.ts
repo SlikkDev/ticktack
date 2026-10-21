@@ -1,34 +1,30 @@
-import i18n from "i18next";
+import { getApiErrorMessage } from "./i18n/api-error-message";
 import {
   type ApiErrorDetails,
   type ApiErrorIssue,
   parseApiErrorBody,
 } from "./parse-api-error-body";
 
-function fallbackMessage(status: number): string {
-  if (status >= 500) {
-    return i18n.t("common:error.messages.server", {
-      defaultValue: "Server error. Please try again later.",
-    });
-  }
-  return i18n.t("common:error.messages.unknown", {
-    defaultValue: "An unexpected error occurred.",
-  });
-}
-
 export class HttpError extends Error {
   status: number;
   code?: string;
   issues?: ApiErrorIssue[];
   missingPermissions?: string[];
+  readonly originalMessage: string;
 
-  constructor(status: number, message: string, details: ApiErrorDetails = {}) {
-    super(message);
+  constructor(
+    status: number,
+    message: string,
+    details: ApiErrorDetails = {},
+    originalMessage = message,
+  ) {
+    super(getApiErrorMessage({ ...details, status, message }));
     this.name = "HttpError";
     this.status = status;
     this.code = details.code;
     this.issues = details.issues;
     this.missingPermissions = details.missingPermissions;
+    this.originalMessage = originalMessage;
   }
 
   static async fromResponse(
@@ -36,9 +32,11 @@ export class HttpError extends Error {
   ): Promise<HttpError> {
     const text = await response.text().catch(() => "");
     const body = parseApiErrorBody(text);
-    const message =
-      (body ? body.message : text).trim() || fallbackMessage(response.status);
-    return new HttpError(response.status, message, body ?? {});
+    return new HttpError(
+      response.status,
+      body ? body.message : text,
+      body ?? {},
+    );
   }
 }
 

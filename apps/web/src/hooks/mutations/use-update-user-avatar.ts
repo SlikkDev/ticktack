@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import uploadAvatar from "@/fetchers/user/upload-avatar";
 import { authClient } from "@/lib/auth-client";
@@ -15,7 +16,7 @@ function useUpdateUserAvatar() {
       const { error } = await authClient.updateUser({ image: avatar.url });
 
       if (error) {
-        throw new Error(error.message || "Failed to update profile picture");
+        throw new ApiClientError(error, "Failed to update profile picture");
       }
 
       return avatar;

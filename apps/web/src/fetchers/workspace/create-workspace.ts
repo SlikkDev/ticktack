@@ -1,4 +1,5 @@
 import { authClient } from "@/lib/auth-client";
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import {
   createUniqueWorkspaceSlug,
   isWorkspaceSlugCollisionError,
@@ -27,6 +28,7 @@ const createWorkspace = async ({
         name,
         existingWorkspaces.map((workspace) => workspace.slug),
       );
+  let lastFailure: { code?: string; status?: number } | undefined;
 
   for (let attempt = 0; attempt < 5; attempt += 1) {
     const { data, error } = await authClient.organization.create({
@@ -39,13 +41,15 @@ const createWorkspace = async ({
     if (!error) {
       return data;
     }
+    lastFailure = error;
 
+    // Retry detection uses the upstream text, before the display message is localized.
     const createError = new Error(
       error.message || "Failed to create workspace",
     );
 
     if (slug || !isWorkspaceSlugCollisionError(createError)) {
-      throw createError;
+      throw new ApiClientError(error, "Failed to create workspace");
     }
 
     workspaceSlug = createUniqueWorkspaceSlug(name, [
@@ -54,7 +58,10 @@ const createWorkspace = async ({
     ]);
   }
 
-  throw new Error("Failed to create workspace");
+  throw new ApiClientError({
+    ...lastFailure,
+    message: "Failed to create workspace",
+  });
 };
 
 export default createWorkspace;

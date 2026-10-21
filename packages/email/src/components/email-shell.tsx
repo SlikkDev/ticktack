@@ -7,6 +7,7 @@ import {
   Preview,
 } from "@react-email/components";
 import React from "react";
+import { EmailDirectionContext, emailDirection } from "./direction";
 import { Row } from "./row";
 import { emailAsset } from "./assets";
 import { themeCss } from "./theme";
@@ -27,50 +28,57 @@ export function EmailShell({
   lang,
   children,
 }: EmailShellProps) {
+  const direction = emailDirection(lang);
   return (
-    <Html lang={lang} dir="ltr">
-      <Head>
-        <title>{title}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="color-scheme" content="light dark" />
-        <meta name="supported-color-schemes" content="light dark" />
-        <meta
-          name="format-detection"
-          content="telephone=no, date=no, address=no, email=no, url=no"
-        />
-        <style>{themeCss}</style>
-      </Head>
-      <Preview>{preview}</Preview>
-      <body id="body" className="k-bg" style={body}>
-        <div
-          role="article"
-          aria-roledescription="email"
-          aria-label={title}
-          lang={lang}
-          dir="ltr"
-          className="k-bg"
-          style={page}
-        >
-          <Container style={container}>
-            <Row style={brand}>
-              <Column style={markCell}>
-                <Img
-                  src={emailAsset("mark")}
-                  width="28"
-                  height="28"
-                  alt=""
-                  style={mark}
-                />
-              </Column>
-              <Column className="k-text" style={wordmark}>
-                Kaneo
-              </Column>
-            </Row>
-            {children}
-          </Container>
-        </div>
-      </body>
-    </Html>
+    <EmailDirectionContext.Provider value={direction}>
+      <Html lang={lang} dir={direction}>
+        <Head>
+          <title>{title}</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta name="color-scheme" content="light dark" />
+          <meta name="supported-color-schemes" content="light dark" />
+          <meta
+            name="format-detection"
+            content="telephone=no, date=no, address=no, email=no, url=no"
+          />
+          <style>{themeCss}</style>
+        </Head>
+        <Preview>{preview}</Preview>
+        <body id="body" className="k-bg" style={body}>
+          <div
+            role="article"
+            aria-roledescription="email"
+            aria-label={title}
+            lang={lang}
+            dir={direction}
+            className="k-bg"
+            style={{
+              ...page,
+              direction,
+              textAlign: direction === "rtl" ? "right" : "left",
+            }}
+          >
+            <Container style={container}>
+              <Row style={brand}>
+                <Column style={markCell}>
+                  <Img
+                    src={emailAsset("mark")}
+                    width="28"
+                    height="28"
+                    alt=""
+                    style={mark}
+                  />
+                </Column>
+                <Column className="k-text" style={wordmark}>
+                  {direction === "rtl" ? "טיקטק" : "TickTack"}
+                </Column>
+              </Row>
+              {children}
+            </Container>
+          </div>
+        </body>
+      </Html>
+    </EmailDirectionContext.Provider>
   );
 }
 

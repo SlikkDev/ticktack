@@ -28,7 +28,7 @@ export function TaskCustomFieldRows({
       aria-label={t("tasks:customFields.fields")}
       className="flex flex-col gap-0.5 border-border border-t pt-3.5"
     >
-      <div className="flex h-6 items-center justify-between pr-1 pb-1 pl-2">
+      <div className="flex h-6 items-center justify-between pe-1 pb-1 ps-2">
         <span className="font-medium text-muted-foreground text-xs">
           {t("tasks:customFields.fields")}
         </span>

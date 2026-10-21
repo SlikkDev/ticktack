@@ -12,9 +12,11 @@ function format(
 ): string | undefined {
   const date = toDate(value);
   if (!date) return undefined;
-  return new Intl.DateTimeFormat(lang, { ...options, timeZone: "UTC" }).format(
-    date,
-  );
+  return new Intl.DateTimeFormat(lang, {
+    ...options,
+    calendar: "gregory",
+    timeZone: "UTC",
+  }).format(date);
 }
 
 export function formatDateTime(value: DateInput, lang: string) {

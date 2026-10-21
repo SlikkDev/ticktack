@@ -36,6 +36,7 @@ import { getConfig } from "@/fetchers/config/get-config";
 import useGetConfig from "@/hooks/queries/config/use-get-config";
 import useInstanceStatus from "@/hooks/queries/instance/use-instance-status";
 import { toast } from "@/lib/toast";
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 
 const signUpSearchSchema = z.object({
   invitationId: z.string().optional(),
@@ -68,9 +69,10 @@ function SignUp() {
   useEffect(() => {
     if (isInstanceStatusError) {
       toast.error(
-        instanceStatusError instanceof Error
-          ? instanceStatusError.message
-          : t("auth:signUp.instanceStatusError"),
+        getApiErrorMessage(
+          instanceStatusError,
+          t("auth:signUp.instanceStatusError"),
+        ),
       );
     }
   }, [isInstanceStatusError, instanceStatusError, t]);

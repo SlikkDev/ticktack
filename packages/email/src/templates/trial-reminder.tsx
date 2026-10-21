@@ -9,6 +9,8 @@ import { type DateInput, formatShortDate } from "../components/format-date";
 import { Frame } from "../components/frame";
 import { Progress } from "../components/progress";
 import { Spacer } from "../components/spacer";
+import { getTrialReminderCopy } from "./trial-reminder-copy";
+import { resolveEmailLocale } from "./resolve-locale";
 
 void React;
 
@@ -19,41 +21,8 @@ export type TrialReminderEmailProps = {
   trialDays?: number;
   endsAt?: DateInput;
   email?: string;
+  locale?: string | null;
 };
-
-function title(daysLeft: number) {
-  if (daysLeft <= 0) {
-    return "Your trial has ended";
-  }
-  if (daysLeft === 1) {
-    return "Your trial ends tomorrow";
-  }
-  return `Your trial ends in ${daysLeft} days`;
-}
-
-function preview(workspaceName: string, daysLeft: number) {
-  if (daysLeft <= 0) {
-    return `The trial for ${workspaceName} has ended`;
-  }
-  if (daysLeft === 1) {
-    return `1 day left on your ${workspaceName} trial`;
-  }
-  return `${daysLeft} days left on your ${workspaceName} trial`;
-}
-
-function subtitle(daysLeft: number) {
-  if (daysLeft <= 0) {
-    return "Your workspace is read-only until you choose a plan. Nothing has been deleted, and your data is still there.";
-  }
-  return "Choose a plan to keep creating and editing when the trial ends. Your projects, tasks and members stay exactly as they are.";
-}
-
-function remaining(daysLeft: number) {
-  if (daysLeft <= 0) {
-    return "Ended";
-  }
-  return daysLeft === 1 ? "1 day left" : `${daysLeft} days left`;
-}
 
 const TrialReminderEmail = ({
   workspaceName,
@@ -62,47 +31,43 @@ const TrialReminderEmail = ({
   trialDays = 14,
   endsAt,
   email,
+  locale,
 }: TrialReminderEmailProps) => {
+  const copy = getTrialReminderCopy(locale);
   const used = Math.min(trialDays, Math.max(0, trialDays - daysLeft));
-  const endDate = endsAt ? formatShortDate(endsAt, "en") : undefined;
+  const endDate = endsAt ? formatShortDate(endsAt, copy.lang) : undefined;
 
   return (
     <EmailShell
-      title={title(daysLeft)}
-      preview={preview(workspaceName, daysLeft)}
-      lang="en"
+      title={copy.title(daysLeft)}
+      preview={copy.preview(workspaceName, daysLeft)}
+      lang={copy.lang}
     >
-      <EmailIntro title={title(daysLeft)} subtitle={subtitle(daysLeft)} />
+      <EmailIntro
+        title={copy.title(daysLeft)}
+        subtitle={copy.subtitle(daysLeft)}
+      />
       <Frame
-        title="Kaneo Cloud trial"
-        description={
-          endDate
-            ? `${workspaceName} workspace, ends ${endDate}`
-            : `${workspaceName} workspace`
-        }
+        title={copy.frame}
+        description={copy.workspace(workspaceName, endDate)}
       >
         <Progress
-          label={`${used} of ${trialDays} days used`}
-          value={remaining(daysLeft)}
+          label={copy.used(used, trialDays)}
+          value={copy.remaining(daysLeft)}
           percent={(used / trialDays) * 100}
         />
       </Frame>
       <Spacer size={20} />
       <EmailButton href={billingUrl} icon="credit-card-light">
-        Choose a plan
+        {copy.cta}
       </EmailButton>
-      <EmailNote title="Rather run it yourself?">
-        Kaneo is free forever when you host it, with every feature included. You
-        can export your data at any time and move it to your own server.
-      </EmailNote>
+      <EmailNote title={copy.selfHostTitle}>{copy.selfHost}</EmailNote>
       <EmailFooter
-        title="Kaneo Cloud billing"
-        reason={
-          email
-            ? `Sent to ${email} because you own the ${workspaceName} workspace on Kaneo Cloud.`
-            : `You are receiving this because you own this workspace on Kaneo Cloud.`
-        }
-        links={footerLinks("en", [{ label: "Billing", href: billingUrl }])}
+        title={copy.footer}
+        reason={copy.reason(workspaceName, email)}
+        links={footerLinks(resolveEmailLocale(copy.lang), [
+          { label: copy.billing, href: billingUrl },
+        ])}
       />
     </EmailShell>
   );

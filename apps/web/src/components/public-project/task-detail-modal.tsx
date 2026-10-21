@@ -20,6 +20,7 @@ import {
 } from "@/lib/due-date-status";
 import { formatDateMedium, formatDateShort } from "@/lib/format";
 import { getInitials } from "@/lib/get-initials";
+import { getStatusDisplayLabel } from "@/lib/i18n/domain";
 import { getPriorityIcon } from "@/lib/priority";
 import type { ExternalLink } from "@/types/external-link";
 import type Task from "@/types/task";
@@ -36,7 +37,12 @@ type PublicTaskDetailModalProps = {
   projectSlug: string;
   // The modal is opened from any column, so it resolves completion by slug
   // rather than being told; without these it falls back to the slug heuristic.
-  columns?: Array<{ slug: string; isFinal: boolean }>;
+  columns?: Array<{
+    id?: string;
+    slug: string;
+    name?: string;
+    isFinal: boolean;
+  }>;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
@@ -95,7 +101,15 @@ export function PublicTaskDetailModal({
     (link) => link.resourceType === "branch",
   );
 
-  const statusLabel = task.status ? t(`tasks:status.${task.status}`) : "";
+  const statusColumn = columns?.find(
+    (column) => column.slug === task.status || column.id === task.status,
+  );
+  const statusLabel = task.status
+    ? getStatusDisplayLabel(
+        statusColumn?.slug ?? task.status,
+        statusColumn?.name,
+      )
+    : "";
   const priorityLabel =
     task.priority != null && task.priority !== ""
       ? t(`tasks:priority.${task.priority}`)

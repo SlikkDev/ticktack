@@ -3,6 +3,7 @@ import { cn } from "@/lib/cn";
 
 type InlineNameInputProps = {
   name: string;
+  displayName?: string;
   label: string;
   readOnly?: boolean;
   className?: string;
@@ -11,30 +12,37 @@ type InlineNameInputProps = {
 
 export function InlineNameInput({
   name,
+  displayName,
   label,
   readOnly = false,
   className,
   onRename,
 }: InlineNameInputProps) {
-  const [draft, setDraft] = useState(name);
-  const [syncedName, setSyncedName] = useState(name);
+  const visibleName = displayName ?? name;
+  const [draft, setDraft] = useState(visibleName);
+  const [syncedName, setSyncedName] = useState(visibleName);
   const cancelled = useRef(false);
 
-  if (name !== syncedName) {
-    setSyncedName(name);
-    setDraft(name);
+  if (visibleName !== syncedName) {
+    setSyncedName(visibleName);
+    setDraft(visibleName);
   }
 
   const commit = async () => {
     const trimmed = draft.trim();
-    if (cancelled.current || !trimmed || trimmed === name) {
+    if (
+      cancelled.current ||
+      !trimmed ||
+      trimmed === name ||
+      trimmed === visibleName
+    ) {
       cancelled.current = false;
-      setDraft(name);
+      setDraft(visibleName);
       return;
     }
 
     setDraft(trimmed);
-    if (!(await onRename(trimmed))) setDraft(name);
+    if (!(await onRename(trimmed))) setDraft(visibleName);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {

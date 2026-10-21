@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { authClient } from "@/lib/auth-client";
 import type { ToggleAdminUserStatusRequest } from "./types";
 
@@ -13,7 +14,7 @@ export async function toggleAdminUserStatus({
     : await authClient.admin.unbanUser({ userId });
 
   if (result.error) {
-    throw new Error(result.error.message ?? "");
+    throw new ApiClientError(result.error, "");
   }
 
   return result.data;

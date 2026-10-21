@@ -22,27 +22,6 @@ import { routeTree } from "./routeTree.gen";
 // router runs and strips it across the sign-up → onboarding redirect chain.
 captureCheckoutIntent();
 
-console.log(`
-                     ////////  
-              /////  ////////  
-            //////// ////////  
-  //////// ///////// ///////   
-  //////// ///////// //////    
-  //////// ///////// ////      
-  //////// ///////// ///       
-  //////// ///////// /////     
-  //////// ///////// //////    
-  //////// ///////// ////////  
-  //////// ///////// ////////  
-  //////// ///////// ////////  
-  //////// ////////            
-  ////////  /////              
-  ///////                      
-                   
-  
-  All you need. Nothing you don't.
-`);
-
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",

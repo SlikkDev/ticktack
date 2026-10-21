@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "@/components/providers/auth-provider/hooks/use-auth";
 import useActiveWorkspace from "@/hooks/queries/workspace/use-active-workspace";
@@ -18,7 +19,7 @@ export const useGetActiveWorkspaceUser = () => {
       });
 
       if (error) {
-        throw new Error(error.message || "Failed to get active workspace user");
+        throw new ApiClientError(error, "Failed to get active workspace user");
       }
 
       return data.members.find((member) => member.userId === user?.id) ?? null;

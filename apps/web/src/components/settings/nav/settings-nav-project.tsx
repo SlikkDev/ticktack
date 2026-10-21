@@ -35,12 +35,14 @@ export function SettingsNavProject({
         onClick={() => setOpen((current) => !current)}
       >
         <project.icon aria-hidden="true" />
-        <span className="flex-1 truncate">{project.name}</span>
+        <span dir="auto" className="flex-1 truncate">
+          {project.name}
+        </span>
         <ChevronRight
           aria-hidden="true"
           className={cn(
-            "ml-auto size-3.5! text-sidebar-foreground/60 transition-transform duration-150 ease-out",
-            open && "rotate-90",
+            "ms-auto size-3.5! text-sidebar-foreground/60 transition-transform duration-150 ease-out",
+            open ? "rotate-90" : "rtl:rotate-180",
           )}
         />
       </SidebarMenuButton>

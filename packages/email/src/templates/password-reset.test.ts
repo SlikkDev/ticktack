@@ -12,7 +12,7 @@ describe("PasswordResetEmail", () => {
       }),
     );
     expect(html).toContain("パスワードのリセット");
-    expect(html).toContain("Kaneo セキュリティメール");
+    expect(html).toContain("TickTack セキュリティメール");
   });
 
   it("renders Traditional Chinese copy for a zh-TW locale", async () => {
@@ -23,6 +23,6 @@ describe("PasswordResetEmail", () => {
       }),
     );
     expect(html).toContain("重設密碼");
-    expect(html).toContain("Kaneo 安全性通知");
+    expect(html).toContain("TickTack 安全性通知");
   });
 });

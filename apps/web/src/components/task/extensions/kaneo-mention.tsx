@@ -41,6 +41,7 @@ export const KaneoMention = Node.create({
       mergeAttributes(HTMLAttributes, {
         "data-type": "kaneo-mention",
         class: "kaneo-mention",
+        dir: "auto",
       }),
       `@${node.attrs.label || ""}`,
     ];

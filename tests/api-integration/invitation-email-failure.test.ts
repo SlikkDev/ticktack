@@ -58,7 +58,11 @@ describe("invitation email failure reporting", () => {
     });
     expect(await db.select().from(schema.invitationTable)).toHaveLength(1);
     expect(send.mock.lastCall?.[2]).toEqual(
-      expect.objectContaining({ role: "Member", expiresAt: expect.any(Date) }),
+      expect.objectContaining({
+        locale: "he-IL",
+        role: "חבר צוות",
+        expiresAt: expect.any(Date),
+      }),
     );
     expect(
       (

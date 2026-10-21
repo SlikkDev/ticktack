@@ -1,5 +1,6 @@
 "use client";
 
+import { useDirection } from "@base-ui/react/direction-provider";
 import { Autocomplete as AutocompletePrimitive } from "@base-ui/react/autocomplete";
 import { ChevronsUpDownIcon, XIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -22,6 +23,8 @@ function AutocompleteInput({
   size?: "sm" | "default" | "lg" | number;
   ref?: React.Ref<HTMLInputElement>;
 }) {
+  // Icon padding follows the UI direction, independently of the input's dir=auto.
+  const direction = useDirection();
   const sizeValue = (size ?? "default") as "sm" | "default" | "lg" | number;
 
   return (
@@ -38,10 +41,16 @@ function AutocompleteInput({
       <AutocompletePrimitive.Input
         className={cn(
           startAddon &&
-            "data-[size=sm]:*:data-[slot=autocomplete-input]:ps-[calc(--spacing(7.5)-1px)] *:data-[slot=autocomplete-input]:ps-[calc(--spacing(8.5)-1px)] sm:data-[size=sm]:*:data-[slot=autocomplete-input]:ps-[calc(--spacing(7)-1px)] sm:*:data-[slot=autocomplete-input]:ps-[calc(--spacing(8)-1px)]",
+            (direction === "rtl"
+              ? "data-[size=sm]:*:data-[slot=autocomplete-input]:pr-[calc(--spacing(7.5)-1px)] *:data-[slot=autocomplete-input]:pr-[calc(--spacing(8.5)-1px)] sm:data-[size=sm]:*:data-[slot=autocomplete-input]:pr-[calc(--spacing(7)-1px)] sm:*:data-[slot=autocomplete-input]:pr-[calc(--spacing(8)-1px)]"
+              : "data-[size=sm]:*:data-[slot=autocomplete-input]:pl-[calc(--spacing(7.5)-1px)] *:data-[slot=autocomplete-input]:pl-[calc(--spacing(8.5)-1px)] sm:data-[size=sm]:*:data-[slot=autocomplete-input]:pl-[calc(--spacing(7)-1px)] sm:*:data-[slot=autocomplete-input]:pl-[calc(--spacing(8)-1px)]"),
           sizeValue === "sm"
-            ? "has-[+[data-slot=autocomplete-trigger],+[data-slot=autocomplete-clear]]:*:data-[slot=autocomplete-input]:pe-6.5"
-            : "has-[+[data-slot=autocomplete-trigger],+[data-slot=autocomplete-clear]]:*:data-[slot=autocomplete-input]:pe-7",
+            ? direction === "rtl"
+              ? "has-[+[data-slot=autocomplete-trigger],+[data-slot=autocomplete-clear]]:*:data-[slot=autocomplete-input]:pl-6.5"
+              : "has-[+[data-slot=autocomplete-trigger],+[data-slot=autocomplete-clear]]:*:data-[slot=autocomplete-input]:pr-6.5"
+            : direction === "rtl"
+              ? "has-[+[data-slot=autocomplete-trigger],+[data-slot=autocomplete-clear]]:*:data-[slot=autocomplete-input]:pl-7"
+              : "has-[+[data-slot=autocomplete-trigger],+[data-slot=autocomplete-clear]]:*:data-[slot=autocomplete-input]:pr-7",
           className,
         )}
         data-slot="autocomplete-input"

@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { authClient } from "@/lib/auth-client";
@@ -34,7 +35,7 @@ export function useWorkspacesWithPermission(
             organizationId,
             permissions,
           });
-          if (res.error) throw new Error(res.error.message);
+          if (res.error) throw new ApiClientError(res.error);
           return res.data?.success === true ? organizationId : null;
         }),
       );

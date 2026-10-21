@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
@@ -11,7 +12,7 @@ function useDeleteApiKey() {
       });
 
       if (result.error) {
-        throw new Error(result.error.message);
+        throw new ApiClientError(result.error);
       }
 
       return result.data;

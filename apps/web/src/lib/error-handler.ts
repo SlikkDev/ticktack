@@ -7,10 +7,11 @@ export type ApiError = {
 
 export function parseApiError(error: unknown): ApiError {
   if (error instanceof Error) {
+    const message = getErrorMessageForClassification(error);
     if (
-      error.message.includes("Failed to fetch") ||
-      error.message.includes("NetworkError") ||
-      error.message.includes("CORS")
+      message.includes("Failed to fetch") ||
+      message.includes("NetworkError") ||
+      message.includes("CORS")
     ) {
       return {
         message: "common:error.messages.cors",
@@ -20,10 +21,10 @@ export function parseApiError(error: unknown): ApiError {
     }
 
     if (
-      error.message.includes("Load failed") ||
-      error.message.includes("fetch") ||
-      error.message.includes("network") ||
-      error.message.includes("connection")
+      message.includes("Load failed") ||
+      message.includes("fetch") ||
+      message.includes("network") ||
+      message.includes("connection")
     ) {
       return {
         message: "common:error.messages.network",
@@ -33,9 +34,9 @@ export function parseApiError(error: unknown): ApiError {
     }
 
     if (
-      error.message.includes("401") ||
-      error.message.includes("unauthorized") ||
-      error.message.includes("authentication")
+      message.includes("401") ||
+      message.includes("unauthorized") ||
+      message.includes("authentication")
     ) {
       return {
         message: "common:error.messages.auth",
@@ -47,9 +48,9 @@ export function parseApiError(error: unknown): ApiError {
 
     // Check for server errors
     if (
-      error.message.includes("500") ||
-      error.message.includes("server error") ||
-      error.message.includes("internal")
+      message.includes("500") ||
+      message.includes("server error") ||
+      message.includes("internal")
     ) {
       return {
         message: "common:error.messages.server",
@@ -95,3 +96,4 @@ export function getNetworkTroubleshootingSteps(): string[] {
     "common:error.troubleshootingSteps.network.checkFirewall",
   ];
 }
+import { getErrorMessageForClassification } from "./i18n/api-error-classification";

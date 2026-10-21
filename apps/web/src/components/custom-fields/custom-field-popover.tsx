@@ -14,7 +14,7 @@ type CustomFieldPopoverProps = {
   field: CustomFieldDefinition;
   value: string;
   onChange: (value: string) => void;
-  side?: "bottom" | "left";
+  side?: "bottom" | "inline-start";
   children: ReactElement;
 };
 

@@ -30,7 +30,9 @@ export function EmailChannelRow({ preferences }: EmailChannelRowProps) {
       }
       description={
         preferences.emailAddress ? (
-          <span className="font-mono">{preferences.emailAddress}</span>
+          <bdi dir="ltr" className="font-mono">
+            {preferences.emailAddress}
+          </bdi>
         ) : (
           t("settings:notificationsPage.accountEmailNoAddress")
         )

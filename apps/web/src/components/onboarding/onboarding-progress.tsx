@@ -22,9 +22,9 @@ export function OnboardingProgress({
       aria-label={t("auth:onboarding.progress", { current, total })}
       className="flex items-center gap-3"
     >
-      <span className="font-mono text-muted-foreground text-xs">
+      <bdi dir="ltr" className="font-mono text-muted-foreground text-xs">
         {current} / {total}
-      </span>
+      </bdi>
       <span className="flex gap-1">
         {segments.map((segment) => (
           <span

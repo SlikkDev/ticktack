@@ -26,7 +26,9 @@ export function InvitationCard({
         <ThemedImg name="users-circle" width={48} height={48} />
       </div>
       <Heading as="h2" className="k-text" style={name}>
-        {workspaceName}
+        <span dir="auto" style={{ unicodeBidi: "isolate" }}>
+          {workspaceName}
+        </span>
       </Heading>
       <Text className="k-muted" style={descriptionStyle}>
         {description}

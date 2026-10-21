@@ -30,6 +30,9 @@ vi.mock("@/hooks/queries/config/use-get-config", () => ({
   default: () => ({ data: undefined }),
 }));
 vi.mock("@/components/page-title", () => ({ default: () => null }));
+vi.mock("@/components/auth/language-switcher", () => ({
+  LanguageSwitcher: () => null,
+}));
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));

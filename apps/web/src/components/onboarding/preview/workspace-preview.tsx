@@ -62,11 +62,11 @@ export function WorkspacePreview({
     <div
       aria-hidden="true"
       className={cn(
-        "relative hidden min-w-0 flex-1 border-border border-l bg-sidebar lg:block",
+        "relative hidden min-w-0 flex-1 border-border border-s bg-sidebar lg:block",
         zoom ? "z-10 overflow-visible" : "overflow-hidden",
       )}
     >
-      <div className="absolute top-[76px] left-[72px] flex items-center gap-2">
+      <div className="absolute top-[76px] start-[72px] flex items-center gap-2">
         <span className="size-1.5 rounded-full bg-success shadow-[0_0_0_3px_--theme(--color-success/25%)]" />
         <span className="font-mono text-[11px] text-muted-foreground uppercase tracking-[0.06em]">
           {label}
@@ -79,7 +79,7 @@ export function WorkspacePreview({
         onAnimationComplete={() => {
           if (zoom) onOpened();
         }}
-        className="absolute top-[120px] left-[72px] flex h-[680px] w-[980px] rounded-[14px] border border-border bg-sidebar py-2 shadow-2xl"
+        className="absolute top-[120px] start-[72px] flex h-[680px] w-[980px] rounded-[14px] border border-border bg-sidebar py-2 shadow-2xl"
       >
         <PreviewSidebar
           workspaceName={workspaceName}
@@ -92,13 +92,13 @@ export function WorkspacePreview({
         />
         <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-s-xl border border-border border-e-0 bg-background">
           <div className="flex h-11 shrink-0 items-center gap-2.5 border-border border-b px-4 text-[13px] text-muted-foreground">
-            <PanelLeft className="size-3.5" />
+            <PanelLeft className="size-3.5 rtl:scale-x-[-1]" />
             <span className="h-3.5 w-px bg-border" />
-            <span className="truncate">{workspaceName}</span>
+            <bdi className="truncate">{workspaceName}</bdi>
             {projectName ? (
               <>
                 <span>/</span>
-                <span className="truncate">{projectName}</span>
+                <bdi className="truncate">{projectName}</bdi>
               </>
             ) : null}
           </div>

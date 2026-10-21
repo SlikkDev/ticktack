@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 import { toast } from "@/lib/toast";
 import { AuthCaptcha } from "./auth-captcha";
 import {
@@ -22,6 +23,7 @@ import {
   authMessageClassName,
 } from "./auth-form-styles";
 import type { AuthCaptcha as AuthCaptchaState } from "./use-auth-captcha";
+import { getAuthRequestLocale } from "./request-locale";
 
 type EmailCodeFormValues = { name: string; email: string };
 
@@ -40,7 +42,7 @@ export function EmailCodeForm({
   disabled = false,
   onSent,
 }: EmailCodeFormProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isPending, setIsPending] = useState(false);
   const schema = useMemo(
     () =>
@@ -63,23 +65,28 @@ export function EmailCodeForm({
     try {
       const result = await authClient.emailOtp.sendVerificationOtp(
         { email, type: "sign-in" },
-        { headers: captcha.headers },
+        {
+          headers: {
+            ...captcha.headers,
+            "x-ticktack-locale": getAuthRequestLocale(
+              i18n?.resolvedLanguage ?? i18n?.language,
+            ),
+          },
+        },
       );
       if (result.error) {
         if (result.error.code === "DISPOSABLE_EMAIL_NOT_ALLOWED") {
           form.setError("email", { message: t("auth:forms.disposableEmail") });
         } else {
-          toast.error(result.error.message || t("auth:otpSignIn.sendFailed"));
+          toast.error(
+            getApiErrorMessage(result.error, t("auth:otpSignIn.sendFailed")),
+          );
         }
         return;
       }
       onSent({ email, name: withName ? name.trim() : undefined });
     } catch (error) {
-      toast.error(
-        error instanceof Error && error.message
-          ? error.message
-          : t("auth:otpSignIn.sendFailed"),
-      );
+      toast.error(getApiErrorMessage(error, t("auth:otpSignIn.sendFailed")));
     } finally {
       setIsPending(false);
       captcha.reset();

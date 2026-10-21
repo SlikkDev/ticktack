@@ -1,6 +1,6 @@
 {
-  "name": "Kaneo",
-  "short_name": "Kaneo",
+  "name": "TickTack · טיקטק",
+  "short_name": "טיקטק",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +15,10 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#141414",
-  "background_color": "#141414",
-  "display": "standalone"
+  "theme_color": "#17233b",
+  "background_color": "#17233b",
+  "display": "standalone",
+  "lang": "he-IL",
+  "dir": "rtl",
+  "start_url": "/"
 }

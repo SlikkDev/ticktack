@@ -10,13 +10,17 @@ import {
 } from "vite-plus/test";
 import { PublicTaskCard } from "@/components/public-project/task-card";
 import { PublicTaskRow } from "@/components/public-project/task-row";
+import { i18n } from "@/lib/i18n";
 import type { ExternalLink } from "@/types/external-link";
 import type Task from "@/types/task";
 import { TaskPullRequests } from ".";
 
 const onParentClick = vi.fn();
 
-beforeAll(() => document.body.addEventListener("click", onParentClick));
+beforeAll(async () => {
+  await i18n.changeLanguage("en-US");
+  document.body.addEventListener("click", onParentClick);
+});
 afterAll(() => document.body.removeEventListener("click", onParentClick));
 afterEach(() => {
   cleanup();

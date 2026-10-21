@@ -16,6 +16,7 @@ import { getSafeRedirectPath } from "@/components/auth/auth-methods";
 import { AuthPage } from "@/components/auth/auth-page";
 import { useAuthCaptcha } from "@/components/auth/use-auth-captcha";
 import { readSignUpName } from "@/components/auth/verify-otp-path";
+import { getAuthRequestLocale } from "@/components/auth/request-locale";
 import PageTitle from "@/components/page-title";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +26,7 @@ import {
 } from "@/components/ui/input-otp";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 import { toast } from "@/lib/toast";
 
 const CODE_LENGTH = 6;
@@ -44,7 +46,8 @@ export const Route = createFileRoute("/auth/verify-otp")({
 });
 
 function VerifyOtp() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = getAuthRequestLocale(i18n?.resolvedLanguage ?? i18n?.language);
   const { history } = useRouter();
   const { email, invitationId, redirect } = useSearch({
     from: "/auth/verify-otp",
@@ -70,7 +73,7 @@ function VerifyOtp() {
         // DISABLE_REGISTRATION=true reject it unless the request carries the
         // invitation the visitor arrived with.
         const result = await authClient.signIn.emailOtp(
-          signUpName ? { email, otp, name: signUpName } : { email, otp },
+          { email, otp, locale, ...(signUpName ? { name: signUpName } : {}) },
           invitationId
             ? { headers: { "x-invitation-id": invitationId } }
             : undefined,
@@ -84,7 +87,10 @@ function VerifyOtp() {
           };
           setError(
             messages[result.error.code ?? ""] ??
-              (result.error.message || t("auth:verifyOtp.toast.invalidCode")),
+              getApiErrorMessage(
+                result.error,
+                t("auth:verifyOtp.toast.invalidCode"),
+              ),
           );
           setIsVerifying(false);
           return;
@@ -97,14 +103,12 @@ function VerifyOtp() {
         );
       } catch (caught) {
         toast.error(
-          caught instanceof Error && caught.message
-            ? caught.message
-            : t("auth:verifyOtp.toast.verifyFailed"),
+          getApiErrorMessage(caught, t("auth:verifyOtp.toast.verifyFailed")),
         );
         setIsVerifying(false);
       }
     },
-    [email, history, invitationId, safeRedirect, signUpName, t],
+    [email, history, invitationId, locale, safeRedirect, signUpName, t],
   );
 
   const resend = async () => {
@@ -113,11 +117,14 @@ function VerifyOtp() {
     try {
       const result = await authClient.emailOtp.sendVerificationOtp(
         { email, type: "sign-in" },
-        { headers: captcha.headers },
+        { headers: { ...captcha.headers, "x-ticktack-locale": locale } },
       );
       if (result.error) {
         toast.error(
-          result.error.message || t("auth:verifyOtp.toast.resendFailed"),
+          getApiErrorMessage(
+            result.error,
+            t("auth:verifyOtp.toast.resendFailed"),
+          ),
         );
         return;
       }
@@ -128,9 +135,7 @@ function VerifyOtp() {
       setError(null);
     } catch (caught) {
       toast.error(
-        caught instanceof Error && caught.message
-          ? caught.message
-          : t("auth:verifyOtp.toast.resendFailed"),
+        getApiErrorMessage(caught, t("auth:verifyOtp.toast.resendFailed")),
       );
     } finally {
       setIsResending(false);

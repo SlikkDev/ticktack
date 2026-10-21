@@ -1,6 +1,8 @@
-import { format, isSameMonth, isToday, isWeekend } from "date-fns";
+import { isSameMonth, isToday } from "date-fns";
 import { type JSX, useMemo } from "react";
 import { cn } from "@/lib/cn";
+import { useTranslation } from "react-i18next";
+import { isLocaleWeekend } from "@/lib/calendar-locale";
 import { formatDate } from "@/lib/format";
 import CalendarTaskBar, { type CalendarTask } from "./calendar-task-bar";
 import DayOverflowPopover from "./day-overflow-popover";
@@ -23,6 +25,8 @@ export default function MonthGrid({
   projectSlug,
   onOpenTask,
 }: MonthGridProps): JSX.Element {
+  const { i18n } = useTranslation();
+  const locale = i18n?.resolvedLanguage ?? "en-US";
   const weekdayTemplate = weeks[0] ?? [];
   const layouts = useMemo(
     () => weeks.map((week) => packWeekLanes(week, tasks, maxLanes)),
@@ -35,9 +39,9 @@ export default function MonthGrid({
         {weekdayTemplate.map((day) => (
           <div
             key={`weekday-${day.toISOString()}`}
-            className="border-r border-border/60 px-1 py-2 text-center text-[11px] font-medium uppercase tracking-wide text-muted-foreground"
+            className="border-e border-border/60 px-1 py-2 text-center text-[11px] font-medium uppercase tracking-wide text-muted-foreground"
           >
-            {formatDate(day, { weekday: "short" })}
+            {formatDate(day, { weekday: "short" }, locale)}
           </div>
         ))}
       </div>
@@ -61,8 +65,8 @@ export default function MonthGrid({
                   key={`cell-${day.toISOString()}`}
                   style={{ gridColumn: dayIndex + 1, gridRow: "1 / -1" }}
                   className={cn(
-                    "min-w-0 border-r border-border/60",
-                    isWeekend(day) && "bg-muted/25",
+                    "min-w-0 border-e border-border/60",
+                    isLocaleWeekend(day, locale) && "bg-muted/25",
                   )}
                 />
               ))}
@@ -81,7 +85,7 @@ export default function MonthGrid({
                       isToday(day) && "bg-primary text-primary-foreground",
                     )}
                   >
-                    {format(day, "d")}
+                    {formatDate(day, { day: "numeric" }, locale)}
                   </span>
                 </div>
               ))}

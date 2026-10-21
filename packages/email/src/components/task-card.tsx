@@ -5,6 +5,8 @@ import { Section } from "./section";
 import { ThemedImg } from "./themed-img";
 import { colors, shadow } from "./tokens";
 
+import { directionalStyle, useEmailDirection } from "./direction";
+
 void React;
 
 export type TaskCardLabel = {
@@ -55,18 +57,26 @@ export function TaskCard({
   dueStatus = "far-future",
   assigneeInitials,
 }: TaskCardProps) {
+  const direction = useEmailDirection();
   const hasMeta = Boolean(priority || dueDate);
 
   return (
     <Section className="k-card" style={card}>
       <Row>
         <Column className="k-muted" style={ticketCell}>
-          {ticket ?? ""}
+          <span dir="ltr" style={{ unicodeBidi: "isolate" }}>
+            {ticket ?? ""}
+          </span>
         </Column>
-        <Column align="right" style={avatarCell}>
+        <Column
+          align={direction === "rtl" ? "left" : "right"}
+          style={avatarCell}
+        >
           {assigneeInitials ? (
             <div className="k-chip k-text k-divider" style={avatar}>
-              {assigneeInitials}
+              <span dir="auto" style={{ unicodeBidi: "isolate" }}>
+                {assigneeInitials}
+              </span>
             </div>
           ) : null}
         </Column>
@@ -74,23 +84,34 @@ export function TaskCard({
       <Text
         className="k-text-95"
         style={{
-          ...titleStyle,
+          ...directionalStyle(titleStyle, direction),
           marginBottom: hasMeta || labels?.length ? "10px" : "0",
         }}
       >
-        {title}
+        <span dir="auto" style={{ unicodeBidi: "isolate" }}>
+          {title}
+        </span>
       </Text>
       {labels?.length ? (
         <Text style={labelRow}>
           {labels.map((label) => (
-            <span key={label.name} className="k-text-85" style={labelStyle}>
+            <span
+              key={label.name}
+              className="k-text-85"
+              style={directionalStyle(labelStyle, direction)}
+            >
               <span
                 aria-hidden="true"
-                style={{ ...labelDot, color: label.color }}
+                style={{
+                  ...directionalStyle(labelDot, direction),
+                  color: label.color,
+                }}
               >
                 ●
               </span>
-              {label.name}
+              <span dir="auto" style={{ unicodeBidi: "isolate" }}>
+                {label.name}
+              </span>
             </span>
           ))}
         </Text>
@@ -98,7 +119,7 @@ export function TaskCard({
       {hasMeta ? (
         <Text style={metaRow}>
           {priority ? (
-            <span style={metaItem}>
+            <span style={directionalStyle(metaItem, direction)}>
               <ThemedImg
                 name={`priority-${priority}`}
                 width={12}
@@ -111,13 +132,21 @@ export function TaskCard({
           {dueDate ? (
             <span
               className={dueClasses[dueStatus]}
-              style={{ ...metaItem, color: dueColors[dueStatus] }}
+              style={{
+                ...directionalStyle(metaItem, direction),
+                color: dueColors[dueStatus],
+              }}
             >
               <ThemedImg
                 name={dueIcons[dueStatus]}
                 width={12}
                 height={12}
-                style={{ ...metaIcon, marginRight: "4px" }}
+                style={{
+                  ...metaIcon,
+                  ...(direction === "rtl"
+                    ? { marginLeft: "4px" }
+                    : { marginRight: "4px" }),
+                }}
               />
               {dueDate}
             </span>

@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
@@ -32,7 +33,7 @@ function useTransferWorkspaceOwnership() {
         role: "owner",
       });
       if (promote.error) {
-        throw new Error(promote.error.message || "Failed to promote new owner");
+        throw new ApiClientError(promote.error, "Failed to promote new owner");
       }
 
       const demote = await authClient.organization.updateMemberRole({
@@ -41,8 +42,9 @@ function useTransferWorkspaceOwnership() {
         role: "admin",
       });
       if (demote.error) {
-        throw new Error(
-          demote.error.message || "Failed to demote previous owner",
+        throw new ApiClientError(
+          demote.error,
+          "Failed to demote previous owner",
         );
       }
 

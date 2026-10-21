@@ -1,6 +1,7 @@
 import { client } from "@kaneo/libs";
 import type { InferRequestType } from "hono/client";
 import { HttpError } from "@/lib/http-error";
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 
 export type CreateTaskRequest = InferRequestType<
   (typeof client)["task"][":projectId"]["$post"]
@@ -20,7 +21,9 @@ async function createTask(
   draftAssetIds?: string[],
 ) {
   if (!projectId) {
-    throw new Error("No project selected for task creation");
+    throw new ApiClientError({
+      message: "No project selected for task creation",
+    });
   }
 
   const response = await client.task[":projectId"].$post({

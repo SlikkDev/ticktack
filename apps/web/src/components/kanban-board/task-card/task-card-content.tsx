@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { formatDateShort } from "@/lib/format";
 import { Calendar, CalendarClock, CalendarX, Trash2Icon } from "lucide-react";
 import { memo, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -142,12 +142,14 @@ function TaskCardContent({
           >
             {showTaskNumbers && (
               <div className="mb-2 font-medium text-[11px] text-muted-foreground/90">
-                {project?.slug}-{task.number}
+                <bdi dir="ltr">
+                  {project?.slug}-{task.number}
+                </bdi>
               </div>
             )}
 
             {showAssignees && (
-              <div className="absolute top-3 right-3">
+              <div className="absolute top-3 end-3">
                 {task.userId ? (
                   <Avatar className="h-5 w-5">
                     <AvatarImage
@@ -171,8 +173,9 @@ function TaskCardContent({
               </div>
             )}
 
-            <div className={cn("pr-6", !taskIsCompleted && "mb-2.5")}>
+            <div className={cn("pe-6", !taskIsCompleted && "mb-2.5")}>
               <div
+                dir="auto"
                 className={cn(
                   "overflow-hidden break-words leading-5 font-medium text-[15px]",
                   taskIsCompleted
@@ -236,7 +239,7 @@ function TaskCardContent({
                     dueDateStatus === "no-due-date") && (
                     <Calendar className="w-3 h-3" />
                   )}
-                  <span>{format(new Date(task.dueDate), "MMM d")}</span>
+                  <span>{formatDateShort(task.dueDate)}</span>
                 </div>
               )}
 

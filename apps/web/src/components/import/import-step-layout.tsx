@@ -39,7 +39,7 @@ export function ImportStepLayout({
             className="-ms-2 text-muted-foreground hover:text-foreground"
             onClick={onBack}
           >
-            <ChevronLeft aria-hidden="true" />
+            <ChevronLeft aria-hidden="true" className="rtl:rotate-180" />
             {backLabel}
           </Button>
           <ImportSteps

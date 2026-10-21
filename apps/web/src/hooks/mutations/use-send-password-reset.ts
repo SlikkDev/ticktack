@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
@@ -18,7 +19,7 @@ function useChangePassword() {
       });
 
       if (error) {
-        throw new Error(error.message || "Failed to change password");
+        throw new ApiClientError(error, "Failed to change password");
       }
 
       return data;

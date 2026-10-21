@@ -1,5 +1,6 @@
 "use client";
 
+import { useDirection } from "@base-ui/react/direction-provider";
 import { Combobox as ComboboxPrimitive } from "@base-ui/react/combobox";
 import { ChevronsUpDownIcon, XIcon } from "lucide-react";
 import * as React from "react";
@@ -39,6 +40,7 @@ function ComboboxChipsInput({
 
   return (
     <ComboboxPrimitive.Input
+      dir="auto"
       className={cn(
         "min-w-12 flex-1 text-base outline-none sm:text-sm [[data-slot=combobox-chip]+&]:ps-0.5",
         sizeValue === "sm" ? "ps-1.5" : "ps-2",
@@ -66,6 +68,8 @@ function ComboboxInput({
   size?: "sm" | "default" | "lg" | number;
   ref?: React.Ref<HTMLInputElement>;
 }) {
+  // Icon padding follows the UI direction, independently of the input's dir=auto.
+  const direction = useDirection();
   const sizeValue = (size ?? "default") as "sm" | "default" | "lg" | number;
 
   return (
@@ -82,10 +86,16 @@ function ComboboxInput({
       <ComboboxPrimitive.Input
         className={cn(
           startAddon &&
-            "data-[size=sm]:*:data-[slot=combobox-input]:ps-[calc(--spacing(7.5)-1px)] *:data-[slot=combobox-input]:ps-[calc(--spacing(8.5)-1px)] sm:data-[size=sm]:*:data-[slot=combobox-input]:ps-[calc(--spacing(7)-1px)] sm:*:data-[slot=combobox-input]:ps-[calc(--spacing(8)-1px)]",
+            (direction === "rtl"
+              ? "data-[size=sm]:*:data-[slot=combobox-input]:pr-[calc(--spacing(7.5)-1px)] *:data-[slot=combobox-input]:pr-[calc(--spacing(8.5)-1px)] sm:data-[size=sm]:*:data-[slot=combobox-input]:pr-[calc(--spacing(7)-1px)] sm:*:data-[slot=combobox-input]:pr-[calc(--spacing(8)-1px)]"
+              : "data-[size=sm]:*:data-[slot=combobox-input]:pl-[calc(--spacing(7.5)-1px)] *:data-[slot=combobox-input]:pl-[calc(--spacing(8.5)-1px)] sm:data-[size=sm]:*:data-[slot=combobox-input]:pl-[calc(--spacing(7)-1px)] sm:*:data-[slot=combobox-input]:pl-[calc(--spacing(8)-1px)]"),
           sizeValue === "sm"
-            ? "has-[+[data-slot=combobox-trigger],+[data-slot=combobox-clear]]:*:data-[slot=combobox-input]:pe-6.5"
-            : "has-[+[data-slot=combobox-trigger],+[data-slot=combobox-clear]]:*:data-[slot=combobox-input]:pe-7",
+            ? direction === "rtl"
+              ? "has-[+[data-slot=combobox-trigger],+[data-slot=combobox-clear]]:*:data-[slot=combobox-input]:pl-6.5"
+              : "has-[+[data-slot=combobox-trigger],+[data-slot=combobox-clear]]:*:data-[slot=combobox-input]:pr-6.5"
+            : direction === "rtl"
+              ? "has-[+[data-slot=combobox-trigger],+[data-slot=combobox-clear]]:*:data-[slot=combobox-input]:pl-7"
+              : "has-[+[data-slot=combobox-trigger],+[data-slot=combobox-clear]]:*:data-[slot=combobox-input]:pr-7",
           className,
         )}
         data-slot="combobox-input"

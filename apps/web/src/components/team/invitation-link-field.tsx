@@ -20,6 +20,7 @@ function InvitationLinkField({ invitationId }: Props) {
       <Input
         ref={inputRef}
         value={buildInvitationLink(invitationId)}
+        dir="ltr"
         readOnly
         aria-label={t("team:invitations.linkLabel")}
         className="font-mono text-xs"

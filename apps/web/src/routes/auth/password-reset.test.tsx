@@ -155,7 +155,12 @@ describe("password recovery", () => {
         email: "reset@example.com",
         redirectTo: `${window.location.origin}/auth/reset-password`,
       },
-      { headers: { "x-turnstile-token": "captcha-token" } },
+      {
+        headers: {
+          "x-turnstile-token": "captcha-token",
+          "x-ticktack-locale": "he-IL",
+        },
+      },
     );
   });
 

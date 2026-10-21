@@ -37,6 +37,7 @@ export function BubbleLinkEditor({
         autoFocus
         type="text"
         inputMode="url"
+        dir="ltr"
         value={value}
         aria-label={t("common:editor.link.label")}
         placeholder={t("common:editor.link.placeholder")}

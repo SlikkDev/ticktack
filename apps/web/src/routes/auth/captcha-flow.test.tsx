@@ -26,6 +26,9 @@ const m = vi.hoisted(() => ({
   getConfig: vi.fn(),
   config: {} as Record<string, unknown>,
 }));
+vi.mock("@/components/auth/language-switcher", () => ({
+  LanguageSwitcher: () => null,
+}));
 vi.mock("@/fetchers/config/get-config", () => ({ getConfig: m.getConfig }));
 vi.mock("@/lib/auth-client", () => ({
   authClient: {

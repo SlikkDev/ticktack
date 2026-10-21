@@ -1,3 +1,4 @@
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 import {
   createFileRoute,
   Link,
@@ -167,7 +168,9 @@ function AcceptInvitation() {
         invitationId: inviteId,
       });
       if (error) {
-        toast.error(error.message || t("auth:invitation.toast.acceptFailed"));
+        toast.error(
+          getApiErrorMessage(error, t("auth:invitation.toast.acceptFailed")),
+        );
         setIsAccepting(false);
         return;
       }
@@ -186,9 +189,7 @@ function AcceptInvitation() {
       });
     } catch (error) {
       toast.error(
-        error instanceof Error && error.message
-          ? error.message
-          : t("auth:invitation.toast.acceptFailed"),
+        getApiErrorMessage(error, t("auth:invitation.toast.acceptFailed")),
       );
       setIsAccepting(false);
     }

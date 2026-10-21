@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 import queryClient from "@/query-client";
@@ -16,7 +17,7 @@ function useDeleteWorkspaceUser() {
       });
 
       if (error) {
-        throw new Error(error.message || "Failed to remove workspace member");
+        throw new ApiClientError(error, "Failed to remove workspace member");
       }
 
       return data;

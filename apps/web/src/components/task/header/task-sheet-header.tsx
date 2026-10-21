@@ -43,20 +43,23 @@ export function TaskSheetHeader({
     icons[project?.icon as keyof typeof icons] || icons.Layout;
 
   return (
-    <div className="flex h-11 shrink-0 items-center gap-1 border-border border-b px-2 sm:h-12 sm:gap-2 sm:pr-2.5 sm:pl-5">
+    <div className="flex h-11 shrink-0 items-center gap-1 border-border border-b px-2 sm:h-12 sm:gap-2 sm:pe-2.5 sm:ps-5">
       <div className="flex min-w-0 flex-1 items-center gap-1.5 max-sm:justify-center sm:gap-2">
         <ProjectIcon
           aria-hidden="true"
           className="size-4 shrink-0 text-muted-foreground max-sm:hidden"
         />
-        <span className="truncate font-medium text-[13px] text-muted-foreground">
+        <span
+          dir="auto"
+          className="truncate font-medium text-[13px] text-muted-foreground"
+        >
           {project?.name}
         </span>
         {project?.slug && task?.number != null && (
           <>
             <ChevronRight
               aria-hidden="true"
-              className="size-3 shrink-0 text-muted-foreground/60 max-sm:hidden"
+              className="size-3 shrink-0 text-muted-foreground/60 max-sm:hidden rtl:rotate-180"
             />
             <span
               aria-hidden="true"
@@ -69,6 +72,7 @@ export function TaskSheetHeader({
                 render={
                   <button
                     type="button"
+                    dir="ltr"
                     onClick={copyId}
                     className="shrink-0 rounded-sm font-medium font-mono text-foreground text-xs outline-none hover:text-foreground/80 focus-visible:ring-2 focus-visible:ring-ring"
                   />

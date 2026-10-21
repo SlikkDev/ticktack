@@ -53,7 +53,14 @@ export function TableToolbar({
         aria-label={labels[action.command]}
         onClick={() => editor.chain().focus()[action.command]().run()}
       >
-        <action.icon className="size-3.5" />
+        <action.icon
+          className={cn(
+            "size-3.5",
+            (action.command === "addColumnBefore" ||
+              action.command === "addColumnAfter") &&
+              "rtl:rotate-180",
+          )}
+        />
       </Button>
       {"separator" in action && (
         <span className="kaneo-tiptap-bubble-separator" />

@@ -1,8 +1,42 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vite-plus/test";
+import i18n from "i18next";
+import he from "@i18n/he-IL.json";
+import en from "@i18n/en-US.json";
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vite-plus/test";
 import type Task from "@/types/task";
 import TaskCardContextMenuContent from "./task-card-context-menu-content";
 
+vi.mock("i18next", async (importOriginal) => {
+  const original = await importOriginal<typeof import("i18next")>();
+  return { default: original.createInstance() };
+});
+const projectColumns: {
+  id: string;
+  name: string;
+  icon: null;
+  isFinal: boolean;
+}[] = [];
+const queriedColumns: {
+  slug: string;
+  name: string;
+  icon: null;
+  isFinal: boolean;
+}[] = [];
+const updateTaskStatus = vi.fn();
+beforeEach(async () => {
+  await i18n.init({
+    lng: "he-IL",
+    fallbackLng: "en-US",
+    resources: { "he-IL": he, "en-US": en },
+  });
+});
 const duplicateTask = vi.fn();
 const canCreateTasks = vi.fn(() => true);
 vi.mock("@/hooks/mutations/task/use-duplicate-task", () => ({
@@ -11,6 +45,8 @@ vi.mock("@/hooks/mutations/task/use-duplicate-task", () => ({
 
 afterEach(() => {
   canCreateTasks.mockReturnValue(true);
+  projectColumns.length = 0;
+  queriedColumns.length = 0;
   cleanup();
   vi.clearAllMocks();
 });
@@ -50,14 +86,20 @@ vi.mock("@/components/ui/context-menu", () => ({
   }): React.JSX.Element => <div>{children}</div>,
   ContextMenuCheckboxItem: ({
     children,
+    onCheckedChange,
   }: {
     children: React.ReactNode;
-  }): React.JSX.Element => <div>{children}</div>,
+    onCheckedChange?: () => void;
+  }): React.JSX.Element => (
+    <button type="button" onClick={onCheckedChange}>
+      {children}
+    </button>
+  ),
 }));
 
 vi.mock("@/hooks/queries/column/use-get-columns", () => ({
   useGetColumns: () => ({
-    data: [],
+    data: queriedColumns,
   }),
 }));
 
@@ -96,7 +138,7 @@ vi.mock("@/hooks/mutations/task/use-update-task-due-date", () => ({
 }));
 
 vi.mock("@/hooks/mutations/task/use-update-task-status", () => ({
-  useUpdateTaskStatus: () => ({ mutateAsync: vi.fn() }),
+  useUpdateTaskStatus: () => ({ mutateAsync: updateTaskStatus }),
 }));
 
 vi.mock("@/hooks/mutations/task/use-update-task-status-priority", () => ({
@@ -119,7 +161,7 @@ vi.mock("@/hooks/use-workspace-permission", () => ({
 vi.mock("@/store/project", () => ({
   default: () => ({
     project: {
-      columns: [],
+      columns: projectColumns,
     },
   }),
 }));
@@ -197,3 +239,46 @@ it("hides duplication without task-create permission", () => {
   renderTask(task);
   expect(screen.queryByText("tasks:actions.duplicate")).toBeNull();
 });
+
+describe.each(["project", "query"] as const)(
+  "%s context status source",
+  (source) => {
+    it.each(["he-IL", "en-US"] as const)(
+      "localizes built-ins in %s and preserves custom names and mutation values",
+      async (locale) => {
+        await i18n.changeLanguage(locale);
+        const columns = [
+          {
+            id: "in-progress",
+            slug: "in-progress",
+            name: "In Progress",
+            icon: null,
+            isFinal: false,
+          },
+          {
+            id: "review-team",
+            slug: "review-team",
+            name: "Team Review",
+            icon: null,
+            isFinal: false,
+          },
+        ];
+        if (source === "project") projectColumns.push(...columns);
+        else queriedColumns.push(...columns);
+        renderTask(task);
+        const label = (locale === "he-IL" ? he : en).tasks.status[
+          "in-progress"
+        ];
+        fireEvent.click(screen.getByRole("button", { name: label }));
+        expect(updateTaskStatus).toHaveBeenCalledWith({
+          ...task,
+          status: "in-progress",
+        });
+        expect(
+          screen.getByRole("button", { name: "Team Review" }),
+        ).toBeInTheDocument();
+        expect(columns[0].name).toBe("In Progress");
+      },
+    );
+  },
+);

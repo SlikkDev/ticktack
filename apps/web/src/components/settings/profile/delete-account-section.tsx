@@ -104,6 +104,7 @@ export function DeleteAccountSection({ email }: DeleteAccountSectionProps) {
           </Label>
           <Input
             id={inputId}
+            dir="ltr"
             autoComplete="off"
             autoCapitalize="none"
             spellCheck={false}

@@ -25,6 +25,9 @@ const m = vi.hoisted(() => ({
   signOut: vi.fn(),
 }));
 
+vi.mock("@/components/auth/language-switcher", () => ({
+  LanguageSwitcher: () => null,
+}));
 vi.mock("@tanstack/react-router", () => ({
   createFileRoute: () => (options: unknown) => options,
   Link: ({ children }: { children: ReactNode }) => <a href="/">{children}</a>,

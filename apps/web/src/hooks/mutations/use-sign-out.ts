@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { getIdToken } from "@/fetchers/oauth/get-id-token";
@@ -45,7 +46,7 @@ function useSignOut(idpLogoutUrl?: string | null) {
           },
         });
         if (result.error) {
-          throw new Error(result.error.message);
+          throw new ApiClientError(result.error);
         }
         return result.data;
       } finally {

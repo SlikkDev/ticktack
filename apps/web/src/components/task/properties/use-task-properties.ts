@@ -28,7 +28,10 @@ export function useTaskProperties(
     project,
     labels,
     status: {
-      label: getStatusDisplayLabel(task?.status ?? "", statusColumn?.name),
+      label: getStatusDisplayLabel(
+        statusColumn?.slug ?? task?.status ?? "",
+        statusColumn?.name,
+      ),
       isFinal: statusColumn?.isFinal ?? false,
       icon: statusColumn?.icon,
     },

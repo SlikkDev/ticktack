@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { authClient } from "@/lib/auth-client";
 
 export type InviteWorkspaceMemberRequest = {
@@ -18,7 +19,7 @@ const inviteWorkspaceMember = async ({
   });
 
   if (error) {
-    throw new Error(error.message || "Failed to invite workspace member");
+    throw new ApiClientError(error, "Failed to invite workspace member");
   }
 
   return data;

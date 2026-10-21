@@ -52,7 +52,10 @@ export function ApiKeyCreatedDialog({
         </DialogHeader>
         <DialogPanel>
           <div className="flex items-center gap-2 rounded-lg border border-input bg-muted/40 py-1.5 ps-3 pe-1.5">
-            <code className="min-w-0 flex-1 select-all truncate font-mono text-xs">
+            <code
+              dir="ltr"
+              className="min-w-0 flex-1 select-all truncate font-mono text-xs [unicode-bidi:isolate]"
+            >
               {apiKey}
             </code>
             <Button

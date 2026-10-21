@@ -1,6 +1,6 @@
 {
 	"common": {
-		"appName": "Kaneo",
+		"appName": "TickTack",
 		"actions": {
 			"cancel": "Cancel",
 			"close": "Close",
@@ -13,7 +13,9 @@
 			"filter": "Filter"
 		},
 		"a11y": {
-			"toggleSidebar": "Toggle sidebar"
+			"toggleSidebar": "Toggle sidebar",
+			"increaseValue": "Increase value",
+			"decreaseValue": "Decrease value"
 		},
 		"sidebar": {
 			"title": "Sidebar",
@@ -96,7 +98,7 @@
 				"errorToast": "Failed to create project"
 			},
 			"createWorkspace": {
-				"breadcrumbKaneo": "KANEO",
+				"breadcrumbKaneo": "TICKTACK",
 				"title": "Create a new workspace",
 				"description": "Create a new workspace by providing a name for your workspace.",
 				"namePlaceholder": "Workspace name",
@@ -160,6 +162,142 @@
 				"apply": "Apply link",
 				"remove": "Remove link"
 			}
+		},
+		"apiErrors": {
+			"badRequest": "Check the information you entered and try again.",
+			"forbidden": "You do not have permission to perform this action.",
+			"notFound": "The requested item was not found. It may have been removed.",
+			"conflict": "This action conflicts with an existing item or a recent change. Refresh and try again.",
+			"rateLimited": "Too many requests. Wait a moment and try again.",
+			"requestTimeout": "The request timed out. Please try again.",
+			"payloadTooLarge": "The upload is too large. Choose a smaller file and try again.",
+			"paymentRequired": "This action requires an active subscription or a different plan. Check the workspace billing settings.",
+			"invalidCredentials": "The email address or password is incorrect.",
+			"emailNotVerified": "Verify your email address before signing in.",
+			"accountExists": "An account with this email already exists. Sign in or use another email address.",
+			"passwordTooLong": "Use no more than 128 characters for your password.",
+			"invalidToken": "This link or token is invalid or has expired. Request a new one and try again.",
+			"emailMismatch": "Use the email address associated with this invitation or account.",
+			"accountLinked": "This account is already linked. Use another account or check your connected accounts.",
+			"lastAccount": "Keep at least one sign-in method connected to your account.",
+			"providerUnavailable": "This sign-in provider is unavailable. Try another sign-in method or contact your administrator.",
+			"localSignInDisabled": "Password sign-in is disabled. Use one of the configured sign-in providers.",
+			"localRegistrationDisabled": "Password registration is disabled. Use one of the configured sign-in providers.",
+			"emailCodeRequired": "Create your account using an email verification code.",
+			"captchaFailed": "The verification check failed. Complete it again and retry.",
+			"guestDisabled": "Guest access is disabled on this instance.",
+			"guestInvitations": "Guests cannot invite members. Sign in with a regular account to continue.",
+			"integrationAuthFailed": "The integration could not authenticate. Check its credentials and permissions.",
+			"instanceAdminRequired": "This action requires instance administrator access.",
+			"cannotChangeOwnRole": "You cannot change your own role.",
+			"cannotRemoveYourself": "You cannot remove your own account from this screen.",
+			"lastAdmin": "The instance must keep at least one administrator.",
+			"soleWorkspaceOwner": "Transfer ownership of your workspaces or delete them before deleting your account.",
+			"activeSubscription": "Cancel active workspace subscriptions before deleting the workspace or account.",
+			"assigneeNotMember": "Choose an assignee who is a member of this workspace.",
+			"assigneeNoAccess": "Choose an assignee who has access to this project.",
+			"dateRange": "The start date must be on or before the due date.",
+			"invalidDate": "Enter a valid date, for example 2025-01-15.",
+			"validation": {
+				"required": "Enter a value for {{field}}.",
+				"invalid": "Check the value of {{field}}.",
+				"minCharacters": "Use at least {{limit}} characters for {{field}}.",
+				"maxCharacters": "Use no more than {{limit}} characters for {{field}}.",
+				"minItems": "Select at least {{limit}} items for {{field}}.",
+				"maxItems": "Select no more than {{limit}} items for {{field}}.",
+				"minNumber": "Enter {{limit}} or more for {{field}}.",
+				"maxNumber": "Enter {{limit}} or less for {{field}}.",
+				"greaterThan": "Enter a number greater than {{limit}} for {{field}}.",
+				"lessThan": "Enter a number less than {{limit}} for {{field}}.",
+				"email": "Enter a valid email address for {{field}}.",
+				"url": "Enter a valid URL for {{field}}.",
+				"integer": "Enter a whole number for {{field}}.",
+				"option": "Choose one of the available options for {{field}}."
+			},
+			"fields": {
+				"value": "this field",
+				"title": "title",
+				"name": "name",
+				"email": "email",
+				"password": "password",
+				"description": "description",
+				"content": "content",
+				"priority": "priority",
+				"status": "status",
+				"startDate": "start date",
+				"dueDate": "due date",
+				"url": "URL",
+				"color": "color",
+				"key": "key",
+				"assignee": "assignee",
+				"position": "position",
+				"limit": "limit"
+			},
+			"workspaceNameNoUrls": "Workspace names cannot contain URLs.",
+			"workspaceNameNoMarkup": "Workspace names cannot contain HTML or template characters.",
+			"import": {
+				"originalDetails": "Original technical details",
+				"progressUnknown": "The import is in progress.",
+				"errorUnknown": "The project could not be imported. Review the original details below.",
+				"warningUnknown": "The import returned a warning. Review the original details below.",
+				"starting": "Starting the import",
+				"readingProject": "Reading {{name}}",
+				"savingProject": "Saving {{name}}",
+				"readingBoard": "Reading board",
+				"readingTeam": "Reading team",
+				"readingIssues": "Reading issues",
+				"readingComments": "Reading comments",
+				"readingMetadata": "Reading states, labels and members",
+				"readingProjectBoard": "Reading project and board",
+				"readingIssuesCount": "Reading issues ({{amount}} so far)",
+				"readingCommentsCount": "Reading comments ({{amount}} so far)",
+				"readingTasksTotal": "Reading tasks ({{amount}} of {{total}})",
+				"readingCommentsTotal": "Reading comments ({{amount}} of {{total}})",
+				"readingLinksTotal": "Reading task links ({{amount}} of {{total}})",
+				"readingDetailsTotal": "Reading task details ({{amount}} of {{total}})",
+				"readingWorkItems": "Reading work items ({{amount}})",
+				"readingWorkItemsTotal": "Reading work items ({{amount}} of {{total}})",
+				"stopped": "The import was stopped.",
+				"interrupted": "The import was interrupted before it finished. Start it again.",
+				"unexpected": "The import stopped because of an unexpected error.",
+				"saveFailed": "TickTack could not save this project.",
+				"restarting": "TickTack is restarting. Start the import again in a minute.",
+				"sourceAuth": "Could not sign in to {{source}}. Check the credentials and access permissions.",
+				"sourceNotFound": "{{source}} could not find the requested item (HTTP 404). Check the URL.",
+				"sourceRateLimited": "{{source}} is limiting requests. Try again in a few minutes.",
+				"sourceServerError": "{{source}} returned an error (HTTP {{status}}). Try again later.",
+				"sourceRefused": "{{source}} refused the request (HTTP {{status}}).",
+				"sourceUnreachable": "Could not reach {{source}} at {{host}}.",
+				"sourceTimeout": "{{source}} took too long to answer. Try again.",
+				"sourceUnreadable": "{{source}} sent an unreadable response.",
+				"warningMembers": "Workspace members could not be read, so assignees and comment authors carry over by name only.",
+				"warningKaneoLinks": "This Kaneo version does not expose task links, so they are not copied.",
+				"warningKaneoComments": "This Kaneo version does not expose comments, so they are not copied.",
+				"warningCustomFieldsUnreadable": "Custom fields could not be read with this API key, so they are not listed here.",
+				"warningJiraBoard": "Jira did not share the board for this project, so columns follow its statuses.",
+				"warningTrelloNames": "Trello does not share member email addresses, so assignees are matched to TickTack members by full name.",
+				"warningPlaneMembers": "Plane did not share the project member list with this token, so some assignee emails may be missing.",
+				"warningAssigneeEmail": "Tasks whose assignee email is unavailable: {{amount}}. Their assignees may not carry over.",
+				"warningCustomFields": "Custom fields are not copied: {{names}}.",
+				"warningIntegrationLinks": "Tasks with integration links that are not copied: {{amount}}.",
+				"warningAssets": "Tasks referencing source images or files: {{amount}}. These files are not copied and may not display.",
+				"warningExternalLinks": "Links to tasks in other projects or boards that are not copied: {{amount}}.",
+				"warningIssueAttachments": "Issues with attachments that are not imported: {{amount}}.",
+				"warningAttachments": "Attachments that were not imported: {{amount}}.",
+				"warningManyAssignees": "Items with more than one assignee: {{amount}}. TickTack keeps one assignee per task, so only the first was kept.",
+				"warningTrelloAttachments": "Cards with attachments that were not imported: {{amount}}. Custom fields, Power-Up data and stickers are not imported either.",
+				"warningPlankaEmails": "Cards with hidden assignee email addresses: {{amount}}. Connect with a PLANKA administrator account to match by email.",
+				"warningLabelLimit": "Issues with more than {{limit}} labels: {{amount}}. Only the first {{limit}} labels were imported.",
+				"warningRelationLimit": "Issues with more than {{limit}} links: {{amount}}. Only the first {{limit}} links were imported.",
+				"warningRenamedColumns": "Column names were changed to avoid conflicts: {{names}}.",
+				"renamedColumn": "{{before}} to {{after}}",
+				"warningUnmatched": "Tasks assigned to people outside this workspace: {{amount}} ({{names}}). Invite those people, then assign the tasks.",
+				"moreNames": "and {{amount}} more",
+				"sourceAuthApiKey": "Could not sign in to {{source}}. Check the API key.",
+				"sourceAuthPassword": "Could not sign in to {{source}}. Check the username and password.",
+				"sourceAuthKeyToken": "Could not sign in to {{source}}. Check the API key and token.",
+				"sourceAuthJira": "Could not sign in to {{source}}. Check the email and API token, or the personal access token for Jira Data Center."
+			}
 		}
 	},
 	"auth": {
@@ -182,7 +320,7 @@
 				"use_a_permanent_email_address_disposable_addresses_cannot_create_accounts_": "Use a permanent email address. Disposable addresses cannot create accounts."
 			},
 			"instanceStatusError": "Couldn't reach the server. Please retry in a moment.",
-			"heading": "Sign in to Kaneo",
+			"heading": "Sign in to TickTack",
 			"submitPassword": "Sign in",
 			"invitation": {
 				"title": "{{inviterName}} invited you to {{workspaceName}}",
@@ -190,7 +328,7 @@
 				"description": "Sign in with the email that received the invitation. You'll join the workspace right after."
 			},
 			"footer": {
-				"newHere": "New to Kaneo?",
+				"newHere": "New to TickTack?",
 				"createAccount": "Create an account",
 				"inviteOnly": "Accounts here are invite-only. Ask an admin for an invitation.",
 				"providerSignUp": "New here? Sign in with a provider above to create an account.",
@@ -245,7 +383,7 @@
 			"toggleMessage": "Already have an account?",
 			"toggleLink": "Sign in",
 			"instanceStatusError": "Couldn't reach the server. Please retry in a moment.",
-			"instanceAdminTitle": "Set up your Kaneo instance",
+			"instanceAdminTitle": "Set up your TickTack instance",
 			"instanceAdminSubtitle": "This account becomes the instance administrator with full access.",
 			"heading": "Create your account",
 			"submitPassword": "Create account",
@@ -297,7 +435,7 @@
 				"acceptFailed": "Failed to accept invitation",
 				"acceptSuccess": "Invitation accepted! Welcome to the team."
 			},
-			"description": "{{inviterName}} invited you to this workspace on Kaneo.",
+			"description": "{{inviterName}} invited you to this workspace on TickTack.",
 			"invitedBy": "Invited by",
 			"sentTo": "Sent to",
 			"signedInAs": "Signed in as",
@@ -305,7 +443,7 @@
 			"notNow": "Not now",
 			"join": "Join workspace",
 			"switchAccount": "Switch account",
-			"goToKaneo": "Go to Kaneo",
+			"goToKaneo": "Go to TickTack",
 			"mismatch": {
 				"title": "Signed in with a different email",
 				"description": "This invitation was sent to {{invitedEmail}}. You're signed in as {{email}}."
@@ -324,7 +462,7 @@
 			}
 		},
 		"onboarding": {
-			"pageTitle": "Welcome to Kaneo",
+			"pageTitle": "Welcome to TickTack",
 			"workspaceName": "Workspace name",
 			"workspaceNamePlaceholder": "e.g. Acme Inc, My Team",
 			"restrictedTitle": "You need an invitation",
@@ -372,7 +510,7 @@
 				},
 				"invite": {
 					"title": "Invite your team",
-					"description": "Kaneo works best with everyone in it. Open **Members** in the sidebar to invite people by email."
+					"description": "TickTack works best with everyone in it. Open **Members** in the sidebar to invite people by email."
 				},
 				"integrations": {
 					"title": "Connect GitHub, GitLab or Gitea",
@@ -502,7 +640,7 @@
 		"device": {
 			"connect": {
 				"title": "Connect a device",
-				"description": "Enter the code shown in your terminal or app to link it to your Kaneo account.",
+				"description": "Enter the code shown in your terminal or app to link it to your TickTack account.",
 				"label": "Device code",
 				"submit": "Continue",
 				"noCode": "No code yet? Start signing in from your app first.",
@@ -566,10 +704,10 @@
 		"syncRules": {
 			"title": "What syncs",
 			"sharedHint": "These rules apply to everyone using this project. Hiding advanced settings does not disable them.",
-			"outgoing": "Kaneo → repository",
-			"incoming": "Repository → Kaneo",
-			"outgoingHint": "Choose which Kaneo tasks can sync. Losing a matching label pauses both directions for an existing task.",
-			"incomingHint": "Choose which issues can be imported or create tasks. Use exact repository label names. Existing links follow the Kaneo task rule.",
+			"outgoing": "TickTack → repository",
+			"incoming": "Repository → TickTack",
+			"outgoingHint": "Choose which TickTack tasks can sync. Losing a matching label pauses both directions for an existing task.",
+			"incomingHint": "Choose which issues can be imported or create tasks. Use exact repository label names. Existing links follow the TickTack task rule.",
 			"all": "All tasks and issues",
 			"filtered": "Only matching labels",
 			"any": "Any selected label",
@@ -612,7 +750,7 @@
 			"closed": "Closed",
 			"noDescription": "No description",
 			"useRepository": "Keep repository values",
-			"useKaneo": "Keep Kaneo values",
+			"useKaneo": "Keep TickTack values",
 			"exportPending": "Export matching tasks",
 			"inactiveHint": "This integration is paused. No tasks will be exported until it is reactivated.",
 			"allIssues": "All issues",
@@ -622,10 +760,10 @@
 			"issuesLabelled": "Issues labelled",
 			"joinAnd": "and",
 			"joinOr": "or",
-			"kaneoToProvider": "Kaneo to {{provider}}",
+			"kaneoToProvider": "TickTack to {{provider}}",
 			"pausedSummary_one": "{{count}} task stopped syncing because it no longer matched the sync rules.",
 			"pausedSummary_other": "{{count}} tasks stopped syncing because they no longer matched the sync rules.",
-			"providerToKaneo": "{{provider}} to Kaneo",
+			"providerToKaneo": "{{provider}} to TickTack",
 			"reviewPaused": "Review",
 			"tasksLabelled": "Tasks labelled"
 		},
@@ -638,7 +776,7 @@
 		"apiKeys": "API keys",
 		"adminUsers": {
 			"title": "Users",
-			"subtitle": "Everyone with an account on this Kaneo instance.",
+			"subtitle": "Everyone with an account on this TickTack instance.",
 			"directoryTitle": "All users",
 			"searchCount_one": "{{count}} matching user",
 			"searchCount_other": "{{count}} matching users",
@@ -714,7 +852,7 @@
 		},
 		"adminWorkspaces": {
 			"title": "Workspaces",
-			"subtitle": "Every workspace on this Kaneo instance, including ones you don't belong to.",
+			"subtitle": "Every workspace on this TickTack instance, including ones you don't belong to.",
 			"directoryTitle": "All workspaces",
 			"searchCount_one": "{{count}} matching workspace",
 			"searchCount_other": "{{count}} matching workspaces",
@@ -831,7 +969,7 @@
 		"notificationsPage": {
 			"pageTitle": "Notifications",
 			"title": "Notifications",
-			"subtitle": "What Kaneo tells you about, and where it reaches you.",
+			"subtitle": "What TickTack tells you about, and where it reaches you.",
 			"statusConnected": "Connected",
 			"statusPaused": "Paused",
 			"emailTitle": "Email",
@@ -864,7 +1002,7 @@
 			"webhookUrlPlaceholder": "https://example.com/webhooks/kaneo",
 			"webhookSecretPlaceholder": "Optional shared secret",
 			"webhookSecretHintConfigured": "A signing secret is already configured ({{masked}}). Enter a new one to replace it.",
-			"webhookSecretHintOptional": "Kaneo signs the request body when a secret is set.",
+			"webhookSecretHintOptional": "TickTack signs the request body when a secret is set.",
 			"connectWebhook": "Connect webhook",
 			"eventPreferencesTitle": "Notify me about",
 			"eventPreferencesDescription": "Your own comments, mentions, and status changes never notify you.",
@@ -910,7 +1048,7 @@
 			"reminderLeadTimeUnitDaysBefore_one": "day before",
 			"reminderLeadTimeUnitDaysBefore_other": "days before",
 			"channelsTitle": "Channels",
-			"channelsDescription": "Notifications always show in Kaneo. Connect a channel to get them somewhere else too.",
+			"channelsDescription": "Notifications always show in TickTack. Connect a channel to get them somewhere else too.",
 			"statusOn": "On",
 			"emailToggleLabel": "Send notifications by email",
 			"connect": "Connect",
@@ -927,7 +1065,7 @@
 			"workspacesTitle": "Workspaces",
 			"workspacesDescription": "Choose which workspaces and projects can use your channels.",
 			"statusSending": "Sending",
-			"onlyInKaneo": "Only in Kaneo",
+			"onlyInKaneo": "Only in TickTack",
 			"projectCount_one": "{{count}} project",
 			"projectCount_other": "{{count}} projects",
 			"ruleSummary": "{{channels}} · {{projects}}",
@@ -946,12 +1084,12 @@
 			"save": "Save",
 			"stopSending": "Stop sending",
 			"stopSendingTitle": "Stop sending from {{workspaceName}}?",
-			"stopSendingDescription": "Notifications from this workspace will only show in Kaneo.",
+			"stopSendingDescription": "Notifications from this workspace will only show in TickTack.",
 			"stopping": "Stopping..."
 		},
 		"preferencesPage": {
 			"title": "Preferences",
-			"subtitle": "How Kaneo looks and works for you.",
+			"subtitle": "How TickTack looks and works for you.",
 			"appearanceTitle": "General",
 			"theme": "Theme",
 			"selectTheme": "Select a theme",
@@ -988,7 +1126,7 @@
 		"developerPage": {
 			"pageTitle": "API keys",
 			"title": "API keys",
-			"subtitle": "Let scripts, the CLI, and MCP clients use Kaneo as you.",
+			"subtitle": "Let scripts, the CLI, and MCP clients use TickTack as you.",
 			"unnamedKey": "Unnamed",
 			"newKey": "New key",
 			"keysTitle": "Keys",
@@ -1330,7 +1468,7 @@
 		"workspaceImport": {
 			"pageTitle": "Import",
 			"title": "Import",
-			"subtitle": "Bring your projects from another tool into {{workspace}}. Kaneo only reads from the source.",
+			"subtitle": "Bring your projects from another tool into {{workspace}}. TickTack only reads from the source.",
 			"opensInNewTab": "(opens in a new tab)",
 			"retry": "Try again",
 			"notAllowed": {
@@ -1397,7 +1535,7 @@
 			"connect": {
 				"title": "Import from {{source}}",
 				"sectionTitle": "Connect",
-				"sectionDescription": "Kaneo only reads from {{source}}. The key is used for this import and never stored.",
+				"sectionDescription": "TickTack only reads from {{source}}. The key is used for this import and never stored.",
 				"cancel": "Cancel",
 				"continue": "Continue",
 				"whereToFind": "Where to find it",
@@ -1431,7 +1569,7 @@
 				"apiKeyLabel": "API key",
 				"apiKeyDescription": "In a Power-Up you own, open the Trello Auth tab and generate an API key (not the OAuth 2.0 tab) at",
 				"apiKeyPlaceholder": "Paste API key",
-				"authorizeLabel": "Authorize Kaneo",
+				"authorizeLabel": "Authorize TickTack",
 				"authorizeDescription": "Opens Trello in a new tab. Read only, expires after a day.",
 				"authorizeNeedsKey": "Enter the API key first. Read only, expires after a day.",
 				"authorizeButton": "Authorize on Trello",
@@ -1805,11 +1943,11 @@
 				"removeError": "Failed to remove GitHub integration",
 				"issuesImported": "Issues imported successfully",
 				"importError": "Failed to import issues",
-				"commentOnEnabled": "Kaneo will comment with a task link on new issues",
+				"commentOnEnabled": "TickTack will comment with a task link on new issues",
 				"commentOnDisabled": "Task link comments on new issues are turned off",
 				"settingsUpdateError": "Failed to update GitHub integration"
 			},
-			"commentTaskLinkTitle": "Comment a Kaneo link on new issues",
+			"commentTaskLinkTitle": "Comment a TickTack link on new issues",
 			"commentTaskLinkHint": "So people on GitHub can jump to the task.",
 			"updatePermissions": "Update permissions",
 			"installGithubApp": "Install GitHub App",
@@ -1846,13 +1984,13 @@
 				"removeError": "Failed to remove Gitea integration",
 				"issuesImported": "Issues imported successfully",
 				"importError": "Failed to import issues",
-				"commentOnEnabled": "Kaneo will comment with a task link on new issues",
+				"commentOnEnabled": "TickTack will comment with a task link on new issues",
 				"commentOnDisabled": "Task link comments on new issues are turned off",
 				"settingsUpdateError": "Failed to update Gitea integration"
 			},
-			"commentTaskLinkTitle": "Comment a Kaneo link on new issues",
+			"commentTaskLinkTitle": "Comment a TickTack link on new issues",
 			"commentTaskLinkHint": "So people on Gitea can jump to the task.",
-			"webhookHint": "Add this webhook in the repository settings so changes come back to Kaneo.",
+			"webhookHint": "Add this webhook in the repository settings so changes come back to TickTack.",
 			"baseUrlLabel": "Gitea URL",
 			"tokenLabel": "Personal access token",
 			"tokenPlaceholder": "Paste token",
@@ -1880,13 +2018,13 @@
 				"removeError": "Failed to remove GitLab integration",
 				"issuesImported": "Issues imported successfully",
 				"importError": "Failed to import issues",
-				"commentOnEnabled": "Kaneo will comment with a task link on issues opened in GitLab",
+				"commentOnEnabled": "TickTack will comment with a task link on issues opened in GitLab",
 				"commentOnDisabled": "Task link comments on issues opened in GitLab are turned off",
 				"settingsUpdateError": "Failed to update GitLab integration"
 			},
-			"commentTaskLinkTitle": "Comment a Kaneo link on issues opened in GitLab",
+			"commentTaskLinkTitle": "Comment a TickTack link on issues opened in GitLab",
 			"commentTaskLinkHint": "So people on GitLab can jump to the task.",
-			"webhookHint": "Add this webhook in the project settings so changes come back to Kaneo.",
+			"webhookHint": "Add this webhook in the project settings so changes come back to TickTack.",
 			"baseUrlLabel": "GitLab URL",
 			"tokenTypeLabel": "Token type",
 			"tokenTypePrivate": "Personal, project or group access token",
@@ -1978,10 +2116,10 @@
 			},
 			"webhookLabel": "Endpoint URL",
 			"webhookPlaceholder": "https://example.com/webhooks/kaneo",
-			"webhookHint": "Kaneo sends POST requests with a JSON payload for each enabled event.",
+			"webhookHint": "TickTack sends POST requests with a JSON payload for each enabled event.",
 			"secretLabel": "Signing secret",
 			"secretPlaceholder": "Shared secret",
-			"secretHint": "Kaneo signs each request with it and sends the digest in the X-Kaneo-Signature header.",
+			"secretHint": "TickTack signs each request with it and sends the digest in the X-Kaneo-Signature header.",
 			"secretHintConfigured": "Current secret: {{secret}}. Paste a new one to replace it.",
 			"eventsTitle": "Send when",
 			"events": {
@@ -2004,7 +2142,7 @@
 			"reminderLeadTimeBefore": "Send reminders",
 			"reminderLeadTimeAfter": "hours before a task is due",
 			"disconnectTitle": "Disconnect webhook?",
-			"disconnectDescription": "Kaneo stops sending events and removes the saved endpoint and secret."
+			"disconnectDescription": "TickTack stops sending events and removes the saved endpoint and secret."
 		},
 		"telegramIntegration": {
 			"validation": {
@@ -2112,7 +2250,7 @@
 		"securityPage": {
 			"pageTitle": "Security",
 			"title": "Security",
-			"subtitle": "How you sign in to Kaneo.",
+			"subtitle": "How you sign in to TickTack.",
 			"sectionTitle": "Sign-in",
 			"currentPassword": "Current password",
 			"newPassword": "New password",
@@ -2181,7 +2319,7 @@
 		"billing": {
 			"pageTitle": "Billing",
 			"subtitle": "Your plan for {{workspace}}.",
-			"disabled": "Billing isn't enabled on this instance. Self-hosted Kaneo includes every feature, free forever.",
+			"disabled": "Billing isn't enabled on this instance. Self-hosted TickTack includes every feature, free forever.",
 			"currentPlan": {
 				"title": "Current plan"
 			},
@@ -2301,7 +2439,7 @@
 			"disconnect": "Disconnect",
 			"disconnecting": "Disconnecting…",
 			"disconnectTitle": "Disconnect {{provider}}?",
-			"disconnectDescription": "Kaneo stops posting to {{provider}} and removes the saved settings.",
+			"disconnectDescription": "TickTack stops posting to {{provider}} and removes the saved settings.",
 			"retry": "Retry"
 		},
 		"codeHosting": {
@@ -3275,14 +3413,14 @@
 	},
 	"invitations": {
 		"email": {
-			"subject": "{{inviterName}} invited you to join {{workspaceName}} on Kaneo",
-			"preview": "You're invited to {{workspaceName}} on Kaneo",
+			"subject": "{{inviterName}} invited you to join {{workspaceName}} on TickTack",
+			"preview": "You're invited to {{workspaceName}} on TickTack",
 			"title": "Join {{workspaceName}}",
-			"subtitle": "{{inviterName}} ({{inviterEmail}}) invited you to collaborate in Kaneo.",
+			"subtitle": "{{inviterName}} ({{inviterEmail}}) invited you to collaborate in TickTack.",
 			"cta": "Accept invitation",
 			"sameEmail": "You can accept with the same email that received this message.",
 			"ignore": "If this wasn't expected, you can safely ignore this email.",
-			"footer": "Kaneo workspace invitation",
+			"footer": "TickTack workspace invitation",
 			"details": {
 				"title": "Invitation details",
 				"sentTo": "Sent to",

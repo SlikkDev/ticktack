@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import deleteAvatar from "@/fetchers/user/delete-avatar";
 import { authClient } from "@/lib/auth-client";
@@ -11,7 +12,7 @@ function useRemoveUserAvatar() {
       const { error } = await authClient.updateUser({ image: null });
 
       if (error) {
-        throw new Error(error.message || "Failed to remove profile picture");
+        throw new ApiClientError(error, "Failed to remove profile picture");
       }
 
       return deleteAvatar();

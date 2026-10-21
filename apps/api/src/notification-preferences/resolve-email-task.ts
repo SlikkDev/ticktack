@@ -109,6 +109,7 @@ export async function resolveEmailTask(
     assigneeInitials: getInitials(task.assigneeName),
     column: column
       ? {
+          slug: column.slug,
           name: column.name,
           icon: resolveColumnIcon(column),
           count: columnCount?.value,

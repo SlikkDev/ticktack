@@ -45,7 +45,9 @@ export function ApiKeyRow({ apiKey, onDelete }: ApiKeyRowProps) {
       description={
         <span className="flex min-w-0 items-center gap-2">
           {apiKey.start ? (
-            <span className="shrink-0 font-mono">{apiKey.start}…</span>
+            <bdi dir="ltr" className="shrink-0 font-mono">
+              {apiKey.start}…
+            </bdi>
           ) : null}
           <span className="truncate">
             {created} · {expiryText}

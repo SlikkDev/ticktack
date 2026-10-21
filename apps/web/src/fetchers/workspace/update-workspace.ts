@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { authClient } from "@/lib/auth-client";
 
 type UpdateWorkspaceRequest = {
@@ -28,7 +29,7 @@ const updateWorkspace = async ({
   });
 
   if (error) {
-    throw new Error(error.message || "Failed to update workspace");
+    throw new ApiClientError(error, "Failed to update workspace");
   }
 
   return data;

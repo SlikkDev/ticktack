@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { authClient } from "@/lib/auth-client";
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 import { toast } from "@/lib/toast";
 import type { AuthProvider } from "./auth-methods";
 import type { AuthCaptcha } from "./use-auth-captcha";
@@ -37,13 +38,14 @@ export function useProviderSignIn({
                 { provider, callbackURL, errorCallbackURL },
                 options,
               );
-        if (result.error) throw new Error(result.error.message);
+        if (result.error) throw result.error;
         return true;
       } catch (error) {
         toast.error(
-          error instanceof Error && error.message
-            ? error.message
-            : t("auth:providers.error", { provider: getName(provider) }),
+          getApiErrorMessage(
+            error,
+            t("auth:providers.error", { provider: getName(provider) }),
+          ),
         );
         setPending(null);
         captcha.reset();

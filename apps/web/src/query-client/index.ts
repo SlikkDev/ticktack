@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/react";
 import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
 import { handleUnauthorized, isUnauthorizedError } from "@/lib/http-error";
+import { getErrorMessageForClassification } from "@/lib/i18n/api-error-classification";
 import { isForbiddenOrNotFound } from "@/lib/is-forbidden-or-not-found";
 
 // TanStack raises these before any fetcher-level message exists; CORS rejections
@@ -8,11 +9,12 @@ import { isForbiddenOrNotFound } from "@/lib/is-forbidden-or-not-found";
 // the captured event so offline-tab reloads don't drown the queue.
 function isNetworkError(error: unknown): boolean {
   if (!(error instanceof Error)) return false;
+  const message = getErrorMessageForClassification(error);
   return (
-    error.message.includes("Failed to fetch") ||
-    error.message.includes("NetworkError") ||
-    error.message.includes("Load failed") ||
-    error.message.includes("CORS")
+    message.includes("Failed to fetch") ||
+    message.includes("NetworkError") ||
+    message.includes("Load failed") ||
+    message.includes("CORS")
   );
 }
 
@@ -21,7 +23,7 @@ function isNetworkError(error: unknown): boolean {
 function isCancellationError(error: Error): boolean {
   return (
     error.name === "AbortError" ||
-    error.message.toLowerCase().includes("aborted")
+    getErrorMessageForClassification(error).toLowerCase().includes("aborted")
   );
 }
 
@@ -38,7 +40,7 @@ function captureCacheError(error: unknown, context: "query" | "mutation") {
   const area = `${isNetwork ? "network" : "api"}.${context}`;
 
   if (isNetwork) {
-    const dedupeKey = `${context}:${error.message}`;
+    const dedupeKey = `${context}:${getErrorMessageForClassification(error)}`;
     const lastSent = networkErrorCooldowns.get(dedupeKey);
     const now = Date.now();
     if (lastSent !== undefined && now - lastSent < NETWORK_REPORT_COOLDOWN_MS) {

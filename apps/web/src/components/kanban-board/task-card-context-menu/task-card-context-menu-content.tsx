@@ -28,7 +28,7 @@ import { useWorkspacePermission } from "@/hooks/use-workspace-permission";
 import { getColumnIcon } from "@/lib/column";
 import { generateLink } from "@/lib/generate-link";
 import { getInitials } from "@/lib/get-initials";
-import { getPriorityLabel } from "@/lib/i18n/domain";
+import { getPriorityLabel, getStatusDisplayLabel } from "@/lib/i18n/domain";
 import { getPriorityIcon } from "@/lib/priority";
 import { getTaskPath } from "@/lib/task-link";
 import { toast } from "@/lib/toast";
@@ -215,7 +215,7 @@ export default function TaskCardContextMenuContent({
                 className="[&_svg]:text-muted-foreground"
               >
                 {getColumnIcon(col.slug, col.isFinal, col.icon)}
-                <span>{col.name}</span>
+                <span>{getStatusDisplayLabel(col.slug, col.name)}</span>
               </ContextMenuCheckboxItem>
             ))}
           </ContextMenuSubContent>

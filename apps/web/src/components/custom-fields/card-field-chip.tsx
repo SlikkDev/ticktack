@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   Tooltip,
   TooltipContent,
@@ -12,7 +13,13 @@ export const cardChipClass =
   "inline-flex h-5 min-w-0 shrink-0 items-center gap-1 rounded-[5px] border border-border px-1.5 font-medium text-[11px] text-foreground/85 transition-colors hover:bg-accent";
 
 export function CardFieldChip({ field }: { field: CardField }) {
-  const display = formatCustomFieldValue(field.type, field.value, "short");
+  const { i18n } = useTranslation();
+  const display = formatCustomFieldValue(
+    field.type,
+    field.value,
+    "short",
+    i18n?.resolvedLanguage ?? i18n?.language,
+  );
 
   return (
     <Tooltip>
@@ -20,7 +27,7 @@ export function CardFieldChip({ field }: { field: CardField }) {
         {field.type === "boolean" ? (
           <>
             <CheckboxMark checked className="size-3" />
-            <span className="max-w-18 truncate">{field.name}</span>
+            <bdi className="max-w-18 truncate">{field.name}</bdi>
           </>
         ) : (
           <>
@@ -29,9 +36,16 @@ export function CardFieldChip({ field }: { field: CardField }) {
               className="size-3 shrink-0 text-muted-foreground"
             />
             <span className="sr-only">{field.name}: </span>
-            <span className="max-w-18 truncate">{display?.text}</span>
+            <bdi
+              dir={field.type === "number" ? "ltr" : "auto"}
+              className="max-w-18 truncate"
+            >
+              {display?.text}
+            </bdi>
             {!!display?.more && (
-              <span className="text-muted-foreground">+{display.more}</span>
+              <bdi dir="ltr" className="text-muted-foreground">
+                +{display.more}
+              </bdi>
             )}
           </>
         )}

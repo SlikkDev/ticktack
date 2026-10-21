@@ -29,12 +29,15 @@ export function TaskReferenceRow({
       {...props}
     >
       {status}
-      <span className={sectionIdClass}>{displayId}</span>
+      <bdi dir="ltr" className={sectionIdClass}>
+        {displayId}
+      </bdi>
       <button
+        dir="auto"
         type="button"
         onClick={onOpen}
         className={cn(
-          "min-w-0 flex-1 text-left text-[13px] outline-none focus-visible:underline max-sm:line-clamp-2 sm:truncate",
+          "min-w-0 flex-1 text-start text-[13px] outline-none focus-visible:underline max-sm:line-clamp-2 sm:truncate",
           done
             ? "text-muted-foreground line-through"
             : "text-foreground/85 group-hover:text-foreground",

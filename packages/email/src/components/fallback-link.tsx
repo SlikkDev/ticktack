@@ -15,7 +15,10 @@ export function FallbackLink({ label, href }: FallbackLinkProps) {
       <Text className="k-muted" style={labelStyle}>
         {label}
       </Text>
-      <Text style={linkWrapper}>
+      <Text
+        dir="ltr"
+        style={{ ...linkWrapper, direction: "ltr", unicodeBidi: "isolate" }}
+      >
         <Link href={href} className="k-link" style={link}>
           {href}
         </Link>

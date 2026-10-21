@@ -1,39 +1,22 @@
-import { useTranslation } from "react-i18next";
-import useGetConfig from "@/hooks/queries/config/use-get-config";
-
-const links = [
-  { href: "https://kaneo.app/terms", labelKey: "auth:page.terms" },
-  { href: "https://kaneo.app/privacy", labelKey: "auth:page.privacy" },
-] as const;
-
-const linkClassName = "transition-colors hover:text-foreground";
-
 export function AuthLegalFooter() {
-  const { t } = useTranslation();
-  const { data: config } = useGetConfig();
-
-  if (!config?.isCloud) return null;
-
   return (
-    <footer className="flex justify-center gap-5 px-6 pb-8 text-muted-foreground text-xs">
-      {links.map((link) => (
-        <a
-          key={link.href}
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={linkClassName}
-        >
-          {t(link.labelKey)}
-        </a>
-      ))}
+    <footer className="flex flex-wrap justify-center gap-3 px-6 pb-8 text-muted-foreground text-xs">
       <a
-        href="https://kaneo.app"
+        href="https://github.com/SlikkDev/ticktack"
         target="_blank"
         rel="noopener noreferrer"
-        className={linkClassName}
+        className="hover:text-foreground"
       >
-        kaneo.app
+        TickTack · טיקטק
+      </a>
+      <span aria-hidden="true">·</span>
+      <a
+        href="https://github.com/usekaneo/kaneo"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-foreground"
+      >
+        Kaneo (MIT)
       </a>
     </footer>
   );

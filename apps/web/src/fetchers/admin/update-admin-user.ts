@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { authClient } from "@/lib/auth-client";
 import type { UpdateAdminUserRequest } from "./types";
 
@@ -13,7 +14,7 @@ export async function updateAdminUser({
   });
 
   if (error) {
-    throw new Error(error.message ?? "");
+    throw new ApiClientError(error, "");
   }
 
   return data;

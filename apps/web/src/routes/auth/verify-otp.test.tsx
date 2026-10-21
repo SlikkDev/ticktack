@@ -31,7 +31,9 @@ vi.stubGlobal(
 document.elementFromPoint = () => null;
 
 const emailOtp = vi.fn();
+const sendVerificationOtp = vi.fn();
 const push = vi.fn();
+const language = vi.hoisted(() => ({ resolvedLanguage: "he-IL" }));
 
 let locationState: unknown = null;
 let search: {
@@ -40,6 +42,9 @@ let search: {
   redirect?: string;
 } = { email: "invitee@kaneo.test" };
 
+vi.mock("@/components/auth/language-switcher", () => ({
+  LanguageSwitcher: () => null,
+}));
 vi.mock("@tanstack/react-router", () => ({
   createFileRoute: () => (options: unknown) => options,
   Link: ({ children }: { children: ReactNode }) => <a href="/">{children}</a>,
@@ -56,11 +61,13 @@ vi.mock("@/lib/auth-client", () => ({
   authClient: {
     signIn: {
       emailOtp: (
-        body: { email: string; otp: string; name?: string },
+        body: { email: string; otp: string; name?: string; locale: string },
         fetchOptions?: { headers: Record<string, string> },
       ) => emailOtp(body, fetchOptions),
     },
-    emailOtp: { sendVerificationOtp: vi.fn() },
+    emailOtp: {
+      sendVerificationOtp: (...args: unknown[]) => sendVerificationOtp(...args),
+    },
   },
 }));
 
@@ -69,7 +76,7 @@ vi.mock("@/lib/toast", () => ({
 }));
 
 vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key: string) => key }),
+  useTranslation: () => ({ t: (key: string) => key, i18n: language }),
 }));
 
 const VerifyOtp = (Route as unknown as { component: ComponentType }).component;
@@ -83,6 +90,8 @@ function submitCode() {
 
 beforeEach(() => {
   emailOtp.mockResolvedValue({ data: {}, error: null });
+  sendVerificationOtp.mockResolvedValue({ error: null });
+  language.resolvedLanguage = "he-IL";
 });
 
 afterEach(async () => {
@@ -97,6 +106,7 @@ afterEach(async () => {
   });
   cleanup();
   emailOtp.mockReset();
+  sendVerificationOtp.mockReset();
   push.mockReset();
   search = { email: "invitee@kaneo.test" };
   locationState = null;
@@ -116,23 +126,32 @@ describe("VerifyOtp", () => {
 
     await waitFor(() => expect(emailOtp).toHaveBeenCalledTimes(1));
     expect(emailOtp).toHaveBeenCalledWith(
-      { email: "invitee@kaneo.test", otp: "123456" },
+      { email: "invitee@kaneo.test", otp: "123456", locale: "he-IL" },
       { headers: { "x-invitation-id": "invitation-1" } },
     );
   });
 
-  it("passes the name from the sign-up page so the new account keeps it", async () => {
-    locationState = { signUpName: "New Person" };
+  it.each(["he-IL", "en-US"])(
+    "passes the signup name and %s locale for a new account",
+    async (locale) => {
+      locationState = { signUpName: "New Person" };
+      language.resolvedLanguage = locale;
 
-    submitCode();
+      submitCode();
 
-    await waitFor(() => expect(emailOtp).toHaveBeenCalledTimes(1));
-    expect(emailOtp).toHaveBeenCalledWith(
-      { email: "invitee@kaneo.test", otp: "123456", name: "New Person" },
-      undefined,
-    );
-    await waitFor(() => expect(push).toHaveBeenCalledWith("/dashboard"));
-  });
+      await waitFor(() => expect(emailOtp).toHaveBeenCalledTimes(1));
+      expect(emailOtp).toHaveBeenCalledWith(
+        {
+          email: "invitee@kaneo.test",
+          otp: "123456",
+          name: "New Person",
+          locale,
+        },
+        undefined,
+      );
+      await waitFor(() => expect(push).toHaveBeenCalledWith("/dashboard"));
+    },
+  );
 
   it("shows an expired code inline instead of signing in", async () => {
     emailOtp.mockResolvedValue({ data: null, error: { code: "OTP_EXPIRED" } });
@@ -150,8 +169,22 @@ describe("VerifyOtp", () => {
 
     await waitFor(() => expect(emailOtp).toHaveBeenCalledTimes(1));
     expect(emailOtp).toHaveBeenCalledWith(
-      { email: "invitee@kaneo.test", otp: "123456" },
+      { email: "invitee@kaneo.test", otp: "123456", locale: "he-IL" },
       undefined,
+    );
+  });
+
+  it("uses the currently selected locale when resending a code", async () => {
+    language.resolvedLanguage = "en-US";
+    render(<VerifyOtp />);
+    fireEvent.click(
+      screen.getByRole("button", { name: "auth:verifyOtp.resendCode" }),
+    );
+    await waitFor(() =>
+      expect(sendVerificationOtp).toHaveBeenCalledWith(
+        { email: "invitee@kaneo.test", type: "sign-in" },
+        { headers: { "x-ticktack-locale": "en-US" } },
+      ),
     );
   });
 });

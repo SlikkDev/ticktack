@@ -2,6 +2,7 @@ import { Extension } from "@tiptap/core";
 import { PluginKey } from "@tiptap/pm/state";
 import { ReactRenderer } from "@tiptap/react";
 import Suggestion, { type SuggestionOptions } from "@tiptap/suggestion";
+import { overlayLeft } from "@/components/editor/overlay-position";
 import MentionList, {
   type MentionListRef,
   type MentionMember,
@@ -58,7 +59,14 @@ export const MentionSuggestion = Extension.create<MentionSuggestionOptions>({
           const rect = clientRect();
           if (!rect) return;
           popup.style.top = `${rect.bottom + window.scrollY + 4}px`;
-          popup.style.left = `${rect.left + window.scrollX}px`;
+          popup.style.left = `${
+            overlayLeft(
+              rect,
+              popup.getBoundingClientRect().width,
+              document.documentElement.clientWidth,
+              getComputedStyle(popup).direction,
+            ) + window.scrollX
+          }px`;
         };
 
         return {

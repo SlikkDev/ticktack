@@ -124,10 +124,10 @@ export function WorkspaceSwitcher() {
                   </span>
                 </div>
                 {isSwitching ? (
-                  <Spinner className="ml-1 size-3.5 text-foreground/70" />
+                  <Spinner className="ms-1 size-3.5 text-foreground/70" />
                 ) : (
                   <ChevronDown
-                    className="ml-1 size-3.5 text-foreground/70 opacity-90 group-hover:opacity-100 data-[state=open]:opacity-100 data-[state=open]:rotate-180 transition-[rotate,opacity] duration-200 ease-out"
+                    className="ms-1 size-3.5 text-foreground/70 opacity-90 group-hover:opacity-100 data-[state=open]:opacity-100 data-[state=open]:rotate-180 transition-[rotate,opacity] duration-200 ease-out"
                     data-state={isOpen ? "open" : "closed"}
                   />
                 )}
@@ -157,7 +157,7 @@ export function WorkspaceSwitcher() {
                     disabled={isSwitching || ws.id === workspace.id}
                     className="h-7 text-sm data-highlighted:bg-sidebar-accent data-highlighted:text-sidebar-accent-foreground"
                   >
-                    <span className="flex-1 text-left">
+                    <span className="flex-1 text-start">
                       {isSwitching && ws.id === workspace?.id
                         ? t("navigation:workspaceSwitcher.switching")
                         : ws.name}

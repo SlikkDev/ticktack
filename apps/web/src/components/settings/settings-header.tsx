@@ -28,7 +28,7 @@ export function SettingsHeader({ breadcrumb }: SettingsHeaderProps) {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <SidebarTrigger className="-ml-1 h-6 w-6" />
+            <SidebarTrigger className="-ms-1 h-6 w-6" />
           </TooltipTrigger>
           <TooltipContent>
             <p className="flex items-center gap-2 text-[10px]">

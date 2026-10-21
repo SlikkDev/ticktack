@@ -1,4 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
+import i18n from "i18next";
+import en from "@i18n/en-US.json";
 import type { ReactNode } from "react";
 import {
   afterEach,
@@ -11,6 +13,11 @@ import {
 import { AutomationsSection } from "@/components/project/automations/automations-section";
 import type { RepositoryConnection } from "@/components/project/automations/use-repository-connections";
 import type { IntegrationState } from "@/components/project/integrations/get-integration-status";
+
+vi.mock("i18next", async (importOriginal) => {
+  const original = await importOriginal<typeof import("i18next")>();
+  return { default: original.createInstance() };
+});
 
 const m = vi.hoisted(() => ({
   states: {} as Record<string, IntegrationState>,
@@ -91,7 +98,8 @@ vi.mock("@/hooks/mutations/workflow-rule/use-delete-workflow-rule", () => ({
 }));
 
 describe("AutomationsSection", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    await i18n.init({ lng: "en-US", resources: { "en-US": en } });
     m.states = {};
     m.canUpdate = true;
   });

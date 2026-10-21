@@ -1,6 +1,7 @@
 "use client";
 
 import { Toast } from "@base-ui/react/toast";
+import { useDirection } from "@base-ui/react/direction-provider";
 import {
   CircleAlertIcon,
   CircleCheckIcon,
@@ -38,9 +39,12 @@ interface ToastProviderProps extends Toast.Provider.Props {
 
 function ToastProvider({
   children,
-  position = "bottom-right",
+  position: positionProp,
   ...props
 }: ToastProviderProps) {
+  const direction = useDirection();
+  const position =
+    positionProp ?? (direction === "rtl" ? "bottom-left" : "bottom-right");
   return (
     <Toast.Provider toastManager={toastManager} {...props}>
       {children}

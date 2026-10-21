@@ -91,7 +91,7 @@ export function MoveProjectRow({
   return (
     <SettingsRow
       stack
-      icon={<ArrowRight />}
+      icon={<ArrowRight className="rtl:rotate-180" />}
       title={t("settings:projectGeneral.moveProject")}
       description={t("settings:projectGeneral.moveProjectDescription")}
     >

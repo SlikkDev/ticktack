@@ -77,15 +77,17 @@ export default function CalendarTaskBar({
       data-task-status={task.status}
       onClick={() => onOpenTask(task.id)}
       className={cn(
-        "z-10 mb-0.5 flex h-6 min-w-0 items-center overflow-hidden border px-1.5 text-left text-[11px] font-medium leading-none text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:h-5",
+        "z-10 mb-0.5 flex h-6 min-w-0 items-center overflow-hidden border px-1.5 text-start text-[11px] font-medium leading-none text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:h-5",
         getCalendarTaskStatusClass(task.status),
         // Bars that run past a week edge lose their cap there so the two halves
         // read as one continuous span across rows.
-        continuesBefore ? "rounded-l-none border-l-0" : "ml-1 rounded-l-md",
-        continuesAfter ? "rounded-r-none border-r-0" : "mr-1 rounded-r-md",
+        continuesBefore ? "rounded-s-none border-s-0" : "ms-1 rounded-s-md",
+        continuesAfter ? "rounded-e-none border-e-0" : "me-1 rounded-e-md",
       )}
     >
-      <span className="truncate">{task.title}</span>
+      <span dir="auto" className="truncate">
+        {task.title}
+      </span>
     </button>
   );
 }

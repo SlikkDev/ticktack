@@ -34,6 +34,7 @@ export function PublicLinkUrlRow({ url }: PublicLinkUrlRowProps) {
         size="sm"
         readOnly
         value={url}
+        dir="ltr"
         aria-label={t("settings:projectVisibility.publicUrl")}
         className="min-w-0 flex-1 font-mono text-xs sm:text-xs"
         onFocus={(event) => event.currentTarget.select()}

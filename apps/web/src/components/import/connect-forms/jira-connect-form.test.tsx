@@ -61,4 +61,37 @@ describe("JiraConnectForm", () => {
     );
     expect(link).toHaveAttribute("target", "_blank");
   });
+
+  it("keeps a revealed API token left-to-right inside an RTL form", () => {
+    render(
+      <div dir="rtl">
+        <JiraConnectForm
+          values={{ ...EMPTY_CONNECT_VALUES, token: "123-jira-token" }}
+          onChange={vi.fn()}
+          error={null}
+          trelloAuthorizeUrl={null}
+        />
+      </div>,
+    );
+
+    const token = screen.getByLabelText(
+      "settings:workspaceImport.jira.tokenLabel",
+    );
+    expect(token).toHaveAttribute("type", "password");
+    expect(token).toHaveAttribute("dir", "ltr");
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "settings:workspaceImport.connect.showSecret",
+      }),
+    );
+    expect(token).toHaveAttribute("type", "text");
+    expect(token).toHaveAttribute("dir", "ltr");
+    expect(token).toHaveValue("123-jira-token");
+    expect(
+      screen.getByRole("button", {
+        name: "settings:workspaceImport.connect.hideSecret",
+      }),
+    ).toHaveAttribute("aria-pressed", "true");
+  });
 });

@@ -40,7 +40,7 @@ export default function CalendarToolbar({
             aria-label={t("tasks:calendar.previousMonth")}
             onClick={onPreviousMonth}
           >
-            <ChevronLeft />
+            <ChevronLeft className="rtl:rotate-180" />
           </Button>
           <Button
             variant="outline"
@@ -57,7 +57,7 @@ export default function CalendarToolbar({
             aria-label={t("tasks:calendar.nextMonth")}
             onClick={onNextMonth}
           >
-            <ChevronRight />
+            <ChevronRight className="rtl:rotate-180" />
           </Button>
         </div>
       </div>

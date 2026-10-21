@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useQuery } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
@@ -17,7 +18,7 @@ function useGetInvitation({ invitationId }: GetInvitationRequest) {
       });
 
       if (error) {
-        throw new Error(error.message || "Failed to get invitation");
+        throw new ApiClientError(error, "Failed to get invitation");
       }
 
       return data;

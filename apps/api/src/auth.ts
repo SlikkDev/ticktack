@@ -1,3 +1,8 @@
+import { getAuthEmailCopy } from "./utils/auth-email-copy";
+import {
+  getRequestedAuthEmailLocale,
+  resolveAuthEmailLocale,
+} from "./utils/auth-email-locale";
 import { revokeUserConnections, revokeWorkspaceConnections } from "./ws";
 import { apiKey } from "@better-auth/api-key";
 import {
@@ -138,23 +143,14 @@ const authSecret = (() => {
   }
 })();
 
-async function getUserLocale(email: string) {
+async function getUserLocale(email: string, requestedLocale?: string) {
   const [user] = await db
     .select({ locale: schema.userTable.locale })
     .from(schema.userTable)
     .where(eq(schema.userTable.email, email))
     .limit(1);
 
-  return user?.locale ?? null;
-}
-
-function getLocaleKey(locale?: string | null) {
-  const normalized = locale?.toLowerCase();
-  if (normalized?.startsWith("de")) return "de";
-  if (normalized?.startsWith("vi")) return "vi";
-  if (normalized?.startsWith("ja")) return "ja";
-  if (normalized === "zh-tw") return "zh-tw";
-  return "en";
+  return resolveAuthEmailLocale(user?.locale, requestedLocale);
 }
 
 function isEmailCodeSignInAvailable() {
@@ -177,48 +173,6 @@ async function shouldDeliverSignInEmail(email: string) {
     return canSendSignInEmail(email);
   }
   return true;
-}
-
-function getAuthEmailCopy(locale?: string | null) {
-  const localeKey = getLocaleKey(locale);
-
-  if (localeKey === "de") {
-    return {
-      magicLinkSubject: "Anmeldelink für Kaneo",
-      otpSubject: (otp: string) => `${otp} ist dein Kaneo-Anmeldecode`,
-      passwordResetSubject: "Kaneo-Passwort zurücksetzen",
-    };
-  }
-
-  if (localeKey === "vi") {
-    return {
-      magicLinkSubject: "Liên kết đăng nhập Kaneo",
-      otpSubject: (otp: string) => `${otp} là mã đăng nhập Kaneo của bạn`,
-      passwordResetSubject: "Đặt lại mật khẩu Kaneo",
-    };
-  }
-
-  if (localeKey === "ja") {
-    return {
-      magicLinkSubject: "Kaneo ログインリンク",
-      otpSubject: (otp: string) => `Kaneo のサインインコード: ${otp}`,
-      passwordResetSubject: "Kaneo のパスワードをリセット",
-    };
-  }
-
-  if (localeKey === "zh-tw") {
-    return {
-      magicLinkSubject: "Kaneo 登入連結",
-      otpSubject: (otp: string) => `你的 Kaneo 登入驗證碼：${otp}`,
-      passwordResetSubject: "重設 Kaneo 密碼",
-    };
-  }
-
-  return {
-    magicLinkSubject: "Login for Kaneo",
-    otpSubject: (otp: string) => `${otp} is your Kaneo sign-in code`,
-    passwordResetSubject: "Reset your Kaneo password",
-  };
 }
 
 function getDeviceAuthClientIds(): Set<string> {
@@ -301,7 +255,10 @@ export const auth = betterAuth({
       const requestContext = getEmailRequestContext(request?.headers);
       // Keep SMTP latency out of the response so it cannot reveal accounts.
       trackPasswordResetDelivery(
-        getUserLocale(user.email).then((locale) =>
+        getUserLocale(
+          user.email,
+          getRequestedAuthEmailLocale(request?.headers),
+        ).then((locale) =>
           sendPasswordResetEmail(
             user.email,
             getAuthEmailCopy(locale).passwordResetSubject,
@@ -352,6 +309,9 @@ export const auth = betterAuth({
     magicLink({
       disableSignUp: isPasswordRegistrationDisabled,
       sendMagicLink: async ({ email, url }, ctx) => {
+        const requestedLocale = getRequestedAuthEmailLocale(
+          ctx?.request?.headers ?? ctx?.headers,
+        );
         const requestContext = getEmailRequestContext(
           ctx?.request?.headers ?? ctx?.headers,
         );
@@ -359,7 +319,7 @@ export const auth = betterAuth({
           if (!(await shouldDeliverSignInEmail(email))) {
             return;
           }
-          const locale = await getUserLocale(email);
+          const locale = await getUserLocale(email, requestedLocale);
           const copy = getAuthEmailCopy(locale);
           await sendMagicLinkEmail(email, copy.magicLinkSubject, {
             magicLink: url,
@@ -377,6 +337,9 @@ export const auth = betterAuth({
             disableSignUp: isPasswordRegistrationDisabled,
             async sendVerificationOTP({ email, otp, type }, ctx) {
               if (type === "sign-in") {
+                const requestedLocale = getRequestedAuthEmailLocale(
+                  ctx?.request?.headers ?? ctx?.headers,
+                );
                 const requestContext = getEmailRequestContext(
                   ctx?.request?.headers ?? ctx?.headers,
                 );
@@ -384,7 +347,7 @@ export const auth = betterAuth({
                   if (!(await shouldDeliverSignInEmail(email))) {
                     return;
                   }
-                  const locale = await getUserLocale(email);
+                  const locale = await getUserLocale(email, requestedLocale);
                   const copy = getAuthEmailCopy(locale);
                   await sendOtpEmail(email, copy.otpSubject(otp), {
                     otp,
@@ -628,6 +591,7 @@ export const auth = betterAuth({
       },
       async sendInvitationEmail(data) {
         const inviteLink = `${process.env.KANEO_CLIENT_URL}/invitation/accept/${data.id}`;
+        // The sender's UI language is not a recipient preference.
         const locale = await getUserLocale(data.email);
         const copy = getWorkspaceInvitationEmailCopy(locale);
 

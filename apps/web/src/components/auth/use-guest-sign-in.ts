@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { authClient } from "@/lib/auth-client";
+import { getApiErrorMessage } from "@/lib/i18n/api-error-message";
 import { toast } from "@/lib/toast";
 import type { AuthCaptcha } from "./use-auth-captcha";
 
@@ -16,14 +17,10 @@ export function useGuestSignIn(captcha: AuthCaptcha, onSuccess: () => void) {
         {},
         { headers: captcha.headers },
       );
-      if (result.error) throw new Error(result.error.message);
+      if (result.error) throw result.error;
       onSuccess();
     } catch (error) {
-      toast.error(
-        error instanceof Error && error.message
-          ? error.message
-          : t("auth:signIn.guestError"),
-      );
+      toast.error(getApiErrorMessage(error, t("auth:signIn.guestError")));
       setIsPending(false);
       captcha.reset();
     }

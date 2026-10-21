@@ -32,8 +32,8 @@ const columnData = {
   },
 } as Record<string, unknown>;
 
-function detect(pointer: { x: number; y: number } | null) {
-  const droppableContainers = [...rects.keys()].map(
+function detect(pointer: { x: number; y: number } | null, positions = rects) {
+  const droppableContainers = [...positions.keys()].map(
     (id) =>
       ({
         id,
@@ -44,7 +44,7 @@ function detect(pointer: { x: number; y: number } | null) {
   return boardCollisionDetection({
     active: { id: "card" } as never,
     collisionRect: rect(100, 120, 300, 80),
-    droppableRects: rects,
+    droppableRects: positions,
     droppableContainers,
     pointerCoordinates: pointer,
   }).map((collision) => collision.id);
@@ -85,6 +85,23 @@ describe("boardCollisionDetection", () => {
   it("finds nothing outside every column", () => {
     expect(detect({ x: 700, y: 160 })).toEqual([]);
     expect(detect({ x: 400, y: 900 })).toEqual([]);
+  });
+
+  it("targets the same cards and empty column when RTL mirrors column positions", () => {
+    const mirrored = new Map(
+      [...rects].map(([id, position]) => [
+        id,
+        rect(
+          620 - position.right,
+          position.top,
+          position.width,
+          position.height,
+        ),
+      ]),
+    );
+    expect(detect({ x: 220, y: 150 }, mirrored)).toEqual(["c"]);
+    expect(detect({ x: 220, y: 600 }, mirrored)).toEqual(["d"]);
+    expect(detect({ x: 470, y: 160 }, mirrored)).toEqual(["empty"]);
   });
 
   it("falls back to corner distance without a pointer", () => {

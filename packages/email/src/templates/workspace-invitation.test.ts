@@ -3,6 +3,7 @@ import { createElement } from "react";
 import { describe, expect, it } from "vite-plus/test";
 import enUS from "../../../../i18n/en-US.json";
 import frFR from "../../../../i18n/fr-FR.json";
+import heIL from "../../../../i18n/he-IL.json";
 import jaJP from "../../../../i18n/ja-JP.json";
 import zhTW from "../../../../i18n/zh-TW.json";
 import WorkspaceInvitationEmail from "./workspace-invitation";
@@ -97,6 +98,28 @@ describe("WorkspaceInvitationEmail default copy", () => {
     );
 
     expect(html).toBe(withEnUs);
+  });
+
+  it("keeps the Hebrew fallback in sync with the he-IL bundle", async () => {
+    const props = {
+      locale: "he-IL",
+      workspaceName: "צוות Team",
+      inviterName: "נועה Noa",
+      inviterEmail: "noa@example.com",
+      invitationLink: "https://ticktack.example/invite/abc123",
+      to: "invitee@example.com",
+    };
+    const fallback = await render(
+      createElement(WorkspaceInvitationEmail, props),
+    );
+    const translated = await render(
+      createElement(WorkspaceInvitationEmail, {
+        ...props,
+        copy: heIL.invitations.email,
+      }),
+    );
+
+    expect(fallback).toBe(translated);
   });
 
   it("renders the role and expiry with translated labels", async () => {

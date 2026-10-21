@@ -126,7 +126,7 @@ export function PropertiesRail({
                 </span>
               </PropertyValue>
             </TaskStartDatePopover>
-            <ArrowRight className="size-3 shrink-0 text-muted-foreground/60" />
+            <ArrowRight className="size-3 shrink-0 text-muted-foreground/60 rtl:rotate-180" />
             <TaskDueDatePopover task={task}>
               <PropertyValue
                 data-task-action="dueDate"

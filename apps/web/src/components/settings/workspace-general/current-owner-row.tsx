@@ -21,8 +21,12 @@ export function CurrentOwnerRow({ name, email, image }: CurrentOwnerRowProps) {
         </AvatarFallback>
       </Avatar>
       <div className="min-w-0 flex-1 space-y-0.5">
-        <p className="truncate text-sm font-medium">{name || email}</p>
-        <p className="truncate text-xs text-muted-foreground">{email}</p>
+        <p dir="auto" className="truncate text-sm font-medium">
+          {name || email}
+        </p>
+        <p dir="ltr" className="truncate text-xs text-muted-foreground">
+          {email}
+        </p>
       </div>
       <Badge variant="outline" className="shrink-0">
         {t("team:roles.owner")}

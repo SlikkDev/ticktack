@@ -61,7 +61,7 @@ export default function TaskDetailsSheet({
   return (
     <Sheet open={!!taskId} onOpenChange={(open) => !open && onClose()}>
       <SheetContent
-        side="right"
+        side="inline-end"
         data-task-view
         data-shortcuts="allow"
         className="w-full max-w-full gap-0 p-0 sm:max-w-lg md:max-w-2xl lg:max-w-4xl [&>button]:hidden"
@@ -127,7 +127,7 @@ export default function TaskDetailsSheet({
               taskId={currentTaskId}
               projectId={projectId}
               workspaceId={workspaceId}
-              className="hidden w-73 shrink-0 overflow-y-auto border-border border-l lg:flex"
+              className="hidden w-73 shrink-0 overflow-y-auto border-border border-s lg:flex"
             />
           </div>
         )}

@@ -201,6 +201,7 @@ function InviteTeamMemberModal({ open, onClose }: Props) {
                       <FormControl>
                         <Input
                           {...field}
+                          dir="ltr"
                           placeholder={t("team:inviteModal.emailPlaceholder")}
                           autoFocus
                         />

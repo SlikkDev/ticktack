@@ -48,7 +48,7 @@ export function CardFieldList({ fields, max, className }: CardFieldListProps) {
                 "cursor-default text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring",
               )}
             >
-              +{hidden.length}
+              <bdi dir="ltr">+{hidden.length}</bdi>
             </button>
           </HoverCardTrigger>
           <HoverCardContent

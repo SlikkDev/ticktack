@@ -1,3 +1,5 @@
+import english from "@i18n/en-US.json";
+import hebrew from "@i18n/he-IL.json";
 import { QueryClientProvider } from "@tanstack/react-query";
 import {
   act,
@@ -8,6 +10,7 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
+import i18n from "i18next";
 import type { PropsWithChildren } from "react";
 import {
   afterEach,
@@ -30,9 +33,7 @@ vi.mock("react-i18next", async (importOriginal) => ({
   ...(await importOriginal<typeof import("react-i18next")>()),
   useTranslation: () => ({
     t: (key: string) =>
-      key === "settings:invitationEmailFailed"
-        ? "The invitation email could not be sent."
-        : key,
+      key === "settings:invitationEmailFailed" ? i18n.t(key) : key,
   }),
 }));
 vi.mock("@/hooks/queries/workspace/use-active-workspace", () => ({
@@ -65,11 +66,16 @@ function wrapper({ children }: PropsWithChildren) {
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 }
-beforeEach(() => {
+beforeEach(async () => {
   vi.clearAllMocks();
+  await i18n.changeLanguage("en-US");
   inviteMember.mockResolvedValue({
     data: null,
-    error: { code: "INVITATION_EMAIL_FAILED", message: "Upstream failure" },
+    error: {
+      code: "INVITATION_EMAIL_FAILED",
+      message: "Upstream failure",
+      status: 500,
+    },
   });
 });
 afterEach(() => {
@@ -77,9 +83,15 @@ afterEach(() => {
   queryClient.clear();
 });
 describe("invitation email delivery errors", () => {
-  it.each([false, true])(
-    "rejects with a translated error when resend is %s",
-    async (resend) => {
+  it.each([
+    ["en-US", false, english.settings.invitationEmailFailed],
+    ["en-US", true, english.settings.invitationEmailFailed],
+    ["he-IL", false, hebrew.settings.invitationEmailFailed],
+    ["he-IL", true, hebrew.settings.invitationEmailFailed],
+  ] as const)(
+    "rejects with translated guidance in %s when resend is %s",
+    async (locale, resend, message) => {
+      await i18n.changeLanguage(locale);
       const { result } = renderHook(useInviteWorkspaceUser, { wrapper });
       const invalidate = vi.spyOn(queryClient, "invalidateQueries");
       await act(async () => {
@@ -90,7 +102,13 @@ describe("invitation email delivery errors", () => {
             role: "member",
             resend,
           }),
-        ).rejects.toThrow("The invitation email could not be sent.");
+        ).rejects.toMatchObject({
+          name: "ApiClientError",
+          code: "INVITATION_EMAIL_FAILED",
+          status: 500,
+          message,
+          originalMessage: "Upstream failure",
+        });
       });
       expect(inviteMember).toHaveBeenCalledWith({
         organizationId: "workspace",
@@ -117,7 +135,7 @@ describe("invitation email delivery errors", () => {
     );
     await waitFor(() =>
       expect(toast.error).toHaveBeenCalledWith(
-        "The invitation email could not be sent.",
+        english.settings.invitationEmailFailed,
       ),
     );
     expect(toast.success).not.toHaveBeenCalled();

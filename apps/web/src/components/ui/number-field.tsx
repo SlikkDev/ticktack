@@ -3,6 +3,7 @@
 import { NumberField as NumberFieldPrimitive } from "@base-ui/react/number-field";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/cn";
 
@@ -19,11 +20,13 @@ function NumberField({
   size?: "sm" | "default" | "lg";
 }) {
   const generatedId = React.useId();
+  const { i18n } = useTranslation();
   const fieldId = id ?? generatedId;
 
   return (
     <NumberFieldContext.Provider value={{ fieldId }}>
       <NumberFieldPrimitive.Root
+        locale={i18n?.resolvedLanguage ?? i18n?.language ?? "en-US"}
         className={cn("flex w-full flex-col items-start gap-2", className)}
         data-size={size}
         data-slot="number-field"
@@ -54,8 +57,10 @@ function NumberFieldDecrement({
   className,
   ...props
 }: NumberFieldPrimitive.Decrement.Props) {
+  const { t } = useTranslation();
   return (
     <NumberFieldPrimitive.Decrement
+      aria-label={t("common:a11y.decreaseValue")}
       className={cn(
         "relative flex shrink-0 cursor-pointer items-center justify-center rounded-s-[calc(var(--radius-lg)-1px)] in-data-[size=sm]:px-[calc(--spacing(2.5)-1px)] px-[calc(--spacing(3)-1px)] transition-colors pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 hover:bg-accent",
         className,
@@ -72,8 +77,10 @@ function NumberFieldIncrement({
   className,
   ...props
 }: NumberFieldPrimitive.Increment.Props) {
+  const { t } = useTranslation();
   return (
     <NumberFieldPrimitive.Increment
+      aria-label={t("common:a11y.increaseValue")}
       className={cn(
         "relative flex shrink-0 cursor-pointer items-center justify-center rounded-e-[calc(var(--radius-lg)-1px)] in-data-[size=sm]:px-[calc(--spacing(2.5)-1px)] px-[calc(--spacing(3)-1px)] transition-colors pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 hover:bg-accent",
         className,
@@ -92,6 +99,7 @@ function NumberFieldInput({
 }: NumberFieldPrimitive.Input.Props) {
   return (
     <NumberFieldPrimitive.Input
+      dir="ltr"
       className={cn(
         "h-8.5 in-data-[size=lg]:h-9.5 in-data-[size=sm]:h-7.5 w-full min-w-0 grow bg-transparent in-data-[size=sm]:px-[calc(--spacing(2.5)-1px)] px-[calc(--spacing(3)-1px)] text-center tabular-nums in-data-[size=lg]:leading-9.5 in-data-[size=sm]:leading-7.5 leading-8.5 outline-none [transition:background-color_5000000s_ease-in-out_0s] sm:h-7.5 sm:in-data-[size=lg]:h-8.5 sm:in-data-[size=sm]:h-6.5 sm:in-data-[size=lg]:leading-8.5 sm:in-data-[size=sm]:leading-8.5 sm:leading-7.5",
         className,

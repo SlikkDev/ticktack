@@ -4,6 +4,8 @@ import { Section } from "./section";
 import { ThemedImg } from "./themed-img";
 import { colors, shadow } from "./tokens";
 
+import { directionalStyle, useEmailDirection } from "./direction";
+
 void React;
 
 export type BoardColumnIcon =
@@ -27,6 +29,7 @@ export function BoardColumn({
   count,
   children,
 }: BoardColumnProps) {
+  const direction = useEmailDirection();
   return (
     <Section className="k-column" style={column}>
       <Section className="k-divider" style={header}>
@@ -35,13 +38,20 @@ export function BoardColumn({
             name={`column-${icon}`}
             width={16}
             height={16}
-            style={iconStyle}
+            style={directionalStyle(iconStyle, direction)}
           />
-          <span className="k-text-95" style={nameStyle}>
+          <span
+            className="k-text-95"
+            dir="auto"
+            style={{ ...nameStyle, unicodeBidi: "isolate" }}
+          >
             {name}
           </span>
           {count !== undefined ? (
-            <span className="k-chip k-muted" style={countStyle}>
+            <span
+              className="k-chip k-muted"
+              style={directionalStyle(countStyle, direction)}
+            >
               {count}
             </span>
           ) : null}

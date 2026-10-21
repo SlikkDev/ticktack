@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 import invalidateUserProfileQueries from "./invalidate-user-profile-queries";
@@ -18,7 +19,7 @@ function useUpdateUserProfile() {
       });
 
       if (error) {
-        throw new Error(error.message || "Failed to update user profile");
+        throw new ApiClientError(error, "Failed to update user profile");
       }
 
       return data;

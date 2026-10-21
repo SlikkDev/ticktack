@@ -47,6 +47,13 @@ function Input({
     >
       {nativeInput ? (
         <input
+          dir={
+            ["email", "url", "tel", "number", "password"].includes(
+              props.type ?? "",
+            )
+              ? "ltr"
+              : "auto"
+          }
           className={inputClassName}
           data-slot="input"
           size={typeof size === "number" ? size : undefined}
@@ -54,6 +61,13 @@ function Input({
         />
       ) : (
         <InputPrimitive
+          dir={
+            ["email", "url", "tel", "number", "password"].includes(
+              props.type ?? "",
+            )
+              ? "ltr"
+              : "auto"
+          }
           className={inputClassName}
           data-slot="input"
           size={typeof size === "number" ? size : undefined}

@@ -32,12 +32,18 @@ export function AssignedTaskRow({
       >
         {getColumnIcon(task.status, false, task.statusIcon)}
       </span>
-      <span className="hidden w-16 shrink-0 truncate font-medium text-muted-foreground text-xs sm:block">
+      <bdi
+        dir="ltr"
+        className="hidden w-16 shrink-0 truncate font-medium text-muted-foreground text-xs sm:block"
+      >
         {task.number == null
           ? task.projectSlug
           : `${task.projectSlug}-${task.number}`}
-      </span>
-      <span className="min-w-0 flex-1 truncate text-foreground text-sm">
+      </bdi>
+      <span
+        dir="auto"
+        className="min-w-0 flex-1 truncate text-foreground text-sm"
+      >
         {task.title}
       </span>
       {showLabels && task.labels.length > 0 && (
@@ -52,17 +58,20 @@ export function AssignedTaskRow({
                 className="size-1.5 shrink-0 rounded-full"
                 style={{ backgroundColor: resolveLabelColor(label.color) }}
               />
-              <span className="truncate">{label.name}</span>
+              <bdi className="truncate">{label.name}</bdi>
             </span>
           ))}
         </span>
       )}
-      <span className="hidden w-28 shrink-0 truncate text-muted-foreground text-xs sm:block">
+      <span
+        dir="auto"
+        className="hidden w-28 shrink-0 truncate text-muted-foreground text-xs sm:block"
+      >
         {task.projectName}
       </span>
       <DueDateText
         dueDate={task.dueDate}
-        className="shrink-0 text-right sm:w-20"
+        className="shrink-0 text-end sm:w-20"
       />
     </Link>
   );

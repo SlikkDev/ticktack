@@ -1,4 +1,6 @@
 import { getColumnIcon } from "@/lib/column";
+import { useTranslation } from "react-i18next";
+import { getStatusDisplayLabel } from "@/lib/i18n/domain";
 import type { ProjectWithTasks } from "@/types/project";
 import type Task from "@/types/task";
 import { PublicTaskCard } from "./task-card";
@@ -12,6 +14,7 @@ export function PublicKanbanView({
   project,
   onTaskClick,
 }: PublicKanbanViewProps) {
+  const { t } = useTranslation();
   const columns = project.columns ?? [];
 
   return (
@@ -29,7 +32,10 @@ export function PublicKanbanView({
                     <div className="flex items-center gap-2">
                       {getColumnIcon(column.id, column.isFinal, column.icon)}
                       <h3 className="font-medium text-foreground">
-                        {column.name}
+                        {getStatusDisplayLabel(
+                          column.slug ?? column.id,
+                          column.name,
+                        )}
                       </h3>
                       <span className="text-sm text-muted-foreground">
                         {column.tasks.length}
@@ -56,7 +62,7 @@ export function PublicKanbanView({
                       <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center mx-auto mb-2">
                         {getColumnIcon(column.id, column.isFinal, column.icon)}
                       </div>
-                      No tasks in {column.name.toLowerCase()}
+                      {t("tasks:listView.noTasks")}
                     </div>
                   )}
                 </div>

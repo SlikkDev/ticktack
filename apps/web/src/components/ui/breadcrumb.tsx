@@ -85,7 +85,7 @@ function BreadcrumbSeparator({
       role="presentation"
       {...props}
     >
-      {children ?? <ChevronRight />}
+      {children ?? <ChevronRight className="rtl:rotate-180" />}
     </li>
   );
 }

@@ -64,7 +64,7 @@ export function ProjectIconPicker({
             placeholder={t("settings:projectGeneral.searchIconsPlaceholder")}
             aria-label={t("settings:projectGeneral.searchIconsPlaceholder")}
           />
-          <div className="max-h-[280px] overflow-y-auto pr-1">
+          <div className="max-h-[280px] overflow-y-auto pe-1">
             <div className="grid grid-cols-6 gap-1.5">
               {matches.map(([name, Icon]) => (
                 <Button

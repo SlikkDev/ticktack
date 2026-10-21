@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useQuery } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
@@ -37,7 +38,7 @@ function useWorkspaceRoles(workspaceId: string | undefined) {
       const result = await authClient.organization.listRoles({
         query: { organizationId: workspaceId },
       });
-      if (result.error) throw new Error(result.error.message);
+      if (result.error) throw new ApiClientError(result.error);
       const roles = result.data ?? [];
 
       return roles.map((r) => ({

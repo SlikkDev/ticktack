@@ -89,6 +89,7 @@ export default function TaskTitle({ taskId, size = "md" }: TaskTitleProps) {
         name="title"
         render={({ field }) => (
           <textarea
+            dir="auto"
             {...field}
             data-task-action="title"
             ref={(element) => {

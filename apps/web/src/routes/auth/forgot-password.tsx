@@ -7,6 +7,7 @@ import { authMessageClassName } from "@/components/auth/auth-form-styles";
 import { authLinkClassName } from "@/components/auth/auth-link-class";
 import { AuthPage } from "@/components/auth/auth-page";
 import { useAuthCaptcha } from "@/components/auth/use-auth-captcha";
+import { getAuthRequestLocale } from "@/components/auth/request-locale";
 import PageTitle from "@/components/page-title";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/auth/forgot-password")({
 });
 
 function ForgotPassword() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data: config, isLoading, isError } = useGetConfig();
   const captcha = useAuthCaptcha();
   const [email, setEmail] = useState("");
@@ -41,7 +42,14 @@ function ForgotPassword() {
           redirectTo: new URL("/auth/reset-password", window.location.origin)
             .href,
         },
-        { headers: captcha.headers },
+        {
+          headers: {
+            ...captcha.headers,
+            "x-ticktack-locale": getAuthRequestLocale(
+              i18n?.resolvedLanguage ?? i18n?.language,
+            ),
+          },
+        },
       );
       if (result.error) setError(true);
       else setSentTo(email);

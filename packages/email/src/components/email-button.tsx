@@ -3,6 +3,8 @@ import React from "react";
 import { emailAsset } from "./assets";
 import { colors, fontFamily } from "./tokens";
 
+import { directionalStyle, useEmailDirection } from "./direction";
+
 void React;
 
 type EmailButtonProps = {
@@ -18,6 +20,7 @@ export function EmailButton({
   fullWidth = false,
   children,
 }: EmailButtonProps) {
+  const direction = useEmailDirection();
   return (
     <Button
       href={href}
@@ -34,7 +37,7 @@ export function EmailButton({
           width="16"
           height="16"
           alt=""
-          style={iconStyle}
+          style={directionalStyle(iconStyle, direction)}
         />
       ) : null}
       {children}
@@ -70,7 +73,7 @@ const iconStyle = {
   display: "inline-block",
   border: "0",
   mixBlendMode: "difference" as const,
-  margin: "0 8px 0 0",
+  marginRight: "8px",
   verticalAlign: "-3px",
   opacity: "0.8",
 };

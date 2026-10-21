@@ -11,6 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { DEFAULT_COLUMN_ICON_NAMES } from "@/constants/column-icons";
 import { cn } from "@/lib/cn";
 import { getColumnIcon } from "@/lib/column";
+import { getStatusDisplayLabel } from "@/lib/i18n/domain";
 
 type ColumnRowProps = {
   column: ProjectColumn;
@@ -39,6 +40,7 @@ export function ColumnRow({
   onDelete,
 }: ColumnRowProps) {
   const { t } = useTranslation();
+  const displayName = getStatusDisplayLabel(column.slug, column.name);
   const { rowRef, rowStyle, isDragging, handleProps } = useSortableRow(
     column.id,
     !canEdit,
@@ -65,7 +67,7 @@ export function ColumnRow({
       )}
     >
       <DragHandle
-        label={t("settings:columnEditor.dragAria", { name: column.name })}
+        label={t("settings:columnEditor.dragAria", { name: displayName })}
         handleProps={handleProps}
         disabled={!canEdit}
       />
@@ -79,7 +81,8 @@ export function ColumnRow({
       </ColumnIconPicker>
       <InlineNameInput
         name={column.name}
-        label={t("settings:columnEditor.renameAria", { name: column.name })}
+        displayName={displayName}
+        label={t("settings:columnEditor.renameAria", { name: displayName })}
         readOnly={!canEdit}
         onRename={onRename}
       />
@@ -89,7 +92,7 @@ export function ColumnRow({
           disabled={!canEdit}
           onCheckedChange={(checked) => void toggleFinal(checked)}
           aria-label={t("settings:columnEditor.markDoneAria", {
-            name: column.name,
+            name: displayName,
           })}
         />
       </div>
@@ -100,7 +103,7 @@ export function ColumnRow({
             variant="ghost"
             size="icon-sm"
             aria-label={t("settings:columnEditor.deleteAria", {
-              name: column.name,
+              name: displayName,
             })}
             onClick={onDelete}
             className="text-muted-foreground opacity-0 transition-opacity hover:text-destructive focus-visible:opacity-100 group-hover/row:opacity-100 group-focus-within/row:opacity-100 pointer-coarse:opacity-100"

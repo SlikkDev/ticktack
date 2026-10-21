@@ -71,8 +71,12 @@ export function ProjectStep({
             className="flex flex-wrap items-center gap-1.5 text-[13px] text-muted-foreground"
           >
             {t("auth:onboarding.project.numbered")}
-            <span className={ticket}>{projectKey}-1</span>
-            <span className={ticket}>{projectKey}-2</span>
+            <bdi dir="ltr" className={ticket}>
+              {projectKey}-1
+            </bdi>
+            <bdi dir="ltr" className={ticket}>
+              {projectKey}-2
+            </bdi>
             <span aria-hidden="true">…</span>
           </p>
         )}

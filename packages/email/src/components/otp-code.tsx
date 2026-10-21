@@ -24,7 +24,13 @@ export function OtpCode({ code, label, hint }: OtpCodeProps) {
       <Text className="k-text" style={labelStyle}>
         {label}
       </Text>
-      <Row style={{ maxWidth: `${slots.length * (SLOT_WIDTH + SLOT_GAP)}px` }}>
+      <Row
+        dir="ltr"
+        style={{
+          direction: "ltr",
+          maxWidth: `${slots.length * (SLOT_WIDTH + SLOT_GAP)}px`,
+        }}
+      >
         {slots.map(({ digit, slot }) => (
           <Column
             key={slot}

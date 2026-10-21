@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { authClient } from "@/lib/auth-client";
 
 export type DeleteWorkspaceUserRequest = {
@@ -15,7 +16,7 @@ async function deleteWorkspaceUser({
   });
 
   if (error) {
-    throw new Error(error.message || "Failed to remove workspace member");
+    throw new ApiClientError(error, "Failed to remove workspace member");
   }
 
   return data;

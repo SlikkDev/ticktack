@@ -5,6 +5,8 @@ import {
   type SlashRange,
 } from "@/components/editor/slash-commands";
 import { BubbleLinkEditor } from "@/components/editor/bubble-link-editor";
+import { overlayLeft } from "@/components/editor/overlay-position";
+import { ViewportOverlay } from "@/components/editor/viewport-overlay";
 import { selectionStartAnchor } from "@/components/editor/selection-start-anchor";
 import { TableToolbar } from "@/components/editor/table-toolbar";
 import { createEditorExtensions } from "@/components/editor/extensions";
@@ -267,14 +269,27 @@ export default function CommentEditor({
     (editorView: Editor["view"], pos: number) => {
       const coords = editorView.coordsAtPos(pos);
       const shellRect = editorShellRef.current?.getBoundingClientRect();
+      const menuWidth = Math.min(
+        16.5 *
+          Number.parseFloat(
+            getComputedStyle(document.documentElement).fontSize,
+          ),
+        window.innerWidth - 32,
+      );
+      const left = overlayLeft(
+        coords,
+        menuWidth,
+        window.innerWidth,
+        getComputedStyle(editorView.dom).direction,
+      );
 
       if (slashMenuPosition === "fixed" || !shellRect) {
-        return { top: coords.bottom + 8, left: coords.left };
+        return { top: coords.bottom + 8, left };
       }
 
       return {
         top: coords.bottom - shellRect.top + 8,
-        left: coords.left - shellRect.left,
+        left: left - shellRect.left,
       };
     },
     [slashMenuPosition],
@@ -1633,13 +1648,11 @@ export default function CommentEditor({
         </BubbleMenu>
       )}
       {slashMenu && !readOnly && !disabled && (
-        <div
+        <ViewportOverlay
           className="kaneo-tiptap-slash-menu"
-          style={{
-            top: slashMenu.top,
-            left: slashMenu.left,
-            position: slashMenuPosition,
-          }}
+          top={slashMenu.top}
+          left={slashMenu.left}
+          position={slashMenuPosition}
         >
           {filteredSlashCommands.length > 0 ? (
             groupedSlashCommands.map((group) => {
@@ -1700,7 +1713,7 @@ export default function CommentEditor({
               {t("activity:comment.editor.noCommands")}
             </div>
           )}
-        </div>
+        </ViewportOverlay>
       )}
       {editor && embedComposer && (
         <div
@@ -1751,6 +1764,8 @@ export default function CommentEditor({
             >
               <Input
                 size="sm"
+                dir="ltr"
+                inputMode="url"
                 value={embedComposer.url}
                 onChange={(event) => {
                   setEmbedComposer((current) =>

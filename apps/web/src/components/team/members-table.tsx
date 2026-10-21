@@ -284,16 +284,19 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                         peeks in, hinting that the table scrolls sideways. */}
                     <div className="min-w-0 max-w-[55vw] sm:max-w-none">
                       <div className="flex items-center gap-2">
-                        <span className="truncate text-sm font-medium">
+                        <bdi className="truncate text-sm font-medium">
                           {member.user.name}
-                        </span>
+                        </bdi>
                         {isSelf ? (
                           <span className="text-xs text-muted-foreground">
                             ({t("team:members.you", { defaultValue: "You" })})
                           </span>
                         ) : null}
                       </div>
-                      <div className="truncate text-xs text-muted-foreground">
+                      <div
+                        dir="ltr"
+                        className="truncate text-xs text-muted-foreground"
+                      >
                         {member.user.email}
                       </div>
                     </div>
@@ -383,7 +386,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                 <TableCell className="py-3 text-sm text-muted-foreground tabular-nums">
                   {member.createdAt ? formatDateMedium(member.createdAt) : "–"}
                 </TableCell>
-                <TableCell className="pe-6 py-3 text-right">
+                <TableCell className="pe-6 py-3 text-end">
                   {!isSelf && canRemove ? (
                     <Menu>
                       <MenuTrigger
@@ -420,9 +423,9 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                   </div>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium">
+                      <bdi dir="ltr" className="text-sm font-medium">
                         {invitation.email}
-                      </span>
+                      </bdi>
                       <Badge
                         variant="outline"
                         size="sm"
@@ -459,7 +462,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
               <TableCell className="py-3 text-sm text-muted-foreground">
                 –
               </TableCell>
-              <TableCell className="pe-6 py-3 text-right">
+              <TableCell className="pe-6 py-3 text-end">
                 {canInvite ? (
                   <Menu>
                     <MenuTrigger
@@ -555,7 +558,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                 />
               }
             >
-              <TrashIcon className="mr-2 size-4" />
+              <TrashIcon className="me-2 size-4" />
               {t("team:membersTable.removeMember")}
             </AlertDialogClose>
           </AlertDialogFooter>
@@ -595,7 +598,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                 />
               }
             >
-              <TrashIcon className="mr-2 size-4" />
+              <TrashIcon className="me-2 size-4" />
               {t("team:membersTable.cancelInvitation")}
             </AlertDialogClose>
           </AlertDialogFooter>

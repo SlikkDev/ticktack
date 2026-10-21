@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
@@ -21,7 +22,7 @@ function useCreateWorkspaceRole() {
         permission,
       });
       if (error) {
-        throw new Error(error.message || "Failed to create role");
+        throw new ApiClientError(error, "Failed to create role");
       }
       return data;
     },

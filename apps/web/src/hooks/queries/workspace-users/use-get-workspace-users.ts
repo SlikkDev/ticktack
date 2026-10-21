@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useQuery } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
@@ -43,7 +44,7 @@ function useGetWorkspaceUsers({
       });
 
       if (error) {
-        throw new Error(error.message || "Failed to get workspace users");
+        throw new ApiClientError(error, "Failed to get workspace users");
       }
 
       return data.members;

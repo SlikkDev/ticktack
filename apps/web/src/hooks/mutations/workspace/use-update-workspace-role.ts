@@ -1,3 +1,4 @@
+import { ApiClientError } from "@/lib/i18n/api-error-from-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
@@ -20,7 +21,7 @@ function useUpdateWorkspaceRole() {
         roleName,
         data: { permission },
       });
-      if (error) throw new Error(error.message || "Failed to update role");
+      if (error) throw new ApiClientError(error, "Failed to update role");
       return data;
     },
     onSuccess: (_data, variables) => {

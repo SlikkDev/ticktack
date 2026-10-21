@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { addDays, format, isSameMonth, isToday, isWeekend } from "date-fns";
+import { addDays, format, isSameMonth, isToday } from "date-fns";
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   useCallback,
@@ -30,7 +30,10 @@ import { Button } from "@/components/ui/button";
 import { useGetTasks } from "@/hooks/queries/task/use-get-tasks";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/cn";
-import { getStatusLabel } from "@/lib/i18n/domain";
+import { isLocaleWeekend } from "@/lib/calendar-locale";
+import { formatDate, formatDateMedium } from "@/lib/format";
+import { localeDirection } from "@/lib/i18n/direction";
+import { getStatusDisplayLabel } from "@/lib/i18n/domain";
 import { useUserPreferencesStore } from "@/store/user-preferences";
 
 type GanttSearchParams = {
@@ -47,7 +50,9 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = i18n?.resolvedLanguage ?? "en-US";
+  const direction = localeDirection(locale);
   const { projectId, workspaceId } = Route.useParams();
   const { taskId } = Route.useSearch();
   const navigate = useNavigate();
@@ -169,16 +174,9 @@ function RouteComponent() {
     [timeline],
   );
 
-  // The task rail is `position: sticky; left: 0`, so it stays pinned over the
-  // left edge of the scroll container's viewport rather than scrolling away
-  // with the timeline underneath it. `scrollIntoView({ inline: "center" })`
-  // has no way to know that, and centers the target against the *whole*
-  // viewport width, landing today roughly half the rail's width left of
-  // where it visually reads as centered. `scroll-padding-left` tells the
-  // browser's own scroll-alignment math to treat the rail's width as inset
-  // from the viewport, so "center" (and any future "start"/"end" alignment)
-  // resolves against the space actually visible next to it.
-  const scrollPaddingLeftRem = showTaskRail
+  // Reserve the sticky rail at inline start so browser-native scrollIntoView
+  // centers today in the visible timeline in both text directions.
+  const scrollPaddingStartRem = showTaskRail
     ? isMobile
       ? taskColumnWidthRem
       : 20
@@ -273,7 +271,10 @@ function RouteComponent() {
         title={t("tasks:gantt.pageTitle", { name: project?.name })}
         hideAppName
       />
-      <div className="flex h-full min-h-0 flex-col bg-background">
+      <div
+        dir={direction}
+        className="flex h-full min-h-0 flex-col bg-background"
+      >
         <div className="border-b border-border/80 px-3 py-2 sm:px-4">
           <h1 className="sr-only">{t("tasks:gantt.title")}</h1>
           <div className="flex flex-wrap items-center gap-2">
@@ -288,10 +289,12 @@ function RouteComponent() {
                     showDate(addDays(timeline.rangeStart, -GANTT_WINDOW_DAYS))
                   }
                 >
-                  <ChevronLeft className="size-4" />
+                  <ChevronLeft className="size-4 rtl:rotate-180" />
                 </Button>
                 <input
                   type="date"
+                  dir="ltr"
+                  lang={locale}
                   aria-label={t("tasks:gantt.periodStart")}
                   className="h-9 min-w-0 rounded-md border border-border bg-background px-2 text-base sm:h-8 sm:text-sm"
                   min={format(timeline.minimumStart, "yyyy-MM-dd")}
@@ -303,7 +306,7 @@ function RouteComponent() {
                   }}
                 />
                 <span className="hidden text-xs text-muted-foreground sm:inline">
-                  – {format(timeline.rangeEnd, "MMM d, yyyy")}
+                  – {formatDateMedium(timeline.rangeEnd, locale)}
                 </span>
                 <Button
                   variant="outline"
@@ -314,7 +317,7 @@ function RouteComponent() {
                     showDate(addDays(timeline.rangeStart, GANTT_WINDOW_DAYS))
                   }
                 >
-                  <ChevronRight className="size-4" />
+                  <ChevronRight className="size-4 rtl:rotate-180" />
                 </Button>
               </>
             )}
@@ -341,9 +344,9 @@ function RouteComponent() {
               onClick={() => setIsTaskRailOpen((current) => !current)}
             >
               {showTaskRail ? (
-                <ChevronLeft className="size-3.5" />
+                <ChevronLeft className="size-3.5 rtl:rotate-180" />
               ) : (
-                <ChevronRight className="size-3.5" />
+                <ChevronRight className="size-3.5 rtl:rotate-180" />
               )}
               {showTaskRail
                 ? t("tasks:gantt.hideTasks")
@@ -378,13 +381,13 @@ function RouteComponent() {
           <div
             data-testid="gantt-scroll-container"
             className="min-h-0 flex-1 overflow-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]"
-            style={{ scrollPaddingLeft: `${scrollPaddingLeftRem}rem` }}
+            style={{ scrollPaddingInlineStart: `${scrollPaddingStartRem}rem` }}
           >
             <div className="relative min-w-max touch-pan-x touch-pan-y">
               <div className="sticky top-0 z-20 flex border-b border-border bg-background/95 backdrop-blur">
                 {showTaskRail ? (
                   <div
-                    className="sticky left-0 z-30 shrink-0 border-r border-border bg-background px-2 py-2.5 sm:w-80 sm:px-4 sm:py-3"
+                    className="sticky start-0 z-30 shrink-0 border-e border-border bg-background px-2 py-2.5 sm:w-80 sm:px-4 sm:py-3"
                     style={{
                       width: isMobile ? `${taskColumnWidthRem}rem` : undefined,
                     }}
@@ -413,12 +416,14 @@ function RouteComponent() {
                         key={day.toISOString()}
                         ref={isCurrentDay ? todayCellRef : undefined}
                         className={cn(
-                          "border-r border-border/70 px-0.5 py-2 text-center sm:px-1",
-                          isWeekend(day) && "bg-muted/25",
+                          "border-e border-border/70 px-0.5 py-2 text-center sm:px-1",
+                          isLocaleWeekend(day, locale) && "bg-muted/25",
                         )}
                       >
                         <div className="h-4 text-[10px] font-medium text-muted-foreground">
-                          {showMonth ? format(day, "MMM") : ""}
+                          {showMonth
+                            ? formatDate(day, { month: "short" }, locale)
+                            : ""}
                         </div>
                         <div
                           className={cn(
@@ -427,7 +432,7 @@ function RouteComponent() {
                               "bg-primary text-primary-foreground",
                           )}
                         >
-                          {format(day, "d")}
+                          {formatDate(day, { day: "numeric" }, locale)}
                         </div>
                       </div>
                     );
@@ -440,7 +445,7 @@ function RouteComponent() {
                   ref={timelineTrackRef}
                   className="absolute inset-y-0 z-0 grid"
                   style={{
-                    left: showTaskRail
+                    insetInlineStart: showTaskRail
                       ? isMobile
                         ? `${taskColumnWidthRem}rem`
                         : "20rem"
@@ -453,8 +458,8 @@ function RouteComponent() {
                     <div
                       key={`bg-line-${day.toISOString()}`}
                       className={cn(
-                        "h-full min-h-0 border-r border-border/60",
-                        isWeekend(day) && "bg-muted/25",
+                        "h-full min-h-0 border-e border-border/60",
+                        isLocaleWeekend(day, locale) && "bg-muted/25",
                       )}
                     />
                   ))}
@@ -475,10 +480,10 @@ function RouteComponent() {
                         }}
                       >
                         {showTaskRail ? (
-                          <div className="sticky left-0 z-[11] h-full border-r border-border bg-background">
+                          <div className="sticky start-0 z-[11] h-full border-e border-border bg-background">
                             <button
                               type="button"
-                              className="flex min-h-[44px] w-full min-w-0 flex-col items-start justify-center gap-0.5 px-2 py-2 text-left transition-colors hover:bg-muted sm:min-h-0 sm:px-3 sm:py-1.5"
+                              className="flex min-h-[44px] w-full min-w-0 flex-col items-start justify-center gap-0.5 px-2 py-2 text-start transition-colors hover:bg-muted sm:min-h-0 sm:px-3 sm:py-1.5"
                               onClick={() =>
                                 navigate({
                                   to: ".",
@@ -489,18 +494,31 @@ function RouteComponent() {
                             >
                               <div className="flex w-full items-center gap-1.5">
                                 <span className="max-w-[7rem] truncate rounded-full bg-secondary px-1.5 py-px text-[10px] font-medium uppercase tracking-wide text-secondary-foreground sm:max-w-none">
-                                  {getStatusLabel(task.status)}
+                                  {getStatusDisplayLabel(
+                                    task.status,
+                                    project?.columns.find(
+                                      (column) =>
+                                        column.slug === task.status ||
+                                        column.id === task.status,
+                                    )?.name,
+                                  )}
                                 </span>
-                                <span className="truncate text-[10px] text-muted-foreground">
+                                <bdi
+                                  dir="ltr"
+                                  className="truncate text-[10px] text-muted-foreground"
+                                >
                                   {project?.slug}-{task.number}
-                                </span>
+                                </bdi>
                               </div>
-                              <p className="w-full line-clamp-1 text-xs font-medium leading-tight text-foreground">
+                              <p
+                                dir="auto"
+                                className="w-full line-clamp-1 text-xs font-medium leading-tight text-foreground"
+                              >
                                 {task.title}
                               </p>
                               <p className="w-full truncate text-[11px] leading-tight text-muted-foreground">
-                                {format(task.scheduleStart, "MMM d, yyyy")} -{" "}
-                                {format(task.scheduleEnd, "MMM d, yyyy")}
+                                {formatDateMedium(task.scheduleStart, locale)} -{" "}
+                                {formatDateMedium(task.scheduleEnd, locale)}
                                 {task.assigneeName
                                   ? ` • ${task.assigneeName}`
                                   : ""}

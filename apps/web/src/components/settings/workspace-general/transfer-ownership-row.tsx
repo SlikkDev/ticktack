@@ -96,13 +96,14 @@ export function TransferOwnershipRow({
               "settings:workspaceGeneral.transferOwnership.pickerPlaceholder",
             )}
           >
-            {selected ? selectedName : null}
+            {selected ? <bdi>{selectedName}</bdi> : null}
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
           {candidates.map((member) => (
             <SelectItem key={member.id} value={member.id}>
-              {member.user.name} ({member.user.email})
+              <bdi>{member.user.name}</bdi> (
+              <bdi dir="ltr">{member.user.email}</bdi>)
             </SelectItem>
           ))}
         </SelectContent>

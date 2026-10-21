@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useUpdateTask } from "@/hooks/mutations/task/use-update-task";
 import { cn } from "@/lib/cn";
 import { toast } from "@/lib/toast";
+import { localeDirection, timelineDayDelta } from "@/lib/i18n/direction";
 import type Task from "@/types/task";
 
 const CLICK_MOVE_THRESHOLD_PX = 4;
@@ -62,7 +63,8 @@ export function GanttTaskBar({
   isMobile = false,
   onOpenTask,
 }: GanttTaskBarProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const direction = localeDirection(i18n?.resolvedLanguage);
   const { mutateAsync: updateTask } = useUpdateTask();
   const [dragDisplay, setDragDisplay] = useState<{
     start: Date;
@@ -93,10 +95,9 @@ export function GanttTaskBar({
   );
 
   const startIsVisible =
-    differenceInCalendarDays(task.scheduleStart, timeline.rangeStart) >= 0;
+    differenceInCalendarDays(displayStart, timeline.rangeStart) >= 0;
   const endIsVisible =
-    differenceInCalendarDays(task.scheduleEnd, timeline.rangeStart) <
-    trackCount;
+    differenceInCalendarDays(displayEnd, timeline.rangeStart) < trackCount;
 
   const persistDates = useCallback(
     async (nextStart: Date, nextEnd: Date): Promise<boolean> => {
@@ -124,12 +125,12 @@ export function GanttTaskBar({
     ? MOBILE_MOVE_THRESHOLD_PX
     : CLICK_MOVE_THRESHOLD_PX;
 
-  const handleResizeLeftPointerDown = (event: React.PointerEvent) => {
+  const handleResizeStartPointerDown = (event: React.PointerEvent) => {
     event.preventDefault();
     event.stopPropagation();
     const originX = event.clientX;
-    const initialStart = task.scheduleStart;
-    const initialEnd = task.scheduleEnd;
+    const initialStart = displayStart;
+    const initialEnd = displayEnd;
     const startIdx = differenceInCalendarDays(
       initialStart,
       timeline.rangeStart,
@@ -137,7 +138,11 @@ export function GanttTaskBar({
     const endIdx = differenceInCalendarDays(initialEnd, timeline.rangeStart);
 
     const onMove = (ev: PointerEvent) => {
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = timelineDayDelta(
+        ev.clientX - originX,
+        pxPerDay,
+        direction,
+      );
       let nextStartIdx = startIdx + deltaDays;
       nextStartIdx = Math.max(0, Math.min(nextStartIdx, endIdx));
       const nextStart = timeline.days[nextStartIdx] ?? initialStart;
@@ -153,7 +158,11 @@ export function GanttTaskBar({
         setDragDisplay(null);
         return;
       }
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = timelineDayDelta(
+        ev.clientX - originX,
+        pxPerDay,
+        direction,
+      );
       let nextStartIdx = startIdx + deltaDays;
       nextStartIdx = Math.max(0, Math.min(nextStartIdx, endIdx));
       const nextStart = timeline.days[nextStartIdx] ?? initialStart;
@@ -174,12 +183,12 @@ export function GanttTaskBar({
     window.addEventListener("pointercancel", onCancel);
   };
 
-  const handleResizeRightPointerDown = (event: React.PointerEvent) => {
+  const handleResizeEndPointerDown = (event: React.PointerEvent) => {
     event.preventDefault();
     event.stopPropagation();
     const originX = event.clientX;
-    const initialStart = task.scheduleStart;
-    const initialEnd = task.scheduleEnd;
+    const initialStart = displayStart;
+    const initialEnd = displayEnd;
     const startIdx = differenceInCalendarDays(
       initialStart,
       timeline.rangeStart,
@@ -187,7 +196,11 @@ export function GanttTaskBar({
     const endIdx = differenceInCalendarDays(initialEnd, timeline.rangeStart);
 
     const onMove = (ev: PointerEvent) => {
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = timelineDayDelta(
+        ev.clientX - originX,
+        pxPerDay,
+        direction,
+      );
       let nextEndIdx = endIdx + deltaDays;
       nextEndIdx = Math.max(startIdx, Math.min(nextEndIdx, trackCount - 1));
       const nextEnd = timeline.days[nextEndIdx] ?? initialEnd;
@@ -203,7 +216,11 @@ export function GanttTaskBar({
         setDragDisplay(null);
         return;
       }
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = timelineDayDelta(
+        ev.clientX - originX,
+        pxPerDay,
+        direction,
+      );
       let nextEndIdx = endIdx + deltaDays;
       nextEndIdx = Math.max(startIdx, Math.min(nextEndIdx, trackCount - 1));
       const nextEnd = timeline.days[nextEndIdx] ?? initialEnd;
@@ -228,8 +245,8 @@ export function GanttTaskBar({
     if (event.button !== 0) return;
     event.preventDefault();
     const originX = event.clientX;
-    const initialStart = task.scheduleStart;
-    const initialEnd = task.scheduleEnd;
+    const initialStart = displayStart;
+    const initialEnd = displayEnd;
     if (!startIsVisible || !endIsVisible) {
       onOpenTask();
       return;
@@ -241,7 +258,11 @@ export function GanttTaskBar({
     );
 
     const onMove = (ev: PointerEvent) => {
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = timelineDayDelta(
+        ev.clientX - originX,
+        pxPerDay,
+        direction,
+      );
       let nextStartIdx = startIdx + deltaDays;
       const maxStart = trackCount - 1 - durationDays;
       nextStartIdx = Math.max(0, Math.min(nextStartIdx, maxStart));
@@ -259,7 +280,11 @@ export function GanttTaskBar({
         return;
       }
       const moved = Math.abs(ev.clientX - originX);
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = timelineDayDelta(
+        ev.clientX - originX,
+        pxPerDay,
+        direction,
+      );
       let nextStartIdx = startIdx + deltaDays;
       const maxStart = trackCount - 1 - durationDays;
       nextStartIdx = Math.max(0, Math.min(nextStartIdx, maxStart));
@@ -291,6 +316,46 @@ export function GanttTaskBar({
     window.addEventListener("pointercancel", onCancel);
   };
 
+  const handleScheduleKeyDown = (
+    event: React.KeyboardEvent,
+    action: "start" | "end" | "move",
+  ) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    event.stopPropagation();
+    const delta = timelineDayDelta(
+      event.key === "ArrowRight" ? pxPerDay : -pxPerDay,
+      pxPerDay,
+      direction,
+    );
+    const startIdx = differenceInCalendarDays(
+      displayStart,
+      timeline.rangeStart,
+    );
+    const endIdx = differenceInCalendarDays(displayEnd, timeline.rangeStart);
+    let nextStartIdx = startIdx;
+    let nextEndIdx = endIdx;
+    if (action === "start" && startIsVisible) {
+      nextStartIdx = Math.max(0, Math.min(startIdx + delta, endIdx));
+    } else if (action === "end" && endIsVisible) {
+      nextEndIdx = Math.max(startIdx, Math.min(endIdx + delta, trackCount - 1));
+    } else if (action === "move" && startIsVisible && endIsVisible) {
+      const duration = endIdx - startIdx;
+      nextStartIdx = Math.max(
+        0,
+        Math.min(startIdx + delta, trackCount - 1 - duration),
+      );
+      nextEndIdx = nextStartIdx + duration;
+    }
+    if (nextStartIdx === startIdx && nextEndIdx === endIdx) return;
+    const start = timeline.days[nextStartIdx] ?? displayStart;
+    const end = timeline.days[nextEndIdx] ?? displayEnd;
+    setDragDisplay({ start, end });
+    void persistDates(start, end).then((ok) => {
+      if (!ok) setDragDisplay(null);
+    });
+  };
+
   if (!barInView || lineEnd <= lineStart) {
     return null;
   }
@@ -304,6 +369,7 @@ export function GanttTaskBar({
 
   return (
     <div
+      dir={direction}
       className="pointer-events-none absolute inset-0 z-[1] grid items-center"
       style={{
         gridTemplateColumns: timeline.gridTemplateColumns,
@@ -311,16 +377,18 @@ export function GanttTaskBar({
     >
       <div
         style={{ gridColumn: `${lineStart} / ${lineEnd}` }}
-        className="group pointer-events-auto relative mx-1 flex min-h-[44px] min-w-0 items-stretch overflow-hidden rounded-md border border-primary/25 bg-background text-left text-sm font-medium leading-none text-foreground shadow-sm transition-colors hover:border-primary/40 sm:h-11 sm:min-h-0"
+        className="group pointer-events-auto relative mx-1 flex min-h-[44px] min-w-0 items-stretch overflow-hidden rounded-md border border-primary/25 bg-background text-start text-sm font-medium leading-none text-foreground shadow-sm transition-colors hover:border-primary/40 sm:h-11 sm:min-h-0"
       >
         {showResizeHandles && (
           <button
             type="button"
             aria-label={t("tasks:gantt.resizeStart")}
+            aria-keyshortcuts="ArrowLeft ArrowRight"
             disabled={!startIsVisible}
-            onPointerDown={handleResizeLeftPointerDown}
+            onPointerDown={handleResizeStartPointerDown}
+            onKeyDown={(event) => handleScheduleKeyDown(event, "start")}
             className={cn(
-              "relative z-20 shrink-0 cursor-ew-resize touch-none border-r border-primary/15 bg-primary/8 hover:bg-primary/18",
+              "relative z-20 shrink-0 cursor-ew-resize touch-none border-e border-primary/15 bg-primary/8 hover:bg-primary/18",
               "min-h-[44px] w-6 sm:min-h-0 sm:w-2",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
             )}
@@ -329,17 +397,21 @@ export function GanttTaskBar({
         <button
           type="button"
           aria-label={t("tasks:gantt.taskAriaLabel", { title: task.title })}
-          className="relative z-10 min-h-[44px] min-w-0 flex-1 cursor-grab touch-manipulation overflow-hidden px-2 text-left active:cursor-grabbing sm:min-h-0 sm:px-2.5"
+          aria-keyshortcuts="ArrowLeft ArrowRight Enter Space"
+          className="relative z-10 min-h-[44px] min-w-0 flex-1 cursor-grab touch-none overflow-hidden px-2 text-start active:cursor-grabbing sm:min-h-0 sm:px-2.5"
           onPointerDown={handleMovePointerDown}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
               onOpenTask();
+              return;
             }
+            handleScheduleKeyDown(e, "move");
           }}
         >
           <div className="absolute inset-0 z-0 bg-primary/12 transition-colors group-hover:bg-primary/18" />
           <span
+            dir="auto"
             className={cn(
               "relative z-10 block truncate",
               labelOutside && "sr-only",
@@ -352,10 +424,12 @@ export function GanttTaskBar({
           <button
             type="button"
             aria-label={t("tasks:gantt.resizeDue")}
+            aria-keyshortcuts="ArrowLeft ArrowRight"
             disabled={!endIsVisible}
-            onPointerDown={handleResizeRightPointerDown}
+            onPointerDown={handleResizeEndPointerDown}
+            onKeyDown={(event) => handleScheduleKeyDown(event, "end")}
             className={cn(
-              "relative z-20 shrink-0 cursor-ew-resize touch-none border-l border-primary/15 bg-primary/8 hover:bg-primary/18",
+              "relative z-20 shrink-0 cursor-ew-resize touch-none border-s border-primary/15 bg-primary/8 hover:bg-primary/18",
               "min-h-[44px] w-6 sm:min-h-0 sm:w-2",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
             )}
@@ -364,9 +438,10 @@ export function GanttTaskBar({
       </div>
       {labelOutside && (
         <span
+          dir="auto"
           aria-hidden="true"
           style={{ gridColumn: `${lineEnd} / ${trackCount + 1}` }}
-          className="min-w-0 truncate pl-1 text-xs font-medium text-foreground/80"
+          className="min-w-0 truncate ps-1 text-xs font-medium text-foreground/80"
         >
           {task.title}
         </span>

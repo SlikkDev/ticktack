@@ -76,7 +76,7 @@ export function PropertyChips({
           <button
             type="button"
             data-task-action="assignee"
-            className={cn(chip, "pl-1.5")}
+            className={cn(chip, "ps-1.5")}
           >
             <AssigneeAvatar
               name={assignee?.user?.name || task.assigneeName}
@@ -112,7 +112,7 @@ export function PropertyChips({
               </span>
             </button>
           </TaskStartDatePopover>
-          <ArrowRight className="text-muted-foreground/60" />
+          <ArrowRight className="text-muted-foreground/60 rtl:rotate-180" />
           <TaskDueDatePopover task={task}>
             <button
               type="button"

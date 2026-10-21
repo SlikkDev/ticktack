@@ -75,7 +75,9 @@ function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
 
     try {
       const { id } = await mutateAsync();
-      toast.success("Project created successfully", { icon: SquarePlusIcon });
+      toast.success(t("common:modals.createProject.successToast"), {
+        icon: SquarePlusIcon,
+      });
       await queryClient.invalidateQueries({ queryKey: ["projects"] });
 
       navigate({
@@ -155,7 +157,7 @@ function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
                     placeholder={t("common:modals.createProject.searchIcons")}
                     className="h-8 text-base sm:text-xs"
                   />
-                  <div className="max-h-[280px] overflow-y-auto pr-1">
+                  <div className="max-h-[280px] overflow-y-auto pe-1">
                     <div className="grid grid-cols-6 gap-1.5">
                       {filteredIcons.map(([iconName, Icon]) => {
                         const isSelected = selectedIcon === iconName;
@@ -209,6 +211,7 @@ function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
                   placeholder="PRO"
+                  dir="ltr"
                   maxLength={8}
                   className="w-20 h-8 text-center font-semibold text-base sm:text-sm bg-background border-border rounded-lg transition-colors duration-150"
                   required

@@ -3,6 +3,7 @@ import { LinkIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useShortcut } from "@/lib/shortcuts/use-shortcut";
 import { toast } from "@/lib/toast";
+import { localeDirection, logicalArrow } from "@/lib/i18n/direction";
 import { focusTaskElement } from "./focus-task-element";
 import {
   type FocusDirection,
@@ -41,7 +42,8 @@ export function useTaskViewShortcuts({
   onToggleGroup,
   onToggleAllGroups,
 }: TaskViewShortcutsOptions) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const textDirection = localeDirection(i18n?.resolvedLanguage);
   const navigate = useNavigate();
   const focused = () => selection.getState().focusedTaskId;
 
@@ -56,12 +58,24 @@ export function useTaskViewShortcuts({
   };
 
   const step = (direction: FocusDirection) =>
-    focus(stepFocus(getGroups(), layout, focused(), direction));
+    focus(
+      stepFocus(
+        getGroups(),
+        layout,
+        focused(),
+        logicalArrow(direction, textDirection),
+      ),
+    );
 
   const move = (direction: MoveDirection) => {
     const taskId = focused();
     if (!taskId || !onMove) return;
-    const overId = moveTarget(getGroups(), layout, taskId, direction);
+    const overId = moveTarget(
+      getGroups(),
+      layout,
+      taskId,
+      logicalArrow(direction, textDirection),
+    );
     if (!overId) return;
     onMove(taskId, overId);
     requestAnimationFrame(() => focusTaskElement(taskId, !peekedTaskId()));

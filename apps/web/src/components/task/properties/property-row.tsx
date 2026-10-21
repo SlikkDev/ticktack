@@ -21,7 +21,7 @@ export function PropertyRow({
     >
       <span
         className={cn(
-          "w-21 shrink-0 truncate pl-2 text-muted-foreground text-xs",
+          "w-21 shrink-0 truncate ps-2 text-muted-foreground text-xs",
           align === "start" && "flex h-8 items-center",
         )}
       >

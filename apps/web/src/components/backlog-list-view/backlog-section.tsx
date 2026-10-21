@@ -45,7 +45,7 @@ const BacklogSection = memo(function BacklogSection({
     <div
       className={cn(
         "border-b border-border/50 transition-colors duration-150 overflow-auto",
-        showDropIndicator && "border-l-4 border-l-ring bg-accent/35",
+        showDropIndicator && "border-s-4 border-s-ring bg-accent/35",
       )}
     >
       <div className="flex items-center justify-between py-2 px-4 bg-muted/60 border-b border-border/50">
@@ -67,7 +67,7 @@ const BacklogSection = memo(function BacklogSection({
           <div className="flex items-center gap-2 h-4">
             <IconComponent className="w-4 h-4 flex-shrink-0 text-muted-foreground" />
             <div className="flex items-center gap-1">
-              <span className="mt-1 mr-1">
+              <span className="mt-1 me-1">
                 {t(`tasks:backlog.sections.${sectionId}`, {
                   defaultValue: title,
                 })}

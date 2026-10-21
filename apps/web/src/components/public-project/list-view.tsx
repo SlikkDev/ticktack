@@ -1,4 +1,6 @@
 import { getColumnIcon } from "@/lib/column";
+import { useTranslation } from "react-i18next";
+import { getStatusDisplayLabel } from "@/lib/i18n/domain";
 import type { ProjectWithTasks } from "@/types/project";
 import type Task from "@/types/task";
 import { PublicTaskRow } from "./task-row";
@@ -9,6 +11,7 @@ type PublicListViewProps = {
 };
 
 export function PublicListView({ project, onTaskClick }: PublicListViewProps) {
+  const { t } = useTranslation();
   const columns = project.columns ?? [];
 
   return (
@@ -22,7 +25,7 @@ export function PublicListView({ project, onTaskClick }: PublicListViewProps) {
                   {getColumnIcon(column.id, column.isFinal, column.icon)}
                 </span>
                 <h3 className="font-semibold text-lg text-foreground">
-                  {column.name}
+                  {getStatusDisplayLabel(column.slug ?? column.id, column.name)}
                 </h3>
                 <span className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full font-medium">
                   {column.tasks.length}
@@ -45,7 +48,7 @@ export function PublicListView({ project, onTaskClick }: PublicListViewProps) {
                     <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center mx-auto mb-2">
                       {getColumnIcon(column.id, column.isFinal, column.icon)}
                     </div>
-                    No tasks in {column.name.toLowerCase()}
+                    {t("tasks:listView.noTasks")}
                   </div>
                 )}
               </div>
