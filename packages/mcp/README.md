@@ -115,14 +115,18 @@ For headless or sandboxed environments where opening a browser is impractical, s
 
 ## Tools
 
-- Session: `whoami`, `list_workspaces`, `list_workspace_members`, `list_notifications`
+- Session: `whoami`, `list_workspaces`, `list_workspace_members`, `list_workspace_activity`
+- Notifications: `list_notifications`, `mark_notification_read`, `mark_all_notifications_read`
 - Search: `search`
-- Projects: `list_projects`, `get_project`, `create_project`, `update_project`, `list_project_columns`
-- Tasks: `list_tasks`, `get_task`, `get_task_by_ticket_id`, `create_task`, `update_task`, `delete_task`, `move_task`, `update_task_status`, `update_task_assignee`, `update_task_due_date`, `list_task_activity`
-- Time entries: `list_task_time_entries`, `get_time_entry`, `create_time_entry`, `update_time_entry`
+- Projects: `list_projects`, `get_project`, `create_project`, `update_project`, `archive_project`, `unarchive_project`
+- Columns: `list_project_columns`, `create_project_column`, `update_project_column`
+- Tasks: `list_tasks`, `list_assigned_tasks`, `get_task`, `get_task_by_ticket_id`, `create_task`, `duplicate_task`, `update_task`, `delete_task`, `move_task`, `update_task_status`, `update_task_assignee`, `update_task_due_date`, `list_task_activity`
+- Time entries: `list_task_time_entries`, `get_time_entry`, `create_time_entry`, `update_time_entry`, `delete_time_entry`
 - Comments: `list_task_comments`, `create_task_comment`, `update_task_comment`, `delete_task_comment`
-- Labels: `list_workspace_labels`, `create_label`, `attach_label_to_task`, `detach_label_from_task`, `delete_label`
+- Labels: `list_workspace_labels`, `create_label`, `update_label`, `attach_label_to_task`, `detach_label_from_task`, `delete_label`
 - Task relations: `create_task_relation`, `get_task_relations`, `delete_task_relation`
+- Custom fields: `list_project_custom_fields`, `get_task_custom_field_values`, `set_task_custom_field_value`
+- External links: `list_task_external_links`, `add_task_external_link`, `remove_task_external_link`
 
 Call `list_project_columns` before setting a status: the column slugs it
 returns are the values `create_task` and `update_task_status` accept.

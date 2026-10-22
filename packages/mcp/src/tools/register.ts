@@ -865,4 +865,289 @@ export function registerTools(
     },
     async () => run(() => client.json("/api/notification")),
   );
+
+  registerTool(
+    "delete_time_entry",
+    {
+      description: "Delete a time entry by ID.",
+      inputSchema: z.object({ id: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(`/api/time-entry/${encodeURIComponent(args.id)}`, {
+          method: "DELETE",
+        }),
+      ),
+  );
+
+  registerTool(
+    "list_assigned_tasks",
+    {
+      description:
+        "List the open tasks assigned to the signed-in user across a workspace's active projects, soonest due first (at most 100).",
+      inputSchema: z.object({ workspaceId: nonEmptyString }),
+    },
+    async (args) => {
+      const qs = new URLSearchParams({ workspaceId: args.workspaceId });
+      return run(() => client.json(`/api/task/assigned?${qs.toString()}`));
+    },
+  );
+
+  registerTool(
+    "archive_project",
+    {
+      description:
+        "Archive a project. Archived projects are hidden from list_projects unless includeArchived is set.",
+      inputSchema: z.object({ id: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(`/api/project/${encodeURIComponent(args.id)}/archive`, {
+          method: "PUT",
+        }),
+      ),
+  );
+
+  registerTool(
+    "unarchive_project",
+    {
+      description: "Restore an archived project.",
+      inputSchema: z.object({ id: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(`/api/project/${encodeURIComponent(args.id)}/unarchive`, {
+          method: "PUT",
+        }),
+      ),
+  );
+
+  registerTool(
+    "create_project_column",
+    {
+      description:
+        "Add a column to a project board. Set isFinal for columns that mean the task is done.",
+      inputSchema: z.object({
+        projectId: nonEmptyString,
+        name: nonEmptyString,
+        icon: optionalNonEmptyString,
+        color: optionalNonEmptyString,
+        isFinal: z.boolean().optional(),
+      }),
+    },
+    async (args) => {
+      const { projectId, ...body } = args;
+      return run(() =>
+        client.json(`/api/column/${encodeURIComponent(projectId)}`, {
+          method: "POST",
+          body: JSON.stringify(body),
+        }),
+      );
+    },
+  );
+
+  registerTool(
+    "update_project_column",
+    {
+      description:
+        "Update a column (PATCH-style: only provided fields are changed). Pass null icon or color to clear it.",
+      inputSchema: z.object({
+        columnId: nonEmptyString,
+        name: optionalNonEmptyString,
+        icon: nullableOptionalNonEmptyString,
+        color: nullableOptionalNonEmptyString,
+        isFinal: z.boolean().optional(),
+      }),
+    },
+    async (args) => {
+      const { columnId, ...body } = args;
+      return run(() =>
+        client.json(`/api/column/${encodeURIComponent(columnId)}`, {
+          method: "PUT",
+          body: JSON.stringify(body),
+        }),
+      );
+    },
+  );
+
+  registerTool(
+    "update_label",
+    {
+      description:
+        "Rename or recolor a label (PATCH-style: only provided fields are changed).",
+      inputSchema: z.object({
+        labelId: nonEmptyString,
+        name: optionalNonEmptyString,
+        color: hexColorSchema.optional(),
+      }),
+    },
+    async (args) =>
+      run(async () => {
+        const path = `/api/label/${encodeURIComponent(args.labelId)}`;
+        const existing = (await client.json(path)) as Record<string, unknown>;
+        const name =
+          args.name ??
+          (typeof existing.name === "string" ? existing.name : undefined);
+        const color =
+          args.color ??
+          (typeof existing.color === "string" ? existing.color : undefined);
+        if (!name || !color) {
+          throw new Error("Cannot update label: missing name or color.");
+        }
+        return client.json(path, {
+          method: "PUT",
+          body: JSON.stringify({ name, color }),
+        });
+      }),
+  );
+
+  registerTool(
+    "mark_notification_read",
+    {
+      description: "Mark one of the signed-in user's notifications as read.",
+      inputSchema: z.object({ id: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(`/api/notification/${encodeURIComponent(args.id)}/read`, {
+          method: "PATCH",
+        }),
+      ),
+  );
+
+  registerTool(
+    "mark_all_notifications_read",
+    {
+      description:
+        "Mark all of the signed-in user's notifications as read, optionally only those in one workspace.",
+      inputSchema: z.object({ workspaceId: optionalNonEmptyString }),
+    },
+    async (args) => {
+      const qs = args.workspaceId
+        ? `?${new URLSearchParams({ workspaceId: args.workspaceId })}`
+        : "";
+      return run(() =>
+        client.json(`/api/notification/read-all${qs}`, { method: "PATCH" }),
+      );
+    },
+  );
+
+  registerTool(
+    "list_project_custom_fields",
+    {
+      description:
+        "List a project's custom field definitions, including their types and options.",
+      inputSchema: z.object({ projectId: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(
+          `/api/custom-field/project/${encodeURIComponent(args.projectId)}`,
+        ),
+      ),
+  );
+
+  registerTool(
+    "get_task_custom_field_values",
+    {
+      description: "Get the custom field values set on a task.",
+      inputSchema: z.object({ taskId: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(
+          `/api/custom-field/task/${encodeURIComponent(args.taskId)}`,
+        ),
+      ),
+  );
+
+  registerTool(
+    "set_task_custom_field_value",
+    {
+      description:
+        "Set a custom field value on a task. Pass the value as a string; an empty string clears it.",
+      inputSchema: z.object({
+        taskId: nonEmptyString,
+        fieldId: nonEmptyString,
+        value: z.string(),
+      }),
+    },
+    async (args) =>
+      run(() =>
+        client.json("/api/custom-field/value", {
+          method: "PUT",
+          body: JSON.stringify(args),
+        }),
+      ),
+  );
+
+  registerTool(
+    "list_task_external_links",
+    {
+      description:
+        "List a task's external links, such as linked issues, pull requests and manual links.",
+      inputSchema: z.object({ taskId: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(
+          `/api/external-link/task/${encodeURIComponent(args.taskId)}`,
+        ),
+      ),
+  );
+
+  registerTool(
+    "add_task_external_link",
+    {
+      description: "Attach an HTTP or HTTPS link to a task.",
+      inputSchema: z.object({
+        taskId: nonEmptyString,
+        url: z.string().url(),
+        title: z.string().trim().min(1).max(200).optional(),
+      }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(
+          `/api/external-link/task/${encodeURIComponent(args.taskId)}`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              url: args.url,
+              ...(args.title ? { title: args.title } : {}),
+            }),
+          },
+        ),
+      ),
+  );
+
+  registerTool(
+    "remove_task_external_link",
+    {
+      description:
+        "Remove a manually added link from a task. Links created by integrations cannot be removed.",
+      inputSchema: z.object({ taskId: nonEmptyString, linkId: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(
+          `/api/external-link/task/${encodeURIComponent(args.taskId)}/${encodeURIComponent(args.linkId)}`,
+          { method: "DELETE" },
+        ),
+      ),
+  );
+
+  registerTool(
+    "list_workspace_activity",
+    {
+      description: "List recent activity across a workspace.",
+      inputSchema: z.object({ workspaceId: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(
+          `/api/activity/workspace/${encodeURIComponent(args.workspaceId)}`,
+        ),
+      ),
+  );
 }
