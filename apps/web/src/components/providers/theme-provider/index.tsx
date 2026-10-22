@@ -1,28 +1,29 @@
 import { useEffect } from "react";
+import { syncNativeSystemBars } from "@/lib/native/system-bars";
 import { useUserPreferencesStore } from "@/store/user-preferences";
+
+function applyTheme(resolved: "light" | "dark") {
+  const root = document.documentElement;
+  root.classList.remove("light", "dark");
+  root.classList.add(resolved);
+  syncNativeSystemBars(resolved);
+}
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const { theme } = useUserPreferencesStore();
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.remove("light", "dark");
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-      root.classList.add(systemTheme);
+      applyTheme(mediaQuery.matches ? "dark" : "light");
     } else {
-      root.classList.add(theme);
+      applyTheme(theme);
     }
 
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) => {
       if (theme === "system") {
-        root.classList.remove("light", "dark");
-        root.classList.add(e.matches ? "dark" : "light");
+        applyTheme(e.matches ? "dark" : "light");
       }
     };
 

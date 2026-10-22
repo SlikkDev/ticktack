@@ -1,0 +1,38 @@
+---
+title: "Mobile apps"
+description: "Build the Capacitor iOS and Android apps against your instance."
+---
+
+The repository ships a Capacitor project in `apps/mobile` that wraps the web
+app as native iOS and Android apps. The apps bundle a web build and use your
+hosted API; they need no additional services.
+
+## Allow the app origins
+
+Inside the apps the page origin is `capacitor://localhost` on iOS and
+`https://localhost` on Android. Add both to `CORS_ORIGINS` together with the
+web origin, because `CORS_ORIGINS` replaces the `KANEO_CLIENT_URL` default:
+
+```dotenv
+CORS_ORIGINS=https://kaneo.example.com,capacitor://localhost,https://localhost
+```
+
+The same list is used for WebSocket origins and Better Auth's trusted
+origins. The apps authenticate with bearer tokens instead of the session
+cookie, so no cookie settings change.
+
+## Build the apps
+
+Set the API origin the build should target in `apps/web/.env.native.local`
+(the committed `apps/web/.env.native` holds the default), then:
+
+```bash
+pnpm install
+pnpm --filter @kaneo/mobile build
+pnpm --filter @kaneo/mobile open:android
+pnpm --filter @kaneo/mobile open:ios
+```
+
+Android Studio and Xcode take over from there for signing and store uploads.
+See `apps/mobile/README.md` for the toolchain requirements, live reload,
+universal links and the current limitations.

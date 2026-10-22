@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import { getApiUrl } from "@/fetchers/get-api-url";
+import { openApiWebSocket } from "@/lib/api-websocket";
 import {
   evictInaccessibleWorkspaceCache,
   evictWorkspaceCache,
@@ -78,7 +79,7 @@ export function useUserWebSocket() {
       if (disposed) return;
       retryTimeout = null;
       const url = getUserWsUrl();
-      const ws = new WebSocket(url);
+      const ws = openApiWebSocket(url);
       activeSocket = ws;
 
       ws.onopen = () => {

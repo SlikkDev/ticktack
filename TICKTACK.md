@@ -30,6 +30,13 @@ paid runners and external notification integrations. Run validation locally and
 build the pinned image on the authorized VPS; do not enable those workflows
 without reviewing their cost and notification destinations.
 
+## Mobile apps
+
+`apps/mobile` wraps the web app as Capacitor iOS and Android apps that use the
+hosted API with bearer tokens. The API needs `CORS_ORIGINS` to list the web
+origin plus `capacitor://localhost` and `https://localhost`. See
+`apps/mobile/README.md`.
+
 ## Verification
 
 See `docs/ticktack-coverage.md` for the explicit coverage inventory and open work.

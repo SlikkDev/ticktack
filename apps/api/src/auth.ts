@@ -84,6 +84,7 @@ import { mapCustomOAuthProfileToUser } from "./utils/custom-oauth-profile";
 import { resolveFileSecret } from "./utils/file-secret";
 import { generateDemoName } from "./utils/generate-demo-name";
 import { getEmailRequestContext } from "./utils/email-request-context";
+import { getConfiguredCorsOrigins } from "./utils/cors-origins";
 import { getDefaultCookieAttributes } from "./utils/get-default-cookie-attributes";
 import { getInvitationEmailSubject } from "./utils/get-invitation-email-subject";
 import {
@@ -139,6 +140,16 @@ try {
     trustedOrigins.push(apiOriginString);
   }
 } catch {}
+// Origins allowed by CORS may also sign in, including the Capacitor shells.
+// Wildcards stay out: CORS matches origins literally, and widening Better
+// Auth's redirect allow-list beyond that would be a surprise.
+for (const origin of getConfiguredCorsOrigins() ?? []) {
+  if (origin.includes("*") || trustedOrigins.includes(origin)) continue;
+  try {
+    new URL(origin);
+    trustedOrigins.push(origin);
+  } catch {}
+}
 
 const baseURLWithoutPath = (() => {
   try {
