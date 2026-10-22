@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Google Assistant App Actions and launcher shortcuts.
+
+    Every fulfillment is a link into the bundled web app's assistant route,
+    which the web shell handles like any other app link
+    (apps/web/src/lib/native/shell.ts and
+    apps/web/src/routes/_layout/_authenticated/dashboard/assistant.$action.tsx),
+    so the actions need no native code and no token outside the WebView.
+    Google's catalog has no built-in intents for tasks or timers, so those are
+    custom intents matched against the en-US query patterns in
+    res/values/strings.xml; GET_THING and OPEN_APP_FEATURE are built-in and
+    come with Google's grammar in every Assistant language. Custom intents are
+    reviewed with the App Actions submission in the Play Console.
+-->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- "Hey Google, create a task in TickTack called buy milk" -->
+    <capability
+        android:name="custom.actions.intent.CREATE_TASK"
+        app:queryPatterns="@array/assistant_create_task_queries">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="io.slikk.ticktack"
+            android:targetClass="io.slikk.ticktack.MainActivity">
+            <url-template android:value="https://ticktack.slikk.io/dashboard/assistant/create-task{?title}" />
+            <parameter
+                android:name="title"
+                android:key="title"
+                android:mimeType="https://schema.org/Text" />
+        </intent>
+    </capability>
+
+    <!-- "Hey Google, start a timer in TickTack on the login bug" -->
+    <capability
+        android:name="custom.actions.intent.START_TIMER"
+        app:queryPatterns="@array/assistant_start_timer_queries">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="io.slikk.ticktack"
+            android:targetClass="io.slikk.ticktack.MainActivity">
+            <url-template android:value="https://ticktack.slikk.io/dashboard/assistant/start-timer{?task}" />
+            <parameter
+                android:name="task"
+                android:key="task"
+                android:mimeType="https://schema.org/Text" />
+        </intent>
+    </capability>
+
+    <!-- "Hey Google, stop the timer in TickTack" -->
+    <capability
+        android:name="custom.actions.intent.STOP_TIMER"
+        app:queryPatterns="@array/assistant_stop_timer_queries">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="io.slikk.ticktack"
+            android:targetClass="io.slikk.ticktack.MainActivity">
+            <url-template android:value="https://ticktack.slikk.io/dashboard/assistant/stop-timer" />
+        </intent>
+    </capability>
+
+    <!-- "Hey Google, what's next in TickTack" -->
+    <capability
+        android:name="custom.actions.intent.WHATS_NEXT"
+        app:queryPatterns="@array/assistant_whats_next_queries">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="io.slikk.ticktack"
+            android:targetClass="io.slikk.ticktack.MainActivity">
+            <url-template android:value="https://ticktack.slikk.io/dashboard/assistant/whats-next" />
+        </intent>
+    </capability>
+
+    <!-- "Hey Google, search TickTack for login bug" -->
+    <capability android:name="actions.intent.GET_THING">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="io.slikk.ticktack"
+            android:targetClass="io.slikk.ticktack.MainActivity">
+            <url-template android:value="https://ticktack.slikk.io/dashboard/assistant/search{?q}" />
+            <parameter
+                android:name="thing.name"
+                android:key="q" />
+        </intent>
+    </capability>
+
+    <!-- "Hey Google, open my tasks in TickTack"; the feature names are the
+         shortcut ids bound below. -->
+    <capability android:name="actions.intent.OPEN_APP_FEATURE">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="io.slikk.ticktack"
+            android:targetClass="io.slikk.ticktack.MainActivity">
+            <url-template android:value="https://ticktack.slikk.io/dashboard/assistant/open{?feature}" />
+            <parameter
+                android:name="feature"
+                android:key="feature" />
+        </intent>
+    </capability>
+
+    <!-- Long-press launcher shortcuts. The first two double as
+         OPEN_APP_FEATURE inventory; the inbox entry has no intent, so it is
+         inventory only and stays out of the launcher. -->
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_new_task"
+        android:shortcutId="new_task"
+        android:shortcutLongLabel="@string/shortcut_new_task_long"
+        android:shortcutShortLabel="@string/shortcut_new_task_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://ticktack.slikk.io/dashboard/assistant/create-task"
+            android:targetClass="io.slikk.ticktack.MainActivity"
+            android:targetPackage="io.slikk.ticktack" />
+        <capability-binding android:key="actions.intent.OPEN_APP_FEATURE">
+            <parameter-binding
+                android:key="feature"
+                android:value="@array/assistant_new_task_synonyms" />
+        </capability-binding>
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_my_tasks"
+        android:shortcutId="my_tasks"
+        android:shortcutLongLabel="@string/shortcut_my_tasks_long"
+        android:shortcutShortLabel="@string/shortcut_my_tasks_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://ticktack.slikk.io/dashboard/assistant/whats-next"
+            android:targetClass="io.slikk.ticktack.MainActivity"
+            android:targetPackage="io.slikk.ticktack" />
+        <capability-binding android:key="actions.intent.OPEN_APP_FEATURE">
+            <parameter-binding
+                android:key="feature"
+                android:value="@array/assistant_my_tasks_synonyms" />
+        </capability-binding>
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_start_timer"
+        android:shortcutId="start_timer"
+        android:shortcutLongLabel="@string/shortcut_start_timer_long"
+        android:shortcutShortLabel="@string/shortcut_start_timer_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://ticktack.slikk.io/dashboard/assistant/start-timer"
+            android:targetClass="io.slikk.ticktack.MainActivity"
+            android:targetPackage="io.slikk.ticktack" />
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_stop_timer"
+        android:shortcutId="stop_timer"
+        android:shortcutLongLabel="@string/shortcut_stop_timer_long"
+        android:shortcutShortLabel="@string/shortcut_stop_timer_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://ticktack.slikk.io/dashboard/assistant/stop-timer"
+            android:targetClass="io.slikk.ticktack.MainActivity"
+            android:targetPackage="io.slikk.ticktack" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="inbox"
+        android:shortcutShortLabel="@string/shortcut_inbox_short">
+        <capability-binding android:key="actions.intent.OPEN_APP_FEATURE">
+            <parameter-binding
+                android:key="feature"
+                android:value="@array/assistant_inbox_synonyms" />
+        </capability-binding>
+    </shortcut>
+</shortcuts>

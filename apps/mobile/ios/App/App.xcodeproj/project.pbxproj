@@ -17,8 +17,22 @@
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
 		7A7C57A70000000000000002 /* TickTackBridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C57A70000000000000001 /* TickTackBridgeViewController.swift */; };
-		7A7C57A70000000000000004 /* WatchBridgePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C57A70000000000000003 /* WatchBridgePlugin.swift */; };
 		7A7C57A70000000000000006 /* WatchSessionRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C57A70000000000000005 /* WatchSessionRelay.swift */; };
+		5E5100000000000000000002 /* NativeSessionPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000001 /* NativeSessionPlugin.swift */; };
+		5E5100000000000000000004 /* NativeSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000003 /* NativeSessionStore.swift */; };
+		5E5100000000000000000007 /* AssistantClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000006 /* AssistantClient.swift */; };
+		5E5100000000000000000009 /* AssistantError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000008 /* AssistantError.swift */; };
+		5E510000000000000000000B /* AssistantMatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E510000000000000000000A /* AssistantMatching.swift */; };
+		5E510000000000000000000D /* CreateTaskIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E510000000000000000000C /* CreateTaskIntent.swift */; };
+		5E510000000000000000000F /* ProjectEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E510000000000000000000E /* ProjectEntity.swift */; };
+		5E5100000000000000000011 /* StartTimerIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000010 /* StartTimerIntent.swift */; };
+		5E5100000000000000000013 /* StopTimerIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000012 /* StopTimerIntent.swift */; };
+		5E5100000000000000000015 /* TaskEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000014 /* TaskEntity.swift */; };
+		5E5100000000000000000017 /* TickTackShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000016 /* TickTackShortcuts.swift */; };
+		5E5100000000000000000019 /* WhatsNextIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000018 /* WhatsNextIntent.swift */; };
+		5E510000000000000000001C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5E510000000000000000001B /* Localizable.xcstrings */; };
+		5E510000000000000000001E /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5E510000000000000000001D /* AppShortcuts.xcstrings */; };
+		5E510000000000000000001F /* WatchSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C57A7000000000000000E /* WatchSummary.swift */; };
 		7A7C57A70000000000000009 /* TickTackWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C57A70000000000000008 /* TickTackWatchApp.swift */; };
 		7A7C57A7000000000000000B /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C57A7000000000000000A /* KeychainStore.swift */; };
 		7A7C57A7000000000000000D /* WatchSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C57A7000000000000000C /* WatchSessionStore.swift */; };
@@ -75,8 +89,21 @@
 		9582B6822FE993A50072D4E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		958DCC722DB07C7200EA8C5F /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = debug.xcconfig; path = ../debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		7A7C57A70000000000000001 /* TickTackBridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickTackBridgeViewController.swift; sourceTree = "<group>"; };
-		7A7C57A70000000000000003 /* WatchBridgePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchBridgePlugin.swift; sourceTree = "<group>"; };
 		7A7C57A70000000000000005 /* WatchSessionRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionRelay.swift; sourceTree = "<group>"; };
+		5E5100000000000000000001 /* NativeSessionPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeSessionPlugin.swift; sourceTree = "<group>"; };
+		5E5100000000000000000003 /* NativeSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeSessionStore.swift; sourceTree = "<group>"; };
+		5E5100000000000000000006 /* AssistantClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistantClient.swift; sourceTree = "<group>"; };
+		5E5100000000000000000008 /* AssistantError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistantError.swift; sourceTree = "<group>"; };
+		5E510000000000000000000A /* AssistantMatching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistantMatching.swift; sourceTree = "<group>"; };
+		5E510000000000000000000C /* CreateTaskIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskIntent.swift; sourceTree = "<group>"; };
+		5E510000000000000000000E /* ProjectEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectEntity.swift; sourceTree = "<group>"; };
+		5E5100000000000000000010 /* StartTimerIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTimerIntent.swift; sourceTree = "<group>"; };
+		5E5100000000000000000012 /* StopTimerIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopTimerIntent.swift; sourceTree = "<group>"; };
+		5E5100000000000000000014 /* TaskEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEntity.swift; sourceTree = "<group>"; };
+		5E5100000000000000000016 /* TickTackShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickTackShortcuts.swift; sourceTree = "<group>"; };
+		5E5100000000000000000018 /* WhatsNextIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNextIntent.swift; sourceTree = "<group>"; };
+		5E510000000000000000001B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		5E510000000000000000001D /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
 		7A7C57A70000000000000008 /* TickTackWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickTackWatchApp.swift; sourceTree = "<group>"; };
 		7A7C57A7000000000000000A /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		7A7C57A7000000000000000C /* WatchSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionStore.swift; sourceTree = "<group>"; };
@@ -139,7 +166,11 @@
 			children = (
 				9582B6822FE993A50072D4E8 /* SceneDelegate.swift */,
 				7A7C57A70000000000000001 /* TickTackBridgeViewController.swift */,
-				7A7C57A70000000000000007 /* WatchBridge */,
+				7A7C57A70000000000000007 /* Watch */,
+				5E5100000000000000000005 /* NativeSession */,
+				5E510000000000000000001A /* Intents */,
+				5E510000000000000000001B /* Localizable.xcstrings */,
+				5E510000000000000000001D /* AppShortcuts.xcstrings */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
@@ -152,13 +183,38 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		7A7C57A70000000000000007 /* WatchBridge */ = {
+		7A7C57A70000000000000007 /* Watch */ = {
 			isa = PBXGroup;
 			children = (
-				7A7C57A70000000000000003 /* WatchBridgePlugin.swift */,
 				7A7C57A70000000000000005 /* WatchSessionRelay.swift */,
 			);
-			path = WatchBridge;
+			path = Watch;
+			sourceTree = "<group>";
+		};
+		5E5100000000000000000005 /* NativeSession */ = {
+			isa = PBXGroup;
+			children = (
+				5E5100000000000000000001 /* NativeSessionPlugin.swift */,
+				5E5100000000000000000003 /* NativeSessionStore.swift */,
+			);
+			path = NativeSession;
+			sourceTree = "<group>";
+		};
+		5E510000000000000000001A /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				5E5100000000000000000006 /* AssistantClient.swift */,
+				5E5100000000000000000008 /* AssistantError.swift */,
+				5E510000000000000000000A /* AssistantMatching.swift */,
+				5E510000000000000000000C /* CreateTaskIntent.swift */,
+				5E510000000000000000000E /* ProjectEntity.swift */,
+				5E5100000000000000000010 /* StartTimerIntent.swift */,
+				5E5100000000000000000012 /* StopTimerIntent.swift */,
+				5E5100000000000000000014 /* TaskEntity.swift */,
+				5E5100000000000000000016 /* TickTackShortcuts.swift */,
+				5E5100000000000000000018 /* WhatsNextIntent.swift */,
+			);
+			path = Intents;
 			sourceTree = "<group>";
 		};
 		7A7C57A70000000000000029 /* Session */ = {
@@ -312,6 +368,8 @@
 				50379B232058CBB4000EE86E /* capacitor.config.json in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
+				5E510000000000000000001C /* Localizable.xcstrings in Resources */,
+				5E510000000000000000001E /* AppShortcuts.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,8 +392,20 @@
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
 				9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */,
 				7A7C57A70000000000000002 /* TickTackBridgeViewController.swift in Sources */,
-				7A7C57A70000000000000004 /* WatchBridgePlugin.swift in Sources */,
 				7A7C57A70000000000000006 /* WatchSessionRelay.swift in Sources */,
+				5E5100000000000000000002 /* NativeSessionPlugin.swift in Sources */,
+				5E5100000000000000000004 /* NativeSessionStore.swift in Sources */,
+				5E5100000000000000000007 /* AssistantClient.swift in Sources */,
+				5E5100000000000000000009 /* AssistantError.swift in Sources */,
+				5E510000000000000000000B /* AssistantMatching.swift in Sources */,
+				5E510000000000000000000D /* CreateTaskIntent.swift in Sources */,
+				5E510000000000000000000F /* ProjectEntity.swift in Sources */,
+				5E5100000000000000000011 /* StartTimerIntent.swift in Sources */,
+				5E5100000000000000000013 /* StopTimerIntent.swift in Sources */,
+				5E5100000000000000000015 /* TaskEntity.swift in Sources */,
+				5E5100000000000000000017 /* TickTackShortcuts.swift in Sources */,
+				5E5100000000000000000019 /* WhatsNextIntent.swift in Sources */,
+				5E510000000000000000001F /* WatchSummary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

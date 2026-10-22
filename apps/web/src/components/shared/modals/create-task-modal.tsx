@@ -85,6 +85,8 @@ type CreateTaskModalProps = {
   status?: string;
   projectId?: string;
   instant?: boolean;
+  /** Pre-fills the title, for example from a voice assistant. */
+  initialTitle?: string;
 };
 
 type Priority = "no-priority" | "low" | "medium" | "high" | "urgent";
@@ -138,6 +140,7 @@ function CreateTaskModalContent({
   status,
   projectId,
   instant = false,
+  initialTitle,
 }: CreateTaskModalProps) {
   const { t } = useTranslation();
   const { project, setProject } = useProjectStore();
@@ -209,7 +212,7 @@ function CreateTaskModalContent({
   const canCreateTaskCapability = canCreateTasks();
   const canCreateLabelCapability = canCreateLabels();
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(initialTitle ?? "");
   const titleRef = useAutoGrowTextarea(title);
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<Priority>("no-priority");

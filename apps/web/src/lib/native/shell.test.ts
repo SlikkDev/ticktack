@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 
-const { native, listeners, setWatchSession } = vi.hoisted(() => ({
+const { native, listeners, setNativeSession } = vi.hoisted(() => ({
   native: { enabled: false },
   listeners: [] as ((event: { url: string }) => void)[],
-  setWatchSession: vi.fn(async () => {}),
+  setNativeSession: vi.fn(async () => {}),
 }));
 
 vi.mock("@capacitor/core", () => ({
@@ -11,9 +11,9 @@ vi.mock("@capacitor/core", () => ({
     isNativePlatform: () => native.enabled,
     getPlatform: () => (native.enabled ? "ios" : "web"),
     isPluginAvailable: (name: string) =>
-      native.enabled && name === "WatchBridge",
+      native.enabled && name === "NativeSession",
   },
-  registerPlugin: () => ({ setSession: setWatchSession }),
+  registerPlugin: () => ({ setSession: setNativeSession }),
 }));
 
 vi.mock("@capacitor/app", () => ({
@@ -44,7 +44,7 @@ describe("native shell bootstrap", () => {
   afterEach(() => {
     native.enabled = false;
     listeners.length = 0;
-    setWatchSession.mockClear();
+    setNativeSession.mockClear();
     globalThis.fetch = originalFetch;
     delete document.documentElement.dataset.nativePlatform;
   });
@@ -56,7 +56,7 @@ describe("native shell bootstrap", () => {
     expect(document.documentElement.dataset.nativePlatform).toBeUndefined();
     expect(globalThis.fetch).toBe(originalFetch);
     expect(listeners).toHaveLength(0);
-    expect(setWatchSession).not.toHaveBeenCalled();
+    expect(setNativeSession).not.toHaveBeenCalled();
   });
 
   it("tags the document, restores the token and routes app links natively", async () => {
@@ -66,7 +66,7 @@ describe("native shell bootstrap", () => {
     await prepareNativeShell();
     expect(document.documentElement.dataset.nativePlatform).toBe("ios");
     expect(globalThis.fetch).not.toBe(originalFetch);
-    expect(setWatchSession).toHaveBeenCalledWith({
+    expect(setNativeSession).toHaveBeenCalledWith({
       apiUrl: "https://tasks.example.test/api",
       token: "restored-token",
     });

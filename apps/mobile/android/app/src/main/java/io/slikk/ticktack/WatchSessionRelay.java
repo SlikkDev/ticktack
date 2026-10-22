@@ -12,7 +12,7 @@ import com.google.android.gms.wearable.Wearable;
  * Keeps the paired Wear OS watch signed in.
  *
  * The web app pushes the API base URL and the bearer token through the
- * WatchBridge plugin on every launch and token change. This relay stores them
+ * NativeSession plugin on every launch and token change. This relay stores them
  * and publishes them as a Data Layer item, which the watch receives as soon
  * as it is connected, even if its app is not running. The watch can also ask
  * for the session with a message (see {@link WatchMessageService}).

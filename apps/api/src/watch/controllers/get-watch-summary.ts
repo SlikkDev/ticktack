@@ -116,7 +116,9 @@ async function loadRunningTimer(userId: string, workspaceIds: string[]) {
       id: timeEntryTable.id,
       taskId: timeEntryTable.taskId,
       taskTitle: taskTable.title,
+      projectId: taskTable.projectId,
       projectName: projectTable.name,
+      workspaceId: projectTable.workspaceId,
       startTime: timeEntryTable.startTime,
     })
     .from(timeEntryTable)

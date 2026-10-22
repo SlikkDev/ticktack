@@ -6,13 +6,15 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
 /**
- * Native half of apps/web/src/lib/native/watch-session.ts.
+ * Native half of apps/web/src/lib/native/native-session.ts.
  *
- * {@code WatchBridge.setSession({ apiUrl, token })} relays the API base URL
- * and the bearer token to the paired Wear OS watch; a null token signs it out.
+ * {@code NativeSession.setSession({ apiUrl, token })} hands the API base URL
+ * and the bearer token to native code. On Android that is the Wear OS relay;
+ * the Assistant App Actions in res/xml/shortcuts.xml deep-link into the web
+ * app and need no token of their own. A null token signs the watch out.
  */
-@CapacitorPlugin(name = "WatchBridge")
-public class WatchBridgePlugin extends Plugin {
+@CapacitorPlugin(name = "NativeSession")
+public class NativeSessionPlugin extends Plugin {
 
     @PluginMethod
     public void setSession(PluginCall call) {

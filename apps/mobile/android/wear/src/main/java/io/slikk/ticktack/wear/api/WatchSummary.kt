@@ -43,7 +43,9 @@ data class WatchSummary(
         val id: String,
         val taskId: String,
         val taskTitle: String,
+        val projectId: String,
         val projectName: String,
+        val workspaceId: String,
         val startTime: Instant,
     )
 
@@ -88,7 +90,9 @@ data class WatchSummary(
                         id = timer.getString("id"),
                         taskId = timer.getString("taskId"),
                         taskTitle = timer.getString("taskTitle"),
+                        projectId = timer.getString("projectId"),
                         projectName = timer.getString("projectName"),
+                        workspaceId = timer.getString("workspaceId"),
                         startTime = Instant.parse(timer.getString("startTime")),
                     )
                 },

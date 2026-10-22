@@ -16,18 +16,18 @@ vi.mock("@capacitor/core", () => ({
   Capacitor: {
     isNativePlatform: () => native.platform,
     isPluginAvailable: (name: string) =>
-      name === "WatchBridge" && native.plugin,
+      name === "NativeSession" && native.plugin,
   },
   registerPlugin: () => ({ setSession }),
 }));
 
-import { configureWatchSession, pushWatchSession } from "./watch-session";
+import { configureNativeSession, pushNativeSession } from "./native-session";
 
-describe("watch session relay", () => {
+describe("native session hand-off", () => {
   beforeEach(() => {
     setSession.mockReset();
     setSession.mockResolvedValue(undefined);
-    configureWatchSession("https://tasks.example.test");
+    configureNativeSession("https://tasks.example.test/api");
   });
 
   afterEach(() => {
@@ -35,30 +35,30 @@ describe("watch session relay", () => {
     native.plugin = false;
   });
 
-  it("does nothing in a browser or in a shell without the bridge", async () => {
-    await pushWatchSession("token");
+  it("does nothing in a browser or in a shell without the plugin", async () => {
+    await pushNativeSession("token");
     native.platform = true;
-    await pushWatchSession("token");
+    await pushNativeSession("token");
     expect(setSession).not.toHaveBeenCalled();
   });
 
-  it("forwards the API origin with every token change, including sign-out", async () => {
+  it("forwards the API base URL with every token change, including sign-out", async () => {
     native.platform = true;
     native.plugin = true;
-    await pushWatchSession("issued-token");
-    await pushWatchSession(null);
+    await pushNativeSession("issued-token");
+    await pushNativeSession(null);
     expect(setSession.mock.calls).toEqual([
-      [{ apiUrl: "https://tasks.example.test", token: "issued-token" }],
-      [{ apiUrl: "https://tasks.example.test", token: null }],
+      [{ apiUrl: "https://tasks.example.test/api", token: "issued-token" }],
+      [{ apiUrl: "https://tasks.example.test/api", token: null }],
     ]);
   });
 
-  it("swallows bridge failures so the phone app keeps working", async () => {
+  it("swallows plugin failures so the phone app keeps working", async () => {
     native.platform = true;
     native.plugin = true;
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
-    setSession.mockRejectedValueOnce(new Error("watch unreachable"));
-    await expect(pushWatchSession("token")).resolves.toBeUndefined();
+    setSession.mockRejectedValueOnce(new Error("keychain locked"));
+    await expect(pushNativeSession("token")).resolves.toBeUndefined();
     expect(warn).toHaveBeenCalledOnce();
     warn.mockRestore();
   });

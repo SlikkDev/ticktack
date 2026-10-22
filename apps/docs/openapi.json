@@ -5400,8 +5400,15 @@
           "taskTitle": {
             "type": "string"
           },
+          "projectId": {
+            "type": "string"
+          },
           "projectName": {
             "type": "string"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "With projectId, enough to open the task in the app."
           },
           "startTime": {
             "type": "string",
@@ -5412,7 +5419,9 @@
           "id",
           "taskId",
           "taskTitle",
+          "projectId",
           "projectName",
+          "workspaceId",
           "startTime"
         ],
         "description": "The caller's most recently started open time entry."

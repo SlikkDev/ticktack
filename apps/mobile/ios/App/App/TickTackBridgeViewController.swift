@@ -6,6 +6,6 @@ import UIKit
 class TickTackBridgeViewController: CAPBridgeViewController {
     override func capacitorDidLoad() {
         super.capacitorDidLoad()
-        bridge?.registerPluginInstance(WatchBridgePlugin())
+        bridge?.registerPluginInstance(NativeSessionPlugin())
     }
 }

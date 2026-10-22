@@ -95,6 +95,70 @@ automatically:
    `applinks:ticktack.slikk.io` in Xcode and publish
    `https://ticktack.slikk.io/.well-known/apple-app-site-association`.
 
+## Siri and Google Assistant
+
+Both apps answer voice requests for the same four actions: create a task,
+start a timer, stop the timer and "what's next". A spoken task name is matched
+against the user's open assigned tasks the same way on both platforms (ticket
+id, exact title, part of the title, then every word in any order), so "start a
+timer on the login bug" finds `WEB-12 Fix the login bug`, and a name that fits
+several tasks asks instead of guessing.
+
+### iOS: App Intents and App Shortcuts
+
+`ios/App/App/Intents` defines four App Intents (`CreateTaskIntent`,
+`StartTimerIntent`, `StopTimerIntent`, `WhatsNextIntent`) and the
+`TickTackShortcuts` provider, so the phrases work as soon as the app is
+installed, with nothing to set up in the Shortcuts app: "Create a task in
+TickTack", "Start a timer in TickTack", "Stop the timer in TickTack" and
+"What's next in TickTack". Siri asks for whatever is missing (the title, the
+project when there is more than one, the task), reads the result back, and the
+same intents show up in Spotlight, the Shortcuts app and the Action button.
+The intents run outside the WebView, so they call the API themselves with the
+bearer token that the `NativeSession` plugin keeps in the keychain
+(`ios/App/App/NativeSession`); until the app has signed in once Siri answers
+"Open TickTack and sign in first." The intents need iOS 16 and the App
+Shortcuts phrases iOS 17, while the app itself still runs on iOS 15. Dialog
+strings and phrases are localized in English and Hebrew
+(`ios/App/App/Localizable.xcstrings`, `ios/App/App/AppShortcuts.xcstrings`).
+
+### Android: App Actions and launcher shortcuts
+
+`android/app/src/main/res/xml/shortcuts.xml` declares Google Assistant App
+Actions. Google's built-in intent catalog has nothing for tasks or timers, so
+create task, start timer, stop timer and what's next are custom intents
+(`custom.actions.intent.*`) with en-US query patterns in
+`res/values/strings.xml`, while the built-in `GET_THING` (search) and
+`OPEN_APP_FEATURE` (new task, my tasks, inbox) come with Google's grammar in
+every Assistant language. Each action is fulfilled by opening a link such as
+`https://ticktack.slikk.io/dashboard/assistant/create-task?title=…`, which the
+web shell routes like any other app link; the web app then performs the action
+with its signed-in session and shows a toast. The same file adds long-press
+launcher shortcuts for new task, what's next, start timer and stop timer, with
+English and Hebrew labels (`res/values-he`).
+
+Google reviews App Actions: custom intents only work for users after the App
+Actions submission in the Play Console is approved, and they only trigger when
+the Assistant language is en-US. Before that, test them with the Google
+Assistant plugin for Android Studio (the App Actions test tool), signed in
+with the Play Console account. Gemini is replacing Assistant on new devices
+and still runs App Actions; Android 16's App Functions are the successor to
+add when the tooling settles.
+
+### The assistant route
+
+Anything that can open a link, including the Android actions above, can use
+`/dashboard/assistant/<action>` in the web app, where the action is
+`create-task`, `start-timer`, `stop-timer`, `whats-next`, `search` or `open`,
+with optional `title`, `task`, `q` and `feature` query parameters
+(`apps/web/src/lib/assistant`). The route resolves the active workspace,
+performs the action through the regular API routes and lands on the relevant
+page: the create-task dialog with the title filled in, the task page with a
+toast when a timer started or stopped, My tasks for "what's next", or search
+when a spoken task name matched nothing or several tasks. On iOS, Siri
+performs the actions natively instead, so the answer can be spoken without
+opening the app.
+
 ## Smart watches
 
 Both apps ship a watch companion: an Apple Watch app in `ios/App/TickTackWatch`
@@ -109,11 +173,12 @@ tasks stays on the phone.
 ### How the watch signs in
 
 The watch never shows a login form. The web shell pushes the API base URL and
-the current bearer token to the native `WatchBridge` plugin
-(`apps/web/src/lib/native/watch-session.ts`) on every launch and whenever the
-token changes, including sign-out. On iOS the plugin relays them over
-WatchConnectivity as the application context (`ios/App/App/WatchBridge`); on
-Android it writes a Wear OS Data Layer item at `/ticktack/session`
+the current bearer token to the native `NativeSession` plugin
+(`apps/web/src/lib/native/native-session.ts`) on every launch and whenever the
+token changes, including sign-out. On iOS the plugin stores them for the Siri
+intents (`ios/App/App/NativeSession`) and relays them over WatchConnectivity
+as the application context (`ios/App/App/Watch`); on Android it writes a Wear
+OS Data Layer item at `/ticktack/session`
 (`android/app/src/main/java/io/slikk/ticktack/WatchSessionRelay.java`). The
 plugin is part of each native project and registered by the app itself, so
 `cap sync` neither installs nor removes it.
@@ -166,8 +231,14 @@ are natural follow-ups.
 - Images in task descriptions that come from private object storage are
   loaded by the WebView without the bearer token and will not render inside
   the app; public project assets and avatars are unaffected.
-- The session token lives in app-sandboxed preferences, not the keychain.
-  Android backups exclude it (`allowBackup="false"`); iOS backups include it.
+- The web shell keeps the session token in app-sandboxed preferences, not
+  the keychain. Android backups exclude it (`allowBackup="false"`); iOS
+  backups include it. On iOS the `NativeSession` plugin keeps a second copy in
+  the keychain for Siri.
+- The Siri intents and the Android App Actions were written without Xcode or
+  the Android SDK and have not run on a device. Custom App Actions understand
+  en-US only and need Google's review before they work outside the test tool;
+  see "Siri and Google Assistant" above.
 - iOS builds and device behaviour were not exercised while adding this
   package; the project was generated on Linux and only the web build, sync and
   tests ran. Validate on real devices before shipping.

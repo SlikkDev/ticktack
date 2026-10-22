@@ -36,6 +36,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    // The <capability> elements in res/xml/shortcuts.xml (App Actions) need core 1.6 or newer.
+    implementation "androidx.core:core:$androidxCoreVersion"
     // Data Layer relay to the Wear OS app in ../wear (WatchSessionRelay).
     implementation "com.google.android.gms:play-services-wearable:$playServicesWearableVersion"
     implementation project(':capacitor-android')

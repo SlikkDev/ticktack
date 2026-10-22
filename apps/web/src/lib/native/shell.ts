@@ -3,13 +3,13 @@ import { Capacitor } from "@capacitor/core";
 import { resolveApiBaseUrl } from "@kaneo/libs";
 import { installNativeApiAuth } from "./api-auth";
 import { loadSessionToken } from "./session-token";
-import { configureWatchSession, pushWatchSession } from "./watch-session";
+import { configureNativeSession, pushNativeSession } from "./native-session";
 
 /**
  * Prepares the Capacitor shell before the first render: tags the document for
  * native-only styles, restores the stored session token, routes API requests
- * through bearer authentication, and hands the session to a paired watch. In
- * a browser it does nothing.
+ * through bearer authentication, and hands the session to native code (Siri,
+ * a paired watch). In a browser it does nothing.
  */
 export async function prepareNativeShell(): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
@@ -17,11 +17,12 @@ export async function prepareNativeShell(): Promise<void> {
   try {
     const apiBaseUrl = resolveApiBaseUrl(import.meta.env.VITE_API_URL);
     const apiOrigin = new URL(apiBaseUrl).origin;
-    configureWatchSession(apiBaseUrl);
+    configureNativeSession(apiBaseUrl);
     const token = await loadSessionToken();
     installNativeApiAuth(apiOrigin);
-    // A paired watch may have missed earlier changes while unreachable.
-    void pushWatchSession(token);
+    // Native code may have missed earlier changes, for example a watch that
+    // was unreachable, so every launch pushes the current session again.
+    void pushNativeSession(token);
   } catch (error) {
     // Rendering must not depend on the shell; a failed restore only means
     // the user signs in again.

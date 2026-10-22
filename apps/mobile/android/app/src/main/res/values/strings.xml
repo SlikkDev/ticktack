@@ -4,4 +4,88 @@
     <string name="title_activity_main">TickTack</string>
     <string name="package_name">io.slikk.ticktack</string>
     <string name="custom_url_scheme">io.slikk.ticktack</string>
+
+    <!-- Launcher shortcuts (res/xml/shortcuts.xml). -->
+    <string name="shortcut_new_task_short">New task</string>
+    <string name="shortcut_new_task_long">Create a new task</string>
+    <string name="shortcut_my_tasks_short">What\'s next</string>
+    <string name="shortcut_my_tasks_long">See what\'s next on your list</string>
+    <string name="shortcut_start_timer_short">Start timer</string>
+    <string name="shortcut_start_timer_long">Start a timer on a task</string>
+    <string name="shortcut_stop_timer_short">Stop timer</string>
+    <string name="shortcut_stop_timer_long">Stop the running timer</string>
+    <string name="shortcut_inbox_short">Inbox</string>
+
+    <!-- Google Assistant grammar for the custom intents in shortcuts.xml.
+         Assistant matches custom intents in en-US only; $text1 is the first
+         text parameter of the intent, and the app name is implied. -->
+    <string-array name="assistant_create_task_queries" translatable="false">
+        <item>create a task called $text1</item>
+        <item>create a task named $text1</item>
+        <item>create a task $text1</item>
+        <item>create a new task called $text1</item>
+        <item>create a new task $text1</item>
+        <item>add a task called $text1</item>
+        <item>add a task named $text1</item>
+        <item>add a task $text1</item>
+        <item>add $text1 to my tasks</item>
+        <item>new task $text1</item>
+        <item>remind me to $text1</item>
+        <item>create a task</item>
+        <item>create a new task</item>
+        <item>add a task</item>
+        <item>new task</item>
+    </string-array>
+    <string-array name="assistant_start_timer_queries" translatable="false">
+        <item>start a timer on $text1</item>
+        <item>start a timer for $text1</item>
+        <item>start the timer on $text1</item>
+        <item>start tracking time on $text1</item>
+        <item>start tracking $text1</item>
+        <item>track time on $text1</item>
+        <item>start working on $text1</item>
+        <item>start a timer</item>
+        <item>start the timer</item>
+        <item>start tracking time</item>
+    </string-array>
+    <string-array name="assistant_stop_timer_queries" translatable="false">
+        <item>stop the timer</item>
+        <item>stop my timer</item>
+        <item>stop tracking time</item>
+        <item>stop tracking</item>
+        <item>stop the clock</item>
+        <item>stop working</item>
+    </string-array>
+    <string-array name="assistant_whats_next_queries" translatable="false">
+        <item>what\'s next</item>
+        <item>what is next</item>
+        <item>what\'s next on my list</item>
+        <item>what\'s on my plate</item>
+        <item>what are my tasks</item>
+        <item>show my tasks</item>
+        <item>what should I do next</item>
+        <item>what do I have to do</item>
+        <item>what\'s due today</item>
+        <item>what\'s due</item>
+    </string-array>
+
+    <!-- OPEN_APP_FEATURE inventory: ways to say each shortcut id. -->
+    <string-array name="assistant_new_task_synonyms" translatable="false">
+        <item>new task</item>
+        <item>create task</item>
+        <item>add task</item>
+        <item>task creation</item>
+    </string-array>
+    <string-array name="assistant_my_tasks_synonyms" translatable="false">
+        <item>my tasks</item>
+        <item>tasks</item>
+        <item>task list</item>
+        <item>to do list</item>
+        <item>what\'s next</item>
+    </string-array>
+    <string-array name="assistant_inbox_synonyms" translatable="false">
+        <item>inbox</item>
+        <item>notifications</item>
+        <item>updates</item>
+    </string-array>
 </resources>

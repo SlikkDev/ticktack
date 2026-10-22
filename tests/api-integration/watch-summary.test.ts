@@ -34,7 +34,9 @@ type WatchSummary = {
     id: string;
     taskId: string;
     taskTitle: string;
+    projectId: string;
     projectName: string;
+    workspaceId: string;
     startTime: string;
   } | null;
   unreadNotifications: number;
@@ -285,7 +287,9 @@ describe("API integration: watch summary", () => {
       id: running.id,
       taskId: soon.id,
       taskTitle: "Due soon",
+      projectId: api.project.id,
       projectName: "API",
+      workspaceId: second.workspace.id,
       startTime: "2026-01-02T08:00:00.000Z",
     });
     expect(body.unreadNotifications).toBe(2);

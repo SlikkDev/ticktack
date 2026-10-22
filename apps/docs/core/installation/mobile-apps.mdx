@@ -1,6 +1,6 @@
 ---
 title: "Mobile apps"
-description: "Build the Capacitor iOS and Android apps, with their Apple Watch and Wear OS companions, against your instance."
+description: "Build the Capacitor iOS and Android apps, with their watch companions and voice assistant actions, against your instance."
 ---
 
 The repository ships a Capacitor project in `apps/mobile` that wraps the web
@@ -36,6 +36,19 @@ pnpm --filter @kaneo/mobile open:ios
 Android Studio and Xcode take over from there for signing and store uploads.
 See `apps/mobile/README.md` for the toolchain requirements, live reload,
 universal links and the current limitations.
+
+## Siri and Google Assistant
+
+The apps answer "Create a task in TickTack", "Start a timer in TickTack",
+"Stop the timer in TickTack" and "What's next in TickTack" (the phrases are
+also available in Hebrew). On iOS these are App Intents that call your API
+directly with the signed-in session, so they work from Siri, Spotlight and the
+Shortcuts app without opening the app. On Android they are Google Assistant App
+Actions that open the app on `/dashboard/assistant/<action>`, where the web app
+performs the action; Google must approve custom App Actions in the Play Console
+before they work for users, and the custom phrases are matched in en-US only.
+Nothing changes on the server. The "Siri and Google Assistant" section of
+`apps/mobile/README.md` has the details and the testing notes.
 
 ## Watch apps
 

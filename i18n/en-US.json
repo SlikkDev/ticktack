@@ -3584,6 +3584,21 @@
 				"project": "Project"
 			},
 			"truncated": "Showing the first {{shown}} of {{total}} tasks."
+		},
+		"assistant": {
+			"pageTitle": "Assistant",
+			"working": "Working on it…",
+			"failedTitle": "That didn't work",
+			"failedDescription": "The action could not be completed. Open your workspace and try again.",
+			"openWorkspace": "Open workspace",
+			"timerStarted": "Timer started on \"{{title}}\"",
+			"timerSwitched": "Stopped the timer on \"{{from}}\" and started one on \"{{to}}\"",
+			"timerAlreadyRunning": "A timer is already running on \"{{title}}\"",
+			"timerStopped": "Timer stopped on \"{{title}}\" after {{duration}}",
+			"noRunningTimer": "No timer is running",
+			"taskNotFound": "None of your tasks is called \"{{query}}\"",
+			"taskAmbiguous": "Several of your tasks match \"{{query}}\". Pick one below.",
+			"sayWhichTask": "Tell the assistant which task to start the timer on."
 		}
 	},
 	"team": {

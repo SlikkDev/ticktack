@@ -20,7 +20,7 @@ final class WatchSessionStore: NSObject, ObservableObject {
     /// Why the last request to the phone failed, for the pairing screen.
     @Published private(set) var requestError: String?
 
-    // Keys shared with App/WatchBridge/WatchSessionRelay.swift.
+    // Keys shared with App/Watch/WatchSessionRelay.swift.
     private static let apiUrlKey = "apiUrl"
     private static let tokenKey = "token"
     private static let requestKey = "request"
