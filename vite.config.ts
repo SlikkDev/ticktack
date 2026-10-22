@@ -19,6 +19,8 @@ const ignorePatterns = [
   "**/routeTree.gen.ts",
   "**/openapi.json",
   "**/drizzle/meta/**",
+  "apps/mobile/android/**",
+  "apps/mobile/ios/**",
 ];
 
 export default defineConfig({

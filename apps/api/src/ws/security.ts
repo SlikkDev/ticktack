@@ -30,11 +30,20 @@ export function assertWebSocketOrigin(headers: Headers) {
       if (!value?.trim()) continue;
       try {
         const url = new URL(value.trim());
+        if (url.username || url.password) continue;
+        if (url.protocol === "https:" || url.protocol === "http:") {
+          if (url.origin === origin) return;
+          continue;
+        }
+        // Capacitor WebViews send custom-scheme origins such as
+        // capacitor://localhost, which the URL parser reports as opaque
+        // ("null"). Compare the configured scheme and host literally.
         if (
-          (url.protocol === "https:" || url.protocol === "http:") &&
-          !url.username &&
-          !url.password &&
-          url.origin === origin
+          url.host &&
+          (url.pathname === "" || url.pathname === "/") &&
+          !url.search &&
+          !url.hash &&
+          `${url.protocol}//${url.host}` === origin
         ) {
           return;
         }

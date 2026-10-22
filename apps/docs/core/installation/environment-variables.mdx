@@ -18,7 +18,7 @@ Name | Description |
 --- | --- |
 | `KANEO_CLIENT_URL` | The URL of the web application.
 | `KANEO_API_URL` | Public API URL. Derived by the bundled image; set it explicitly for a separate API or host-native development. |
-| `CORS_ORIGINS` | Optional comma-separated list of allowed browser origins, for example `https://kaneo.example.com`. When omitted, HTTP CORS uses `KANEO_CLIENT_URL`. |
+| `CORS_ORIGINS` | Optional comma-separated list of allowed browser origins, for example `https://kaneo.example.com`. When omitted, HTTP CORS uses `KANEO_CLIENT_URL`. The [mobile apps](/core/installation/mobile-apps) need `capacitor://localhost` and `https://localhost` here as well. |
 
 The web container embeds only `KANEO_API_URL`, `KANEO_CLIENT_URL`, and
 `KANEO_TURNSTILE_SITE_KEY` into browser assets at startup. These values are public;

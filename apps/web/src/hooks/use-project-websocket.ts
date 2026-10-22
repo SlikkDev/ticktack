@@ -8,6 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { getApiUrl } from "@/fetchers/get-api-url";
+import { openApiWebSocket } from "@/lib/api-websocket";
 import { authClient } from "@/lib/auth-client";
 import { evictProjectCache } from "@/lib/evict-project-cache";
 import getTask from "@/fetchers/task/get-task";
@@ -158,7 +159,7 @@ export function useProjectWebSocket(projectId: string) {
       if (disposed) return;
       retryTimeout = null;
       const url = getWsUrl(projectId);
-      const ws = new WebSocket(url);
+      const ws = openApiWebSocket(url);
       activeSocket = ws;
 
       ws.onopen = () => {

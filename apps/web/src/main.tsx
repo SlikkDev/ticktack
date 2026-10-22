@@ -16,6 +16,7 @@ import { ErrorBoundary } from "./components/ui/error-boundary";
 import { ShortcutListener } from "./lib/shortcuts/shortcut-listener";
 import { captureCheckoutIntent } from "./lib/checkout-intent";
 import { AppI18nProvider } from "./lib/i18n/provider";
+import { listenForAppLinks, prepareNativeShell } from "./lib/native/shell";
 import { routeTree } from "./routeTree.gen";
 
 // Capture a pricing-page `?checkout=<plan>-<interval>` deep link before the
@@ -70,8 +71,7 @@ function RootCrashFallback({
   );
 }
 
-const rootElement = document.getElementById("root") as HTMLElement;
-if (!rootElement.innerHTML) {
+function renderApp(rootElement: HTMLElement) {
   const root = createRoot(rootElement);
   root.render(
     <StrictMode>
@@ -91,4 +91,14 @@ if (!rootElement.innerHTML) {
       </ErrorBoundary>
     </StrictMode>,
   );
+}
+
+const rootElement = document.getElementById("root") as HTMLElement;
+if (!rootElement.innerHTML) {
+  // The Capacitor shell restores its session token first so the initial
+  // session fetch is already authenticated; in a browser this resolves at once.
+  void prepareNativeShell().finally(() => {
+    listenForAppLinks((href) => router.history.push(href));
+    renderApp(rootElement);
+  });
 }

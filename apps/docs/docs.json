@@ -112,7 +112,8 @@
 							"core/installation/object-storage-and-image-uploads",
 							"core/installation/silo",
 							"core/installation/storage-backends",
-							"core/installation/environment-variables"
+							"core/installation/environment-variables",
+							"core/installation/mobile-apps"
 						]
 					},
 					{

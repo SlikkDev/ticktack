@@ -42,6 +42,7 @@ import {
   validationHookWithMessage,
 } from "./errors/validation-error";
 import { prepareDatabaseStartup } from "./database/prepare-database-startup";
+import { getConfiguredCorsOrigins } from "./utils/cors-origins";
 import { waitForDatabase } from "./database/wait-for-database";
 import discordIntegration from "./discord-integration";
 import { eventContext } from "./events";
@@ -218,14 +219,7 @@ export function createApp() {
   nodeWs.wss.options.maxPayload = MAX_WEBSOCKET_MESSAGE_BYTES;
   nodeWs.wss.options.perMessageDeflate = false;
   const { upgradeWebSocket, injectWebSocket } = nodeWs;
-  const corsOriginSource = [
-    process.env.CORS_ORIGINS,
-    process.env.KANEO_CLIENT_URL,
-  ].find((value) => value?.trim());
-  const corsOrigins = corsOriginSource
-    ?.split(",")
-    .map((origin) => origin.trim())
-    .filter(Boolean);
+  const corsOrigins = getConfiguredCorsOrigins();
 
   const reflectUnconfiguredOrigins = process.env.NODE_ENV !== "production";
 
@@ -244,6 +238,9 @@ export function createApp() {
         "X-RateLimit-Limit",
         "X-RateLimit-Remaining",
         "X-RateLimit-Reset",
+        // Better Auth's bearer plugin issues the session token here for
+        // clients that cannot use the cookie, such as the Capacitor apps.
+        "set-auth-token",
       ],
       origin: (origin) => {
         // Reflecting an arbitrary origin alongside credentials lets any site

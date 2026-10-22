@@ -22,6 +22,14 @@ export default defineConfig({
         ],
         cache: false,
       },
+      // Bundled into the Capacitor apps; see apps/mobile/README.md.
+      "compile:native": {
+        command: "vp build --mode native",
+        dependsOn: [
+          { task: "build", from: ["dependencies", "devDependencies"] },
+        ],
+        cache: false,
+      },
       "check:types": {
         command:
           "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",

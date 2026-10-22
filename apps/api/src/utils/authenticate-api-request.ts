@@ -2,6 +2,7 @@ import * as Sentry from "@sentry/node";
 import { APIError } from "better-auth/api";
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
+import { readWebSocketBearerToken } from "../ws/bearer-protocol";
 import { apiKeyRejection } from "./api-key-rejection";
 import { getUserSession } from "./get-user-session";
 import { type ApiKeyRateLimit, rateLimitHeaders } from "./rate-limit-headers";
@@ -33,9 +34,13 @@ async function getSession(headers: Headers) {
   }
 }
 
-async function getSessionFromBearerOnlyHeaders(c: Context) {
+// A bearer token must never fall back to the request's cookies, so the
+// session lookup only sees the Authorization header, which also carries a
+// token that arrived as a WebSocket subprotocol.
+async function getSessionFromBearerOnlyHeaders(c: Context, token: string) {
   const headers = new Headers(c.req.raw.headers);
   headers.delete("cookie");
+  headers.set("authorization", `Bearer ${token}`);
 
   return getSession(headers);
 }
@@ -63,6 +68,14 @@ function parseBearerToken(authHeader: string | undefined): {
   };
 }
 
+function readBearerCredential(c: Context) {
+  const fromHeader = parseBearerToken(c.req.header("Authorization"));
+  if (fromHeader.token || fromHeader.malformed) {
+    return fromHeader;
+  }
+  return readWebSocketBearerToken(c.req.raw.headers);
+}
+
 function setRateLimitHeaders(c: Context, rateLimit: ApiKeyRateLimit | null) {
   if (rateLimit) c.set("apiKeyHeaders", rateLimitHeaders(rateLimit));
 }
@@ -88,7 +101,7 @@ function setApiKeyContext(c: Context, { key, rateLimit }: VerifiedApiKey) {
 }
 
 export async function authenticateApiRequest(c: Context): Promise<void> {
-  const { token, malformed } = parseBearerToken(c.req.header("Authorization"));
+  const { token, malformed } = readBearerCredential(c);
   if (malformed) {
     throw new HTTPException(401, { message: "Unauthorized" });
   }
@@ -112,7 +125,7 @@ export async function authenticateApiRequest(c: Context): Promise<void> {
     if (apiKeyResult) {
       throw apiKeyRejection(apiKeyResult);
     }
-    const sessionResult = await getSessionFromBearerOnlyHeaders(c);
+    const sessionResult = await getSessionFromBearerOnlyHeaders(c, token);
     if (sessionResult?.user && sessionResult.session) {
       c.set("user", sessionResult.user);
       c.set("session", sessionResult.session);
@@ -171,7 +184,7 @@ export async function resolveAssetBearerOrCookie(c: Context): Promise<{
     if (apiKeyResult) {
       throw apiKeyRejection(apiKeyResult);
     }
-    const sessionResult = await getSessionFromBearerOnlyHeaders(c);
+    const sessionResult = await getSessionFromBearerOnlyHeaders(c, token);
     if (sessionResult?.user?.id) {
       return { userId: sessionResult.user.id };
     }
