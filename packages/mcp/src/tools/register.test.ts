@@ -505,3 +505,157 @@ describe("registerTools", () => {
     ]);
   });
 });
+
+describe("workspace parity tools", () => {
+  it.each([
+    [
+      "delete_time_entry",
+      { id: "entry 1" },
+      ["/api/time-entry/entry%201", { method: "DELETE" }],
+    ],
+    [
+      "list_assigned_tasks",
+      { workspaceId: "ws-1" },
+      ["/api/task/assigned?workspaceId=ws-1"],
+    ],
+    [
+      "archive_project",
+      { id: "proj-1" },
+      ["/api/project/proj-1/archive", { method: "PUT" }],
+    ],
+    [
+      "unarchive_project",
+      { id: "proj-1" },
+      ["/api/project/proj-1/unarchive", { method: "PUT" }],
+    ],
+    [
+      "create_project_column",
+      { projectId: "proj-1", name: "QA", isFinal: false },
+      [
+        "/api/column/proj-1",
+        {
+          method: "POST",
+          body: JSON.stringify({ name: "QA", isFinal: false }),
+        },
+      ],
+    ],
+    [
+      "update_project_column",
+      { columnId: "col-1", color: null },
+      [
+        "/api/column/col-1",
+        { method: "PUT", body: JSON.stringify({ color: null }) },
+      ],
+    ],
+    [
+      "mark_notification_read",
+      { id: "n-1" },
+      ["/api/notification/n-1/read", { method: "PATCH" }],
+    ],
+    [
+      "mark_all_notifications_read",
+      {},
+      ["/api/notification/read-all", { method: "PATCH" }],
+    ],
+    [
+      "mark_all_notifications_read",
+      { workspaceId: "ws-1" },
+      ["/api/notification/read-all?workspaceId=ws-1", { method: "PATCH" }],
+    ],
+    [
+      "list_project_custom_fields",
+      { projectId: "proj-1" },
+      ["/api/custom-field/project/proj-1"],
+    ],
+    [
+      "get_task_custom_field_values",
+      { taskId: "task-1" },
+      ["/api/custom-field/task/task-1"],
+    ],
+    [
+      "set_task_custom_field_value",
+      { taskId: "task-1", fieldId: "field-1", value: "" },
+      [
+        "/api/custom-field/value",
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            taskId: "task-1",
+            fieldId: "field-1",
+            value: "",
+          }),
+        },
+      ],
+    ],
+    [
+      "list_task_external_links",
+      { taskId: "task-1" },
+      ["/api/external-link/task/task-1"],
+    ],
+    [
+      "add_task_external_link",
+      { taskId: "task-1", url: "https://example.com/spec" },
+      [
+        "/api/external-link/task/task-1",
+        {
+          method: "POST",
+          body: JSON.stringify({ url: "https://example.com/spec" }),
+        },
+      ],
+    ],
+    [
+      "remove_task_external_link",
+      { taskId: "task-1", linkId: "link/1" },
+      ["/api/external-link/task/task-1/link%2F1", { method: "DELETE" }],
+    ],
+    [
+      "list_workspace_activity",
+      { workspaceId: "ws-1" },
+      ["/api/activity/workspace/ws-1"],
+    ],
+  ])("%s calls the matching API route", async (name, args, expected) => {
+    const { server, tools } = createServerMock();
+    const client = { json: vi.fn().mockResolvedValue({}) };
+    registerTools(server as never, { client: client as never });
+
+    const result = await tools.get(name)?.handler(args);
+
+    expect(result?.isError).toBe(false);
+    expect(client.json).toHaveBeenCalledExactlyOnceWith(...expected);
+  });
+
+  it("rejects external links that are not URLs", async () => {
+    const { server, tools } = createServerMock();
+    const client = { json: vi.fn() };
+    registerTools(server as never, { client: client as never });
+
+    const result = await tools
+      .get("add_task_external_link")
+      ?.handler({ taskId: "task-1", url: "not a url" });
+
+    expect(result?.isError).toBe(true);
+    expect(client.json).not.toHaveBeenCalled();
+  });
+
+  it("keeps the stored color when update_label only renames", async () => {
+    const { server, tools } = createServerMock();
+    const client = {
+      json: vi
+        .fn()
+        .mockResolvedValueOnce({ id: "label-1", name: "Bug", color: "#ff0000" })
+        .mockResolvedValueOnce({ id: "label-1" }),
+    };
+    registerTools(server as never, { client: client as never });
+
+    const result = await tools
+      .get("update_label")
+      ?.handler({ labelId: "label-1", name: "Defect" });
+
+    expect(result?.isError).toBe(false);
+    expect(client.json).toHaveBeenNthCalledWith(1, "/api/label/label-1");
+    expect(client.json).toHaveBeenNthCalledWith(2, "/api/label/label-1", {
+      method: "PUT",
+      body: JSON.stringify({ name: "Defect", color: "#ff0000" }),
+    });
+  });
+});

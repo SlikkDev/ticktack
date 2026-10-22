@@ -7,6 +7,7 @@ import {
 import { requireWorkspacePermission } from "../utils/require-workspace-permission";
 import { workspaceAccess } from "../utils/workspace-access-middleware";
 import createTimeEntry from "./controllers/create-time-entry";
+import deleteTimeEntry from "./controllers/delete-time-entry";
 import getTimeEntriesByTaskId from "./controllers/get-time-entries";
 import getTimeEntry from "./controllers/get-time-entry";
 import updateTimeEntry from "./controllers/update-time-entry";
@@ -107,6 +108,27 @@ const updateTimeEntryRoute = createRoute({
   },
 });
 
+const deleteTimeEntryRoute = createRoute({
+  method: "delete",
+  operationId: "deleteTimeEntry",
+  path: "/{id}",
+  tags: ["Time Entries"],
+  summary: "Delete time entry",
+  description: "Permanently remove a time entry, running or closed.",
+  middleware: [
+    workspaceAccess.fromTimeEntry(),
+    requireWorkspacePermission({ task: ["update"] }),
+  ] as const,
+  request: { params: timeEntryParam },
+  responses: {
+    200: jsonResponse("The deleted time entry", timeEntrySchema),
+    403: errorResponse(
+      "No access to the project, or missing task:update permission",
+    ),
+    404: errorResponse("Time entry not found"),
+  },
+});
+
 const timeEntry = apiRouter()
   .openapi(getTaskTimeEntriesRoute, async (c) =>
     c.json(await getTimeEntriesByTaskId(c.req.valid("param").taskId), 200),
@@ -139,6 +161,9 @@ const timeEntry = apiRouter()
       }),
       200,
     );
-  });
+  })
+  .openapi(deleteTimeEntryRoute, async (c) =>
+    c.json(await deleteTimeEntry(c.req.valid("param").id), 200),
+  );
 
 export default timeEntry;
