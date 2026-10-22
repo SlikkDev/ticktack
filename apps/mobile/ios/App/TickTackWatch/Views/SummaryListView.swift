@@ -81,6 +81,5 @@ struct SummaryListView: View {
             }
         }
         .task { await model.refresh() }
-        .refreshable { await model.refresh() }
     }
 }

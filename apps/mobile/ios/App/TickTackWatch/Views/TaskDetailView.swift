@@ -20,6 +20,10 @@ struct TaskDetailView: View {
         model.summary.runningTimer?.taskId == task.id
     }
 
+    private var title: String {
+        task.number.map { "#\($0)" } ?? ""
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 8) {
@@ -82,7 +86,7 @@ struct TaskDetailView: View {
             }
         }
         .disabled(model.isBusy(task))
-        .navigationTitle(task.number.map { "#\($0)" } ?? "")
+        .navigationTitle(title)
         .sheet(isPresented: $showingStatuses) {
             StatusPickerView(statuses: project?.statuses ?? [], currentSlug: task.status) { status in
                 showingStatuses = false
