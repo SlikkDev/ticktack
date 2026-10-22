@@ -7,7 +7,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Activated at launch so a watch asking for the session can wake the
+        // app in the background and get an answer.
+        WatchSessionRelay.shared.activate()
         return true
     }
 

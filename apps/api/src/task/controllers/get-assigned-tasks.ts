@@ -30,10 +30,17 @@ const priorityRank = sql<number>`CASE
   ELSE 0
 END`;
 
+type AssignedTasksOptions = {
+  /** Return only the total, without loading task rows or labels. */
+  countOnly?: boolean;
+  /** Skip the label lookup for callers that do not render labels. */
+  withLabels?: boolean;
+};
+
 async function getAssignedTasks(
   workspaceId: string,
   userId: string,
-  countOnly = false,
+  { countOnly = false, withLabels = true }: AssignedTasksOptions = {},
 ) {
   const openAndMine = and(
     eq(projectTable.workspaceId, workspaceId),
@@ -109,23 +116,24 @@ async function getAssignedTasks(
     totalsQuery,
   ]);
 
-  const labels = tasks.length
-    ? await db
-        .select({
-          id: labelTable.id,
-          name: labelTable.name,
-          color: labelTable.color,
-          taskId: labelTable.taskId,
-        })
-        .from(labelTable)
-        .where(
-          inArray(
-            labelTable.taskId,
-            tasks.map((task) => task.id),
-          ),
-        )
-        .orderBy(asc(labelTable.name), asc(labelTable.id))
-    : [];
+  const labels =
+    tasks.length && withLabels
+      ? await db
+          .select({
+            id: labelTable.id,
+            name: labelTable.name,
+            color: labelTable.color,
+            taskId: labelTable.taskId,
+          })
+          .from(labelTable)
+          .where(
+            inArray(
+              labelTable.taskId,
+              tasks.map((task) => task.id),
+            ),
+          )
+          .orderBy(asc(labelTable.name), asc(labelTable.id))
+      : [];
 
   const labelsByTask = new Map<
     string,

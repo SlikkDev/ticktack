@@ -806,11 +806,9 @@ const task = apiRouter<BaseVariables & { workspaceId: string }>()
   .openapi(listAssignedTasksRoute, async (c) => {
     const { workspaceId, countOnly } = c.req.valid("query");
     return c.json(
-      await getAssignedTasks(
-        workspaceId,
-        c.get("userId"),
-        countOnly === "true",
-      ),
+      await getAssignedTasks(workspaceId, c.get("userId"), {
+        countOnly: countOnly === "true",
+      }),
       200,
     );
   })
