@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">טיקטק</string>
+    <string name="title_activity_main">טיקטק</string>
+
+    <!-- Launcher shortcuts (res/xml/shortcuts.xml). -->
+    <string name="shortcut_new_task_short">משימה חדשה</string>
+    <string name="shortcut_new_task_long">יצירת משימה חדשה</string>
+    <string name="shortcut_my_tasks_short">מה הלאה</string>
+    <string name="shortcut_my_tasks_long">מה הבא בתור ברשימה שלך</string>
+    <string name="shortcut_start_timer_short">הפעלת טיימר</string>
+    <string name="shortcut_start_timer_long">הפעלת טיימר על משימה</string>
+    <string name="shortcut_stop_timer_short">עצירת טיימר</string>
+    <string name="shortcut_stop_timer_long">עצירת הטיימר הפעיל</string>
+    <string name="shortcut_inbox_short">דואר נכנס</string>
+</resources>

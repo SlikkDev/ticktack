@@ -4,11 +4,12 @@ import WatchConnectivity
 /// Keeps the paired Apple Watch signed in.
 ///
 /// The web app pushes the API base URL and the bearer token through the
-/// `WatchBridge` plugin on every launch and token change. This relay stores
-/// them and forwards them as the WatchConnectivity application context, which
-/// the watch receives even if it was unreachable at the time. The watch can
-/// also ask for the session with a message; that launches this app in the
-/// background when needed, so the answer comes from the stored copy.
+/// `NativeSession` plugin on every launch and token change; NativeSessionStore
+/// keeps them and this relay forwards them as the WatchConnectivity
+/// application context, which the watch receives even if it was unreachable
+/// at the time. The watch can also ask for the session with a message; that
+/// launches this app in the background when needed, so the answer comes from
+/// the stored copy.
 final class WatchSessionRelay: NSObject, WCSessionDelegate {
     static let shared = WatchSessionRelay()
 
@@ -18,11 +19,6 @@ final class WatchSessionRelay: NSObject, WCSessionDelegate {
     static let updatedAtKey = "updatedAt"
     static let requestKey = "request"
     static let sessionRequest = "session"
-
-    // Stored next to Capacitor's Preferences (also UserDefaults), so the
-    // token gets the same protection as the phone app's own copy.
-    private let storageKey = "io.slikk.ticktack.watch-session"
-    private let defaults = UserDefaults.standard
 
     private override init() {
         super.init()
@@ -37,22 +33,20 @@ final class WatchSessionRelay: NSObject, WCSessionDelegate {
         session.activate()
     }
 
-    /// Stores the session and sends it to the watch. A nil token signs the
-    /// watch out.
-    func update(apiUrl: String, token: String?) {
-        var stored: [String: String] = [Self.apiUrlKey: apiUrl]
-        if let token, !token.isEmpty {
-            stored[Self.tokenKey] = token
-        }
-        defaults.set(stored, forKey: storageKey)
-        publish()
-    }
-
+    /// The stored session as the watch expects it: the API URL, plus the
+    /// token while signed in. Empty before the first sign-in.
     private var storedSession: [String: Any] {
-        defaults.dictionary(forKey: storageKey) ?? [:]
+        guard let apiUrl = NativeSessionStore.apiUrl else { return [:] }
+        var session: [String: Any] = [Self.apiUrlKey: apiUrl]
+        if let token = NativeSessionStore.token {
+            session[Self.tokenKey] = token
+        }
+        return session
     }
 
-    private func publish() {
+    /// Sends the stored session to the watch. Call after every change; a
+    /// session without a token signs the watch out.
+    func publish() {
         guard WCSession.isSupported() else { return }
         let session = WCSession.default
         guard session.activationState == .activated,

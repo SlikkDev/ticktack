@@ -48,7 +48,11 @@ const watchRunningTimerSchema = z
     }),
     taskId: z.string(),
     taskTitle: z.string(),
+    projectId: z.string(),
     projectName: z.string(),
+    workspaceId: z.string().openapi({
+      description: "With projectId, enough to open the task in the app.",
+    }),
     startTime: responseTimestamp,
   })
   .openapi("WatchRunningTimer");

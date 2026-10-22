@@ -3642,6 +3642,21 @@
 				"project": "פרויקט"
 			},
 			"truncated": "מוצגות {{shown}} המשימות הראשונות מתוך {{total}}."
+		},
+		"assistant": {
+			"pageTitle": "עוזר קולי",
+			"working": "רק רגע…",
+			"failedTitle": "זה לא הצליח",
+			"failedDescription": "לא ניתן היה להשלים את הפעולה. פתחו את סביבת העבודה ונסו שוב.",
+			"openWorkspace": "לסביבת העבודה",
+			"timerStarted": "הטיימר הופעל על \"{{title}}\"",
+			"timerSwitched": "הטיימר על \"{{from}}\" נעצר והופעל טיימר על \"{{to}}\"",
+			"timerAlreadyRunning": "כבר פועל טיימר על \"{{title}}\"",
+			"timerStopped": "הטיימר על \"{{title}}\" נעצר אחרי {{duration}}",
+			"noRunningTimer": "אין טיימר פעיל",
+			"taskNotFound": "אין לך משימה בשם \"{{query}}\"",
+			"taskAmbiguous": "כמה מהמשימות שלך מתאימות ל\"{{query}}\". בחרו אחת למטה.",
+			"sayWhichTask": "אמרו לעוזר על איזו משימה להפעיל את הטיימר."
 		}
 	},
 	"team": {

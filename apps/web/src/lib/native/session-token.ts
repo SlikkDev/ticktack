@@ -1,5 +1,5 @@
 import { Preferences } from "@capacitor/preferences";
-import { pushWatchSession } from "./watch-session";
+import { pushNativeSession } from "./native-session";
 
 // Preferences is sandboxed app storage (UserDefaults / SharedPreferences), not
 // the keychain: it survives restarts and reinstall-free updates, but a device
@@ -28,5 +28,5 @@ export async function setSessionToken(token: string | null): Promise<void> {
   } else {
     await Preferences.remove({ key: STORAGE_KEY });
   }
-  void pushWatchSession(token);
+  void pushNativeSession(token);
 }

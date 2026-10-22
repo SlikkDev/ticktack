@@ -3526,6 +3526,21 @@
 			},
 			"empty": "暂时没有指派给你的任务",
 			"loadError": "你的任务加载失败。"
+		},
+		"assistant": {
+			"failedDescription": "The action could not be completed. Open your workspace and try again.",
+			"failedTitle": "That didn't work",
+			"noRunningTimer": "No timer is running",
+			"openWorkspace": "Open workspace",
+			"pageTitle": "Assistant",
+			"sayWhichTask": "Tell the assistant which task to start the timer on.",
+			"taskAmbiguous": "Several of your tasks match \"{{query}}\". Pick one below.",
+			"taskNotFound": "None of your tasks is called \"{{query}}\"",
+			"timerAlreadyRunning": "A timer is already running on \"{{title}}\"",
+			"timerStarted": "Timer started on \"{{title}}\"",
+			"timerStopped": "Timer stopped on \"{{title}}\" after {{duration}}",
+			"timerSwitched": "Stopped the timer on \"{{from}}\" and started one on \"{{to}}\"",
+			"working": "Working on it…"
 		}
 	},
 	"team": {

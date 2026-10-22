@@ -41,7 +41,9 @@ struct WatchSummary: Decodable, Equatable {
         let id: String
         let taskId: String
         let taskTitle: String
+        let projectId: String
         let projectName: String
+        let workspaceId: String
         let startTime: Date
     }
 

@@ -34,9 +34,12 @@ without reviewing their cost and notification destinations.
 
 `apps/mobile` wraps the web app as Capacitor iOS and Android apps that use the
 hosted API with bearer tokens, and ships Apple Watch and Wear OS companions
-that receive the session from the phone and read `GET /api/watch/summary`. The
-API needs `CORS_ORIGINS` to list the web origin plus `capacitor://localhost`
-and `https://localhost`. See `apps/mobile/README.md`.
+that receive the session from the phone and read `GET /api/watch/summary`.
+Siri App Intents on iOS and Google Assistant App Actions on Android create
+tasks, start and stop timers and read out what is next; Android fulfils them
+through the web app's `/dashboard/assistant/<action>` route. The API needs
+`CORS_ORIGINS` to list the web origin plus `capacitor://localhost` and
+`https://localhost`. See `apps/mobile/README.md`.
 
 ## Verification
 

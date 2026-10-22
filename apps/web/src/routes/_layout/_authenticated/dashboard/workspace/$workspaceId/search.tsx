@@ -9,18 +9,27 @@ import { Input } from "@/components/ui/input";
 import useGlobalSearch from "@/hooks/queries/search/use-global-search";
 import { getPriorityIcon } from "@/lib/priority";
 
+type SearchParams = {
+  /** Initial query, for example the words spoken to an assistant. */
+  q?: string;
+};
+
 export const Route = createFileRoute(
   "/_layout/_authenticated/dashboard/workspace/$workspaceId/search",
 )({
   component: SearchComponent,
+  validateSearch: (search: Record<string, unknown>): SearchParams => ({
+    q: typeof search.q === "string" && search.q ? search.q : undefined,
+  }),
 });
 
 function SearchComponent() {
   const { t } = useTranslation();
   const { workspaceId } = Route.useParams();
+  const { q: initialQuery = "" } = Route.useSearch();
   const navigate = useNavigate();
-  const [searchInput, setSearchInput] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [searchInput, setSearchInput] = useState(initialQuery);
+  const [debouncedQuery, setDebouncedQuery] = useState(initialQuery.trim());
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { data, isLoading, isFetching } = useGlobalSearch({
