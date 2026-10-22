@@ -5226,6 +5226,197 @@
           "deleted"
         ]
       },
+      "WatchSummary": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ]
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WatchProject"
+            },
+            "description": "Every project that a returned task belongs to."
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WatchTask"
+            },
+            "description": "Open tasks assigned to the caller, soonest due first and undated last, then by priority."
+          },
+          "total": {
+            "type": "number",
+            "description": "All open tasks assigned to the caller, including any beyond the returned page."
+          },
+          "runningTimer": {
+            "$ref": "#/components/schemas/WatchRunningTimer"
+          },
+          "unreadNotifications": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "user",
+          "projects",
+          "tasks",
+          "total",
+          "runningTimer",
+          "unreadNotifications"
+        ]
+      },
+      "WatchProject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "workspaceName": {
+            "type": "string"
+          },
+          "statuses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WatchStatus"
+            },
+            "description": "The project's columns in board order; their slugs are valid values for updateTaskStatus."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "workspaceId",
+          "workspaceName",
+          "statuses"
+        ]
+      },
+      "WatchStatus": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "isFinal": {
+            "type": "boolean",
+            "description": "Moving a task here completes it."
+          }
+        },
+        "required": [
+          "slug",
+          "name",
+          "isFinal"
+        ]
+      },
+      "WatchTask": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "number": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "description": "The slug of the column the task sits in."
+          },
+          "statusName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "priority": {
+            "type": "string",
+            "description": "One of: no-priority, low, medium, high, urgent."
+          },
+          "dueDate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "number",
+          "title",
+          "status",
+          "statusName",
+          "priority",
+          "dueDate"
+        ]
+      },
+      "WatchRunningTimer": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The open time entry; close it with updateTimeEntry."
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "taskTitle": {
+            "type": "string"
+          },
+          "projectName": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "taskId",
+          "taskTitle",
+          "projectName",
+          "startTime"
+        ],
+        "description": "The caller's most recently started open time entry."
+      },
       "AdminUserList": {
         "type": "object",
         "properties": {
@@ -23709,6 +23900,41 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserAvatarDeleted"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/watch/summary": {
+      "get": {
+        "operationId": "getWatchSummary",
+        "tags": [
+          "Watch"
+        ],
+        "summary": "Get my watch summary",
+        "description": "A compact view for smart watch companions: the caller's open tasks across every workspace they can read (soonest due first, undated last, at most 50), the columns of the projects those tasks sit in, the caller's running timer, and their unread notification count. Completed and archived tasks and archived projects are excluded. Quick actions use updateTaskStatus, createTimeEntry and updateTimeEntry.",
+        "responses": {
+          "200": {
+            "description": "The caller's watch summary",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WatchSummary"
                 }
               }
             }

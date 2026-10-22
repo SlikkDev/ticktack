@@ -1,15 +1,19 @@
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 
-const { native, listeners } = vi.hoisted(() => ({
+const { native, listeners, setWatchSession } = vi.hoisted(() => ({
   native: { enabled: false },
   listeners: [] as ((event: { url: string }) => void)[],
+  setWatchSession: vi.fn(async () => {}),
 }));
 
 vi.mock("@capacitor/core", () => ({
   Capacitor: {
     isNativePlatform: () => native.enabled,
     getPlatform: () => (native.enabled ? "ios" : "web"),
+    isPluginAvailable: (name: string) =>
+      native.enabled && name === "WatchBridge",
   },
+  registerPlugin: () => ({ setSession: setWatchSession }),
 }));
 
 vi.mock("@capacitor/app", () => ({
@@ -40,6 +44,7 @@ describe("native shell bootstrap", () => {
   afterEach(() => {
     native.enabled = false;
     listeners.length = 0;
+    setWatchSession.mockClear();
     globalThis.fetch = originalFetch;
     delete document.documentElement.dataset.nativePlatform;
   });
@@ -51,14 +56,20 @@ describe("native shell bootstrap", () => {
     expect(document.documentElement.dataset.nativePlatform).toBeUndefined();
     expect(globalThis.fetch).toBe(originalFetch);
     expect(listeners).toHaveLength(0);
+    expect(setWatchSession).not.toHaveBeenCalled();
   });
 
   it("tags the document, restores the token and routes app links natively", async () => {
     native.enabled = true;
     vi.stubEnv("VITE_CLIENT_URL", "https://tasks.example.test");
+    vi.stubEnv("VITE_API_URL", "https://tasks.example.test");
     await prepareNativeShell();
     expect(document.documentElement.dataset.nativePlatform).toBe("ios");
     expect(globalThis.fetch).not.toBe(originalFetch);
+    expect(setWatchSession).toHaveBeenCalledWith({
+      apiUrl: "https://tasks.example.test/api",
+      token: "restored-token",
+    });
 
     const navigate = vi.fn();
     listenForAppLinks(navigate);

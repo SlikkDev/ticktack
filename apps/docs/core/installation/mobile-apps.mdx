@@ -1,6 +1,6 @@
 ---
 title: "Mobile apps"
-description: "Build the Capacitor iOS and Android apps against your instance."
+description: "Build the Capacitor iOS and Android apps, with their Apple Watch and Wear OS companions, against your instance."
 ---
 
 The repository ships a Capacitor project in `apps/mobile` that wraps the web
@@ -36,3 +36,14 @@ pnpm --filter @kaneo/mobile open:ios
 Android Studio and Xcode take over from there for signing and store uploads.
 See `apps/mobile/README.md` for the toolchain requirements, live reload,
 universal links and the current limitations.
+
+## Watch apps
+
+The iOS project embeds an Apple Watch app and the Android project includes a
+Wear OS module, so the builds above produce the watch apps as well. The watch
+receives the signed-in session from the phone app and then calls your API
+directly: it reads `GET /api/watch/summary` for the wearer's open tasks,
+running timer and unread notifications, and uses the regular task status and
+time entry routes for quick actions. Nothing changes on the server. The watch
+apps have not been exercised on devices yet; read the "Smart watches" section
+of `apps/mobile/README.md` before shipping them.

@@ -95,6 +95,68 @@ automatically:
    `applinks:ticktack.slikk.io` in Xcode and publish
    `https://ticktack.slikk.io/.well-known/apple-app-site-association`.
 
+## Smart watches
+
+Both apps ship a watch companion: an Apple Watch app in `ios/App/TickTackWatch`
+(SwiftUI, watchOS 10 or newer) and a Wear OS app in `android/wear` (Compose for
+Wear OS, Wear OS 3 or newer). Each shows the wearer's open tasks from every
+workspace they can read, grouped into overdue, today, upcoming and no due date,
+with the running timer and the unread notification count on top. From a task
+the wearer can mark it done, move it to another status, or start and stop a
+timer. The watch apps are for glances and quick actions; creating and editing
+tasks stays on the phone.
+
+### How the watch signs in
+
+The watch never shows a login form. The web shell pushes the API base URL and
+the current bearer token to the native `WatchBridge` plugin
+(`apps/web/src/lib/native/watch-session.ts`) on every launch and whenever the
+token changes, including sign-out. On iOS the plugin relays them over
+WatchConnectivity as the application context (`ios/App/App/WatchBridge`); on
+Android it writes a Wear OS Data Layer item at `/ticktack/session`
+(`android/app/src/main/java/io/slikk/ticktack/WatchSessionRelay.java`). The
+plugin is part of each native project and registered by the app itself, so
+`cap sync` neither installs nor removes it.
+
+The watch stores the token (Keychain on watchOS, app-private preferences on
+Wear OS) and calls the API directly over HTTPS, using the phone's connection
+when it has none of its own. If no session has arrived yet, the watch asks the
+phone for one, which wakes the phone app's relay. A `401` from the API clears
+the stored session and shows the pairing screen until the phone signs in again.
+
+The watch reads `GET /api/watch/summary`, a compact cross-workspace view of the
+caller's assigned tasks, and performs quick actions through the regular
+`PUT /api/task/status/{id}`, `POST /api/time-entry` and
+`PUT /api/time-entry/{id}` routes, so every change passes the same permission
+checks and emits the same activity and realtime events as the web app. No extra
+server configuration is needed: native clients send no `Origin`, so CORS does
+not apply. API keys need read scope on workspaces, projects and tasks to call
+the summary route.
+
+### Building the watch apps
+
+- iOS: the Xcode project has a `TickTackWatch` target (bundle id
+  `io.slikk.ticktack.watchkitapp`) that the `App` target embeds, so
+  `cap open ios` and a normal archive include the watch app. Select the same
+  team for both targets under Signing & Capabilities. The watch app requires
+  the phone app (`WKRunsIndependentlyOfCompanionApp` is `NO`).
+- Android: `settings.gradle` includes the `:wear` module, which builds a
+  separate APK with the same application id. Publish it on the Wear OS track
+  of the same Play listing and sign it with the phone app's key; the Data
+  Layer only connects apps that share both. Kotlin and the Compose compiler
+  plugin are declared in `android/build.gradle`; Compose, Play services and
+  the Wear SDK versions live in `android/variables.gradle`.
+- Strings are localized in English and Hebrew
+  (`ios/App/TickTackWatch/Localizable.xcstrings`,
+  `android/wear/src/main/res/values-he`). Add other languages there; the web
+  app's i18n files do not reach the watches.
+
+Neither watch app has been built or run yet: the package was written on Linux
+without Xcode or the Android SDK. Open the projects in Xcode and Android
+Studio, resolve any toolchain prompts, and test on a watch or simulator before
+shipping. Complications and tiles, a notifications list and an offline cache
+are natural follow-ups.
+
 ## Known limitations
 
 - Sign in with email and password, or with an emailed code, works in the app.
@@ -109,3 +171,7 @@ automatically:
 - iOS builds and device behaviour were not exercised while adding this
   package; the project was generated on Linux and only the web build, sync and
   tests ran. Validate on real devices before shipping.
+- The watch apps show assigned tasks, the running timer and the unread count
+  and offer status and timer actions only. They have no complications or
+  tiles, no notifications list and no offline cache, and their builds were not
+  exercised either; see "Smart watches" above.

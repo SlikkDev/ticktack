@@ -1,0 +1,571 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "TickTack": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TickTack"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "טיקטק"
+          }
+        }
+      }
+    },
+    "due.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "היום"
+          }
+        }
+      }
+    },
+    "due.tomorrow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomorrow"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחר"
+          }
+        }
+      }
+    },
+    "due.yesterday": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yesterday"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אתמול"
+          }
+        }
+      }
+    },
+    "error.server %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server answered with status %lld."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "השרת החזיר סטטוס %lld."
+          }
+        }
+      }
+    },
+    "error.unauthorized": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your session ended. Sign in on your iPhone again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ההתחברות הסתיימה. התחברו שוב באייפון."
+          }
+        }
+      }
+    },
+    "error.unexpected": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unexpected answer from the server."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התקבלה תשובה לא צפויה מהשרת."
+          }
+        }
+      }
+    },
+    "notifications.unread %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld unread notification"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld unread notifications"
+                }
+              }
+            }
+          }
+        },
+        "he": {
+          "variations": {
+            "plural": {
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld התראות שלא נקראו"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "התראה אחת שלא נקראה"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld התראות שלא נקראו"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "שתי התראות שלא נקראו"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "pairing.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open TickTack on your iPhone and sign in. Your tasks then appear here."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פתחו את טיקטק באייפון והתחברו. המשימות שלכם יופיעו כאן."
+          }
+        }
+      }
+    },
+    "pairing.notSignedIn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nobody is signed in on your iPhone."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אף אחד לא מחובר באייפון."
+          }
+        }
+      }
+    },
+    "pairing.phoneUnreachable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your iPhone is out of reach. Bring it closer and try again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "האייפון לא בטווח. קרבו אותו ונסו שוב."
+          }
+        }
+      }
+    },
+    "pairing.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ניסיון חוזר"
+          }
+        }
+      }
+    },
+    "pairing.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in on your iPhone"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התחברו באייפון"
+          }
+        }
+      }
+    },
+    "pairing.unsupported": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This watch cannot reach the iPhone app."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "השעון הזה לא יכול להתחבר לאפליקציה באייפון."
+          }
+        }
+      }
+    },
+    "section.overdue": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdue"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "באיחור"
+          }
+        }
+      }
+    },
+    "section.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "היום"
+          }
+        }
+      }
+    },
+    "section.undated": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No due date"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ללא תאריך יעד"
+          }
+        }
+      }
+    },
+    "section.upcoming": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upcoming"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בקרוב"
+          }
+        }
+      }
+    },
+    "task.changeStatus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change status"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שינוי סטטוס"
+          }
+        }
+      }
+    },
+    "task.complete": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark done"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סימון כבוצע"
+          }
+        }
+      }
+    },
+    "task.due": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Due"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תאריך יעד"
+          }
+        }
+      }
+    },
+    "task.status": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סטטוס"
+          }
+        }
+      }
+    },
+    "tasks.emptyBody": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No open tasks are assigned to you."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אין משימות פתוחות שהוקצו לך."
+          }
+        }
+      }
+    },
+    "tasks.emptyTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All clear"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הכול נקי"
+          }
+        }
+      }
+    },
+    "tasks.more %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld more task on your phone"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld more tasks on your phone"
+                }
+              }
+            }
+          }
+        },
+        "he": {
+          "variations": {
+            "plural": {
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "עוד %lld משימות בטלפון"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "עוד משימה אחת בטלפון"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "עוד %lld משימות בטלפון"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "עוד שתי משימות בטלפון"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "tasks.refresh": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רענון"
+          }
+        }
+      }
+    },
+    "timer.running": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracking time"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מעקב זמן פעיל"
+          }
+        }
+      }
+    },
+    "timer.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start timer"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התחלת טיימר"
+          }
+        }
+      }
+    },
+    "timer.stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop timer"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עצירת טיימר"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

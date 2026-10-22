@@ -36,6 +36,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    // Data Layer relay to the Wear OS app in ../wear (WatchSessionRelay).
+    implementation "com.google.android.gms:play-services-wearable:$playServicesWearableVersion"
     implementation project(':capacitor-android')
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"

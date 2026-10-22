@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TickTack</string>
+
+    <string name="pairing_title">Sign in on your phone</string>
+    <string name="pairing_body">Open TickTack on your phone and sign in. Your tasks then appear here.</string>
+    <string name="pairing_retry">Try again</string>
+    <string name="pairing_requested">Asked your phone for the session. Open TickTack there if nothing happens.</string>
+    <string name="pairing_phone_unreachable">Your phone is out of reach. Bring it closer and try again.</string>
+
+    <string name="error_unauthorized">Your session ended. Sign in on your phone again.</string>
+    <string name="error_unexpected">Unexpected answer from the server.</string>
+
+    <string name="section_overdue">Overdue</string>
+    <string name="section_today">Today</string>
+    <string name="section_upcoming">Upcoming</string>
+    <string name="section_undated">No due date</string>
+
+    <string name="due_today">Today</string>
+    <string name="due_tomorrow">Tomorrow</string>
+    <string name="due_yesterday">Yesterday</string>
+
+    <plurals name="notifications_unread">
+        <item quantity="one">%d unread notification</item>
+        <item quantity="other">%d unread notifications</item>
+    </plurals>
+
+    <string name="tasks_empty_title">All clear</string>
+    <string name="tasks_empty_body">No open tasks are assigned to you.</string>
+    <plurals name="tasks_more">
+        <item quantity="one">%d more task on your phone</item>
+        <item quantity="other">%d more tasks on your phone</item>
+    </plurals>
+    <string name="tasks_refresh">Refresh</string>
+
+    <string name="task_status">Status</string>
+    <string name="task_due">Due</string>
+    <string name="task_complete">Mark done</string>
+    <string name="task_change_status">Change status</string>
+
+    <string name="timer_running">Tracking time</string>
+    <string name="timer_start">Start timer</string>
+    <string name="timer_stop">Stop timer</string>
+</resources>

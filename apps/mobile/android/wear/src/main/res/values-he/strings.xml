@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">טיקטק</string>
+
+    <string name="pairing_title">התחברו בטלפון</string>
+    <string name="pairing_body">פתחו את טיקטק בטלפון והתחברו. המשימות שלכם יופיעו כאן.</string>
+    <string name="pairing_retry">ניסיון חוזר</string>
+    <string name="pairing_requested">ביקשנו מהטלפון את ההתחברות. אם לא קורה כלום, פתחו שם את טיקטק.</string>
+    <string name="pairing_phone_unreachable">הטלפון לא בטווח. קרבו אותו ונסו שוב.</string>
+
+    <string name="error_unauthorized">ההתחברות הסתיימה. התחברו שוב בטלפון.</string>
+    <string name="error_unexpected">התקבלה תשובה לא צפויה מהשרת.</string>
+
+    <string name="section_overdue">באיחור</string>
+    <string name="section_today">היום</string>
+    <string name="section_upcoming">בקרוב</string>
+    <string name="section_undated">ללא תאריך יעד</string>
+
+    <string name="due_today">היום</string>
+    <string name="due_tomorrow">מחר</string>
+    <string name="due_yesterday">אתמול</string>
+
+    <plurals name="notifications_unread">
+        <item quantity="one">התראה אחת שלא נקראה</item>
+        <item quantity="two">שתי התראות שלא נקראו</item>
+        <item quantity="many">%d התראות שלא נקראו</item>
+        <item quantity="other">%d התראות שלא נקראו</item>
+    </plurals>
+
+    <string name="tasks_empty_title">הכול נקי</string>
+    <string name="tasks_empty_body">אין משימות פתוחות שהוקצו לך.</string>
+    <plurals name="tasks_more">
+        <item quantity="one">עוד משימה אחת בטלפון</item>
+        <item quantity="two">עוד שתי משימות בטלפון</item>
+        <item quantity="many">עוד %d משימות בטלפון</item>
+        <item quantity="other">עוד %d משימות בטלפון</item>
+    </plurals>
+    <string name="tasks_refresh">רענון</string>
+
+    <string name="task_status">סטטוס</string>
+    <string name="task_due">תאריך יעד</string>
+    <string name="task_complete">סימון כבוצע</string>
+    <string name="task_change_status">שינוי סטטוס</string>
+
+    <string name="timer_running">מעקב זמן פעיל</string>
+    <string name="timer_start">התחלת טיימר</string>
+    <string name="timer_stop">עצירת טיימר</string>
+</resources>

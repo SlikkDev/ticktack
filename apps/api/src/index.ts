@@ -87,6 +87,7 @@ import taskRelation from "./task-relation";
 import telegramIntegration from "./telegram-integration";
 import timeEntry from "./time-entry";
 import user from "./user";
+import watch from "./watch";
 import getAvatar from "./user/controllers/get-avatar";
 import { apiKeyRejection } from "./utils/api-key-rejection";
 import { applyApiKeyHeaders } from "./utils/apply-api-key-headers";
@@ -879,6 +880,7 @@ export function createApp() {
   const customFieldApi = api.route("/custom-field", customField);
   const importApi = api.route("/import", importRoutes);
   const userApi = api.route("/user", user);
+  const watchApi = api.route("/watch", watch);
   const adminApi = api.route("/admin", admin);
 
   app.route(
@@ -1023,6 +1025,7 @@ export function createApp() {
     telegramIntegrationApi,
     timeEntryApi,
     userApi,
+    watchApi,
     adminApi,
     workflowRuleApi,
     workspaceApi,
@@ -1157,6 +1160,7 @@ const {
   telegramIntegrationApi,
   timeEntryApi,
   userApi,
+  watchApi,
   adminApi,
   workflowRuleApi,
   workspaceApi,
@@ -1206,6 +1210,7 @@ export type AppType =
   | typeof customFieldApi
   | typeof importApi
   | typeof userApi
+  | typeof watchApi
   | typeof adminApi
   | typeof publicProjectApi
   | typeof invitationPublicApi
