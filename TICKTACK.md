@@ -37,9 +37,12 @@ hosted API with bearer tokens, and ships Apple Watch and Wear OS companions
 that receive the session from the phone and read `GET /api/watch/summary`.
 Siri App Intents on iOS and Google Assistant App Actions on Android create
 tasks, start and stop timers and read out what is next; Android fulfils them
-through the web app's `/dashboard/assistant/<action>` route. The API needs
-`CORS_ORIGINS` to list the web origin plus `capacitor://localhost` and
-`https://localhost`. See `apps/mobile/README.md`.
+through the web app's `/dashboard/assistant/<action>` route. Both apps also
+ship an "Up next" home screen widget (a WidgetKit extension on iOS, an app
+widget on Android) that shows the running timer and the next tasks, stops the
+timer, and opens the app on a task. The API needs `CORS_ORIGINS` to list the
+web origin plus `capacitor://localhost` and `https://localhost`. See
+`apps/mobile/README.md`.
 
 ## Verification
 

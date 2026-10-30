@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Home screen widget. Dark variants live in values-night; on Android 12+
+     the accent follows the wallpaper (values-v31 and values-night-v31). -->
+<resources>
+    <color name="widget_background">#FFFFFFFF</color>
+    <color name="widget_text_primary">#DE000000</color>
+    <color name="widget_text_secondary">#99000000</color>
+    <color name="widget_accent">#FF17233B</color>
+    <color name="widget_timer_background">#1417233B</color>
+    <color name="widget_stop">#FFD32F2F</color>
+    <color name="widget_overdue">#FFD32F2F</color>
+    <color name="widget_priority_none">#33000000</color>
+    <color name="widget_priority_medium">#FFF9A825</color>
+    <color name="widget_priority_high">#FFEF6C00</color>
+    <color name="widget_priority_urgent">#FFD32F2F</color>
+</resources>

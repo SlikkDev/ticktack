@@ -1,5 +1,6 @@
 import AppIntents
 import Foundation
+import WidgetKit
 
 /// "Create a task in TickTack": Siri asks for a title, picks the project when
 /// the user has more than one, and files the task in the project's first open
@@ -36,6 +37,7 @@ struct CreateTaskIntent: AppIntent {
         }
 
         _ = try await client.createTask(projectId: target.id, title: title, status: column.slug)
+        WidgetCenter.shared.reloadAllTimelines()
         return .result(dialog: "Added “\(title)” to \(target.name).")
     }
 

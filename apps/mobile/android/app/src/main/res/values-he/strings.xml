@@ -13,4 +13,45 @@
     <string name="shortcut_stop_timer_short">עצירת טיימר</string>
     <string name="shortcut_stop_timer_long">עצירת הטיימר הפעיל</string>
     <string name="shortcut_inbox_short">דואר נכנס</string>
+
+    <!-- Home screen widget (res/xml/task_widget_info.xml, widget/). -->
+    <string name="widget_title">הבא בתור</string>
+    <string name="widget_description">המשימות הבאות שלך והטיימר הפעיל, ישירות מטיקטק.</string>
+    <string name="widget_loading">טוען את המשימות שלך…</string>
+    <string name="widget_signed_out">פתחו את טיקטק והתחברו כדי לראות כאן את המשימות שלכם.</string>
+    <string name="widget_unavailable">טיקטק לא הצליח להתרענן. הקישו על הכותרת כדי לפתוח את האפליקציה.</string>
+    <string name="widget_empty_body">אין משימות פתוחות שהוקצו לך.</string>
+    <string name="widget_refresh">רענון</string>
+    <string name="widget_new_task">משימה חדשה</string>
+    <string name="widget_timer_running">מעקב זמן פעיל</string>
+    <string name="widget_timer_stop">עצירת טיימר</string>
+    <string name="widget_due_today">היום</string>
+    <string name="widget_due_tomorrow">מחר</string>
+    <string name="widget_due_yesterday">אתמול</string>
+    <plurals name="widget_due_now">
+        <item quantity="one">משימה אחת לביצוע היום</item>
+        <item quantity="two">שתי משימות לביצוע היום</item>
+        <item quantity="many">%d משימות לביצוע היום</item>
+        <item quantity="other">%d משימות לביצוע היום</item>
+    </plurals>
+    <plurals name="widget_unread">
+        <item quantity="one">התראה אחת שלא נקראה</item>
+        <item quantity="two">שתי התראות שלא נקראו</item>
+        <item quantity="many">%d התראות שלא נקראו</item>
+        <item quantity="other">%d התראות שלא נקראו</item>
+    </plurals>
+    <plurals name="widget_more">
+        <item quantity="one">עוד משימה אחת באפליקציה</item>
+        <item quantity="two">עוד שתי משימות באפליקציה</item>
+        <item quantity="many">עוד %d משימות באפליקציה</item>
+        <item quantity="other">עוד %d משימות באפליקציה</item>
+    </plurals>
+
+    <!-- Sample content for the widget picker (res/layout/widget_tasks_preview.xml). -->
+    <string name="widget_preview_due">2 לביצוע היום</string>
+    <string name="widget_preview_unread">2 שלא נקראו</string>
+    <string name="widget_preview_timer">סקירת העיצוב</string>
+    <string name="widget_preview_project">אתר</string>
+    <string name="widget_preview_task_1">תיקון באג ההתחברות</string>
+    <string name="widget_preview_task_2">כתיבת הערות הגרסה</string>
 </resources>

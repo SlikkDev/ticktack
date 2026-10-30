@@ -50,6 +50,38 @@
 		7A7C57A70000000000000025 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A7C57A70000000000000024 /* Assets.xcassets */; };
 		7A7C57A70000000000000027 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7A7C57A70000000000000026 /* Localizable.xcstrings */; };
 		7A7C57A70000000000000036 /* TickTackWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 7A7C57A7000000000000002E /* TickTackWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		574700000000000000000002 /* TickTackWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000001 /* TickTackWidgetBundle.swift */; };
+		574700000000000000000004 /* UpNextWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000003 /* UpNextWidget.swift */; };
+		574700000000000000000006 /* SummaryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000005 /* SummaryProvider.swift */; };
+		574700000000000000000008 /* SummaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000007 /* SummaryEntry.swift */; };
+		57470000000000000000000A /* WidgetLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000009 /* WidgetLinks.swift */; };
+		57470000000000000000000C /* WatchSummaryDue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57470000000000000000000B /* WatchSummaryDue.swift */; };
+		57470000000000000000000E /* UpNextWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57470000000000000000000D /* UpNextWidgetView.swift */; };
+		574700000000000000000010 /* WidgetContainerBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57470000000000000000000F /* WidgetContainerBackground.swift */; };
+		574700000000000000000012 /* SmallWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000011 /* SmallWidgetView.swift */; };
+		574700000000000000000014 /* ListWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000013 /* ListWidgetView.swift */; };
+		574700000000000000000016 /* HeaderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000015 /* HeaderRow.swift */; };
+		574700000000000000000018 /* RunningTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000017 /* RunningTimerView.swift */; };
+		57470000000000000000001A /* StopTimerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000019 /* StopTimerButton.swift */; };
+		57470000000000000000001C /* TaskLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57470000000000000000001B /* TaskLineView.swift */; };
+		57470000000000000000001E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57470000000000000000001D /* MessageView.swift */; };
+		574700000000000000000020 /* Linked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57470000000000000000001F /* Linked.swift */; };
+		574700000000000000000022 /* AccessoryRectangularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000021 /* AccessoryRectangularView.swift */; };
+		574700000000000000000024 /* AccessoryCircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000023 /* AccessoryCircularView.swift */; };
+		574700000000000000000026 /* AccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000025 /* AccessoryInlineView.swift */; };
+		574700000000000000000028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000027 /* Assets.xcassets */; };
+		57470000000000000000002A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 574700000000000000000029 /* Localizable.xcstrings */; };
+		57470000000000000000002F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57470000000000000000002E /* WidgetKit.framework */; };
+		574700000000000000000031 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 574700000000000000000030 /* SwiftUI.framework */; };
+		574700000000000000000033 /* TickTackWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 574700000000000000000032 /* TickTackWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		574700000000000000000034 /* NativeSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000003 /* NativeSessionStore.swift */; };
+		574700000000000000000035 /* AssistantClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000006 /* AssistantClient.swift */; };
+		574700000000000000000036 /* AssistantError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000008 /* AssistantError.swift */; };
+		574700000000000000000037 /* StopTimerIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5100000000000000000012 /* StopTimerIntent.swift */; };
+		574700000000000000000038 /* WatchSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C57A7000000000000000E /* WatchSummary.swift */; };
+		574700000000000000000039 /* TaskSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C57A70000000000000014 /* TaskSections.swift */; };
+		57470000000000000000003B /* PriorityStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57470000000000000000003A /* PriorityStyle.swift */; };
+		57470000000000000000003C /* PriorityStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57470000000000000000003A /* PriorityStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +91,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7A7C57A7000000000000002D;
 			remoteInfo = TickTackWatch;
+		};
+		574700000000000000000047 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 574700000000000000000040;
+			remoteInfo = TickTackWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -72,6 +111,17 @@
 				7A7C57A70000000000000036 /* TickTackWatch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		574700000000000000000049 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				574700000000000000000033 /* TickTackWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -121,6 +171,34 @@
 		7A7C57A70000000000000024 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7A7C57A70000000000000026 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		7A7C57A7000000000000002E /* TickTackWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TickTackWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		574700000000000000000001 /* TickTackWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickTackWidgetBundle.swift; sourceTree = "<group>"; };
+		574700000000000000000003 /* UpNextWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpNextWidget.swift; sourceTree = "<group>"; };
+		574700000000000000000005 /* SummaryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryProvider.swift; sourceTree = "<group>"; };
+		574700000000000000000007 /* SummaryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryEntry.swift; sourceTree = "<group>"; };
+		574700000000000000000009 /* WidgetLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetLinks.swift; sourceTree = "<group>"; };
+		57470000000000000000000B /* WatchSummaryDue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSummaryDue.swift; sourceTree = "<group>"; };
+		57470000000000000000000D /* UpNextWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpNextWidgetView.swift; sourceTree = "<group>"; };
+		57470000000000000000000F /* WidgetContainerBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContainerBackground.swift; sourceTree = "<group>"; };
+		574700000000000000000011 /* SmallWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallWidgetView.swift; sourceTree = "<group>"; };
+		574700000000000000000013 /* ListWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWidgetView.swift; sourceTree = "<group>"; };
+		574700000000000000000015 /* HeaderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderRow.swift; sourceTree = "<group>"; };
+		574700000000000000000017 /* RunningTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTimerView.swift; sourceTree = "<group>"; };
+		574700000000000000000019 /* StopTimerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopTimerButton.swift; sourceTree = "<group>"; };
+		57470000000000000000001B /* TaskLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskLineView.swift; sourceTree = "<group>"; };
+		57470000000000000000001D /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		57470000000000000000001F /* Linked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linked.swift; sourceTree = "<group>"; };
+		574700000000000000000021 /* AccessoryRectangularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryRectangularView.swift; sourceTree = "<group>"; };
+		574700000000000000000023 /* AccessoryCircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryCircularView.swift; sourceTree = "<group>"; };
+		574700000000000000000025 /* AccessoryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryInlineView.swift; sourceTree = "<group>"; };
+		574700000000000000000027 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		574700000000000000000029 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		57470000000000000000002B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57470000000000000000002C /* TickTackWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TickTackWidget.entitlements; sourceTree = "<group>"; };
+		57470000000000000000002D /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
+		57470000000000000000002E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		574700000000000000000030 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		574700000000000000000032 /* TickTackWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TickTackWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		57470000000000000000003A /* PriorityStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +217,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		574700000000000000000042 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57470000000000000000002F /* WidgetKit.framework in Frameworks */,
+				574700000000000000000031 /* SwiftUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -148,6 +235,8 @@
 				958DCC722DB07C7200EA8C5F /* debug.xcconfig */,
 				504EC3061FED79650016851F /* App */,
 				7A7C57A70000000000000028 /* TickTackWatch */,
+				57470000000000000000003D /* TickTackWidget */,
+				57470000000000000000003F /* Frameworks */,
 				504EC3051FED79650016851F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -157,6 +246,7 @@
 			children = (
 				504EC3041FED79650016851F /* App.app */,
 				7A7C57A7000000000000002E /* TickTackWatch.app */,
+				574700000000000000000032 /* TickTackWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,6 +267,7 @@
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
 				504EC3131FED79650016851F /* Info.plist */,
+				57470000000000000000002D /* App.entitlements */,
 				2FAD9762203C412B000D30F8 /* config.xml */,
 				50B271D01FEDC1A000F3C39B /* public */,
 			);
@@ -240,6 +331,7 @@
 			children = (
 				7A7C57A70000000000000012 /* SummaryModel.swift */,
 				7A7C57A70000000000000014 /* TaskSections.swift */,
+				57470000000000000000003A /* PriorityStyle.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -272,6 +364,53 @@
 			path = TickTackWatch;
 			sourceTree = "<group>";
 		};
+		57470000000000000000003D /* TickTackWidget */ = {
+			isa = PBXGroup;
+			children = (
+				574700000000000000000001 /* TickTackWidgetBundle.swift */,
+				574700000000000000000003 /* UpNextWidget.swift */,
+				574700000000000000000005 /* SummaryProvider.swift */,
+				574700000000000000000007 /* SummaryEntry.swift */,
+				574700000000000000000009 /* WidgetLinks.swift */,
+				57470000000000000000000B /* WatchSummaryDue.swift */,
+				57470000000000000000003E /* Views */,
+				574700000000000000000027 /* Assets.xcassets */,
+				574700000000000000000029 /* Localizable.xcstrings */,
+				57470000000000000000002B /* Info.plist */,
+				57470000000000000000002C /* TickTackWidget.entitlements */,
+			);
+			path = TickTackWidget;
+			sourceTree = "<group>";
+		};
+		57470000000000000000003E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				57470000000000000000000D /* UpNextWidgetView.swift */,
+				57470000000000000000000F /* WidgetContainerBackground.swift */,
+				574700000000000000000011 /* SmallWidgetView.swift */,
+				574700000000000000000013 /* ListWidgetView.swift */,
+				574700000000000000000015 /* HeaderRow.swift */,
+				574700000000000000000017 /* RunningTimerView.swift */,
+				574700000000000000000019 /* StopTimerButton.swift */,
+				57470000000000000000001B /* TaskLineView.swift */,
+				57470000000000000000001D /* MessageView.swift */,
+				57470000000000000000001F /* Linked.swift */,
+				574700000000000000000021 /* AccessoryRectangularView.swift */,
+				574700000000000000000023 /* AccessoryCircularView.swift */,
+				574700000000000000000025 /* AccessoryInlineView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		57470000000000000000003F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				57470000000000000000002E /* WidgetKit.framework */,
+				574700000000000000000030 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -283,11 +422,13 @@
 				504EC3011FED79650016851F /* Frameworks */,
 				504EC3021FED79650016851F /* Resources */,
 				7A7C57A70000000000000035 /* Embed Watch Content */,
+				574700000000000000000049 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				7A7C57A70000000000000038 /* PBXTargetDependency */,
+				574700000000000000000048 /* PBXTargetDependency */,
 			);
 			name = App;
 			packageProductDependencies = (
@@ -314,6 +455,23 @@
 			productReference = 7A7C57A7000000000000002E /* TickTackWatch.app */;
 			productType = "com.apple.product-type.application";
 		};
+		574700000000000000000040 /* TickTackWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 574700000000000000000044 /* Build configuration list for PBXNativeTarget "TickTackWidgetExtension" */;
+			buildPhases = (
+				574700000000000000000041 /* Sources */,
+				574700000000000000000042 /* Frameworks */,
+				574700000000000000000043 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TickTackWidgetExtension;
+			productName = TickTackWidgetExtension;
+			productReference = 574700000000000000000032 /* TickTackWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -329,6 +487,10 @@
 						ProvisioningStyle = Automatic;
 					};
 					7A7C57A7000000000000002D = {
+						CreatedOnToolsVersion = 16.0;
+						ProvisioningStyle = Automatic;
+					};
+					574700000000000000000040 = {
 						CreatedOnToolsVersion = 16.0;
 						ProvisioningStyle = Automatic;
 					};
@@ -353,6 +515,7 @@
 			targets = (
 				504EC3031FED79650016851F /* App */,
 				7A7C57A7000000000000002D /* TickTackWatch */,
+				574700000000000000000040 /* TickTackWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -379,6 +542,15 @@
 			files = (
 				7A7C57A70000000000000025 /* Assets.xcassets in Resources */,
 				7A7C57A70000000000000027 /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		574700000000000000000043 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				574700000000000000000028 /* Assets.xcassets in Resources */,
+				57470000000000000000002A /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +592,7 @@
 				7A7C57A70000000000000011 /* TickTackClient.swift in Sources */,
 				7A7C57A70000000000000013 /* SummaryModel.swift in Sources */,
 				7A7C57A70000000000000015 /* TaskSections.swift in Sources */,
+				57470000000000000000003C /* PriorityStyle.swift in Sources */,
 				7A7C57A70000000000000017 /* ContentView.swift in Sources */,
 				7A7C57A70000000000000019 /* PairingView.swift in Sources */,
 				7A7C57A7000000000000001B /* SummaryListView.swift in Sources */,
@@ -430,6 +603,39 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		574700000000000000000041 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				574700000000000000000002 /* TickTackWidgetBundle.swift in Sources */,
+				574700000000000000000004 /* UpNextWidget.swift in Sources */,
+				574700000000000000000006 /* SummaryProvider.swift in Sources */,
+				574700000000000000000008 /* SummaryEntry.swift in Sources */,
+				57470000000000000000000A /* WidgetLinks.swift in Sources */,
+				57470000000000000000000C /* WatchSummaryDue.swift in Sources */,
+				57470000000000000000000E /* UpNextWidgetView.swift in Sources */,
+				574700000000000000000010 /* WidgetContainerBackground.swift in Sources */,
+				574700000000000000000012 /* SmallWidgetView.swift in Sources */,
+				574700000000000000000014 /* ListWidgetView.swift in Sources */,
+				574700000000000000000016 /* HeaderRow.swift in Sources */,
+				574700000000000000000018 /* RunningTimerView.swift in Sources */,
+				57470000000000000000001A /* StopTimerButton.swift in Sources */,
+				57470000000000000000001C /* TaskLineView.swift in Sources */,
+				57470000000000000000001E /* MessageView.swift in Sources */,
+				574700000000000000000020 /* Linked.swift in Sources */,
+				574700000000000000000022 /* AccessoryRectangularView.swift in Sources */,
+				574700000000000000000024 /* AccessoryCircularView.swift in Sources */,
+				574700000000000000000026 /* AccessoryInlineView.swift in Sources */,
+				574700000000000000000034 /* NativeSessionStore.swift in Sources */,
+				574700000000000000000035 /* AssistantClient.swift in Sources */,
+				574700000000000000000036 /* AssistantError.swift in Sources */,
+				574700000000000000000037 /* StopTimerIntent.swift in Sources */,
+				574700000000000000000038 /* WatchSummary.swift in Sources */,
+				574700000000000000000039 /* TaskSections.swift in Sources */,
+				57470000000000000000003B /* PriorityStyle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -437,6 +643,11 @@
 			isa = PBXTargetDependency;
 			target = 7A7C57A7000000000000002D /* TickTackWatch */;
 			targetProxy = 7A7C57A70000000000000037 /* PBXContainerItemProxy */;
+		};
+		574700000000000000000048 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 574700000000000000000040 /* TickTackWidgetExtension */;
+			targetProxy = 574700000000000000000047 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -574,6 +785,7 @@
 			baseConfigurationReference = 958DCC722DB07C7200EA8C5F /* debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = App/Info.plist;
@@ -596,6 +808,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = App/Info.plist;
@@ -681,6 +894,68 @@
 			};
 			name = Release;
 		};
+		574700000000000000000045 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TickTackWidget/TickTackWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TickTackWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TickTack;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.slikk.ticktack.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		574700000000000000000046 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TickTackWidget/TickTackWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TickTackWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TickTack;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.slikk.ticktack.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -707,6 +982,15 @@
 			buildConfigurations = (
 				7A7C57A70000000000000033 /* Debug */,
 				7A7C57A70000000000000034 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		574700000000000000000044 /* Build configuration list for PBXNativeTarget "TickTackWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				574700000000000000000045 /* Debug */,
+				574700000000000000000046 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

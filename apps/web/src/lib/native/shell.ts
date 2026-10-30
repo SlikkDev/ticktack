@@ -9,7 +9,7 @@ import { configureNativeSession, pushNativeSession } from "./native-session";
  * Prepares the Capacitor shell before the first render: tags the document for
  * native-only styles, restores the stored session token, routes API requests
  * through bearer authentication, and hands the session to native code (Siri,
- * a paired watch). In a browser it does nothing.
+ * the home screen widget, a paired watch). In a browser it does nothing.
  */
 export async function prepareNativeShell(): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
@@ -17,7 +17,9 @@ export async function prepareNativeShell(): Promise<void> {
   try {
     const apiBaseUrl = resolveApiBaseUrl(import.meta.env.VITE_API_URL);
     const apiOrigin = new URL(apiBaseUrl).origin;
-    configureNativeSession(apiBaseUrl);
+    // The widgets open the app on a page with links that listenForAppLinks
+    // below recognises, so they are built on the same client URL.
+    configureNativeSession(apiBaseUrl, import.meta.env.VITE_CLIENT_URL ?? null);
     const token = await loadSessionToken();
     installNativeApiAuth(apiOrigin);
     // Native code may have missed earlier changes, for example a watch that

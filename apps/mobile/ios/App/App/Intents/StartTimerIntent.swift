@@ -1,5 +1,6 @@
 import AppIntents
 import Foundation
+import WidgetKit
 
 /// "Start a timer in TickTack": Siri asks which of the user's open tasks to
 /// track and opens a time entry on it. Only one timer runs at a time, so a
@@ -26,9 +27,11 @@ struct StartTimerIntent: AppIntent {
         if let running = summary.runningTimer {
             try await client.stopTimer(running)
             try await client.startTimer(taskId: task.id)
+            WidgetCenter.shared.reloadAllTimelines()
             return .result(dialog: "Stopped the timer on “\(running.taskTitle)” and started one on “\(task.title)”.")
         }
         try await client.startTimer(taskId: task.id)
+        WidgetCenter.shared.reloadAllTimelines()
         return .result(dialog: "Timer started on “\(task.title)”.")
     }
 }

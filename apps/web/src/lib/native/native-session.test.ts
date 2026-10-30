@@ -27,7 +27,10 @@ describe("native session hand-off", () => {
   beforeEach(() => {
     setSession.mockReset();
     setSession.mockResolvedValue(undefined);
-    configureNativeSession("https://tasks.example.test/api");
+    configureNativeSession(
+      "https://tasks.example.test/api",
+      "https://tasks.example.test",
+    );
   });
 
   afterEach(() => {
@@ -42,15 +45,39 @@ describe("native session hand-off", () => {
     expect(setSession).not.toHaveBeenCalled();
   });
 
-  it("forwards the API base URL with every token change, including sign-out", async () => {
+  it("forwards the URLs with every token change, including sign-out", async () => {
     native.platform = true;
     native.plugin = true;
     await pushNativeSession("issued-token");
     await pushNativeSession(null);
     expect(setSession.mock.calls).toEqual([
-      [{ apiUrl: "https://tasks.example.test/api", token: "issued-token" }],
-      [{ apiUrl: "https://tasks.example.test/api", token: null }],
+      [
+        {
+          apiUrl: "https://tasks.example.test/api",
+          clientUrl: "https://tasks.example.test",
+          token: "issued-token",
+        },
+      ],
+      [
+        {
+          apiUrl: "https://tasks.example.test/api",
+          clientUrl: "https://tasks.example.test",
+          token: null,
+        },
+      ],
     ]);
+  });
+
+  it("sends a null client URL when the build does not know it", async () => {
+    native.platform = true;
+    native.plugin = true;
+    configureNativeSession("https://tasks.example.test/api");
+    await pushNativeSession("issued-token");
+    expect(setSession).toHaveBeenCalledWith({
+      apiUrl: "https://tasks.example.test/api",
+      clientUrl: null,
+      token: "issued-token",
+    });
   });
 
   it("swallows plugin failures so the phone app keeps working", async () => {

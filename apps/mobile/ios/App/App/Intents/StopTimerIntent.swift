@@ -1,8 +1,10 @@
 import AppIntents
 import Foundation
+import WidgetKit
 
 /// "Stop the timer in TickTack": closes the running time entry and says how
-/// long it ran.
+/// long it ran. The home screen widget's stop button runs this intent too,
+/// inside the widget extension, so the file is part of both targets.
 @available(iOS 16.0, *)
 struct StopTimerIntent: AppIntent {
     static var title: LocalizedStringResource = "Stop Timer"
@@ -14,6 +16,7 @@ struct StopTimerIntent: AppIntent {
             throw AssistantError.noRunningTimer
         }
         try await client.stopTimer(running)
+        WidgetCenter.shared.reloadAllTimelines()
         let duration = Self.spokenDuration(from: running.startTime, to: Date())
         return .result(dialog: "Stopped the timer on “\(running.taskTitle)” after \(duration).")
     }

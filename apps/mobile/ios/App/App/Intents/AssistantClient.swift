@@ -1,7 +1,8 @@
 import Foundation
 
-/// The API calls behind the Siri App Intents, authenticated with the bearer
-/// token the web shell stored (NativeSessionStore). Paths are relative to the
+/// The API calls behind the Siri App Intents and the home screen widget,
+/// authenticated with the bearer token the web shell stored
+/// (NativeSessionStore). Paths are relative to the
 /// API base URL, for example https://ticktack.slikk.io/api. Responses mirror
 /// the Zod schemas in apps/api/src/*/response.ts; only the fields the intents
 /// read are decoded.

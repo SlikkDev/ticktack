@@ -13,7 +13,9 @@ over HTTPS; they do not run the API or database on the device.
   `VITE_API_URL=http://10.0.2.2:1337` for an Android emulator against a local
   API (that also needs `server.cleartext` in `capacitor.config.ts`).
 - `cap sync` copies `apps/web/dist` into `android/` and `ios/` and wires the
-  native plugins (`@capacitor/app`, `@capacitor/preferences`).
+  native plugins (`@capacitor/app`, `@capacitor/preferences`). The
+  `NativeSession` plugin that the watches, Siri and the widgets rely on is
+  part of each native project instead; see "How the watch signs in" below.
 - Inside the shell the page origin is `capacitor://localhost` (iOS) or
   `https://localhost` (Android), so the API's session cookie would be a
   third-party cookie that WebViews withhold. The app therefore signs in with
@@ -172,16 +174,19 @@ tasks stays on the phone.
 
 ### How the watch signs in
 
-The watch never shows a login form. The web shell pushes the API base URL and
-the current bearer token to the native `NativeSession` plugin
-(`apps/web/src/lib/native/native-session.ts`) on every launch and whenever the
-token changes, including sign-out. On iOS the plugin stores them for the Siri
-intents (`ios/App/App/NativeSession`) and relays them over WatchConnectivity
-as the application context (`ios/App/App/Watch`); on Android it writes a Wear
-OS Data Layer item at `/ticktack/session`
-(`android/app/src/main/java/io/slikk/ticktack/WatchSessionRelay.java`). The
-plugin is part of each native project and registered by the app itself, so
-`cap sync` neither installs nor removes it.
+The watch never shows a login form. The web shell pushes the API base URL, the
+web app's own URL (`VITE_CLIENT_URL`) and the current bearer token to the
+native `NativeSession` plugin (`apps/web/src/lib/native/native-session.ts`)
+on every launch and whenever the token changes, including sign-out. On iOS
+the plugin stores them for the Siri intents and the widget
+(`ios/App/App/NativeSession`) and relays the API URL and token over
+WatchConnectivity as the application context (`ios/App/App/Watch`); on Android
+it stores them for the widget
+(`android/app/src/main/java/io/slikk/ticktack/NativeSessionStore.java`) and
+writes a Wear OS Data Layer item at `/ticktack/session`
+(`WatchSessionRelay.java` next to it). The plugin is part of each native
+project and registered by the app itself, so `cap sync` neither installs nor
+removes it.
 
 The watch stores the token (Keychain on watchOS, app-private preferences on
 Wear OS) and calls the API directly over HTTPS, using the phone's connection
@@ -222,6 +227,70 @@ Studio, resolve any toolchain prompts, and test on a watch or simulator before
 shipping. Complications and tiles, a notifications list and an offline cache
 are natural follow-ups.
 
+## Home screen widgets
+
+Both apps ship an "Up next" home screen widget: the running timer with a stop
+button, the soonest-due open tasks assigned to the user with their due dates,
+the number of tasks due today, the unread notification count and a new-task
+button. Tapping a task opens it in the app, the header opens My tasks, the
+unread count opens the inbox and the plus opens the create-task dialog. Like
+the watches, the widgets call `GET /api/watch/summary` themselves with the
+session the web shell hands to the `NativeSession` plugin, and they stop the
+timer through `PUT /api/time-entry/{id}`, so no server change is needed. Taps
+open the app through the web app's own URLs (`/dashboard/assistant/whats-next`,
+`/dashboard/assistant/create-task`, `/dashboard/assistant/open?feature=inbox`
+and the task page), which the shell routes like any other app link; that is
+why the plugin now also receives `VITE_CLIENT_URL`.
+
+### iOS: WidgetKit extension
+
+`ios/App/TickTackWidget` is a WidgetKit extension target
+(`TickTackWidgetExtension`, bundle id `io.slikk.ticktack.widget`, iOS 16 or
+newer) that the `App` target embeds; `cap open ios` and a normal archive
+include it. The one widget, "Up next", supports the small, medium and large
+Home Screen families and the rectangular, circular and inline Lock Screen
+families. Task titles are marked privacy sensitive, so a locked Lock Screen
+redacts them. The timeline refreshes every 15 minutes (every 5 after a failed
+fetch), and the app reloads it whenever it goes to the background, the session
+changes, or a Siri intent creates a task or starts or stops a timer. From iOS
+17 the stop button runs `StopTimerIntent` inside the extension, so the timer
+stops without opening the app; on iOS 16 the row opens the task instead.
+
+The extension and the app share the session through the app group
+`group.io.slikk.ticktack` (`App/App.entitlements`,
+`TickTackWidget/TickTackWidget.entitlements`): `NativeSessionStore` keeps the
+URLs in the group's `UserDefaults` and the token in the keychain with the
+group as its access group. Select the same team for the `App`,
+`TickTackWatch` and `TickTackWidgetExtension` targets and let automatic
+signing register the app group, or add it to both app ids in the developer
+account; without the entitlement the token cannot be stored and Siri and the
+widget keep asking to sign in. The extension compiles `NativeSessionStore`,
+`AssistantClient`, `AssistantError`, `StopTimerIntent`, `WatchSummary`,
+`TaskSections` and `PriorityStyle` from the app and watch targets rather than
+copying them. Strings are localized in English and Hebrew in
+`TickTackWidget/Localizable.xcstrings`.
+
+### Android: app widget
+
+`android/app/src/main/java/io/slikk/ticktack/widget` is a classic
+`AppWidgetProvider` with `RemoteViews`, so the phone module stays Java. The
+widget is 4×2 by default and resizable (`res/xml/task_widget_info.xml`); the
+task list is a scrolling collection served by `TaskListService`, and the
+running timer is a `Chronometer`, so it keeps counting between refreshes.
+`TaskWidgetProvider` fetches the summary off the main thread inside
+`goAsync()` and caches it in app-private preferences (`WidgetSummaryCache`),
+so a relayout or a reboot shows the last known tasks at once and a failed
+refresh keeps them. The launcher refreshes the widget every 30 minutes, and
+the app requests a refresh whenever the session changes and whenever
+`MainActivity` pauses. The stop and refresh buttons broadcast to
+`TaskWidgetActions`, which is not exported, so only the app's own pending
+intents can stop the timer. Taps open `MainActivity` with explicit `VIEW`
+intents that carry the web app's URLs, like the launcher shortcuts, so they
+need no App Links verification. Colours follow dark mode (`res/values-night`)
+and, on Android 12 and newer, the wallpaper accent and the launcher's corner
+radius (`res/values-v31`); strings live in `res/values/strings.xml` and
+`res/values-he/strings.xml`.
+
 ## Known limitations
 
 - Sign in with email and password, or with an emailed code, works in the app.
@@ -233,8 +302,10 @@ are natural follow-ups.
   the app; public project assets and avatars are unaffected.
 - The web shell keeps the session token in app-sandboxed preferences, not
   the keychain. Android backups exclude it (`allowBackup="false"`); iOS
-  backups include it. On iOS the `NativeSession` plugin keeps a second copy in
-  the keychain for Siri.
+  backups include it. The `NativeSession` plugin keeps a second copy for the
+  code that runs outside the WebView: in the shared keychain on iOS (Siri and
+  the widget) and in app-private preferences on Android (the widget and the
+  watch relay).
 - The Siri intents and the Android App Actions were written without Xcode or
   the Android SDK and have not run on a device. Custom App Actions understand
   en-US only and need Google's review before they work outside the test tool;
@@ -246,3 +317,9 @@ are natural follow-ups.
   and offer status and timer actions only. They have no complications or
   tiles, no notifications list and no offline cache, and their builds were not
   exercised either; see "Smart watches" above.
+- The widgets were written without Xcode or the Android SDK too and have not
+  run on a device. The iOS widget needs the App Groups capability on both
+  targets (see "Home screen widgets"), stops the timer in place only from iOS
+  17, and offers no other quick actions; the Android widget keeps the last
+  summary in plain app-private preferences and opens the app for everything
+  except stopping the timer.

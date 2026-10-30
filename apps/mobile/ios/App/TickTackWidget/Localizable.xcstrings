@@ -1,0 +1,431 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "TickTack": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TickTack"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "טיקטק"
+          }
+        }
+      }
+    },
+    "widget.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Up next"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הבא בתור"
+          }
+        }
+      }
+    },
+    "widget.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your next tasks and the running timer, straight from TickTack."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המשימות הבאות שלך והטיימר הפעיל, ישירות מטיקטק."
+          }
+        }
+      }
+    },
+    "widget.timer.running": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracking time"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מעקב זמן פעיל"
+          }
+        }
+      }
+    },
+    "widget.timer.stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop timer"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עצירת טיימר"
+          }
+        }
+      }
+    },
+    "widget.newTask": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New task"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "משימה חדשה"
+          }
+        }
+      }
+    },
+    "widget.unread %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld unread"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld שלא נקראו"
+          }
+        }
+      }
+    },
+    "widget.due %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld due today"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld לביצוע היום"
+          }
+        }
+      }
+    },
+    "widget.dueLabel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "today"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "היום"
+          }
+        }
+      }
+    },
+    "widget.more %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld more in the app"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עוד %lld באפליקציה"
+          }
+        }
+      }
+    },
+    "widget.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All clear"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הכול נקי"
+          }
+        }
+      }
+    },
+    "widget.empty.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No open tasks are assigned to you."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אין משימות פתוחות שהוקצו לך."
+          }
+        }
+      }
+    },
+    "widget.signedOut": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open TickTack and sign in to see your tasks here."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פתחו את טיקטק והתחברו כדי לראות כאן את המשימות שלכם."
+          }
+        }
+      }
+    },
+    "widget.signedOut.short": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open TickTack to sign in"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פתחו את טיקטק כדי להתחבר"
+          }
+        }
+      }
+    },
+    "widget.unavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TickTack couldn't refresh. Tap to open the app."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "טיקטק לא הצליח להתרענן. הקישו כדי לפתוח את האפליקציה."
+          }
+        }
+      }
+    },
+    "widget.unavailable.short": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't refresh"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרענון נכשל"
+          }
+        }
+      }
+    },
+    "widget.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הבא בתור"
+          }
+        }
+      }
+    },
+    "widget.nothingDue": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing due"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אין משימות לביצוע"
+          }
+        }
+      }
+    },
+    "section.overdue": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdue"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "באיחור"
+          }
+        }
+      }
+    },
+    "section.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "היום"
+          }
+        }
+      }
+    },
+    "section.upcoming": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upcoming"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בקרוב"
+          }
+        }
+      }
+    },
+    "section.undated": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No due date"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ללא תאריך יעד"
+          }
+        }
+      }
+    },
+    "due.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "היום"
+          }
+        }
+      }
+    },
+    "due.tomorrow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomorrow"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחר"
+          }
+        }
+      }
+    },
+    "due.yesterday": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yesterday"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אתמול"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

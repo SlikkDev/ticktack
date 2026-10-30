@@ -1,11 +1,12 @@
 import Capacitor
 import Foundation
+import WidgetKit
 
 /// Native half of `apps/web/src/lib/native/native-session.ts`.
 ///
-/// `NativeSession.setSession({ apiUrl, token })` stores the API base URL and
-/// the bearer token for the Siri App Intents and relays them to the paired
-/// Apple Watch; a null token signs both out.
+/// `NativeSession.setSession({ apiUrl, clientUrl, token })` stores the URLs
+/// and the bearer token for the Siri App Intents and the home screen widget
+/// and relays them to the paired Apple Watch; a null token signs them all out.
 @objc(NativeSessionPlugin)
 public class NativeSessionPlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "NativeSessionPlugin"
@@ -19,8 +20,14 @@ public class NativeSessionPlugin: CAPPlugin, CAPBridgedPlugin {
             call.reject("apiUrl is required")
             return
         }
-        NativeSessionStore.save(apiUrl: apiUrl, token: call.getString("token"))
+        NativeSessionStore.save(
+            apiUrl: apiUrl,
+            clientUrl: call.getString("clientUrl"),
+            token: call.getString("token")
+        )
         WatchSessionRelay.shared.publish()
+        // The widget shows the signed-in user's tasks, or asks to sign in.
+        WidgetCenter.shared.reloadAllTimelines()
         call.resolve()
     }
 }

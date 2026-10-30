@@ -68,6 +68,7 @@ describe("native shell bootstrap", () => {
     expect(globalThis.fetch).not.toBe(originalFetch);
     expect(setNativeSession).toHaveBeenCalledWith({
       apiUrl: "https://tasks.example.test/api",
+      clientUrl: "https://tasks.example.test",
       token: "restored-token",
     });
 

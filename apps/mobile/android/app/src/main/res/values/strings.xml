@@ -88,4 +88,40 @@
         <item>notifications</item>
         <item>updates</item>
     </string-array>
+
+    <!-- Home screen widget (res/xml/task_widget_info.xml, widget/). -->
+    <string name="widget_title">Up next</string>
+    <string name="widget_description">Your next tasks and the running timer, straight from TickTack.</string>
+    <string name="widget_loading">Loading your tasks…</string>
+    <string name="widget_signed_out">Open TickTack and sign in to see your tasks here.</string>
+    <string name="widget_unavailable">TickTack couldn\'t refresh. Tap the title to open the app.</string>
+    <string name="widget_empty_body">No open tasks are assigned to you.</string>
+    <string name="widget_refresh">Refresh</string>
+    <string name="widget_new_task">New task</string>
+    <string name="widget_timer_running">Tracking time</string>
+    <string name="widget_timer_stop">Stop timer</string>
+    <string name="widget_due_today">Today</string>
+    <string name="widget_due_tomorrow">Tomorrow</string>
+    <string name="widget_due_yesterday">Yesterday</string>
+    <plurals name="widget_due_now">
+        <item quantity="one">%d due today</item>
+        <item quantity="other">%d due today</item>
+    </plurals>
+    <plurals name="widget_unread">
+        <item quantity="one">%d unread</item>
+        <item quantity="other">%d unread</item>
+    </plurals>
+    <plurals name="widget_more">
+        <item quantity="one">%d more in the app</item>
+        <item quantity="other">%d more in the app</item>
+    </plurals>
+
+    <!-- Sample content for the widget picker (res/layout/widget_tasks_preview.xml). -->
+    <string name="widget_preview_due">2 due today</string>
+    <string name="widget_preview_unread">2 unread</string>
+    <string name="widget_preview_timer">Review the design</string>
+    <string name="widget_preview_project">Website</string>
+    <string name="widget_preview_elapsed" translatable="false">25:14</string>
+    <string name="widget_preview_task_1">Fix the login bug</string>
+    <string name="widget_preview_task_2">Write the release notes</string>
 </resources>

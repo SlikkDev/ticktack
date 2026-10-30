@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- White so widget/TaskListFactory.java can tint it per priority. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#FFFFFFFF" />
+    <size
+        android:width="8dp"
+        android:height="8dp" />
+</shape>

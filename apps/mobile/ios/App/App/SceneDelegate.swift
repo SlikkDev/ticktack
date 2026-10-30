@@ -1,5 +1,6 @@
 import UIKit
 import Capacitor
+import WidgetKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -12,6 +13,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
 
         SceneDelegateProxy.shared.scene(scene, willConnectTo: session, options: connectionOptions)
+    }
+
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        // Whatever the user just did in the app, the home screen widget
+        // should show it; WidgetKit budgets these reloads itself.
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
