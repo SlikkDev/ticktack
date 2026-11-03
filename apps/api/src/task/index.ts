@@ -61,6 +61,7 @@ import updateTaskAssignee from "./controllers/update-task-assignee";
 import updateTaskDescription from "./controllers/update-task-description";
 import updateTaskDueDate from "./controllers/update-task-due-date";
 import updateTaskPriority from "./controllers/update-task-priority";
+import updateTaskVersion from "./controllers/update-task-version";
 import updateTaskStatus from "./controllers/update-task-status";
 import updateTaskTitle from "./controllers/update-task-title";
 import {
@@ -105,6 +106,7 @@ import {
   updateDescriptionBody,
   updateDueDateBody,
   updatePriorityBody,
+  updateVersionBody,
   updateStatusBody,
   updateTaskBody,
   updateTitleBody,
@@ -568,6 +570,36 @@ const updateTaskPriorityRoute = createRoute({
   },
 });
 
+const updateTaskVersionRoute = createRoute({
+  method: "put",
+  operationId: "updateTaskVersion",
+  path: "/version/{id}",
+  tags: ["Tasks"],
+  summary: "Update task version",
+  description:
+    "Put a task in a version of its workspace, or take it out with null.",
+  middleware: [
+    workspaceAccess.fromTask(),
+    requireWorkspacePermission({ task: ["update"] }),
+    requireEntitlement,
+  ] as const,
+  request: {
+    params: taskParam,
+    body: {
+      required: true,
+      content: { "application/json": { schema: updateVersionBody } },
+    },
+  },
+  responses: {
+    200: jsonResponse("The updated task", taskSchema),
+    400: errorResponse("Invalid body"),
+    403: errorResponse(
+      "No access to the project, or missing task:update permission",
+    ),
+    404: errorResponse("Task or version not found"),
+  },
+});
+
 const updateTaskAssigneeRoute = createRoute({
   method: "put",
   operationId: "updateTaskAssignee",
@@ -885,6 +917,7 @@ const task = apiRouter<BaseVariables & { workspaceId: string }>()
       priority,
       status,
       userId,
+      versionId,
       customFields,
       draftAssetIds,
     } = c.req.valid("json");
@@ -910,6 +943,7 @@ const task = apiRouter<BaseVariables & { workspaceId: string }>()
       dueDate: parsedDueDate,
       priority,
       status,
+      versionId,
       customFields,
       draftAssetIds,
     });
@@ -973,6 +1007,7 @@ const task = apiRouter<BaseVariables & { workspaceId: string }>()
       projectId,
       position,
       userId,
+      versionId,
     } = c.req.valid("json");
 
     const currentUserId = c.get("userId");
@@ -1000,6 +1035,7 @@ const task = apiRouter<BaseVariables & { workspaceId: string }>()
       position,
       userId,
       currentUserId,
+      versionId,
     );
 
     return c.json(task, 200);
@@ -1043,6 +1079,15 @@ const task = apiRouter<BaseVariables & { workspaceId: string }>()
     const currentUserId = c.get("userId");
 
     const task = await updateTaskPriority({ id, priority, currentUserId });
+
+    return c.json(task, 200);
+  })
+  .openapi(updateTaskVersionRoute, async (c) => {
+    const { id } = c.req.valid("param");
+    const { versionId } = c.req.valid("json");
+    const currentUserId = c.get("userId");
+
+    const task = await updateTaskVersion({ id, versionId, currentUserId });
 
     return c.json(task, 200);
   })

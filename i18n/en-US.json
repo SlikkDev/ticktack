@@ -1485,6 +1485,50 @@
 			"emptyDescription": "Add labels to sort and filter tasks across projects.",
 			"loadError": "Could not load labels. Please try again."
 		},
+		"workspaceVersions": {
+			"pageTitle": "Versions",
+			"title": "Versions",
+			"subtitle": "Versions group the tasks that ship together, across every project in this workspace.",
+			"subtitleWithWorkspace": "Versions group the tasks that ship together, across every project in {{workspaceName}}.",
+			"sectionTitle": "Workspace versions",
+			"sectionDescription": "Assign a version from a task's properties, then filter any board by it. Release a version once it has shipped.",
+			"newVersion": "New version",
+			"createVersion": "Create version",
+			"editVersion": "Edit version",
+			"saveVersion": "Save",
+			"deleteVersion": "Delete version",
+			"nameLabel": "Name",
+			"namePlaceholder": "v1.4.0",
+			"descriptionLabel": "Description",
+			"descriptionPlaceholder": "What this version delivers (optional)",
+			"createDescription": "Tasks in any project of this workspace can be assigned to it.",
+			"editDescription": "Changes show up on every task in this version.",
+			"deleteConfirmTitle": "Delete “{{name}}”?",
+			"deleteConfirmDescription_one": "{{count}} task loses its version. The task itself is kept. This can't be undone.",
+			"deleteConfirmDescription_other": "{{count}} tasks lose their version. The tasks themselves are kept. This can't be undone.",
+			"deleteConfirmDescriptionEmpty": "No task uses this version. This can't be undone.",
+			"taskCount_one": "{{count}} task",
+			"taskCount_other": "{{count}} tasks",
+			"releasedOn": "Released {{date}}",
+			"statusOpen": "Open",
+			"statusReleased": "Released",
+			"release": "Mark as released",
+			"reopen": "Reopen",
+			"editNamed": "Edit {{name}}",
+			"rowActions": "Actions for {{name}}",
+			"createSuccess": "Version created",
+			"updateSuccess": "Version updated",
+			"deleteSuccess": "Version deleted",
+			"releaseSuccess": "Version marked as released",
+			"reopenSuccess": "Version reopened",
+			"createError": "Failed to create version",
+			"updateError": "Failed to update version",
+			"deleteError": "Failed to delete version",
+			"loadError": "Could not load versions. Please try again.",
+			"nameRequired": "Version name is required",
+			"emptyTitle": "No versions yet",
+			"emptyDescription": "Create a version to group the tasks that ship together."
+		},
 		"workspaceImport": {
 			"pageTitle": "Import",
 			"title": "Import",
@@ -2805,6 +2849,9 @@
 		"clearedDueDate": "cleared the due date",
 		"setDueDate": "set due date to {{date}}",
 		"changedDueDate": "changed due date from {{from}} to {{to}}",
+		"changedVersion": "changed version from {{from}} to {{to}}",
+		"setVersion": "set version to {{version}}",
+		"clearedVersion": "cleared the version",
 		"changedTitle": "changed title from \"{{from}}\" to \"{{to}}\"",
 		"moved": "moved task from \"{{from}}\" to \"{{to}}\"",
 		"movedFromOtherProject": "moved task from another project to \"{{to}}\"",
@@ -2929,6 +2976,10 @@
 			"medium": "Medium",
 			"high": "High",
 			"urgent": "Urgent"
+		},
+		"version": {
+			"label": "Version",
+			"none": "No version"
 		},
 		"view": {
 			"board": "Board",
@@ -3131,6 +3182,10 @@
 				"unassigned": "Unassigned",
 				"updateError": "Failed to update task assignee"
 			},
+			"version": {
+				"searchPlaceholder": "Search versions…",
+				"updateError": "Failed to update task version"
+			},
 			"status": {
 				"updateError": "Failed to update task status"
 			},
@@ -3210,7 +3265,8 @@
 				"priority": "Priority",
 				"assignee": "Assignee",
 				"dueDate": "Due date",
-				"labels": "Labels"
+				"labels": "Labels",
+				"version": "Version"
 			},
 			"operators": {
 				"isAnyOf": "is any of",

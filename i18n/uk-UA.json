@@ -2598,6 +2598,54 @@
 		},
 		"shared": {
 			"autosave": "Зміни зберігаються автоматично"
+		},
+		"workspaceVersions": {
+			"createDescription": "Tasks in any project of this workspace can be assigned to it.",
+			"createError": "Failed to create version",
+			"createSuccess": "Version created",
+			"createVersion": "Create version",
+			"deleteConfirmDescription_few": "{{count}} tasks lose their version. The tasks themselves are kept. This can't be undone.",
+			"deleteConfirmDescription_many": "{{count}} tasks lose their version. The tasks themselves are kept. This can't be undone.",
+			"deleteConfirmDescription_one": "{{count}} task loses its version. The task itself is kept. This can't be undone.",
+			"deleteConfirmDescription_other": "{{count}} tasks lose their version. The tasks themselves are kept. This can't be undone.",
+			"deleteConfirmDescriptionEmpty": "No task uses this version. This can't be undone.",
+			"deleteConfirmTitle": "Delete “{{name}}”?",
+			"deleteError": "Failed to delete version",
+			"deleteSuccess": "Version deleted",
+			"deleteVersion": "Delete version",
+			"descriptionLabel": "Description",
+			"descriptionPlaceholder": "What this version delivers (optional)",
+			"editDescription": "Changes show up on every task in this version.",
+			"editNamed": "Edit {{name}}",
+			"editVersion": "Edit version",
+			"emptyDescription": "Create a version to group the tasks that ship together.",
+			"emptyTitle": "No versions yet",
+			"loadError": "Could not load versions. Please try again.",
+			"nameLabel": "Name",
+			"namePlaceholder": "v1.4.0",
+			"nameRequired": "Version name is required",
+			"newVersion": "New version",
+			"pageTitle": "Versions",
+			"release": "Mark as released",
+			"releasedOn": "Released {{date}}",
+			"releaseSuccess": "Version marked as released",
+			"reopen": "Reopen",
+			"reopenSuccess": "Version reopened",
+			"rowActions": "Actions for {{name}}",
+			"saveVersion": "Save",
+			"sectionDescription": "Assign a version from a task's properties, then filter any board by it. Release a version once it has shipped.",
+			"sectionTitle": "Workspace versions",
+			"statusOpen": "Open",
+			"statusReleased": "Released",
+			"subtitle": "Versions group the tasks that ship together, across every project in this workspace.",
+			"subtitleWithWorkspace": "Versions group the tasks that ship together, across every project in {{workspaceName}}.",
+			"taskCount_few": "{{count}} tasks",
+			"taskCount_many": "{{count}} tasks",
+			"taskCount_one": "{{count}} task",
+			"taskCount_other": "{{count}} tasks",
+			"title": "Versions",
+			"updateError": "Failed to update version",
+			"updateSuccess": "Version updated"
 		}
 	},
 	"navigation": {
@@ -3002,7 +3050,10 @@
 		},
 		"moved": "перемістив завдання з «{{from}}» до «{{to}}»",
 		"created": "створив це завдання",
-		"movedFromOtherProject": "moved task from another project to \"{{to}}\""
+		"movedFromOtherProject": "moved task from another project to \"{{to}}\"",
+		"changedVersion": "changed version from {{from}} to {{to}}",
+		"clearedVersion": "cleared the version",
+		"setVersion": "set version to {{version}}"
 	},
 	"tasks": {
 		"title": "Завдання",
@@ -3258,6 +3309,10 @@
 					"crimson": "Багряний"
 				},
 				"editLabels": "Редагувати мітки"
+			},
+			"version": {
+				"searchPlaceholder": "Search versions…",
+				"updateError": "Failed to update task version"
 			}
 		},
 		"backlog": {
@@ -3300,7 +3355,8 @@
 				"priority": "Пріоритет",
 				"assignee": "Виконавець",
 				"dueDate": "Дата завершення",
-				"labels": "Мітки"
+				"labels": "Мітки",
+				"version": "Version"
 			},
 			"operators": {
 				"isAnyOf": "є будь-яким з",
@@ -3537,6 +3593,10 @@
 			"markdownCopied": "Скопійовано як Markdown",
 			"copyFailed": "Не вдалося скопіювати в буфер обміну.",
 			"pageUrlCopied": "URL сторінки скопійовано"
+		},
+		"version": {
+			"label": "Version",
+			"none": "No version"
 		}
 	},
 	"invitations": {

@@ -1,0 +1,71 @@
+---
+title: Versions
+description: Group the tasks that ship together with workspace versions, assign them from a task, filter boards by version, and mark a version as released
+---
+
+A version names a release: the set of tasks, across every project in the workspace, that ship together. Give a task a version while it is being planned, filter any board or backlog by that version to see what is left, and mark the version as released once it is out. Versions replace the one-label-per-release pattern and keep the label list for what labels are good at.
+
+## Open workspace versions
+
+1. Go to **Settings**.
+2. Open **Workspace -> Versions**.
+
+The page lists the workspace's versions with how many tasks each one holds. Open versions come first, newest first, then the released ones.
+
+## Create a version
+
+1. Click **New version**.
+2. Enter a name, such as `v1.4.0` or `2026-11-03`. Names are unique within the workspace.
+3. Add a description if it helps, for example what the release is for.
+4. Click **Create version**.
+
+The version can now be assigned to tasks in any project of the workspace.
+
+## Assign a version to a task
+
+1. Open the task.
+2. In the properties rail, click **Version**.
+3. Pick a version, or **No version** to clear it.
+
+The task's board card shows the version name. Changing a version is recorded in the task's activity, so the history shows when a task moved between releases.
+
+Duplicating a task keeps its version. Moving a task to another project in the same workspace keeps it too.
+
+## Filter a board by version
+
+1. On a board, backlog, calendar, or Gantt view, open **Filter**.
+2. Choose **Version**.
+3. Pick one or more versions, or **No version** for tasks that are not scheduled for a release yet.
+
+Like the other filters, the version filter can be negated to show everything except a version, and it is remembered per project.
+
+## Release a version
+
+1. Open the version's actions menu.
+2. Click **Mark as released**.
+
+The version shows as **Released** with the date, and moves below the open versions. Its tasks keep their version, so the release stays a record of what shipped. **Reopen** undoes it.
+
+## Edit or delete a version
+
+- To rename a version or change its description, click its name.
+- To delete it, open its actions menu and click **Delete version**. The tasks are kept and simply lose their version. This cannot be undone.
+
+## From the API, API keys, and MCP
+
+Versions are available wherever tasks are:
+
+- The **task list** endpoint accepts `versionId` (or `versionId=none`) and `label`, so a release script can list the tasks of a version, or find a task by an exact label name, without reading a whole project.
+- Tasks carry `versionId` when they are created or updated, and `PUT /task/version/{id}` changes just the version.
+- `GET /version/workspace/{workspaceId}` lists a workspace's versions with their task counts; `POST`, `PUT`, and `DELETE /version` manage them.
+- The MCP server exposes the same through `list_workspace_versions`, `create_version`, `update_version`, `delete_version`, and `update_task_version`, and `list_tasks` takes `versionId` and `label`.
+
+## Permissions
+
+Assigning a version to a task needs the **Task: update** permission. Creating, editing, releasing, and deleting versions needs the **Workspace: manage settings** permission, the same one that guards the other workspace settings pages. If you don't see the controls, ask a workspace admin to update your role.
+
+## Related
+
+- [Labels](/core/functional/manage-workspace-labels)
+- [Backlog planning](/core/functional/backlog-planning)
+- [Import from Jira](/core/migrations/from-jira): Jira fix versions become workspace versions

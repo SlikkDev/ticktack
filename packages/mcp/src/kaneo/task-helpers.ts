@@ -16,6 +16,7 @@ export type TaskUpdatePatch = {
   startDate?: string | null;
   dueDate?: string | null;
   userId?: string | null;
+  versionId?: string | null;
 };
 
 /**
@@ -24,7 +25,7 @@ export type TaskUpdatePatch = {
 export function buildFullTaskUpdateBody(
   existing: Record<string, unknown>,
   patch: TaskUpdatePatch,
-): Record<string, string | number | undefined> {
+): Record<string, string | number | null | undefined> {
   const positionRaw = patch.position ?? existing.position;
   const position =
     typeof positionRaw === "number"
@@ -94,7 +95,7 @@ export function buildFullTaskUpdateBody(
     patch.dueDate !== undefined ? patch.dueDate : existing.dueDate,
   );
 
-  const body: Record<string, string | number | undefined> = {
+  const body: Record<string, string | number | null | undefined> = {
     title,
     description,
     status,
@@ -102,6 +103,11 @@ export function buildFullTaskUpdateBody(
     projectId,
     position,
   };
+  // The API keeps the version when the field is absent, so only a patched
+  // value is sent: a string moves the task, null clears it.
+  if (patch.versionId !== undefined) {
+    body.versionId = patch.versionId;
+  }
 
   if (startDate !== undefined) {
     body.startDate = startDate;

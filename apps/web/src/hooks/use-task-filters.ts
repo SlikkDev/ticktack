@@ -10,6 +10,8 @@ export type BoardFilters = {
   assignee: string[] | null;
   dueDate: string[] | null;
   labels: string[] | null;
+  // Version ids, or VERSION_FILTER_VALUES.noVersion for tasks without one.
+  version?: string[] | null;
   customFields: Record<string, string[]> | null;
   negated?: string[] | null;
 };
@@ -20,12 +22,17 @@ export const DUE_DATE_FILTER_VALUES = {
   noDueDate: "noDueDate",
 } as const;
 
+export const VERSION_FILTER_VALUES = {
+  noVersion: "noVersion",
+} as const;
+
 const DEFAULT_FILTERS: BoardFilters = {
   status: null,
   priority: null,
   assignee: null,
   dueDate: null,
   labels: null,
+  version: null,
   customFields: null,
 };
 
@@ -35,6 +42,7 @@ const FILTER_KEYS: Array<keyof BoardFilters> = [
   "assignee",
   "dueDate",
   "labels",
+  "version",
   "customFields",
 ];
 

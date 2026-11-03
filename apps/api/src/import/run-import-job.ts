@@ -1,4 +1,7 @@
-import type { ImportedProject } from "@kaneo/importers";
+import type {
+  ImportedCrossProjectRelation,
+  ImportedProject,
+} from "@kaneo/importers";
 import { HTTPException } from "hono/http-exception";
 import {
   failUnfinishedProjects,
@@ -12,6 +15,8 @@ import {
 import { createProgressThrottle } from "./runs/progress-throttle";
 import type { OpenedImportSource } from "./source/open-import-source";
 import { writeImportedProject } from "./write-imported-project";
+import { unresolvedCrossProjectWarning } from "./writer/plan-cross-project-relations";
+import { writeCrossProjectRelations } from "./writer/write-cross-project-relations";
 
 export type ImportJobState = { projects: ImportRunProject[] };
 
@@ -29,6 +34,14 @@ const HEARTBEAT_MS = 20_000;
 const STOPPED = "The import was stopped.";
 const UNEXPECTED = "The import stopped because of an unexpected error.";
 const SAVE_FAILED = "Kaneo could not save this project.";
+const CROSS_PROJECT_FAILED =
+  "Kaneo could not save this project's links to tasks in other projects.";
+
+/** Links to other projects, kept until every project of the run is written. */
+type PendingCrossProjectRelations = {
+  index: number;
+  relations: ImportedCrossProjectRelation[];
+};
 
 function stopReason(signal: AbortSignal) {
   return signal.reason instanceof Error ? signal.reason.message : STOPPED;
@@ -69,6 +82,7 @@ async function importProject(
   job: ImportJob,
   store: ImportRunStore,
   index: number,
+  pending: PendingCrossProjectRelations[],
 ) {
   const entry = job.state.projects[index];
   if (!entry) return;
@@ -109,6 +123,9 @@ async function importProject(
         ...written,
       }),
     });
+    if (project.crossProjectRelations?.length) {
+      pending.push({ index, relations: project.crossProjectRelations });
+    }
   } catch (error) {
     if (!(error instanceof HTTPException)) {
       logImportError("Failed to save an imported project", job.runId, error);
@@ -122,6 +139,54 @@ async function importProject(
   }
 }
 
+// Each project's links to tasks in other projects are resolved once every
+// project is written, so the order of the import does not decide which links
+// survive. A project's own row reports what was written and what was not.
+async function linkAcrossProjects(
+  job: ImportJob,
+  store: ImportRunStore,
+  pending: PendingCrossProjectRelations[],
+) {
+  if (pending.length === 0) return;
+  await store.save({ message: "Linking tasks across projects" });
+  const projectKeys = new Map(
+    job.state.projects.flatMap((project) =>
+      project.status === "completed" && project.projectSlug
+        ? [[project.sourceId, project.projectSlug] as const]
+        : [],
+    ),
+  );
+  for (const { index, relations } of pending) {
+    const entry = job.state.projects[index];
+    if (!entry || entry.status !== "completed") continue;
+    try {
+      const result = await writeCrossProjectRelations({
+        workspaceId: job.workspaceId,
+        relations,
+        projectKeys,
+      });
+      updateProject(job, index, {
+        counts: {
+          ...entry.counts,
+          relations: entry.counts.relations + result.written,
+        },
+        warnings: result.unresolved
+          ? [
+              ...entry.warnings,
+              unresolvedCrossProjectWarning(result.unresolved),
+            ]
+          : entry.warnings,
+      });
+    } catch (error) {
+      logImportError("Failed to link tasks across projects", job.runId, error);
+      updateProject(job, index, {
+        warnings: [...entry.warnings, CROSS_PROJECT_FAILED],
+      });
+    }
+  }
+  await store.save({ projects: job.state.projects });
+}
+
 export async function runImportJob(job: ImportJob): Promise<void> {
   const store = createImportRunStore(job.runId);
   const heartbeat = setInterval(() => {
@@ -131,9 +196,13 @@ export async function runImportJob(job: ImportJob): Promise<void> {
 
   let error: string | null = null;
   try {
+    const pending: PendingCrossProjectRelations[] = [];
     for (let index = 0; index < job.state.projects.length; index++) {
       if (job.signal.aborted || store.isDetached()) break;
-      await importProject(job, store, index);
+      await importProject(job, store, index, pending);
+    }
+    if (!job.signal.aborted && !store.isDetached()) {
+      await linkAcrossProjects(job, store, pending);
     }
     if (job.signal.aborted) error = stopReason(job.signal);
   } catch (unexpected) {

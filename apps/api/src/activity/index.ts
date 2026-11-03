@@ -296,6 +296,23 @@ subscribeToEvent<{
 subscribeToEvent<{
   taskId: string;
   userId: string;
+  oldVersionId: string | null;
+  newVersionId: string | null;
+  oldVersion: string | null;
+  newVersion: string | null;
+  type: string;
+}>("task.version_changed", async (data) => {
+  await createActivity(data.taskId, data.type, data.userId, null, {
+    oldVersionId: data.oldVersionId,
+    newVersionId: data.newVersionId,
+    oldVersion: data.oldVersion,
+    newVersion: data.newVersion,
+  });
+});
+
+subscribeToEvent<{
+  taskId: string;
+  userId: string;
   title: string;
   type: string;
 }>("task.unassigned", async (data) => {

@@ -33,6 +33,7 @@ function plan(tasks: ImportedTask[], numbers = tasks.map((_, i) => 41 + i)) {
     now,
     newId: () => `task-${++id}`,
     assign: (person) => (person?.email === "ana@example.com" ? "u-ana" : null),
+    versions: new Map([["v1", "version-1"]]),
   });
 }
 
@@ -132,6 +133,16 @@ describe("planImportTasks", () => {
       createdAt: new Date("2021-03-04T05:06:07.000Z"),
       userId: "u-ana",
     });
+  });
+
+  it("puts tasks in the Kaneo version their source version maps to", () => {
+    expect(
+      plan([
+        task("a", { versionKey: "v1" }),
+        task("b", { versionKey: "unknown" }),
+        task("c"),
+      ]).map((planned) => planned.versionId),
+    ).toEqual(["version-1", null, null]);
   });
 
   it("dates tasks without a source date now", () => {

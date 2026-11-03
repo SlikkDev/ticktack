@@ -114,7 +114,7 @@ describe("mapJiraProject", () => {
     ]);
     expect(result.warnings).toEqual([
       "1 issue has attachments, which are not imported.",
-      "1 parent or issue link points to another project, so it was not imported.",
+      "1 parent or issue link points to an issue Kaneo could not identify, so it was not imported.",
     ]);
   });
 

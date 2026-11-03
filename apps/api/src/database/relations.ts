@@ -27,6 +27,7 @@ import {
   userNotificationWorkspaceRuleTable,
   userTable,
   verificationTable,
+  versionTable,
   workflowRuleTable,
   workspaceRoleTable,
   workspaceTable,
@@ -75,6 +76,7 @@ export const workspaceTableRelations = relations(
     teams: many(teamTable),
     members: many(workspaceUserTable),
     projects: many(projectTable),
+    versions: many(versionTable),
     assets: many(assetTable),
     invitations: many(invitationTable),
     notificationWorkspaceRules: many(userNotificationWorkspaceRuleTable),
@@ -148,6 +150,10 @@ export const taskTableRelations = relations(taskTable, ({ one, many }) => ({
     fields: [taskTable.columnId],
     references: [columnTable.id],
   }),
+  version: one(versionTable, {
+    fields: [taskTable.versionId],
+    references: [versionTable.id],
+  }),
   timeEntries: many(timeEntryTable),
   activities: many(activityTable),
   comments: many(commentTable),
@@ -204,6 +210,17 @@ export const assetTableRelations = relations(assetTable, ({ one }) => ({
     references: [userTable.id],
   }),
 }));
+
+export const versionTableRelations = relations(
+  versionTable,
+  ({ one, many }) => ({
+    workspace: one(workspaceTable, {
+      fields: [versionTable.workspaceId],
+      references: [workspaceTable.id],
+    }),
+    tasks: many(taskTable),
+  }),
+);
 
 export const labelTableRelations = relations(labelTable, ({ one }) => ({
   task: one(taskTable, {

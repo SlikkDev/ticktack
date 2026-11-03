@@ -1,11 +1,13 @@
 import {
   CalendarDays,
   CircleDashed,
+  Milestone,
   SignalHigh,
   Tag,
   UserRound,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { VERSION_FILTER_VALUES } from "@/hooks/use-task-filters";
 import { getColumnIcon } from "@/lib/column";
 import { getPriorityLabel, getStatusDisplayLabel } from "@/lib/i18n/domain";
 import { getPriorityIcon } from "@/lib/priority";
@@ -66,7 +68,7 @@ export function useFilterSubjects({
   });
 
   const listSubject = (
-    key: "status" | "priority" | "assignee" | "dueDate",
+    key: "status" | "priority" | "assignee" | "dueDate" | "version",
     fields: Pick<FilterSubject, "label" | "icon" | "options">,
   ) =>
     subject(key, {
@@ -84,6 +86,9 @@ export function useFilterSubjects({
     status: countValues(tasks, (task) => [task.status]),
     assignee: countValues(tasks, (task) => [task.userId]),
     priority: countValues(tasks, (task) => [task.priority]),
+    version: countValues(tasks, (task) => [
+      task.versionId ?? VERSION_FILTER_VALUES.noVersion,
+    ]),
     labels: countValues(tasks, (task) =>
       (task.labels ?? []).map((label) =>
         groupIdByLabel.get(`${label.name}|${label.color}`),
@@ -163,6 +168,28 @@ export function useFilterSubjects({
       },
       "include",
     ),
+    listSubject("version", {
+      label: t("tasks:boardFilters.subjects.version"),
+      icon: <Milestone />,
+      options: [
+        ...options.versions.map((version) => ({
+          value: version.id,
+          label: version.name,
+          icon: (
+            <Milestone
+              className={version.releasedAt ? "opacity-50" : undefined}
+            />
+          ),
+          count: counts.version[version.id],
+        })),
+        {
+          value: VERSION_FILTER_VALUES.noVersion,
+          label: t("tasks:version.none"),
+          icon: <CircleDashed />,
+          count: counts.version[VERSION_FILTER_VALUES.noVersion],
+        },
+      ],
+    }),
     listSubject("dueDate", {
       label: t("tasks:boardFilters.subjects.dueDate"),
       icon: <CalendarDays />,

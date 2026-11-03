@@ -554,6 +554,37 @@ export const calendarFeedTable = pgTable(
   (table) => [index("calendar_feed_project_id_idx").on(table.projectId)],
 );
 
+// A release a task ships in. Versions belong to the workspace so one release
+// can collect tasks from several projects; a task carries at most one.
+export const versionTable = pgTable(
+  "version",
+  {
+    id: text("id")
+      .$defaultFn(() => createId())
+      .primaryKey(),
+    workspaceId: text("workspace_id")
+      .notNull()
+      .references(() => workspaceTable.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    name: text("name").notNull(),
+    description: text("description"),
+    releasedAt: timestamp("released_at", { mode: "date" }),
+    createdAt: timestamp("created_at", { mode: "date" })
+      .default(utcNow)
+      .notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" })
+      .default(utcNow)
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("version_workspaceId_idx").on(table.workspaceId),
+    unique("version_workspace_name_unique").on(table.workspaceId, table.name),
+  ],
+);
+
 export const taskTable = pgTable(
   "task",
   {
@@ -580,6 +611,10 @@ export const taskTable = pgTable(
       onUpdate: "cascade",
     }),
     priority: text("priority").default("low").notNull(),
+    versionId: text("version_id").references(() => versionTable.id, {
+      onDelete: "set null",
+      onUpdate: "cascade",
+    }),
     startDate: timestamp("start_date", { mode: "date" }),
     dueDate: timestamp("due_date", { mode: "date" }),
     createdAt: timestamp("created_at", { mode: "date" })
@@ -592,6 +627,7 @@ export const taskTable = pgTable(
   },
   (table) => [
     index("task_projectId_idx").on(table.projectId),
+    index("task_versionId_idx").on(table.versionId),
     index("task_project_scheduled_id_idx")
       .on(table.projectId, table.id)
       .where(

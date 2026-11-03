@@ -17,6 +17,7 @@ export const ISSUE_FIELDS = [
   "created",
   "parent",
   "issuelinks",
+  "fixVersions",
   "attachment",
 ];
 

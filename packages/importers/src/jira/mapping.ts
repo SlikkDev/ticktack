@@ -7,6 +7,7 @@ import type {
 import type { JiraIssue } from "./api-types.js";
 import type { HtmlToMarkdown } from "./html.js";
 import { issueLabels } from "./labels.js";
+import { issueVersionKey } from "./versions.js";
 import { toPerson } from "./people.js";
 
 const PRIORITIES: ReadonlyMap<string, ImportedPriority> = new Map([
@@ -59,6 +60,7 @@ export function mapIssue(
   const dueDate = toIsoDate(fields.duedate);
   const createdAt = toIsoDate(fields.created);
   const assignee = toPerson(fields.assignee);
+  const versionKey = issueVersionKey(issue);
   return {
     key: issue.id,
     ...(number !== undefined ? { number } : {}),
@@ -70,6 +72,7 @@ export function mapIssue(
     ...(createdAt ? { createdAt } : {}),
     ...(assignee ? { assignee } : {}),
     labelKeys: issueLabels(issue),
+    ...(versionKey ? { versionKey } : {}),
     comments: context.comments,
   };
 }

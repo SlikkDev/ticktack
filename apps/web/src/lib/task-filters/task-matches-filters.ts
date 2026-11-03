@@ -8,6 +8,7 @@ import {
 import {
   type BoardFilters,
   DUE_DATE_FILTER_VALUES,
+  VERSION_FILTER_VALUES,
 } from "@/hooks/use-task-filters";
 import type Task from "@/types/task";
 import { customFieldSubjectId } from "./filter-subject-id";
@@ -105,6 +106,14 @@ export function taskMatchesFilters(
       "labels",
       filters.labels,
       () => filters.labels?.some((id) => labelIds.includes(id)) ?? false,
+    ],
+    [
+      "version",
+      filters.version,
+      () =>
+        filters.version?.includes(
+          task.versionId ?? VERSION_FILTER_VALUES.noVersion,
+        ) ?? false,
     ],
   ];
 

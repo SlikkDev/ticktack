@@ -1,10 +1,11 @@
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import db from "../../database";
 import {
   activityTable,
   taskReminderSentTable,
   taskTable,
   userTable,
+  versionTable,
 } from "../../database/schema";
 import { publishEvent } from "../../events";
 import createNotification from "../../notification/controllers/create-notification";
@@ -17,13 +18,33 @@ type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
 type Changes = Partial<
   Pick<
     Task,
-    "title" | "status" | "priority" | "description" | "userId" | "dueDate"
+    | "title"
+    | "status"
+    | "priority"
+    | "description"
+    | "userId"
+    | "dueDate"
+    | "versionId"
   >
 >;
 export type TaskBefore = Pick<
   Task,
   "id" | "projectId" | "title" | "status" | "priority" | "userId" | "dueDate"
-> & { description?: string | null; columnId?: string | null };
+> & {
+  description?: string | null;
+  columnId?: string | null;
+  versionId?: string | null;
+};
+
+async function versionNames(ids: Array<string | null | undefined>) {
+  const wanted = ids.filter((id): id is string => Boolean(id));
+  if (wanted.length === 0) return new Map<string, string>();
+  const rows = await db
+    .select({ id: versionTable.id, name: versionTable.name })
+    .from(versionTable)
+    .where(inArray(versionTable.id, wanted));
+  return new Map(rows.map((row) => [row.id, row.name]));
+}
 
 export async function recordTaskMutation(
   tx: Transaction,
@@ -114,6 +135,24 @@ export async function publishTaskMutation(
       newPriority: after.priority,
       type: "priority_changed",
     });
+  if (
+    (!options.fields || options.fields.includes("versionId")) &&
+    before.versionId !== undefined &&
+    after.versionId !== undefined &&
+    before.versionId !== after.versionId
+  ) {
+    const names = await versionNames([before.versionId, after.versionId]);
+    await publishEvent("task.version_changed", {
+      ...common,
+      oldVersionId: before.versionId,
+      newVersionId: after.versionId,
+      oldVersion: before.versionId
+        ? (names.get(before.versionId) ?? null)
+        : null,
+      newVersion: after.versionId ? (names.get(after.versionId) ?? null) : null,
+      type: "version_changed",
+    });
+  }
   if (changed("userId")) {
     const assignee =
       options.assigneeName !== undefined

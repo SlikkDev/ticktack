@@ -98,6 +98,7 @@ const controls: TaskFilterControls = {
 const options = {
   members: [],
   labels: [],
+  versions: [],
   customFields: [],
   usedCustomFieldValues: {},
 };

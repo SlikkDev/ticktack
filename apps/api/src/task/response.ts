@@ -26,6 +26,9 @@ export const taskSchema = z
       description: "The slug of the column the task sits in.",
     }),
     priority: z.string().openapi({ description: priorityDescription }),
+    versionId: z.string().nullable().optional().openapi({
+      description: "The version (release) the task ships in, if any.",
+    }),
     startDate: nullableResponseTimestamp,
     dueDate: nullableResponseTimestamp,
     createdAt: responseTimestamp,
@@ -59,6 +62,9 @@ export const taskWithAssigneeSchema = taskSchema
       .optional(),
     assigneeName: z.string().nullable(),
     assigneeId: z.string().nullable(),
+    versionName: z.string().nullable().optional().openapi({
+      description: "The name of the task's version, when it has one.",
+    }),
   })
   .openapi("TaskWithAssignee");
 
@@ -113,6 +119,8 @@ export const boardTaskSchema = z
     assigneeId: z.string().nullable(),
     assigneeImage: z.string().nullable(),
     projectId: z.string(),
+    versionId: z.string().nullable(),
+    versionName: z.string().nullable(),
     subtaskCounts: z
       .object({
         completed: z.number().int().nonnegative(),

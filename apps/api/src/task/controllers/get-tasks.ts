@@ -3,9 +3,11 @@ import {
   asc,
   desc,
   eq,
+  exists,
   getTableColumns,
   gte,
   inArray,
+  isNull,
   lte,
   type SQL,
   type SQLWrapper,
@@ -21,6 +23,7 @@ import {
   taskTable,
   taskRelationTable,
   userTable,
+  versionTable,
 } from "../../database/schema";
 import { boundedTaskRead, type TaskReadDatabase } from "../bounded-read";
 import {
@@ -41,6 +44,8 @@ export type GetTasksOptions = {
   page?: number;
   relatedPage?: number;
   priority?: string;
+  label?: string;
+  versionId?: string;
   sortBy?:
     | "createdAt"
     | "priority"
@@ -51,6 +56,9 @@ export type GetTasksOptions = {
   sortOrder?: "asc" | "desc";
   status?: string;
 };
+
+/** Sentinel for the versionId filter: tasks that ship in no version. */
+export const NO_VERSION = "none";
 
 const priorityCaseExpr = sql<number>`CASE
   WHEN ${taskTable.priority} = 'urgent' THEN 4
@@ -131,6 +139,30 @@ async function getTasksPage(
     conditions.push(eq(taskTable.userId, options.assigneeId));
   }
 
+  if (options.label) {
+    conditions.push(
+      exists(
+        db
+          .select({ id: labelTable.id })
+          .from(labelTable)
+          .where(
+            and(
+              eq(labelTable.taskId, taskTable.id),
+              eq(labelTable.name, options.label),
+            ),
+          ),
+      ),
+    );
+  }
+
+  if (options.versionId) {
+    conditions.push(
+      options.versionId === NO_VERSION
+        ? isNull(taskTable.versionId)
+        : eq(taskTable.versionId, options.versionId),
+    );
+  }
+
   if (options.dueBefore) {
     conditions.push(lte(taskTable.dueDate, new Date(options.dueBefore)));
   }
@@ -193,6 +225,8 @@ async function getTasksPage(
     assigneeId: userTable.id,
     assigneeImage: userTable.image,
     projectId: taskTable.projectId,
+    versionId: taskTable.versionId,
+    versionName: versionTable.name,
   };
 
   const query = db
@@ -200,6 +234,7 @@ async function getTasksPage(
     .from(taskTable)
     .leftJoin(userTable, eq(taskTable.userId, userTable.id))
     .leftJoin(projectTable, eq(taskTable.projectId, projectTable.id))
+    .leftJoin(versionTable, eq(taskTable.versionId, versionTable.id))
     .where(whereClause)
     .orderBy(orderByClause, asc(taskTable.id));
 
