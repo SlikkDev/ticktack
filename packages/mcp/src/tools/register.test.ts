@@ -155,6 +155,72 @@ describe("registerTools", () => {
     });
   });
 
+  it("filters list_tasks by label and version", async () => {
+    const { server, tools } = createServerMock();
+    const client = { json: vi.fn().mockResolvedValue([]) };
+
+    registerTools(server as never, { client: client as never });
+
+    await tools.get("list_tasks")?.handler({
+      projectId: "project-1",
+      label: "release v0.0.70",
+      versionId: "none",
+    });
+
+    expect(client.json).toHaveBeenCalledWith(
+      "/api/task/tasks/project-1?label=release+v0.0.70&versionId=none",
+      { method: "GET" },
+    );
+  });
+
+  it("manages versions and puts tasks in them", async () => {
+    const { server, tools } = createServerMock();
+    const client = { json: vi.fn().mockResolvedValue({ id: "version-1" }) };
+
+    registerTools(server as never, { client: client as never });
+
+    await tools.get("list_workspace_versions")?.handler({
+      workspaceId: "ws-1",
+      released: false,
+    });
+    expect(client.json).toHaveBeenCalledWith(
+      "/api/version/workspace/ws-1?released=false",
+      { method: "GET" },
+    );
+
+    await tools.get("create_version")?.handler({
+      workspaceId: "ws-1",
+      name: "v0.0.70",
+    });
+    expect(client.json).toHaveBeenCalledWith("/api/version", {
+      method: "POST",
+      body: JSON.stringify({ workspaceId: "ws-1", name: "v0.0.70" }),
+    });
+
+    await tools.get("update_version")?.handler({
+      versionId: "version-1",
+      released: true,
+    });
+    expect(client.json).toHaveBeenCalledWith("/api/version/version-1", {
+      method: "PUT",
+      body: JSON.stringify({ released: true }),
+    });
+
+    await tools.get("update_task_version")?.handler({
+      taskId: "task-1",
+      versionId: null,
+    });
+    expect(client.json).toHaveBeenCalledWith("/api/task/version/task-1", {
+      method: "PUT",
+      body: JSON.stringify({ versionId: null }),
+    });
+
+    await tools.get("delete_version")?.handler({ versionId: "version-1" });
+    expect(client.json).toHaveBeenCalledWith("/api/version/version-1", {
+      method: "DELETE",
+    });
+  });
+
   it("builds the expected query string for list_tasks", async () => {
     const { server, tools } = createServerMock();
     const client = {

@@ -27,6 +27,7 @@ export async function writeImportTasks(
         dueDate: task.dueDate,
         createdAt: task.createdAt,
         userId: task.userId,
+        versionId: task.versionId,
       })),
     );
 

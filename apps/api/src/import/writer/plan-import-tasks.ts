@@ -21,6 +21,7 @@ export type PlannedImportTask = {
   dueDate: Date | null;
   createdAt: Date;
   userId: string | null;
+  versionId: string | null;
   labelKeys: readonly string[];
   comments: readonly ImportedComment[];
 };
@@ -33,6 +34,8 @@ type PlanImportTasksInput = {
   now: Date;
   newId: () => string;
   assign: (person: ImportedPerson | undefined) => string | null;
+  /** Kaneo version id by the source's version key. */
+  versions?: ReadonlyMap<string, string>;
 };
 
 const UNTITLED_TASK = "Untitled task";
@@ -75,6 +78,7 @@ export function planImportTasks({
   now,
   newId,
   assign,
+  versions,
 }: PlanImportTasksInput): PlannedImportTask[] {
   const positions = new Map<string, number>();
 
@@ -101,6 +105,7 @@ export function planImportTasks({
       dueDate: parseImportDate(task.dueDate),
       createdAt: parseImportDate(task.createdAt) ?? now,
       userId: assign(task.assignee),
+      versionId: (task.versionKey && versions?.get(task.versionKey)) || null,
       labelKeys: task.labelKeys,
       comments: task.comments,
     };

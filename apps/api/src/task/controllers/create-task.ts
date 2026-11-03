@@ -21,6 +21,7 @@ import {
   assertValidTaskStatus,
   isCustomFieldValueEmpty,
 } from "../validate-task-fields";
+import { assertVersionInWorkspace } from "../../version/assert-version-in-workspace";
 import { claimTaskNumber } from "./claim-task-numbers";
 import { nextTaskPosition } from "./next-task-position";
 
@@ -55,6 +56,7 @@ async function createTask({
   dueDate,
   description,
   priority,
+  versionId,
   customFields,
   draftAssetIds,
 }: {
@@ -67,6 +69,7 @@ async function createTask({
   dueDate?: Date;
   description?: string;
   priority?: string;
+  versionId?: string | null;
   customFields?: CustomFieldInput[];
   draftAssetIds?: string[];
 }) {
@@ -125,6 +128,13 @@ async function createTask({
       .where(eq(userTable.id, normalizedUserId));
   }
 
+  if (versionId) {
+    await assertVersionInWorkspace(
+      versionId,
+      await getProjectWorkspaceId(projectId),
+    );
+  }
+
   const column = await db.query.columnTable.findFirst({
     where: and(
       eq(columnTable.projectId, projectId),
@@ -153,6 +163,7 @@ async function createTask({
         dueDate: dueDate || null,
         description: description || "",
         priority: resolvedPriority,
+        versionId: versionId || null,
         number: taskNumber,
         position: nextPosition,
       })

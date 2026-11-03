@@ -1,4 +1,4 @@
-import { ArrowRight, Calendar, CalendarDays } from "lucide-react";
+import { ArrowRight, Calendar, CalendarDays, Milestone } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import icons from "@/constants/project-icons";
 import { getColumnIcon } from "@/lib/column";
@@ -14,6 +14,7 @@ import TaskMovePopover from "../task-move-popover";
 import TaskPriorityPopover from "../task-priority-popover";
 import TaskStartDatePopover from "../task-start-date-popover";
 import TaskStatusPopover from "../task-status-popover";
+import TaskVersionPopover from "../task-version-popover";
 import { AssigneeAvatar } from "./assignee-avatar";
 import { dueDateTextClass } from "./due-date-text-class";
 import { LabelsValue } from "./labels-value";
@@ -110,6 +111,24 @@ export function PropertiesRail({
               <LabelsValue labels={labels} />
             </PropertyValue>
           </TaskLabelsPopover>
+        </PropertyRow>
+
+        <PropertyRow label={t("tasks:version.label")}>
+          <TaskVersionPopover task={task} workspaceId={workspaceId}>
+            <PropertyValue data-task-action="version">
+              <Milestone
+                className={cn(!task.versionId && "text-muted-foreground")}
+              />
+              <span
+                className={cn(
+                  "truncate",
+                  !task.versionId && "text-muted-foreground",
+                )}
+              >
+                {task.versionName || t("tasks:version.none")}
+              </span>
+            </PropertyValue>
+          </TaskVersionPopover>
         </PropertyRow>
 
         <PropertyRow label={t("tasks:properties.dates")}>

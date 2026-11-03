@@ -271,6 +271,18 @@
           "projectId": {
             "type": "string"
           },
+          "versionId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "versionName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
           "subtaskCounts": {
             "type": "object",
             "properties": {
@@ -318,6 +330,8 @@
           "assigneeId",
           "assigneeImage",
           "projectId",
+          "versionId",
+          "versionName",
           "subtaskCounts",
           "labels",
           "externalLinks"
@@ -1223,6 +1237,13 @@
             "type": "string",
             "description": "One of: no-priority, low, medium, high, urgent."
           },
+          "versionId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The version (release) the task ships in, if any."
+          },
           "startDate": {
             "type": [
               "string",
@@ -1361,6 +1382,13 @@
                   "string",
                   "null"
                 ]
+              },
+              "versionName": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The name of the task's version, when it has one."
               }
             },
             "required": [
@@ -1606,7 +1634,7 @@
           },
           "type": {
             "type": "string",
-            "description": "One of: comment, task, create, status_changed, priority_changed, assignee_changed, unassigned, due_date_changed, title_changed, description_changed."
+            "description": "One of: comment, task, create, status_changed, priority_changed, version_changed, assignee_changed, unassigned, due_date_changed, title_changed, description_changed."
           },
           "createdAt": {
             "type": "string",
@@ -1699,7 +1727,7 @@
           },
           "type": {
             "type": "string",
-            "description": "One of: comment, task, create, status_changed, priority_changed, assignee_changed, unassigned, due_date_changed, title_changed, description_changed."
+            "description": "One of: comment, task, create, status_changed, priority_changed, version_changed, assignee_changed, unassigned, due_date_changed, title_changed, description_changed."
           },
           "createdAt": {
             "type": "string",
@@ -1969,6 +1997,68 @@
               "pendingDeletion"
             ]
           }
+        ]
+      },
+      "VersionWithCount": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Version"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "taskCount": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Tasks in this version across the workspace's projects."
+              }
+            },
+            "required": [
+              "taskCount"
+            ]
+          }
+        ]
+      },
+      "Version": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "releasedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the version was marked released; null while open."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "workspaceId",
+          "name",
+          "description",
+          "releasedAt",
+          "createdAt",
+          "updatedAt"
         ]
       },
       "Notification": {
@@ -5687,6 +5777,29 @@
             },
             "required": false,
             "name": "assigneeId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Only tasks carrying a label with exactly this name."
+            },
+            "required": false,
+            "description": "Only tasks carrying a label with exactly this name.",
+            "name": "label",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Only tasks in this version. Pass `none` for tasks without a version."
+            },
+            "required": false,
+            "description": "Only tasks in this version. Pass `none` for tasks without a version.",
+            "name": "versionId",
             "in": "query"
           },
           {
@@ -10877,6 +10990,29 @@
           },
           {
             "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Only tasks carrying a label with exactly this name."
+            },
+            "required": false,
+            "description": "Only tasks carrying a label with exactly this name.",
+            "name": "label",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Only tasks in this version. Pass `none` for tasks without a version."
+            },
+            "required": false,
+            "description": "Only tasks in this version. Pass `none` for tasks without a version.",
+            "name": "versionId",
+            "in": "query"
+          },
+          {
+            "schema": {
               "type": "integer",
               "minimum": 1,
               "maximum": 1000000
@@ -11594,6 +11730,13 @@
                     "type": "string",
                     "description": "Assignee, if any."
                   },
+                  "versionId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The version (release) the task ships in, if any."
+                  },
                   "draftAssetIds": {
                     "type": "array",
                     "items": {
@@ -12045,6 +12188,13 @@
                   },
                   "userId": {
                     "type": "string"
+                  },
+                  "versionId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The version the task ships in. Omit to keep the current version; null clears it."
                   }
                 },
                 "required": [
@@ -12671,6 +12821,103 @@
           },
           "404": {
             "description": "Task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/task/version/{id}": {
+      "put": {
+        "operationId": "updateTaskVersion",
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Update task version",
+        "description": "Put a task in a version of its workspace, or take it out with null.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "versionId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A version of the task's workspace. Null clears it."
+                  }
+                },
+                "required": [
+                  "versionId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No access to the project, or missing task:update permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task or version not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -15642,6 +15889,362 @@
           },
           "404": {
             "description": "Label or task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/version/workspace/{workspaceId}": {
+      "get": {
+        "operationId": "getWorkspaceVersions",
+        "tags": [
+          "Versions"
+        ],
+        "summary": "List workspace versions",
+        "description": "List the versions (releases) of a workspace with how many tasks each one holds. Open versions come first, newest first.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "description": "Only released (`true`) or unreleased (`false`) versions. Omit for all."
+            },
+            "required": false,
+            "description": "Only released (`true`) or unreleased (`false`) versions. Omit for all.",
+            "name": "released",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Versions in the workspace",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VersionWithCount"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Workspace not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/version": {
+      "post": {
+        "operationId": "createVersion",
+        "tags": [
+          "Versions"
+        ],
+        "summary": "Create version",
+        "description": "Create a version in a workspace. Tasks from any project of the workspace can then be assigned to it.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100,
+                    "description": "Unique within the workspace, e.g. `v1.4.0`."
+                  },
+                  "description": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 2000
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The created version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Version"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing workspace:manage_settings permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Workspace not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "A version with this name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/version/{id}": {
+      "put": {
+        "operationId": "updateVersion",
+        "tags": [
+          "Versions"
+        ],
+        "summary": "Update version",
+        "description": "Rename or describe a version, or mark it released. Releasing records the release time; tasks keep their version.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "description": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 2000,
+                    "description": "Send null or an empty string to clear it."
+                  },
+                  "released": {
+                    "type": "boolean",
+                    "description": "True marks the version as released now; false reopens it. Omit to leave it unchanged."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Version"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing workspace:manage_settings permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Version not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "A version with this name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteVersion",
+        "tags": [
+          "Versions"
+        ],
+        "summary": "Delete version",
+        "description": "Delete a version. Tasks in it stay where they are and simply lose the version.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The deleted version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Version"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing workspace:manage_settings permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Version not found",
             "content": {
               "application/json": {
                 "schema": {

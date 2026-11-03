@@ -124,6 +124,7 @@ For headless or sandboxed environments where opening a browser is impractical, s
 - Time entries: `list_task_time_entries`, `get_time_entry`, `create_time_entry`, `update_time_entry`, `delete_time_entry`
 - Comments: `list_task_comments`, `create_task_comment`, `update_task_comment`, `delete_task_comment`
 - Labels: `list_workspace_labels`, `create_label`, `update_label`, `attach_label_to_task`, `detach_label_from_task`, `delete_label`
+- Versions: `list_workspace_versions`, `create_version`, `update_version`, `delete_version`, `update_task_version`
 - Task relations: `create_task_relation`, `get_task_relations`, `delete_task_relation`
 - Custom fields: `list_project_custom_fields`, `get_task_custom_field_values`, `set_task_custom_field_value`
 - External links: `list_task_external_links`, `add_task_external_link`, `remove_task_external_link`

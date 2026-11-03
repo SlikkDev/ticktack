@@ -1,5 +1,11 @@
 import { formatDateShort } from "@/lib/format";
-import { Calendar, CalendarClock, CalendarX, Trash2Icon } from "lucide-react";
+import {
+  Calendar,
+  CalendarClock,
+  CalendarX,
+  Milestone,
+  Trash2Icon,
+} from "lucide-react";
 import { memo, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TaskProgressBadges } from "@/components/task/task-progress-badges";
@@ -220,6 +226,16 @@ function TaskCardContent({
               )}
 
               <TaskProgressBadges task={task} />
+
+              {task.versionName && (
+                <span
+                  className="flex h-5.5 min-w-0 items-center gap-1 text-[10px] text-muted-foreground"
+                  title={t("tasks:version.label")}
+                >
+                  <Milestone className="h-3 w-3 shrink-0" />
+                  <span className="max-w-28 truncate">{task.versionName}</span>
+                </span>
+              )}
 
               {showDueDates && task.dueDate && (
                 <div

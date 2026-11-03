@@ -13,6 +13,7 @@ import {
 } from "../../utils/assert-assignable-user";
 import { boardDescription, descriptionDeferred } from "../description-pages";
 import { assertValidTaskStatus } from "../validate-task-fields";
+import { assertVersionInWorkspace } from "../../version/assert-version-in-workspace";
 import { assertTaskPosition } from "./next-task-position";
 
 async function updateTask(
@@ -27,6 +28,7 @@ async function updateTask(
   position: number,
   userId?: string,
   currentUserId?: string,
+  versionId?: string | null,
 ) {
   assertTaskPosition(position);
 
@@ -36,6 +38,7 @@ async function updateTask(
       title: taskTable.title,
       priority: taskTable.priority,
       userId: taskTable.userId,
+      versionId: taskTable.versionId,
       dueDate: taskTable.dueDate,
       description:
         description === undefined ? sql<null>`null` : taskTable.description,
@@ -71,6 +74,13 @@ async function updateTask(
     );
   }
 
+  if (versionId) {
+    await assertVersionInWorkspace(
+      versionId,
+      await getProjectWorkspaceId(projectId),
+    );
+  }
+
   const column = await db.query.columnTable.findFirst({
     where: and(
       eq(columnTable.projectId, projectId),
@@ -94,6 +104,7 @@ async function updateTask(
         title: taskTable.title,
         priority: taskTable.priority,
         userId: taskTable.userId,
+        versionId: taskTable.versionId,
         dueDate: taskTable.dueDate,
         description:
           description === undefined ? sql<null>`null` : taskTable.description,
@@ -128,6 +139,8 @@ async function updateTask(
         priority,
         position,
         userId: normalizedUserId ?? null,
+        // Omitted keeps the version so older clients never clear it.
+        ...(versionId !== undefined ? { versionId } : {}),
       })
       .where(and(eq(taskTable.id, id), eq(taskTable.projectId, projectId)))
       .returning({

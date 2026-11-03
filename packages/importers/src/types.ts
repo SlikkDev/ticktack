@@ -33,6 +33,13 @@ export type ImportedComment = {
   createdAt?: string;
 };
 
+export type ImportedVersion = {
+  key: string;
+  name: string;
+  description?: string;
+  releasedAt?: string;
+};
+
 export type ImportedTask = {
   key: string;
   number?: number;
@@ -46,6 +53,7 @@ export type ImportedTask = {
   createdAt?: string;
   assignee?: ImportedPerson;
   labelKeys: string[];
+  versionKey?: string;
   comments: ImportedComment[];
 };
 
@@ -57,14 +65,33 @@ export type ImportedRelation = {
   type: ImportedRelationType;
 };
 
+/** A task named by its project key and number, e.g. OPS-9, in any project of the source. */
+export type ImportedTaskRef = {
+  projectKey: string;
+  number: number;
+};
+
+/**
+ * A relation whose ends live in different projects. Kaneo resolves both ends
+ * against the workspace once every project of the import run is written, so
+ * the link is kept whichever project is imported first.
+ */
+export type ImportedCrossProjectRelation = {
+  source: ImportedTaskRef;
+  target: ImportedTaskRef;
+  type: ImportedRelationType;
+};
+
 export type ImportedProject = {
   name: string;
   key?: string;
   description?: string;
   columns: ImportedColumn[];
   labels: ImportedLabel[];
+  versions?: ImportedVersion[];
   tasks: ImportedTask[];
   relations: ImportedRelation[];
+  crossProjectRelations?: ImportedCrossProjectRelation[];
   warnings: string[];
 };
 

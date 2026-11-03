@@ -78,6 +78,17 @@ export function describeActivity(activity: WorkspaceActivity, t: Translate) {
             });
       }
       break;
+    case "version_changed":
+      if (eventData) {
+        if (!eventData.newVersion) return t("activity:clearedVersion");
+        return eventData.oldVersion
+          ? t("activity:changedVersion", {
+              from: String(eventData.oldVersion),
+              to: String(eventData.newVersion),
+            })
+          : t("activity:setVersion", { version: String(eventData.newVersion) });
+      }
+      break;
     case "title_changed":
       if (eventData) {
         return t("activity:changedTitle", {

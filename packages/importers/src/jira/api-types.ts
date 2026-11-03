@@ -60,6 +60,14 @@ export type JiraLinkedIssue = {
   key?: string | null;
 };
 
+export type JiraVersion = {
+  id: string;
+  name?: string | null;
+  description?: string | null;
+  released?: boolean | null;
+  releaseDate?: string | null;
+};
+
 export type JiraIssueLink = {
   type?: {
     name?: string | null;
@@ -81,6 +89,7 @@ export type JiraIssueFields = {
   created?: string | null;
   parent?: JiraLinkedIssue | null;
   issuelinks?: JiraIssueLink[] | null;
+  fixVersions?: JiraVersion[] | null;
   attachment?: unknown[] | null;
   comment?: { total?: number | null } | null;
 };

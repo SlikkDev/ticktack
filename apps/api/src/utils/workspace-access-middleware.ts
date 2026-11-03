@@ -14,7 +14,8 @@ type LookupResource =
   | "comment"
   | "column"
   | "workflowRule"
-  | "customField";
+  | "customField"
+  | "version";
 
 type WorkspaceIdSource =
   | { type: "query"; key: string }
@@ -44,6 +45,7 @@ const RESOURCE_NOT_FOUND: Record<LookupResource, string> = {
   column: "Column not found",
   workflowRule: "Workflow rule not found",
   customField: "Custom field not found",
+  version: "Version not found",
 };
 
 type WorkspaceAccessMiddlewareConfig = {
@@ -342,6 +344,17 @@ async function lookupScope(
       return field ?? null;
     }
 
+    case "version": {
+      const [version] = await db
+        .select({ workspaceId: schema.versionTable.workspaceId })
+        .from(schema.versionTable)
+        .where(eq(schema.versionTable.id, id))
+        .limit(1);
+      return version
+        ? { workspaceId: version.workspaceId, projectId: null }
+        : null;
+    }
+
     default:
       return null;
   }
@@ -434,6 +447,11 @@ export const workspaceAccess = {
   fromCustomField: (idKey = "id") =>
     workspaceAccessMiddleware({
       sources: [{ type: "lookup", resource: "customField", idKey }],
+    }),
+
+  fromVersion: (idKey = "id") =>
+    workspaceAccessMiddleware({
+      sources: [{ type: "lookup", resource: "version", idKey }],
     }),
 
   fromProjectId: (idKey = "projectId") =>

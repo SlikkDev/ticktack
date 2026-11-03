@@ -210,6 +210,12 @@ export function registerTools(
     status: optionalNonEmptyString,
     priority: prioritySchema.optional(),
     assigneeId: optionalNonEmptyString,
+    label: optionalNonEmptyString.describe(
+      "Only tasks carrying a label with exactly this name",
+    ),
+    versionId: optionalNonEmptyString.describe(
+      "Only tasks in this version; pass 'none' for tasks without a version",
+    ),
     page: z.number().int().min(1).max(1_000_000).optional(),
     relatedPage: z.number().int().min(1).max(1_000_000).optional(),
     limit: z.number().int().min(1).max(100).optional(),
@@ -295,6 +301,9 @@ export function registerTools(
         startDate: optionalIsoDateTimeSchema,
         dueDate: optionalIsoDateTimeSchema,
         userId: optionalNonEmptyString,
+        versionId: optionalNonEmptyString.describe(
+          "Version (release) of the workspace the task ships in",
+        ),
       }),
     },
     async (args) => {
@@ -312,6 +321,9 @@ export function registerTools(
       }
       if (args.userId !== undefined) {
         body.userId = args.userId;
+      }
+      if (args.versionId !== undefined) {
+        body.versionId = args.versionId;
       }
       return run(() =>
         client.json(`/api/task/${encodeURIComponent(args.projectId)}`, {
@@ -357,6 +369,9 @@ export function registerTools(
     startDate: nullableOptionalIsoDateTimeSchema,
     dueDate: nullableOptionalIsoDateTimeSchema,
     userId: nullableOptionalNonEmptyString,
+    versionId: nullableOptionalNonEmptyString.describe(
+      "Version the task ships in; null takes it out of its version",
+    ),
   });
 
   registerTool(
@@ -999,6 +1014,124 @@ export function registerTools(
           body: JSON.stringify({ name, color }),
         });
       }),
+  );
+
+  registerTool(
+    "list_workspace_versions",
+    {
+      description:
+        "List the versions (releases) of a workspace with their task counts. Open versions come first.",
+      inputSchema: z.object({
+        workspaceId: nonEmptyString,
+        released: z
+          .boolean()
+          .optional()
+          .describe("Only released (true) or open (false) versions"),
+      }),
+    },
+    async (args) => {
+      const qs = new URLSearchParams();
+      if (args.released !== undefined) {
+        qs.set("released", String(args.released));
+      }
+      const q = qs.toString();
+      return run(() =>
+        client.json(
+          `/api/version/workspace/${encodeURIComponent(args.workspaceId)}${q ? `?${q}` : ""}`,
+          { method: "GET" },
+        ),
+      );
+    },
+  );
+
+  registerTool(
+    "create_version",
+    {
+      description:
+        "Create a version (release) in a workspace. Tasks from any project of the workspace can ship in it.",
+      inputSchema: z.object({
+        workspaceId: nonEmptyString,
+        name: nonEmptyString.describe(
+          "Unique within the workspace, e.g. v1.4.0",
+        ),
+        description: z.string().optional(),
+      }),
+    },
+    async (args) =>
+      run(() =>
+        client.json("/api/version", {
+          method: "POST",
+          body: JSON.stringify({
+            workspaceId: args.workspaceId,
+            name: args.name,
+            ...(args.description !== undefined
+              ? { description: args.description }
+              : {}),
+          }),
+        }),
+      ),
+  );
+
+  registerTool(
+    "update_version",
+    {
+      description:
+        "Rename or describe a version, or mark it released (PATCH-style: only provided fields are changed).",
+      inputSchema: z.object({
+        versionId: nonEmptyString,
+        name: optionalNonEmptyString,
+        description: z.string().nullable().optional(),
+        released: z
+          .boolean()
+          .optional()
+          .describe("true marks the version released now; false reopens it"),
+      }),
+    },
+    async (args) => {
+      const { versionId, ...patch } = args;
+      return run(() =>
+        client.json(`/api/version/${encodeURIComponent(versionId)}`, {
+          method: "PUT",
+          body: JSON.stringify(patch),
+        }),
+      );
+    },
+  );
+
+  registerTool(
+    "delete_version",
+    {
+      description:
+        "Delete a version. Its tasks stay where they are and lose the version.",
+      inputSchema: z.object({ versionId: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(`/api/version/${encodeURIComponent(args.versionId)}`, {
+          method: "DELETE",
+        }),
+      ),
+  );
+
+  registerTool(
+    "update_task_version",
+    {
+      description:
+        "Put a task in a version of its workspace, or pass a null versionId to take it out.",
+      inputSchema: z.object({
+        taskId: nonEmptyString,
+        versionId: nonEmptyString
+          .nullable()
+          .describe("Version ID, or null to clear"),
+      }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(`/api/task/version/${encodeURIComponent(args.taskId)}`, {
+          method: "PUT",
+          body: JSON.stringify({ versionId: args.versionId }),
+        }),
+      ),
   );
 
   registerTool(

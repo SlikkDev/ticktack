@@ -1,6 +1,6 @@
 ---
 title: Import from Jira
-description: Move Jira Cloud or Jira Data Center projects into Kaneo, including board columns, issues, priorities, labels, assignees, sub-tasks, issue links, and comments.
+description: Move Jira Cloud or Jira Data Center projects into Kaneo, including board columns, issues, priorities, labels, fix versions, assignees, sub-tasks, issue links, and comments.
 ---
 
 Each Jira project becomes a Kaneo project. This works with Jira Cloud and Jira Data Center. Read [Import from other tools](/core/migrations) first for the rules that apply to every import.
@@ -40,9 +40,11 @@ If you run Kaneo yourself and Jira is on a private network, for example a Jira D
 | Priority | The closest Kaneo priority. Highest, Blocker, and Critical become Urgent. High and Major become High. Medium stays Medium. Low, Lowest, Minor, and Trivial become Low. Other priorities become no priority |
 | Due date | Due date |
 | Labels | Labels. Jira labels have no colors, so Kaneo picks one for each |
+| Fix versions | Workspace [versions](/core/functional/manage-workspace-versions), with the release date and the released state. An issue with several fix versions keeps the first one listed. A version with the same name as one already in the workspace is reused |
 | Assignee | Assignee, matched by email, or by full name when Jira hides the email |
 | Sub-tasks, and issues that have a parent issue such as an epic | Subtask relations |
 | Issue links | **Blocks** links stay blocks relations. Other links, such as **Relates**, become related relations |
+| Parent and issue links to issues in other projects | Kept when the other project is in the same import, or was imported into the workspace before. They are written after all projects of the import, so the order of the projects does not matter. The report says how many pointed at a project Kaneo does not have |
 | Comments | Comments, with the original author's name and date |
 
 ## What doesn't
@@ -50,11 +52,11 @@ If you run Kaneo yourself and Jira is on a private network, for example a Jira D
 - **Attachments.** Download anything you need from Jira before you stop using it.
 - **Sprints.**
 - **Epics**, other than as parent issues. An epic is imported as a task, with its issues as subtasks.
-- **Components and fix versions.**
+- **Components.**
 - **Custom fields.**
 - **Worklogs.**
 - **Watchers.**
-- **Parent and issue links to issues in other projects.** The report says how many were left out.
+- **Links to issues in projects that are not in Kaneo.** Import the other project, into the same workspace, and the links of a later import of this project will be kept. The report says how many were left out.
 
 ## Troubleshooting
 

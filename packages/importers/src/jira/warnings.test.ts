@@ -21,7 +21,7 @@ describe("buildWarnings", () => {
       }),
     ).toEqual([
       "1 issue has attachments, which are not imported.",
-      "1 parent or issue link points to another project, so it was not imported.",
+      "1 parent or issue link points to an issue Kaneo could not identify, so it was not imported.",
     ]);
     expect(
       buildWarnings({
@@ -31,7 +31,7 @@ describe("buildWarnings", () => {
       }),
     ).toEqual([
       "3 issues have attachments, which are not imported.",
-      "2 parent or issue links point to other projects, so they were not imported.",
+      "2 parent or issue links point to issues Kaneo could not identify, so they were not imported.",
       BOARD_UNAVAILABLE_WARNING,
     ]);
   });

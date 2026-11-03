@@ -21,6 +21,7 @@ import { createJiraHtmlToMarkdown } from "./html.js";
 import { mapLabels } from "./labels.js";
 import { mapIssue } from "./mapping.js";
 import { mapRelations } from "./relations.js";
+import { mapVersions } from "./versions.js";
 import { buildWarnings } from "./warnings.js";
 
 export type JiraProjectData = {
@@ -39,7 +40,7 @@ export function mapJiraProject(data: JiraProjectData): ImportedProject {
   const plan = choosePlan(data.boardColumns, statuses, categories);
   const toMarkdown = createJiraHtmlToMarkdown(data.baseUrl);
   const placed = sortByColumn(data.issues, plan, categories);
-  const { relations, external } = mapRelations(data.issues);
+  const { relations, crossProject, external } = mapRelations(data.issues);
   const description = data.project.description?.trim();
 
   return {
@@ -48,6 +49,7 @@ export function mapJiraProject(data: JiraProjectData): ImportedProject {
     ...(description ? { description } : {}),
     columns: plan.columns,
     labels: mapLabels(data.issues),
+    versions: mapVersions(data.issues),
     tasks: placed.map(({ issue, columnKey }) =>
       mapIssue(issue, {
         columnKey,
@@ -56,6 +58,7 @@ export function mapJiraProject(data: JiraProjectData): ImportedProject {
       }),
     ),
     relations,
+    crossProjectRelations: crossProject,
     warnings: buildWarnings({
       issuesWithAttachments: data.issues.filter(
         (issue) => (issue.fields?.attachment?.length ?? 0) > 0,

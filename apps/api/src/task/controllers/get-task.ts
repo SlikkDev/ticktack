@@ -10,6 +10,7 @@ import {
   userTable,
   projectTable,
   taskRelationTable,
+  versionTable,
 } from "../../database/schema";
 
 async function getTask(taskId: string, board = false, userId?: string) {
@@ -35,10 +36,13 @@ async function getTask(taskId: string, board = false, userId?: string) {
       assigneeName: userTable.name,
       assigneeId: userTable.id,
       projectId: taskTable.projectId,
+      versionId: taskTable.versionId,
+      versionName: versionTable.name,
       workspaceId: sql<string>`(select ${projectTable.workspaceId} from ${projectTable} where ${projectTable.id} = ${taskTable.projectId})`,
     })
     .from(taskTable)
     .leftJoin(userTable, eq(taskTable.userId, userTable.id))
+    .leftJoin(versionTable, eq(taskTable.versionId, versionTable.id))
     .where(eq(taskTable.id, taskId))
     .limit(1);
 

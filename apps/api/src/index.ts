@@ -60,6 +60,7 @@ import { stopActiveImports } from "./import/runs/stop-active-imports";
 import getInstanceStatus from "./instance/controllers/get-instance-status";
 import invitation from "./invitation";
 import label from "./label";
+import version from "./version";
 import mattermostIntegration from "./mattermost-integration";
 import mcpRoutes, { mcpWellKnownRoutes } from "./mcp";
 import { migrateColumns } from "./migrations/column-migration";
@@ -839,6 +840,7 @@ export function createApp() {
   const commentApi = api.route("/comment", comment);
   const timeEntryApi = api.route("/time-entry", timeEntry);
   const labelApi = api.route("/label", label);
+  const versionApi = api.route("/version", version);
   const notificationApi = api.route("/notification", notification);
   const notificationPreferencesApi = api.route(
     "/notification-preferences",
@@ -1012,6 +1014,7 @@ export function createApp() {
     invitationPublicApi,
     magicLinkApi,
     labelApi,
+    versionApi,
     notificationApi,
     notificationPreferencesApi,
     projectApi,
@@ -1147,6 +1150,7 @@ const {
   invitationPublicApi,
   magicLinkApi,
   labelApi,
+  versionApi,
   mattermostIntegrationApi,
   notificationApi,
   notificationPreferencesApi,
@@ -1190,6 +1194,7 @@ export type AppType =
   | typeof commentApi
   | typeof timeEntryApi
   | typeof labelApi
+  | typeof versionApi
   | typeof notificationApi
   | typeof notificationPreferencesApi
   | typeof searchApi

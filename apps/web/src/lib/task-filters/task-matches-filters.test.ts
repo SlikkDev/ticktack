@@ -33,6 +33,7 @@ function task(overrides: Partial<Task>): Task {
     priority: "high",
     dueDate: "2026-10-16",
     userId: "u1",
+    versionId: "v1",
     labels: [{ id: "l1", name: "Engineering", color: "blue" }],
     ...overrides,
   } as Task;
@@ -72,6 +73,9 @@ describe("taskMatchesFilters", () => {
     [{ assignee: ["u2"] }, false],
     [{ labels: ["l2", "l1"] }, true],
     [{ labels: ["l2"] }, false],
+    [{ version: ["v1", "v2"] }, true],
+    [{ version: ["v2"] }, false],
+    [{ version: ["noVersion"] }, false],
     [{ customFields: { size: ["L", "XL"] } }, true],
     [{ customFields: { size: ["S"] } }, false],
   ] as Array<[Partial<BoardFilters>, boolean]>)(
@@ -103,6 +107,23 @@ describe("taskMatchesFilters", () => {
     },
   );
 
+  it("matches tasks without a version against the no-version option", () => {
+    expect(
+      taskMatchesFilters(
+        task({ versionId: null }),
+        { ...noFilters, version: ["noVersion"] },
+        context,
+      ),
+    ).toBe(true);
+    expect(
+      taskMatchesFilters(
+        task({ versionId: null }),
+        { ...noFilters, version: ["v1"] },
+        context,
+      ),
+    ).toBe(false);
+  });
+
   it("requires a value for every filtered custom field", () => {
     expect(
       taskMatchesFilters(
@@ -118,6 +139,7 @@ describe("taskMatchesFilters", () => {
     [{ priority: ["low"], negated: ["priority"] }, true],
     [{ labels: ["l1"], negated: ["labels"] }, false],
     [{ dueDate: ["noDueDate"], negated: ["dueDate"] }, true],
+    [{ version: ["v1"], negated: ["version"] }, false],
     [{ customFields: { size: ["S"] }, negated: ["customField:size"] }, true],
     [{ customFields: { size: ["L"] }, negated: ["customField:size"] }, false],
   ] as Array<[Partial<BoardFilters>, boolean]>)(

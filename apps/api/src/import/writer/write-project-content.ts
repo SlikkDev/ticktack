@@ -15,6 +15,7 @@ import { writeImportComments } from "./write-import-comments";
 import { writeImportLabels } from "./write-import-labels";
 import { writeImportRelations } from "./write-import-relations";
 import { writeImportTasks } from "./write-import-tasks";
+import { writeImportVersions } from "./write-import-versions";
 
 type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
@@ -62,6 +63,11 @@ export async function writeProjectContent(
       })
       .where(eq(projectTable.id, projectId));
   }
+  const versions = await writeImportVersions(
+    tx,
+    workspaceId,
+    project.versions ?? [],
+  );
   const tasks = planImportTasks({
     tasks: project.tasks,
     columns: board.byKey,
@@ -70,6 +76,7 @@ export async function writeProjectContent(
     now,
     newId: createId,
     assign: assignees.match,
+    versions,
   });
   await writeImportTasks(tx, projectId, userId, tasks);
 

@@ -147,6 +147,16 @@ const ISSUE_PAGE_1 = [
       },
       labels: ["frontend"],
       duedate: "2024-06-30",
+      fixVersions: [
+        {
+          id: "v1",
+          name: "1.0",
+          description: "First release",
+          released: true,
+          releaseDate: "2024-03-01",
+        },
+        { id: "v2", name: "1.1", released: false },
+      ],
       issuelinks: [
         {
           type: { name: "Blocks", inward: "is blocked by", outward: "blocks" },
@@ -168,6 +178,7 @@ const ISSUE_PAGE_1 = [
 const ISSUE_PAGE_2 = [
   issue("103", 3, {
     status: STATUSES.done,
+    fixVersions: [{ id: "v2", name: "1.1", released: false }],
     parent: { id: "101", key: "ABC-1" },
     issuelinks: [
       {
@@ -461,6 +472,7 @@ describe("readProject on Jira Cloud", () => {
         "status",
         "parent",
         "issuelinks",
+        "fixVersions",
         "attachment",
         "comment",
       ]),
@@ -527,6 +539,7 @@ describe("readProject on Jira Cloud", () => {
         number: 1,
         columnKey: "column-3",
         title: "Issue 1",
+        versionKey: "v1",
         description: "Ship it, cc @Grace Hopper",
         priority: "urgent",
         dueDate: "2024-06-30T00:00:00.000Z",
@@ -551,6 +564,7 @@ describe("readProject on Jira Cloud", () => {
         number: 3,
         columnKey: "column-4",
         title: "Issue 3",
+        versionKey: "v2",
         description: "",
         priority: "medium",
         createdAt: "2024-01-01T10:00:00.000Z",
@@ -562,9 +576,31 @@ describe("readProject on Jira Cloud", () => {
       { sourceKey: "101", targetKey: "103", type: "blocks" },
       { sourceKey: "101", targetKey: "103", type: "subtask" },
     ]);
+    expect(project.crossProjectRelations).toEqual([
+      {
+        source: { projectKey: "ABC", number: 3 },
+        target: { projectKey: "OPS", number: 9 },
+        type: "related",
+      },
+    ]);
+    expect(project.versions).toEqual([
+      {
+        key: "v1",
+        name: "1.0",
+        description: "First release",
+        releasedAt: "2024-03-01T00:00:00.000Z",
+      },
+      { key: "v2", name: "1.1" },
+    ]);
+    expect(
+      project.tasks.map((task) => [task.key, task.versionKey ?? null]),
+    ).toEqual([
+      ["102", null],
+      ["101", "v1"],
+      ["103", "v2"],
+    ]);
     expect(project.warnings).toEqual([
       "1 issue has attachments, which are not imported.",
-      "1 parent or issue link points to another project, so it was not imported.",
     ]);
   });
 

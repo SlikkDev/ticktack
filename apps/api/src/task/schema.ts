@@ -44,6 +44,13 @@ export const listTasksQuery = z.object({
   status: z.string().optional(),
   priority: z.string().optional(),
   assigneeId: z.string().optional(),
+  label: z.string().min(1).max(256).optional().openapi({
+    description: "Only tasks carrying a label with exactly this name.",
+  }),
+  versionId: z.string().min(1).optional().openapi({
+    description:
+      "Only tasks in this version. Pass `none` for tasks without a version.",
+  }),
   // Number("abc") is NaN, which used to reach the limit/offset clause unchecked.
   page: pagingNumber(1, 1_000_000).optional(),
   relatedPage: pagingNumber(1, 1_000_000).optional(),
@@ -81,6 +88,9 @@ export const createTaskBody = z.object({
   priority,
   status: z.string().openapi({ description: "The target column's slug." }),
   userId: z.string().optional().openapi({ description: "Assignee, if any." }),
+  versionId: z.string().nullable().optional().openapi({
+    description: "The version (release) the task ships in, if any.",
+  }),
   draftAssetIds: z.array(z.string()).max(100).optional(),
   customFields: z
     .array(z.object({ fieldId: z.string(), value: z.string() }))
@@ -100,6 +110,10 @@ export const updateTaskBody = z.object({
   projectId: z.string(),
   position: z.number().int().min(0).max(MAX_TASK_POSITION),
   userId: z.string().optional(),
+  versionId: z.string().nullable().optional().openapi({
+    description:
+      "The version the task ships in. Omit to keep the current version; null clears it.",
+  }),
 });
 
 export const moveTaskBody = z.object({
@@ -125,6 +139,11 @@ export const importTasksBody = z.object({
 
 export const updateStatusBody = z.object({ status: z.string() });
 export const updatePriorityBody = z.object({ priority });
+export const updateVersionBody = z.object({
+  versionId: z.string().nullable().openapi({
+    description: "A version of the task's workspace. Null clears it.",
+  }),
+});
 export const updateAssigneeBody = z.object({
   userId: z.string().nullable().openapi({ description: "Null unassigns." }),
 });

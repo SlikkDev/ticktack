@@ -1,4 +1,10 @@
-import { Calendar, CircleAlert, History, UserRound } from "lucide-react";
+import {
+  Calendar,
+  CircleAlert,
+  History,
+  Milestone,
+  UserRound,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import useActiveWorkspace from "@/hooks/queries/workspace/use-active-workspace";
 import useGetWorkspaceUsers from "@/hooks/queries/workspace-users/use-get-workspace-users";
@@ -57,6 +63,8 @@ function getActivityTypeIcon(type: string) {
       return <CircleAlert className={iconClass} />;
     case "due_date_changed":
       return <Calendar className={iconClass} />;
+    case "version_changed":
+      return <Milestone className={iconClass} />;
     case "assignee_changed":
     case "unassigned":
       return <UserRound className={iconClass} />;
@@ -284,6 +292,21 @@ function renderActivityContent({
     }
 
     return <span className="text-muted-foreground">{content}</span>;
+  }
+
+  if (activity.type === "version_changed" && eventData) {
+    const oldVersion = eventData.oldVersion ? String(eventData.oldVersion) : "";
+    const newVersion = eventData.newVersion ? String(eventData.newVersion) : "";
+
+    return (
+      <span className="text-muted-foreground">
+        {newVersion
+          ? oldVersion
+            ? t("activity:changedVersion", { from: oldVersion, to: newVersion })
+            : t("activity:setVersion", { version: newVersion })
+          : t("activity:clearedVersion")}
+      </span>
+    );
   }
 
   if (activity.type === "unassigned") {
