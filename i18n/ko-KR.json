@@ -2514,6 +2514,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "자동 할당",
+			"workspaceSubtitle": "보드에서 작업이 진행될 때 적절한 사람에게 넘깁니다.",
+			"sectionTitle": "상태별 할당",
+			"workspaceSectionDescription": "어떤 프로젝트에서든 작업이 특정 상태로 이동하면 선택한 멤버에게 할당합니다. 프로젝트는 워크플로 설정에서 이를 재정의할 수 있습니다.",
+			"projectSectionDescription": "작업이 특정 상태로 이동하면 선택한 멤버에게 할당합니다. 여기의 규칙은 같은 상태의 워크스페이스 규칙을 재정의합니다.",
+			"noOne": "할당 안 함",
+			"useWorkspaceRule": "워크스페이스 규칙: {{name}}",
+			"emptyTitle": "아직 상태가 없습니다",
+			"emptyDescription": "프로젝트를 만들어 상태별 자동 할당 규칙을 설정하세요.",
+			"loadError": "자동 할당 규칙을 불러오지 못했습니다.",
+			"saveError": "자동 할당 규칙을 저장하지 못했습니다."
 		}
 	},
 	"navigation": {

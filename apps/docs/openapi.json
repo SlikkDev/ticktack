@@ -4401,6 +4401,154 @@
           "updatedAt"
         ]
       },
+      "WorkspaceStatusAssignRules": {
+        "type": "object",
+        "properties": {
+          "rules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusAssignRule"
+            }
+          },
+          "statuses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "slug": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "slug",
+                "name"
+              ]
+            },
+            "description": "Statuses used by the workspace's projects, deduplicated by slug."
+          }
+        },
+        "required": [
+          "rules",
+          "statuses"
+        ]
+      },
+      "StatusAssignRule": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The project the rule belongs to, or null for a workspace rule that applies to every project."
+          },
+          "status": {
+            "type": "string",
+            "description": "The status (column slug) that triggers the assignment."
+          },
+          "assigneeId": {
+            "type": "string"
+          },
+          "assigneeName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "workspaceId",
+          "projectId",
+          "status",
+          "assigneeId",
+          "assigneeName",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "StatusAssignRuleRow": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The project the rule belongs to, or null for a workspace rule that applies to every project."
+          },
+          "status": {
+            "type": "string",
+            "description": "The status (column slug) that triggers the assignment."
+          },
+          "assigneeId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "workspaceId",
+          "projectId",
+          "status",
+          "assigneeId",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "ProjectStatusAssignRules": {
+        "type": "object",
+        "properties": {
+          "rules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusAssignRule"
+            },
+            "description": "Rules set on this project."
+          },
+          "workspaceRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusAssignRule"
+            },
+            "description": "Workspace rules. A project rule for the same status overrides them."
+          }
+        },
+        "required": [
+          "rules",
+          "workspaceRules"
+        ]
+      },
       "PendingInvitation": {
         "type": "object",
         "properties": {
@@ -22872,6 +23020,470 @@
           },
           "404": {
             "description": "Workflow rule not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/status-assign-rule/workspace/{workspaceId}": {
+      "get": {
+        "operationId": "getWorkspaceStatusAssignRules",
+        "tags": [
+          "Status Assign Rules"
+        ],
+        "summary": "Get workspace status assign rules",
+        "description": "Get the workspace rules that assign a task to a user when it moves into a status, and the statuses its projects use.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workspace rules",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceStatusAssignRules"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Workspace not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      },
+      "put": {
+        "operationId": "upsertWorkspaceStatusAssignRule",
+        "tags": [
+          "Status Assign Rules"
+        ],
+        "summary": "Upsert workspace status assign rule",
+        "description": "Assign tasks in every project of the workspace to a user when they move into a status. Replaces the workspace rule for that status.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The status (column slug) that triggers the assignment."
+                  },
+                  "assigneeId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The user tasks are assigned to when they enter the status."
+                  }
+                },
+                "required": [
+                  "status",
+                  "assigneeId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The saved rule",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusAssignRuleRow"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body or unknown status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing workspace:manage_settings permission, or the user is not a workspace member",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Workspace not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/status-assign-rule/workspace/{workspaceId}/{id}": {
+      "delete": {
+        "operationId": "deleteWorkspaceStatusAssignRule",
+        "tags": [
+          "Status Assign Rules"
+        ],
+        "summary": "Delete workspace status assign rule",
+        "description": "Delete a workspace rule. Returns the rule that was removed.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The deleted rule",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusAssignRuleRow"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing workspace:manage_settings permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Rule not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/status-assign-rule/project/{projectId}": {
+      "get": {
+        "operationId": "getProjectStatusAssignRules",
+        "tags": [
+          "Status Assign Rules"
+        ],
+        "summary": "Get project status assign rules",
+        "description": "Get the project's rules and the workspace rules it inherits. A project rule overrides the workspace rule for the same status.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project rules",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectStatusAssignRules"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No access to the project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Project not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      },
+      "put": {
+        "operationId": "upsertProjectStatusAssignRule",
+        "tags": [
+          "Status Assign Rules"
+        ],
+        "summary": "Upsert project status assign rule",
+        "description": "Assign tasks in this project to a user when they move into a status. Overrides the workspace rule for that status.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The status (column slug) that triggers the assignment."
+                  },
+                  "assigneeId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The user tasks are assigned to when they enter the status."
+                  }
+                },
+                "required": [
+                  "status",
+                  "assigneeId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The saved rule",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusAssignRuleRow"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body or unknown status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing project:update permission, or the user cannot access the project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Project not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/status-assign-rule/project/{projectId}/{id}": {
+      "delete": {
+        "operationId": "deleteProjectStatusAssignRule",
+        "tags": [
+          "Status Assign Rules"
+        ],
+        "summary": "Delete project status assign rule",
+        "description": "Delete a project rule, so the workspace rule for that status applies again. Returns the rule that was removed.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The deleted rule",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusAssignRuleRow"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing project:update permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Rule not found",
             "content": {
               "application/json": {
                 "schema": {

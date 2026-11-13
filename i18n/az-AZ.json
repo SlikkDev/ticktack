@@ -2558,6 +2558,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Avtomatik təyinat",
+			"workspaceSubtitle": "Tapşırıqları lövhələrinizdə irəlilədikcə doğru şəxsə verin.",
+			"sectionTitle": "Statusa görə təyin et",
+			"workspaceSectionDescription": "Hər hansı layihədə tapşırıq bir statusa keçəndə onu seçilmiş üzvə təyin et. Layihə bunu iş axını ayarlarında ləğv edə bilər.",
+			"projectSectionDescription": "Tapşırıq bir statusa keçəndə onu seçilmiş üzvə təyin et. Buradakı qayda eyni status üçün iş sahəsi qaydasını əvəz edir.",
+			"noOne": "Təyin etmə",
+			"useWorkspaceRule": "İş sahəsi qaydası: {{name}}",
+			"emptyTitle": "Hələ status yoxdur",
+			"emptyDescription": "Statusları üçün avtomatik təyinat qaydaları qurmaq üçün layihə yaradın.",
+			"loadError": "Avtomatik təyinat qaydaları yüklənə bilmədi.",
+			"saveError": "Avtomatik təyinat qaydası yadda saxlanıla bilmədi."
 		}
 	},
 	"navigation": {

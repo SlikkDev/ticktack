@@ -2514,6 +2514,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Penugasan otomatis",
+			"workspaceSubtitle": "Serahkan tugas ke orang yang tepat saat tugas bergerak di papan Anda.",
+			"sectionTitle": "Tugaskan berdasarkan status",
+			"workspaceSectionDescription": "Saat tugas di proyek mana pun berpindah ke suatu status, tugaskan ke anggota yang dipilih. Proyek dapat menimpa ini di pengaturan alur kerjanya.",
+			"projectSectionDescription": "Saat tugas berpindah ke suatu status, tugaskan ke anggota yang dipilih. Aturan di sini menimpa aturan ruang kerja untuk status yang sama.",
+			"noOne": "Jangan tugaskan",
+			"useWorkspaceRule": "Aturan ruang kerja: {{name}}",
+			"emptyTitle": "Belum ada status",
+			"emptyDescription": "Buat proyek untuk menyiapkan aturan penugasan otomatis untuk statusnya.",
+			"loadError": "Tidak dapat memuat aturan penugasan otomatis.",
+			"saveError": "Tidak dapat menyimpan aturan penugasan otomatis."
 		}
 	},
 	"navigation": {

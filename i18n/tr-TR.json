@@ -2558,6 +2558,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Otomatik atama",
+			"workspaceSubtitle": "Görevleri panolarınızda ilerledikçe doğru kişiye verin.",
+			"sectionTitle": "Duruma göre ata",
+			"workspaceSectionDescription": "Herhangi bir projede bir görev bir duruma geçtiğinde, onu seçilen üyeye ata. Bir proje bunu iş akışı ayarlarında geçersiz kılabilir.",
+			"projectSectionDescription": "Bir görev bir duruma geçtiğinde, onu seçilen üyeye ata. Buradaki kural, aynı durum için çalışma alanı kuralını geçersiz kılar.",
+			"noOne": "Atama",
+			"useWorkspaceRule": "Çalışma alanı kuralı: {{name}}",
+			"emptyTitle": "Henüz durum yok",
+			"emptyDescription": "Durumları için otomatik atama kuralları ayarlamak üzere bir proje oluşturun.",
+			"loadError": "Otomatik atama kuralları yüklenemedi.",
+			"saveError": "Otomatik atama kuralı kaydedilemedi."
 		}
 	},
 	"navigation": {

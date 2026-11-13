@@ -36,4 +36,13 @@ Connect the repository first through [Integrations](/core/integrations/index). T
 
 Disconnect the repository integration if you want to stop using that connection entirely.
 
+## Assign tasks automatically
+
+Auto-assign hands a task to a chosen member whenever it moves into a status, for example to a reviewer when it reaches **Review**. The rule runs however the task moves: on the board, in bulk, through the API, or from a repository automation. The new assignee gets the usual assignment notification, and the task's activity shows the change.
+
+- **Workspace rules** apply to every project. Open **Settings → Auto-assign** and choose a member for each status. You need permission to manage workspace settings.
+- **Project rules** live under **Assign on status** on the project's **Workflow** page and override the workspace rule for the same status. Choose **Workspace rule: …** to fall back to the workspace rule again. You need permission to manage the project.
+
+A rule reassigns the task even when someone else already has it. It is skipped when the chosen member has left the workspace or cannot access the project. Creating a task does not trigger a rule; only a move into the status does.
+
 Return to [Board and List](/core/functional/plan-and-execute-tasks) to work with the updated columns.

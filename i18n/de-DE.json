@@ -2558,6 +2558,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Automatisch zuweisen",
+			"workspaceSubtitle": "Übergib Aufgaben an die richtige Person, während sie über deine Boards wandern.",
+			"sectionTitle": "Bei Status zuweisen",
+			"workspaceSectionDescription": "Wenn eine Aufgabe in einem beliebigen Projekt in einen Status wechselt, wird sie dem gewählten Mitglied zugewiesen. Ein Projekt kann dies in seinen Workflow-Einstellungen überschreiben.",
+			"projectSectionDescription": "Wenn eine Aufgabe in einen Status wechselt, wird sie dem gewählten Mitglied zugewiesen. Eine Regel hier überschreibt die Workspace-Regel für denselben Status.",
+			"noOne": "Nicht zuweisen",
+			"useWorkspaceRule": "Workspace-Regel: {{name}}",
+			"emptyTitle": "Noch keine Status",
+			"emptyDescription": "Erstelle ein Projekt, um Regeln für die automatische Zuweisung seiner Status festzulegen.",
+			"loadError": "Regeln zur automatischen Zuweisung konnten nicht geladen werden.",
+			"saveError": "Die Regel zur automatischen Zuweisung konnte nicht gespeichert werden."
 		}
 	},
 	"navigation": {

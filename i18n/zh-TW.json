@@ -2514,6 +2514,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "自動指派",
+			"workspaceSubtitle": "任務在看板中流轉時，將其交給合適的人。",
+			"sectionTitle": "依狀態指派",
+			"workspaceSectionDescription": "當任何專案中的任務進入某個狀態時，將其指派給所選成員。專案可以在其工作流程設定中覆寫此規則。",
+			"projectSectionDescription": "當任務進入某個狀態時，將其指派給所選成員。此處的規則會覆寫同一狀態的工作區規則。",
+			"noOne": "不指派",
+			"useWorkspaceRule": "工作區規則：{{name}}",
+			"emptyTitle": "尚無狀態",
+			"emptyDescription": "建立一個專案，為其狀態設定自動指派規則。",
+			"loadError": "無法載入自動指派規則。",
+			"saveError": "無法儲存自動指派規則。"
 		}
 	},
 	"navigation": {

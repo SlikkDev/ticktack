@@ -2602,6 +2602,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Asignación automática",
+			"workspaceSubtitle": "Entrega las tareas a la persona adecuada a medida que avanzan por tus tableros.",
+			"sectionTitle": "Asignar por estado",
+			"workspaceSectionDescription": "Cuando una tarea pasa a un estado en cualquier proyecto, asígnala al miembro elegido. Un proyecto puede sobrescribir esto en su configuración de flujo de trabajo.",
+			"projectSectionDescription": "Cuando una tarea pasa a un estado, asígnala al miembro elegido. Una regla aquí sobrescribe la regla del espacio de trabajo para el mismo estado.",
+			"noOne": "No asignar",
+			"useWorkspaceRule": "Regla del espacio de trabajo: {{name}}",
+			"emptyTitle": "Aún no hay estados",
+			"emptyDescription": "Crea un proyecto para configurar reglas de asignación automática para sus estados.",
+			"loadError": "No se pudieron cargar las reglas de asignación automática.",
+			"saveError": "No se pudo guardar la regla de asignación automática."
 		}
 	},
 	"navigation": {

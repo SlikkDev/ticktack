@@ -2602,6 +2602,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Atribuição automática",
+			"workspaceSubtitle": "Entregue as tarefas à pessoa certa conforme elas avançam pelos seus quadros.",
+			"sectionTitle": "Atribuir por status",
+			"workspaceSectionDescription": "Quando uma tarefa entra em um status em qualquer projeto, atribua-a ao membro escolhido. Um projeto pode substituir isso nas configurações de fluxo de trabalho.",
+			"projectSectionDescription": "Quando uma tarefa entra em um status, atribua-a ao membro escolhido. Uma regra aqui substitui a regra do espaço de trabalho para o mesmo status.",
+			"noOne": "Não atribuir",
+			"useWorkspaceRule": "Regra do espaço de trabalho: {{name}}",
+			"emptyTitle": "Nenhum status ainda",
+			"emptyDescription": "Crie um projeto para configurar regras de atribuição automática para os status dele.",
+			"loadError": "Não foi possível carregar as regras de atribuição automática.",
+			"saveError": "Não foi possível salvar a regra de atribuição automática."
 		}
 	},
 	"navigation": {

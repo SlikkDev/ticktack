@@ -3359,6 +3359,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Automatyczne przypisywanie",
+			"workspaceSubtitle": "Przekazuj zadania właściwej osobie, gdy przechodzą przez Twoje tablice.",
+			"sectionTitle": "Przypisz przy statusie",
+			"workspaceSectionDescription": "Gdy zadanie w dowolnym projekcie przejdzie do statusu, przypisz je wybranemu członkowi. Projekt może to nadpisać w ustawieniach przepływu pracy.",
+			"projectSectionDescription": "Gdy zadanie przejdzie do statusu, przypisz je wybranemu członkowi. Reguła tutaj nadpisuje regułę przestrzeni roboczej dla tego samego statusu.",
+			"noOne": "Nie przypisuj",
+			"useWorkspaceRule": "Reguła przestrzeni roboczej: {{name}}",
+			"emptyTitle": "Brak statusów",
+			"emptyDescription": "Utwórz projekt, aby skonfigurować reguły automatycznego przypisywania dla jego statusów.",
+			"loadError": "Nie udało się wczytać reguł automatycznego przypisywania.",
+			"saveError": "Nie udało się zapisać reguły automatycznego przypisywania."
 		}
 	},
 	"tasks": {

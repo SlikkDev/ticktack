@@ -2602,6 +2602,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Attribution automatique",
+			"workspaceSubtitle": "Confiez les tâches à la bonne personne au fil de leur progression sur vos tableaux.",
+			"sectionTitle": "Attribuer selon le statut",
+			"workspaceSectionDescription": "Lorsqu’une tâche passe à un statut dans n’importe quel projet, l’attribuer au membre choisi. Un projet peut remplacer cette règle dans ses paramètres de workflow.",
+			"projectSectionDescription": "Lorsqu’une tâche passe à un statut, l’attribuer au membre choisi. Une règle définie ici remplace la règle de l’espace de travail pour le même statut.",
+			"noOne": "Ne pas attribuer",
+			"useWorkspaceRule": "Règle de l’espace de travail : {{name}}",
+			"emptyTitle": "Aucun statut pour l’instant",
+			"emptyDescription": "Créez un projet pour configurer des règles d’attribution automatique pour ses statuts.",
+			"loadError": "Impossible de charger les règles d’attribution automatique.",
+			"saveError": "Impossible d’enregistrer la règle d’attribution automatique."
 		}
 	},
 	"navigation": {

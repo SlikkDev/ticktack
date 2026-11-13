@@ -2602,6 +2602,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "הקצאה אוטומטית",
+			"workspaceSubtitle": "העבירו משימות לאדם הנכון כשהן מתקדמות בלוחות שלכם.",
+			"sectionTitle": "הקצאה לפי סטטוס",
+			"workspaceSectionDescription": "כשמשימה בכל פרויקט עוברת לסטטוס, היא תוקצה לחבר שנבחר. פרויקט יכול לעקוף זאת בהגדרות זרימת העבודה שלו.",
+			"projectSectionDescription": "כשמשימה עוברת לסטטוס, היא תוקצה לחבר שנבחר. כלל כאן עוקף את כלל סביבת העבודה עבור אותו סטטוס.",
+			"noOne": "ללא הקצאה",
+			"useWorkspaceRule": "כלל סביבת העבודה: {{name}}",
+			"emptyTitle": "עדיין אין סטטוסים",
+			"emptyDescription": "צרו פרויקט כדי להגדיר כללי הקצאה אוטומטית לסטטוסים שלו.",
+			"loadError": "לא ניתן לטעון את כללי ההקצאה האוטומטית.",
+			"saveError": "לא ניתן לשמור את כלל ההקצאה האוטומטית."
 		}
 	},
 	"navigation": {

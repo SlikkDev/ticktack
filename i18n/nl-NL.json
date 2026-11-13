@@ -2558,6 +2558,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Automatisch toewijzen",
+			"workspaceSubtitle": "Geef taken aan de juiste persoon terwijl ze over je borden bewegen.",
+			"sectionTitle": "Toewijzen bij status",
+			"workspaceSectionDescription": "Wanneer een taak in een project naar een status gaat, wordt deze aan het gekozen lid toegewezen. Een project kan dit overschrijven in zijn workflow-instellingen.",
+			"projectSectionDescription": "Wanneer een taak naar een status gaat, wordt deze aan het gekozen lid toegewezen. Een regel hier overschrijft de werkruimteregel voor dezelfde status.",
+			"noOne": "Niet toewijzen",
+			"useWorkspaceRule": "Werkruimteregel: {{name}}",
+			"emptyTitle": "Nog geen statussen",
+			"emptyDescription": "Maak een project aan om regels voor automatisch toewijzen voor de statussen in te stellen.",
+			"loadError": "Kon de regels voor automatisch toewijzen niet laden.",
+			"saveError": "Kon de regel voor automatisch toewijzen niet opslaan."
 		}
 	},
 	"navigation": {

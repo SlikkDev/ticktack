@@ -125,6 +125,7 @@ function evictPrivateQueries(
       "calendar-feeds",
       "columns",
       "workflow-rules",
+      "status-assign-rules",
       "custom-fields",
       "custom-field-values",
       "custom-field-filter-values",
