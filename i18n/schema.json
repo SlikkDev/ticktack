@@ -5866,6 +5866,202 @@
 						"loadError"
 					]
 				},
+				"workspaceVersions": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"pageTitle": {
+							"type": "string"
+						},
+						"title": {
+							"type": "string"
+						},
+						"subtitle": {
+							"type": "string"
+						},
+						"subtitleWithWorkspace": {
+							"type": "string"
+						},
+						"sectionTitle": {
+							"type": "string"
+						},
+						"sectionDescription": {
+							"type": "string"
+						},
+						"newVersion": {
+							"type": "string"
+						},
+						"createVersion": {
+							"type": "string"
+						},
+						"editVersion": {
+							"type": "string"
+						},
+						"saveVersion": {
+							"type": "string"
+						},
+						"deleteVersion": {
+							"type": "string"
+						},
+						"nameLabel": {
+							"type": "string"
+						},
+						"namePlaceholder": {
+							"type": "string"
+						},
+						"descriptionLabel": {
+							"type": "string"
+						},
+						"descriptionPlaceholder": {
+							"type": "string"
+						},
+						"createDescription": {
+							"type": "string"
+						},
+						"editDescription": {
+							"type": "string"
+						},
+						"deleteConfirmTitle": {
+							"type": "string"
+						},
+						"deleteConfirmDescription_one": {
+							"type": "string"
+						},
+						"deleteConfirmDescription_zero": {
+							"type": "string"
+						},
+						"deleteConfirmDescription_two": {
+							"type": "string"
+						},
+						"deleteConfirmDescription_few": {
+							"type": "string"
+						},
+						"deleteConfirmDescription_many": {
+							"type": "string"
+						},
+						"deleteConfirmDescription_other": {
+							"type": "string"
+						},
+						"deleteConfirmDescriptionEmpty": {
+							"type": "string"
+						},
+						"taskCount_one": {
+							"type": "string"
+						},
+						"taskCount_zero": {
+							"type": "string"
+						},
+						"taskCount_two": {
+							"type": "string"
+						},
+						"taskCount_few": {
+							"type": "string"
+						},
+						"taskCount_many": {
+							"type": "string"
+						},
+						"taskCount_other": {
+							"type": "string"
+						},
+						"releasedOn": {
+							"type": "string"
+						},
+						"statusOpen": {
+							"type": "string"
+						},
+						"statusReleased": {
+							"type": "string"
+						},
+						"release": {
+							"type": "string"
+						},
+						"reopen": {
+							"type": "string"
+						},
+						"editNamed": {
+							"type": "string"
+						},
+						"rowActions": {
+							"type": "string"
+						},
+						"createSuccess": {
+							"type": "string"
+						},
+						"updateSuccess": {
+							"type": "string"
+						},
+						"deleteSuccess": {
+							"type": "string"
+						},
+						"releaseSuccess": {
+							"type": "string"
+						},
+						"reopenSuccess": {
+							"type": "string"
+						},
+						"createError": {
+							"type": "string"
+						},
+						"updateError": {
+							"type": "string"
+						},
+						"deleteError": {
+							"type": "string"
+						},
+						"loadError": {
+							"type": "string"
+						},
+						"nameRequired": {
+							"type": "string"
+						},
+						"emptyTitle": {
+							"type": "string"
+						},
+						"emptyDescription": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"pageTitle",
+						"title",
+						"subtitle",
+						"subtitleWithWorkspace",
+						"sectionTitle",
+						"sectionDescription",
+						"newVersion",
+						"createVersion",
+						"editVersion",
+						"saveVersion",
+						"deleteVersion",
+						"nameLabel",
+						"namePlaceholder",
+						"descriptionLabel",
+						"descriptionPlaceholder",
+						"createDescription",
+						"editDescription",
+						"deleteConfirmTitle",
+						"deleteConfirmDescriptionEmpty",
+						"releasedOn",
+						"statusOpen",
+						"statusReleased",
+						"release",
+						"reopen",
+						"editNamed",
+						"rowActions",
+						"createSuccess",
+						"updateSuccess",
+						"deleteSuccess",
+						"releaseSuccess",
+						"reopenSuccess",
+						"createError",
+						"updateError",
+						"deleteError",
+						"loadError",
+						"nameRequired",
+						"emptyTitle",
+						"emptyDescription"
+					]
+				},
 				"workspaceImport": {
 					"type": "object",
 					"additionalProperties": false,
@@ -10283,6 +10479,7 @@
 				"workspaceGeneral",
 				"workspaceRoles",
 				"workspaceLabels",
+				"workspaceVersions",
 				"workspaceImport",
 				"projectGeneral",
 				"projectIntegrations",
@@ -11354,6 +11551,35 @@
 								}
 							},
 							"required": ["title", "contentWithTask", "contentWithoutTask"]
+						},
+						"watched_task_comment": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"title": {
+									"type": "string"
+								},
+								"content": {
+									"type": "string"
+								}
+							},
+							"required": ["title", "content"]
+						},
+						"watched_task_assignee_changed": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"title": {
+									"type": "string"
+								},
+								"content": {
+									"type": "string"
+								},
+								"contentUnassigned": {
+									"type": "string"
+								}
+							},
+							"required": ["title", "content", "contentUnassigned"]
 						}
 					},
 					"required": [
@@ -11365,7 +11591,9 @@
 						"task_comment",
 						"due_date_reminder",
 						"task_overdue",
-						"time_entry_created"
+						"time_entry_created",
+						"watched_task_comment",
+						"watched_task_assignee_changed"
 					]
 				},
 				"inbox": {
@@ -11490,6 +11718,15 @@
 					"type": "string"
 				},
 				"changedDueDate": {
+					"type": "string"
+				},
+				"changedVersion": {
+					"type": "string"
+				},
+				"setVersion": {
+					"type": "string"
+				},
+				"clearedVersion": {
 					"type": "string"
 				},
 				"changedTitle": {
@@ -11915,6 +12152,9 @@
 				"clearedDueDate",
 				"setDueDate",
 				"changedDueDate",
+				"changedVersion",
+				"setVersion",
+				"clearedVersion",
 				"changedTitle",
 				"moved",
 				"movedFromOtherProject",
@@ -12000,6 +12240,19 @@
 						"high",
 						"urgent"
 					]
+				},
+				"version": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"label": {
+							"type": "string"
+						},
+						"none": {
+							"type": "string"
+						}
+					},
+					"required": ["label", "none"]
 				},
 				"view": {
 					"type": "object",
@@ -12784,6 +13037,19 @@
 							},
 							"required": ["unassigned", "updateError"]
 						},
+						"version": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"searchPlaceholder": {
+									"type": "string"
+								},
+								"updateError": {
+									"type": "string"
+								}
+							},
+							"required": ["searchPlaceholder", "updateError"]
+						},
 						"status": {
 							"type": "object",
 							"additionalProperties": false,
@@ -12918,6 +13184,7 @@
 					},
 					"required": [
 						"assignee",
+						"version",
 						"status",
 						"priority",
 						"dueDate",
@@ -13134,6 +13401,9 @@
 								},
 								"labels": {
 									"type": "string"
+								},
+								"version": {
+									"type": "string"
 								}
 							},
 							"required": [
@@ -13141,7 +13411,8 @@
 								"priority",
 								"assignee",
 								"dueDate",
-								"labels"
+								"labels",
+								"version"
 							]
 						},
 						"operators": {
@@ -14196,6 +14467,43 @@
 						"copyFailed",
 						"pageUrlCopied"
 					]
+				},
+				"watchers": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"label": {
+							"type": "string"
+						},
+						"add": {
+							"type": "string"
+						},
+						"placeholder": {
+							"type": "string"
+						},
+						"count_one": {
+							"type": "string"
+						},
+						"count_zero": {
+							"type": "string"
+						},
+						"count_two": {
+							"type": "string"
+						},
+						"count_few": {
+							"type": "string"
+						},
+						"count_many": {
+							"type": "string"
+						},
+						"count_other": {
+							"type": "string"
+						},
+						"updateError": {
+							"type": "string"
+						}
+					},
+					"required": ["label", "add", "placeholder", "updateError"]
 				}
 			},
 			"required": [
@@ -14203,6 +14511,7 @@
 				"title",
 				"status",
 				"priority",
+				"version",
 				"view",
 				"common",
 				"detail",
@@ -14242,7 +14551,8 @@
 				"display",
 				"filterBar",
 				"filterMenu",
-				"shortcuts"
+				"shortcuts",
+				"watchers"
 			]
 		},
 		"invitations": {

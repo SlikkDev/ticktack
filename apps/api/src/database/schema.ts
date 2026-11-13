@@ -8,6 +8,7 @@ import {
   integer,
   jsonb,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   unique,
@@ -1282,6 +1283,34 @@ export const taskRelationTable = pgTable(
   (table) => [
     index("task_relation_source_idx").on(table.sourceTaskId),
     index("task_relation_target_idx").on(table.targetTaskId),
+  ],
+);
+
+// Users who follow a task without being its assignee. Notification delivery
+// still checks workspace membership and project access, so a stale row for a
+// user who lost access stays silent.
+export const taskWatcherTable = pgTable(
+  "task_watcher",
+  {
+    taskId: text("task_id")
+      .notNull()
+      .references(() => taskTable.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => userTable.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    createdAt: timestamp("created_at", { mode: "date" })
+      .default(utcNow)
+      .notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.taskId, table.userId] }),
+    index("task_watcher_userId_idx").on(table.userId),
   ],
 );
 

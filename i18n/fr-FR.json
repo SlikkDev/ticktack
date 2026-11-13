@@ -2852,6 +2852,15 @@
 			"task_overdue": {
 				"title": "Tâche en retard",
 				"content": "{{taskTitle}} a dépassé sa date d'échéance"
+			},
+			"watched_task_assignee_changed": {
+				"content": "{{taskTitle}} is now assigned to {{assigneeName}}",
+				"contentUnassigned": "{{taskTitle}} is now unassigned",
+				"title": "Assignee changed on a task you watch"
+			},
+			"watched_task_comment": {
+				"content": "New comment on {{taskTitle}}: {{commentPreview}}",
+				"title": "{{commenterName}} commented on a task you watch"
 			}
 		},
 		"reminderLeadTime": {
@@ -3541,6 +3550,15 @@
 		"version": {
 			"label": "Version",
 			"none": "No version"
+		},
+		"watchers": {
+			"add": "Add watchers",
+			"count_many": "{{count}} watchers",
+			"count_one": "{{count}} watcher",
+			"count_other": "{{count}} watchers",
+			"label": "Watchers",
+			"placeholder": "Add or remove watchers…",
+			"updateError": "Failed to update watchers"
 		}
 	},
 	"invitations": {

@@ -112,6 +112,28 @@ export function hebrewEmailContent(
           : "נוספה תגובה חדשה למשימה בטיקטק.",
       };
     }
+    case "watched_task_comment": {
+      const name = text("commenterName");
+      return {
+        title: name
+          ? `${name} הגיב למשימה שאת/ה עוקב/ת אחריה`
+          : "תגובה חדשה למשימה שאת/ה עוקב/ת אחריה",
+        body: task
+          ? `נוספה תגובה חדשה למשימה ${task}.`
+          : "נוספה תגובה חדשה למשימה שאת/ה עוקב/ת אחריה.",
+      };
+    }
+    case "watched_task_assignee_changed": {
+      const assignee = text("assigneeName");
+      return {
+        title: "האחראי השתנה במשימה שאת/ה עוקב/ת אחריה",
+        body: !task
+          ? "האחראי השתנה במשימה שאת/ה עוקב/ת אחריה."
+          : assignee
+            ? `המשימה ${task} הוקצתה ל־${assignee}.`
+            : `המשימה ${task} אינה מוקצית כעת.`,
+      };
+    }
     default:
       return {
         title: notification.title ?? "התראה חדשה מטיקטק",
