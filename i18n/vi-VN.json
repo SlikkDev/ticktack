@@ -2779,6 +2779,15 @@
 				"title": "Đã bắt đầu theo dõi thời gian",
 				"contentWithTask": "Đã bắt đầu theo dõi thời gian trên công việc: {{taskTitle}}",
 				"contentWithoutTask": "Đã bắt đầu theo dõi thời gian trên một công việc"
+			},
+			"watched_task_assignee_changed": {
+				"content": "{{taskTitle}} is now assigned to {{assigneeName}}",
+				"contentUnassigned": "{{taskTitle}} is now unassigned",
+				"title": "Assignee changed on a task you watch"
+			},
+			"watched_task_comment": {
+				"content": "New comment on {{taskTitle}}: {{commentPreview}}",
+				"title": "{{commenterName}} commented on a task you watch"
 			}
 		},
 		"inbox": {
@@ -3442,6 +3451,13 @@
 		"version": {
 			"label": "Version",
 			"none": "No version"
+		},
+		"watchers": {
+			"add": "Add watchers",
+			"count_other": "{{count}} watchers",
+			"label": "Watchers",
+			"placeholder": "Add or remove watchers…",
+			"updateError": "Failed to update watchers"
 		}
 	},
 	"invitations": {

@@ -2828,6 +2828,15 @@
 				"title": "Time tracking started",
 				"contentWithTask": "Time tracking started on task: {{taskTitle}}",
 				"contentWithoutTask": "Time tracking started on a task"
+			},
+			"watched_task_comment": {
+				"title": "{{commenterName}} commented on a task you watch",
+				"content": "New comment on {{taskTitle}}: {{commentPreview}}"
+			},
+			"watched_task_assignee_changed": {
+				"title": "Assignee changed on a task you watch",
+				"content": "{{taskTitle}} is now assigned to {{assigneeName}}",
+				"contentUnassigned": "{{taskTitle}} is now unassigned"
 			}
 		},
 		"inbox": {
@@ -3498,6 +3507,14 @@
 			"markdownCopied": "Copied as Markdown",
 			"copyFailed": "Couldn't copy to the clipboard.",
 			"pageUrlCopied": "Copied page URL"
+		},
+		"watchers": {
+			"label": "Watchers",
+			"add": "Add watchers",
+			"placeholder": "Add or remove watchers…",
+			"count_one": "{{count}} watcher",
+			"count_other": "{{count}} watchers",
+			"updateError": "Failed to update watchers"
 		}
 	},
 	"invitations": {

@@ -71,6 +71,16 @@ export function getNotificationTitle(
           ...eventData,
           defaultValue: notification.title ?? notification.type,
         });
+      case "watched_task_comment":
+        return t("notifications:events.watched_task_comment.title", {
+          ...eventData,
+          defaultValue: notification.title ?? notification.type,
+        });
+      case "watched_task_assignee_changed":
+        return t("notifications:events.watched_task_assignee_changed.title", {
+          ...eventData,
+          defaultValue: notification.title ?? notification.type,
+        });
       case "due_date_reminder":
         return t("notifications:events.due_date_reminder.title", {
           ...eventData,
@@ -138,6 +148,21 @@ export function getNotificationContent(
           ...eventData,
           defaultValue: notification.content ?? "",
         });
+      case "watched_task_comment":
+        return t("notifications:events.watched_task_comment.content", {
+          ...eventData,
+          defaultValue: notification.content ?? "",
+        });
+      case "watched_task_assignee_changed":
+        return eventData.assigneeName
+          ? t("notifications:events.watched_task_assignee_changed.content", {
+              ...eventData,
+              defaultValue: notification.content ?? "",
+            })
+          : t(
+              "notifications:events.watched_task_assignee_changed.contentUnassigned",
+              { ...eventData, defaultValue: notification.content ?? "" },
+            );
       case "due_date_reminder":
         return t("notifications:events.due_date_reminder.content", {
           ...eventData,
