@@ -15,7 +15,7 @@ async function updateTaskAssignee({
 }: {
   id: string;
   userId: string | null;
-  currentUserId: string;
+  currentUserId?: string;
 }) {
   const { before: existingTask, after: updatedTask } = await withLockedTask(
     id,

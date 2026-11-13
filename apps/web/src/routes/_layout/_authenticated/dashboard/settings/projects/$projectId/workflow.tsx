@@ -6,6 +6,7 @@ import { ColumnList } from "@/components/project/columns/column-list";
 import { AutosaveNote } from "@/components/settings/autosave-note";
 import { SettingsPage } from "@/components/settings/settings-page";
 import { SettingsSection } from "@/components/settings/settings-section";
+import { ProjectStatusAssignRules } from "@/components/settings/status-assign-rules/project-status-assign-rules";
 
 export const Route = createFileRoute(
   "/_layout/_authenticated/dashboard/settings/projects/$projectId/workflow",
@@ -36,6 +37,12 @@ function RouteComponent() {
           description={t("settings:projectWorkflow.automationDescription")}
         >
           <AutomationsSection projectId={projectId} />
+        </SettingsSection>
+        <SettingsSection
+          title={t("settings:statusAssign.sectionTitle")}
+          description={t("settings:statusAssign.projectSectionDescription")}
+        >
+          <ProjectStatusAssignRules projectId={projectId} />
         </SettingsSection>
       </SettingsPage>
     </>

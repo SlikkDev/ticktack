@@ -470,6 +470,13 @@
       "when": 1793689421772,
       "tag": "0066_versions",
       "breakpoints": true
+    },
+    {
+      "idx": 67,
+      "version": "7",
+      "when": 1794566121246,
+      "tag": "0067_status_assign_rules",
+      "breakpoints": true
     }
   ]
 }

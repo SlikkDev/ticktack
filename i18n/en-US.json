@@ -1907,6 +1907,19 @@
 			"automationTitle": "Automations",
 			"automationDescription": "Move a linked task when something happens in a connected repository."
 		},
+		"statusAssign": {
+			"title": "Auto-assign",
+			"workspaceSubtitle": "Hand tasks to the right person as they move through your boards.",
+			"sectionTitle": "Assign on status",
+			"workspaceSectionDescription": "When a task moves into a status in any project, assign it to the chosen member. A project can override this in its workflow settings.",
+			"projectSectionDescription": "When a task moves into a status, assign it to the chosen member. A rule here overrides the workspace rule for the same status.",
+			"noOne": "Don't assign",
+			"useWorkspaceRule": "Workspace rule: {{name}}",
+			"emptyTitle": "No statuses yet",
+			"emptyDescription": "Create a project to set up auto-assign rules for its statuses.",
+			"loadError": "Couldn't load auto-assign rules.",
+			"saveError": "Couldn't save the auto-assign rule."
+		},
 		"projectSwitcher": {
 			"selectProject": "Select project",
 			"noProjects": "No projects"

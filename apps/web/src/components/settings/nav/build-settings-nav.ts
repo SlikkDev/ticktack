@@ -12,6 +12,7 @@ import {
   SlidersHorizontal,
   Tag,
   User,
+  UserRoundCheck,
 } from "lucide-react";
 import projectIcons from "@/constants/project-icons";
 import type {
@@ -131,6 +132,12 @@ export function buildSettingsNav({
           label: t("settings:workspaceVersions.title"),
           to: "/dashboard/settings/workspace/versions",
           icon: Milestone,
+        },
+        {
+          id: "workspace-auto-assign",
+          label: t("settings:statusAssign.title"),
+          to: "/dashboard/settings/workspace/auto-assign",
+          icon: UserRoundCheck,
         },
         ...(canImport
           ? [

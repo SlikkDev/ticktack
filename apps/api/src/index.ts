@@ -109,6 +109,7 @@ import { drainSignInEmails } from "./utils/sign-in-email-tasks";
 import { validateWorkspaceAccess } from "./utils/validate-workspace-access";
 import { apiKeyResponseHeaders } from "./utils/rate-limit-headers";
 import { readApiKeyCheck, verifyApiKey } from "./utils/verify-api-key";
+import statusAssignRule from "./status-assign-rule";
 import workflowRule from "./workflow-rule";
 import workspace from "./workspace";
 import {
@@ -877,6 +878,10 @@ export function createApp() {
   const taskRelationApi = api.route("/task-relation", taskRelation);
   const externalLinkApi = api.route("/external-link", externalLink);
   const workflowRuleApi = api.route("/workflow-rule", workflowRule);
+  const statusAssignRuleApi = api.route(
+    "/status-assign-rule",
+    statusAssignRule,
+  );
   const invitationApi = api.route("/invitation", invitation);
   const workspaceApi = api.route("/workspace", workspace);
   const customFieldApi = api.route("/custom-field", customField);
@@ -1031,6 +1036,7 @@ export function createApp() {
     watchApi,
     adminApi,
     workflowRuleApi,
+    statusAssignRuleApi,
     workspaceApi,
     customFieldApi,
     importApi,
@@ -1167,6 +1173,7 @@ const {
   watchApi,
   adminApi,
   workflowRuleApi,
+  statusAssignRuleApi,
   workspaceApi,
   customFieldApi,
   importApi,
@@ -1210,6 +1217,7 @@ export type AppType =
   | typeof taskRelationApi
   | typeof externalLinkApi
   | typeof workflowRuleApi
+  | typeof statusAssignRuleApi
   | typeof invitationApi
   | typeof workspaceApi
   | typeof customFieldApi

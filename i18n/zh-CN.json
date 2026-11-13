@@ -2514,6 +2514,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "自动分配",
+			"workspaceSubtitle": "任务在看板中流转时，将其交给合适的人。",
+			"sectionTitle": "按状态分配",
+			"workspaceSectionDescription": "当任意项目中的任务进入某个状态时，将其分配给所选成员。项目可以在其工作流设置中覆盖此规则。",
+			"projectSectionDescription": "当任务进入某个状态时，将其分配给所选成员。此处的规则会覆盖同一状态的工作区规则。",
+			"noOne": "不分配",
+			"useWorkspaceRule": "工作区规则：{{name}}",
+			"emptyTitle": "暂无状态",
+			"emptyDescription": "创建一个项目，为其状态设置自动分配规则。",
+			"loadError": "无法加载自动分配规则。",
+			"saveError": "无法保存自动分配规则。"
 		}
 	},
 	"navigation": {

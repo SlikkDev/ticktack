@@ -2514,6 +2514,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "自動割り当て",
+			"workspaceSubtitle": "ボード上でタスクが進むにつれて、適切な担当者に引き渡します。",
+			"sectionTitle": "ステータスで割り当て",
+			"workspaceSectionDescription": "いずれかのプロジェクトでタスクがステータスに移動したとき、選択したメンバーに割り当てます。プロジェクトはワークフロー設定でこれを上書きできます。",
+			"projectSectionDescription": "タスクがステータスに移動したとき、選択したメンバーに割り当てます。ここでのルールは、同じステータスのワークスペースルールを上書きします。",
+			"noOne": "割り当てない",
+			"useWorkspaceRule": "ワークスペースのルール: {{name}}",
+			"emptyTitle": "ステータスがまだありません",
+			"emptyDescription": "プロジェクトを作成すると、そのステータスに自動割り当てルールを設定できます。",
+			"loadError": "自動割り当てルールを読み込めませんでした。",
+			"saveError": "自動割り当てルールを保存できませんでした。"
 		}
 	},
 	"navigation": {

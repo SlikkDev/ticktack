@@ -2514,6 +2514,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Tự động giao",
+			"workspaceSubtitle": "Giao công việc cho đúng người khi chúng di chuyển trên các bảng của bạn.",
+			"sectionTitle": "Giao theo trạng thái",
+			"workspaceSectionDescription": "Khi một công việc trong bất kỳ dự án nào chuyển sang một trạng thái, giao nó cho thành viên đã chọn. Dự án có thể ghi đè điều này trong cài đặt quy trình làm việc.",
+			"projectSectionDescription": "Khi một công việc chuyển sang một trạng thái, giao nó cho thành viên đã chọn. Quy tắc ở đây ghi đè quy tắc không gian làm việc cho cùng trạng thái.",
+			"noOne": "Không giao",
+			"useWorkspaceRule": "Quy tắc không gian làm việc: {{name}}",
+			"emptyTitle": "Chưa có trạng thái",
+			"emptyDescription": "Tạo một dự án để thiết lập quy tắc tự động giao cho các trạng thái của nó.",
+			"loadError": "Không thể tải các quy tắc tự động giao.",
+			"saveError": "Không thể lưu quy tắc tự động giao."
 		}
 	},
 	"navigation": {

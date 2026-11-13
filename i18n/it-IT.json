@@ -2602,6 +2602,19 @@
 			"title": "Versions",
 			"updateError": "Failed to update version",
 			"updateSuccess": "Version updated"
+		},
+		"statusAssign": {
+			"title": "Assegnazione automatica",
+			"workspaceSubtitle": "Affida le attività alla persona giusta mentre avanzano nelle tue bacheche.",
+			"sectionTitle": "Assegna per stato",
+			"workspaceSectionDescription": "Quando un’attività passa a uno stato in qualsiasi progetto, assegnala al membro scelto. Un progetto può sovrascrivere questa regola nelle impostazioni del workflow.",
+			"projectSectionDescription": "Quando un’attività passa a uno stato, assegnala al membro scelto. Una regola qui sovrascrive la regola dello spazio di lavoro per lo stesso stato.",
+			"noOne": "Non assegnare",
+			"useWorkspaceRule": "Regola dello spazio di lavoro: {{name}}",
+			"emptyTitle": "Nessuno stato",
+			"emptyDescription": "Crea un progetto per impostare le regole di assegnazione automatica per i suoi stati.",
+			"loadError": "Impossibile caricare le regole di assegnazione automatica.",
+			"saveError": "Impossibile salvare la regola di assegnazione automatica."
 		}
 	},
 	"navigation": {

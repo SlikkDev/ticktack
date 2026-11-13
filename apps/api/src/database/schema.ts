@@ -532,6 +532,52 @@ export const workflowRuleTable = pgTable(
   ],
 );
 
+// Assigns a task to a user when it moves into a status. A workspace rule
+// (projectId null) applies to every project of the workspace; a project rule
+// for the same status overrides it. Status is a column slug because columns
+// are per project and workspace rules must match across projects.
+export const statusAssignRuleTable = pgTable(
+  "status_assign_rule",
+  {
+    id: text("id")
+      .$defaultFn(() => createId())
+      .primaryKey(),
+    workspaceId: text("workspace_id")
+      .notNull()
+      .references(() => workspaceTable.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    projectId: text("project_id").references(() => projectTable.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+    status: text("status").notNull(),
+    assigneeId: text("assignee_id")
+      .notNull()
+      .references(() => userTable.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    createdAt: timestamp("created_at", { mode: "date" })
+      .default(utcNow)
+      .notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" })
+      .default(utcNow)
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [
+    uniqueIndex("status_assign_rule_workspace_status_uidx")
+      .on(table.workspaceId, table.status)
+      .where(sql`${table.projectId} is null`),
+    uniqueIndex("status_assign_rule_project_status_uidx")
+      .on(table.projectId, table.status)
+      .where(sql`${table.projectId} is not null`),
+    index("status_assign_rule_assigneeId_idx").on(table.assigneeId),
+  ],
+);
+
 export const calendarFeedTable = pgTable(
   "calendar_feed",
   {
