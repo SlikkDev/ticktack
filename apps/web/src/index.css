@@ -1569,3 +1569,46 @@ html[data-native-platform] .min-h-svh {
   }
 
 }
+
+/* Slikk.Dev attribution badge, from the canonical kit
+   (https://github.com/SlikkDev/attribution). Kept outside the layers so the
+   kit's own reset (`all: revert`) is what applies. The wordmark, the dot
+   colour and the focus ring are fixed; the ink follows this app's muted
+   colour. The kit's 0.9 text opacity is left out: the muted colour already
+   sits close to the AA line. */
+.dsk-credit {
+  all: revert;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  padding: 6px 2px;
+  border: 0;
+  background: none;
+  transition: color 0.18s ease;
+}
+.dsk-credit:hover,
+.dsk-credit:focus-visible {
+  color: var(--foreground);
+}
+.dsk-credit:focus-visible {
+  outline: 2px solid #ff2d6b;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.dsk-credit__mark {
+  height: 14px;
+  width: auto;
+  display: block;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dsk-credit {
+    transition: none;
+  }
+}

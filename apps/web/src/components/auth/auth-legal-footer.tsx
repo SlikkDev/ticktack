@@ -1,6 +1,8 @@
+import { SlikkCredit } from "./slikk-credit";
+
 export function AuthLegalFooter() {
   return (
-    <footer className="flex flex-wrap justify-center gap-3 px-6 pb-8 text-muted-foreground text-xs">
+    <footer className="flex flex-wrap items-center justify-center gap-3 px-6 pb-8 text-muted-foreground text-xs">
       <a
         href="https://github.com/SlikkDev/ticktack"
         target="_blank"
@@ -18,6 +20,8 @@ export function AuthLegalFooter() {
       >
         Kaneo (MIT)
       </a>
+      <span aria-hidden="true">·</span>
+      <SlikkCredit />
     </footer>
   );
 }

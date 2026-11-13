@@ -2840,6 +2840,19 @@
 						"recoveryHint",
 						"reauthenticate"
 					]
+				},
+				"credit": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"text": {
+							"type": "string"
+						},
+						"label": {
+							"type": "string"
+						}
+					},
+					"required": ["text", "label"]
 				}
 			},
 			"required": [
@@ -2858,7 +2871,8 @@
 				"page",
 				"device",
 				"mcp",
-				"passwordless"
+				"passwordless",
+				"credit"
 			]
 		},
 		"settings": {
@@ -7800,6 +7814,58 @@
 						"automationDescription"
 					]
 				},
+				"statusAssign": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"title": {
+							"type": "string"
+						},
+						"workspaceSubtitle": {
+							"type": "string"
+						},
+						"sectionTitle": {
+							"type": "string"
+						},
+						"workspaceSectionDescription": {
+							"type": "string"
+						},
+						"projectSectionDescription": {
+							"type": "string"
+						},
+						"noOne": {
+							"type": "string"
+						},
+						"useWorkspaceRule": {
+							"type": "string"
+						},
+						"emptyTitle": {
+							"type": "string"
+						},
+						"emptyDescription": {
+							"type": "string"
+						},
+						"loadError": {
+							"type": "string"
+						},
+						"saveError": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"title",
+						"workspaceSubtitle",
+						"sectionTitle",
+						"workspaceSectionDescription",
+						"projectSectionDescription",
+						"noOne",
+						"useWorkspaceRule",
+						"emptyTitle",
+						"emptyDescription",
+						"loadError",
+						"saveError"
+					]
+				},
 				"projectSwitcher": {
 					"type": "object",
 					"additionalProperties": false,
@@ -10485,6 +10551,7 @@
 				"projectIntegrations",
 				"projectVisibility",
 				"projectWorkflow",
+				"statusAssign",
 				"projectSwitcher",
 				"columnEditor",
 				"customFields",

@@ -716,6 +716,10 @@
 			"addPasskey": "Add a passkey",
 			"recoveryHint": "Keep access to your email for recovery. Removing a passkey does not delete it from your device’s password manager.",
 			"reauthenticate": "Sign in again to manage passkeys"
+		},
+		"credit": {
+			"text": "Hebrew-first fork by",
+			"label": "Hebrew-first fork by Slikk.Dev (opens slikk.dev in a new tab)"
 		}
 	},
 	"settings": {
