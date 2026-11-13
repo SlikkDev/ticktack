@@ -366,6 +366,12 @@ export function useProjectWebSocket(projectId: string) {
             );
             return;
           }
+          if (message.type === "TASK_WATCHERS_UPDATED") {
+            void queryClient.invalidateQueries({
+              queryKey: ["task-watchers", message.taskId],
+            });
+            return;
+          }
           if (
             message.type === "TASK_UPDATED" ||
             message.type === "TASK_CREATED" ||

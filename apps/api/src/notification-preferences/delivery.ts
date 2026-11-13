@@ -188,6 +188,36 @@ function buildDeliveryContent(notification: {
           : "A new comment was added to a TickTack task.",
       };
     }
+    case "watched_task_comment": {
+      const taskTitle = getStringValue(notification.eventData, "taskTitle");
+      const commenterName = getStringValue(
+        notification.eventData,
+        "commenterName",
+      );
+      return {
+        title: commenterName
+          ? `${commenterName} commented on a task you watch`
+          : "New comment on a task you watch",
+        body: taskTitle
+          ? `A new comment was added to ${taskTitle}.`
+          : "A new comment was added to a task you watch.",
+      };
+    }
+    case "watched_task_assignee_changed": {
+      const taskTitle = getStringValue(notification.eventData, "taskTitle");
+      const assigneeName = getStringValue(
+        notification.eventData,
+        "assigneeName",
+      );
+      return {
+        title: "Assignee changed on a task you watch",
+        body: !taskTitle
+          ? "The assignee changed on a task you watch."
+          : assigneeName
+            ? `${taskTitle} is now assigned to ${assigneeName}.`
+            : `${taskTitle} is now unassigned.`,
+      };
+    }
     default:
       return {
         title: notification.title ?? "New TickTack notification",

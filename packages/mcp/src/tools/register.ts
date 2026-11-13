@@ -631,6 +631,53 @@ export function registerTools(
   );
 
   registerTool(
+    "get_task_watchers",
+    {
+      description:
+        "List the users watching a task. Watchers are notified of status changes, assignee changes, and new comments.",
+      inputSchema: z.object({ taskId: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(`/api/task-watcher/${encodeURIComponent(args.taskId)}`, {
+          method: "GET",
+        }),
+      ),
+  );
+
+  registerTool(
+    "add_task_watcher",
+    {
+      description:
+        "Add a workspace member as a watcher of a task. Pass your own user ID to watch it yourself; adding someone else needs task:assign.",
+      inputSchema: z.object({ taskId: nonEmptyString, userId: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(
+          `/api/task-watcher/${encodeURIComponent(args.taskId)}/${encodeURIComponent(args.userId)}`,
+          { method: "PUT" },
+        ),
+      ),
+  );
+
+  registerTool(
+    "remove_task_watcher",
+    {
+      description:
+        "Remove a watcher from a task. Pass your own user ID to stop watching; removing someone else needs task:assign.",
+      inputSchema: z.object({ taskId: nonEmptyString, userId: nonEmptyString }),
+    },
+    async (args) =>
+      run(() =>
+        client.json(
+          `/api/task-watcher/${encodeURIComponent(args.taskId)}/${encodeURIComponent(args.userId)}`,
+          { method: "DELETE" },
+        ),
+      ),
+  );
+
+  registerTool(
     "delete_label",
     {
       description:

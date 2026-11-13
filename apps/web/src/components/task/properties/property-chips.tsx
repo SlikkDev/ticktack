@@ -6,6 +6,7 @@ import { cn } from "@/lib/cn";
 import { getColumnIcon } from "@/lib/column";
 import { formatDateShort } from "@/lib/format";
 import { getPriorityLabel } from "@/lib/i18n/domain";
+import useGetTaskWatchers from "@/hooks/queries/task-watcher/use-get-task-watchers";
 import { getPriorityIcon } from "@/lib/priority";
 import { TaskCustomFieldChips } from "../custom-fields/task-custom-field-chips";
 import TaskAssigneePopover from "../task-assignee-popover";
@@ -15,10 +16,12 @@ import TaskMovePopover from "../task-move-popover";
 import TaskPriorityPopover from "../task-priority-popover";
 import TaskStartDatePopover from "../task-start-date-popover";
 import TaskStatusPopover from "../task-status-popover";
+import TaskWatchersPopover from "../task-watchers-popover";
 import { AssigneeAvatar } from "./assignee-avatar";
 import { dueDateTextClass } from "./due-date-text-class";
 import { LabelsValue } from "./labels-value";
 import { useTaskProperties } from "./use-task-properties";
+import { WatchersValue } from "./watchers-value";
 
 type PropertyChipsProps = {
   taskId: string;
@@ -43,6 +46,7 @@ export function PropertyChips({
   const { t } = useTranslation();
   const { task, project, labels, status, assignee, dueStatus, canMoveTask } =
     useTaskProperties(taskId, projectId, workspaceId);
+  const { data: watchers = [] } = useGetTaskWatchers(taskId);
 
   if (!task) return null;
 
@@ -95,6 +99,15 @@ export function PropertyChips({
             </span>
           </button>
         </TaskAssigneePopover>
+        <TaskWatchersPopover task={task} workspaceId={workspaceId}>
+          <button
+            type="button"
+            data-task-action="watchers"
+            className={cn(chip, "ps-1.5")}
+          >
+            <WatchersValue watchers={watchers} />
+          </button>
+        </TaskWatchersPopover>
         <div className={cn(chip, "gap-0.5 px-1 hover:bg-accent/30")}>
           <TaskStartDatePopover task={task}>
             <button type="button" className={dateButton}>

@@ -472,6 +472,37 @@ describe("registerTools", () => {
     });
   });
 
+  it("adds and removes task watchers by task and user id", async () => {
+    const { server, tools } = createServerMock();
+    const client = { json: vi.fn().mockResolvedValue({}) };
+
+    registerTools(server as never, { client: client as never });
+
+    await tools
+      .get("add_task_watcher")
+      ?.handler({ taskId: "task 1", userId: "user/2" });
+    await tools
+      .get("remove_task_watcher")
+      ?.handler({ taskId: "task 1", userId: "user/2" });
+    await tools.get("get_task_watchers")?.handler({ taskId: "task 1" });
+
+    expect(client.json).toHaveBeenNthCalledWith(
+      1,
+      "/api/task-watcher/task%201/user%2F2",
+      { method: "PUT" },
+    );
+    expect(client.json).toHaveBeenNthCalledWith(
+      2,
+      "/api/task-watcher/task%201/user%2F2",
+      { method: "DELETE" },
+    );
+    expect(client.json).toHaveBeenNthCalledWith(
+      3,
+      "/api/task-watcher/task%201",
+      { method: "GET" },
+    );
+  });
+
   it("deletes a task relation by id", async () => {
     const { server, tools } = createServerMock();
     const client = { json: vi.fn().mockResolvedValue({}) };

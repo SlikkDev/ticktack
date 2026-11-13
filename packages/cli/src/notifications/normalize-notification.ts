@@ -76,6 +76,23 @@ function describe(
         message: preview ? `${named}: ${preview}` : named,
       };
     }
+    case "watched_task_comment": {
+      const who = field(data, "commenterName") ?? "Someone";
+      const preview = field(data, "commentPreview");
+      return {
+        title: `${who} commented on a task you watch`,
+        message: preview ? `${named}: ${preview}` : named,
+      };
+    }
+    case "watched_task_assignee_changed": {
+      const assignee = field(data, "assigneeName");
+      return {
+        title: "Assignee changed on a task you watch",
+        message: assignee
+          ? `${named} is now assigned to ${assignee}`
+          : `${named} is now unassigned`,
+      };
+    }
     case "due_date_reminder":
       return {
         title: "Task due soon",

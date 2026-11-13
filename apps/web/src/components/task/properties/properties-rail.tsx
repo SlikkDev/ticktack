@@ -5,6 +5,7 @@ import { getColumnIcon } from "@/lib/column";
 import { cn } from "@/lib/cn";
 import { formatDateShort } from "@/lib/format";
 import { getPriorityLabel } from "@/lib/i18n/domain";
+import useGetTaskWatchers from "@/hooks/queries/task-watcher/use-get-task-watchers";
 import { getPriorityIcon } from "@/lib/priority";
 import { TaskCustomFieldRows } from "../custom-fields/task-custom-field-rows";
 import TaskAssigneePopover from "../task-assignee-popover";
@@ -15,12 +16,14 @@ import TaskPriorityPopover from "../task-priority-popover";
 import TaskStartDatePopover from "../task-start-date-popover";
 import TaskStatusPopover from "../task-status-popover";
 import TaskVersionPopover from "../task-version-popover";
+import TaskWatchersPopover from "../task-watchers-popover";
 import { AssigneeAvatar } from "./assignee-avatar";
 import { dueDateTextClass } from "./due-date-text-class";
 import { LabelsValue } from "./labels-value";
 import { PropertyRow } from "./property-row";
 import { PropertyValue } from "./property-value";
 import { useTaskProperties } from "./use-task-properties";
+import { WatchersValue } from "./watchers-value";
 
 type PropertiesRailProps = {
   taskId: string;
@@ -38,6 +41,7 @@ export function PropertiesRail({
   const { t } = useTranslation();
   const { task, project, labels, status, assignee, dueStatus, canMoveTask } =
     useTaskProperties(taskId, projectId, workspaceId);
+  const { data: watchers = [] } = useGetTaskWatchers(taskId);
 
   if (!task) return null;
 
@@ -99,6 +103,14 @@ export function PropertiesRail({
               </span>
             </PropertyValue>
           </TaskAssigneePopover>
+        </PropertyRow>
+
+        <PropertyRow label={t("tasks:watchers.label")}>
+          <TaskWatchersPopover task={task} workspaceId={workspaceId}>
+            <PropertyValue data-task-action="watchers">
+              <WatchersValue watchers={watchers} />
+            </PropertyValue>
+          </TaskWatchersPopover>
         </PropertyRow>
 
         <PropertyRow label={t("tasks:properties.labels")} align="start">
