@@ -711,6 +711,10 @@
 			"subtitle": "Sign in with an email link or a passkey.",
 			"unnamedPasskey": "Passkey",
 			"usePasskey": "Sign in with a passkey"
+		},
+		"credit": {
+			"label": "Hebrew-first fork by Slikk.Dev (opens slikk.dev in a new tab)",
+			"text": "Hebrew-first fork by"
 		}
 	},
 	"settings": {
