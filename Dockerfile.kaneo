@@ -123,6 +123,17 @@ RUN chmod +x /docker-entrypoint.d/env.sh /usr/local/bin/kaneo-entrypoint.sh
 
 ENV NODE_ENV=production
 
+# Name the commit the image was built from, so /api/health can tell which code
+# is running. Coolify passes SOURCE_COMMIT itself; a manual build passes
+# --build-arg SOURCE_COMMIT=$(git rev-parse HEAD). Declared last so a new
+# commit does not invalidate the layers above.
+ARG SOURCE_COMMIT=""
+ARG TICKTACK_VERSION=""
+ENV KANEO_BUILD_COMMIT=$SOURCE_COMMIT \
+  KANEO_BUILD_VERSION=$TICKTACK_VERSION
+LABEL org.opencontainers.image.revision=$SOURCE_COMMIT \
+  org.opencontainers.image.version=$TICKTACK_VERSION
+
 USER appuser
 EXPOSE 5173
 

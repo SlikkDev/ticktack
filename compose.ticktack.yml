@@ -1,5 +1,7 @@
 # TickTack on Coolify: build Dockerfile.kaneo from a reviewed commit first.
 # TICKTACK_IMAGE must identify that immutable local image; never use "latest".
+# Pass --build-arg SOURCE_COMMIT=<sha> so /api/health names the running commit
+# (TICKTACK.md, "Which commit is running").
 # Coolify creates a dedicated network and namespaced volumes for this service.
 # Leave domains empty until the initial owner is created privately and anonymous
 # registration is verified closed. Then route HTTPS to the ticktack service:5173.
