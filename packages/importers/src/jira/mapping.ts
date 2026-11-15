@@ -1,6 +1,7 @@
 import { toIsoDate } from "../markdown.js";
 import type {
   ImportedComment,
+  ImportedLink,
   ImportedPriority,
   ImportedTask,
 } from "../types.js";
@@ -24,9 +25,12 @@ const PRIORITIES: ReadonlyMap<string, ImportedPriority> = new Map([
 ]);
 
 export type IssueContext = {
+  baseUrl: string;
   columnKey: string | null;
   comments: ImportedComment[];
   toMarkdown: HtmlToMarkdown;
+  /** Add the issue type as a label. */
+  withType?: boolean;
 };
 
 export function mapPriority(name: string | null | undefined): ImportedPriority {
@@ -51,6 +55,19 @@ export function issueDescription(
   return typeof raw === "string" ? raw.trim() : "";
 }
 
+/** The issue's page in Jira, so a migrated task still points at its history there. */
+export function issueLink(
+  baseUrl: string,
+  key: string | null | undefined,
+): ImportedLink | undefined {
+  const issueKey = key?.trim();
+  if (!issueKey || !baseUrl) return undefined;
+  return {
+    url: `${baseUrl.replace(/\/+$/, "")}/browse/${encodeURIComponent(issueKey)}`,
+    title: `Jira ${issueKey}`,
+  };
+}
+
 export function mapIssue(
   issue: JiraIssue,
   context: IssueContext,
@@ -61,6 +78,7 @@ export function mapIssue(
   const createdAt = toIsoDate(fields.created);
   const assignee = toPerson(fields.assignee);
   const versionKey = issueVersionKey(issue);
+  const link = issueLink(context.baseUrl, issue.key);
   return {
     key: issue.id,
     ...(number !== undefined ? { number } : {}),
@@ -71,8 +89,9 @@ export function mapIssue(
     ...(dueDate ? { dueDate } : {}),
     ...(createdAt ? { createdAt } : {}),
     ...(assignee ? { assignee } : {}),
-    labelKeys: issueLabels(issue),
+    labelKeys: issueLabels(issue, context.withType),
     ...(versionKey ? { versionKey } : {}),
+    ...(link ? { links: [link] } : {}),
     comments: context.comments,
   };
 }

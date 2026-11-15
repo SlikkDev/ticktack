@@ -65,6 +65,7 @@ export type JiraVersion = {
   name?: string | null;
   description?: string | null;
   released?: boolean | null;
+  archived?: boolean | null;
   releaseDate?: string | null;
 };
 
@@ -91,7 +92,26 @@ export type JiraIssueFields = {
   issuelinks?: JiraIssueLink[] | null;
   fixVersions?: JiraVersion[] | null;
   attachment?: unknown[] | null;
+  issuetype?: { name?: string | null } | null;
   comment?: { total?: number | null } | null;
+};
+
+export type JiraChangeItem = {
+  field?: string | null;
+  fromString?: string | null;
+  toString?: string | null;
+};
+
+export type JiraHistory = {
+  author?: JiraUser | null;
+  created?: string | null;
+  items?: JiraChangeItem[] | null;
+};
+
+export type JiraChangelog = {
+  histories?: JiraHistory[] | null;
+  total?: number | null;
+  maxResults?: number | null;
 };
 
 export type JiraIssue = {
@@ -99,6 +119,7 @@ export type JiraIssue = {
   key: string;
   fields?: JiraIssueFields | null;
   renderedFields?: { description?: string | null } | null;
+  changelog?: JiraChangelog | null;
 };
 
 export type JiraCloudSearchPage = {

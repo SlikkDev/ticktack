@@ -33,6 +33,12 @@ export type ImportedComment = {
   createdAt?: string;
 };
 
+/** A link back to where the task came from, such as the source issue's page. */
+export type ImportedLink = {
+  url: string;
+  title: string;
+};
+
 export type ImportedVersion = {
   key: string;
   name: string;
@@ -54,6 +60,7 @@ export type ImportedTask = {
   assignee?: ImportedPerson;
   labelKeys: string[];
   versionKey?: string;
+  links?: ImportedLink[];
   comments: ImportedComment[];
 };
 

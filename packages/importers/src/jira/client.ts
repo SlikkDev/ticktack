@@ -10,6 +10,7 @@ import type {
   JiraProjectPage,
   JiraServerSearchPage,
   JiraUser,
+  JiraVersion,
 } from "./api-types.js";
 import type { JiraAuth } from "./auth.js";
 import { toJiraError } from "./errors.js";
@@ -29,6 +30,8 @@ export type JiraClientOptions = {
 export type SearchQuery = {
   jql: string;
   fields: string[];
+  /** Also return each issue's change history. */
+  changelog?: boolean;
 };
 
 export class JiraClient {
@@ -117,7 +120,7 @@ export class JiraClient {
         jql: query.jql,
         maxResults: SEARCH_PAGE_SIZE,
         fields: query.fields,
-        expand: "renderedFields",
+        expand: searchExpand(query),
         ...(nextPageToken ? { nextPageToken } : {}),
       }),
     });
@@ -132,9 +135,17 @@ export class JiraClient {
       startAt: String(startAt),
       maxResults: String(SEARCH_PAGE_SIZE),
       fields: query.fields.join(","),
-      expand: "renderedFields",
+      expand: searchExpand(query),
     });
     return this.request(`${this.api}/search?${params}`);
+  }
+
+  async projectVersions(projectKey: string): Promise<JiraVersion[]> {
+    return (
+      (await this.request<JiraVersion[] | null>(
+        `${this.api}/project/${encodeURIComponent(projectKey)}/versions`,
+      )) ?? []
+    );
   }
 
   comments(issueId: string, startAt: number): Promise<JiraCommentPage | null> {
@@ -155,4 +166,8 @@ export class JiraClient {
       throw toJiraError(error, this.options.auth.rejectedMessage);
     }
   }
+}
+
+function searchExpand(query: SearchQuery): string {
+  return query.changelog ? "renderedFields,changelog" : "renderedFields";
 }

@@ -1,5 +1,6 @@
 import type {
   ImportedComment,
+  ImportedLink,
   ImportedPerson,
   ImportedTask,
 } from "@kaneo/importers";
@@ -23,6 +24,7 @@ export type PlannedImportTask = {
   userId: string | null;
   versionId: string | null;
   labelKeys: readonly string[];
+  links: readonly ImportedLink[];
   comments: readonly ImportedComment[];
 };
 
@@ -107,6 +109,7 @@ export function planImportTasks({
       userId: assign(task.assignee),
       versionId: (task.versionKey && versions?.get(task.versionKey)) || null,
       labelKeys: task.labelKeys,
+      links: task.links ?? [],
       comments: task.comments,
     };
   });

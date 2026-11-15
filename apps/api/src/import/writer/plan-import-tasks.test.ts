@@ -38,6 +38,16 @@ function plan(tasks: ImportedTask[], numbers = tasks.map((_, i) => 41 + i)) {
 }
 
 describe("planImportTasks", () => {
+  it("keeps each task's links back to its source", () => {
+    const link = {
+      url: "https://retter.atlassian.net/browse/TECH-9",
+      title: "Jira TECH-9",
+    };
+    const [linked, plain] = plan([task("a", { links: [link] }), task("b")]);
+    expect(linked?.links).toEqual([link]);
+    expect(plain?.links).toEqual([]);
+  });
+
   it("numbers tasks as given and positions them per column or status", () => {
     const planned = plan([
       task("a"),

@@ -1,4 +1,4 @@
-import type { ImportedProject } from "../types.js";
+import type { ImportedComment, ImportedProject } from "../types.js";
 import type {
   JiraBoardColumn,
   JiraComment,
@@ -6,6 +6,7 @@ import type {
   JiraIssueTypeStatuses,
   JiraProject,
   JiraStatus,
+  JiraVersion,
 } from "./api-types.js";
 import {
   type ColumnPlan,
@@ -17,11 +18,12 @@ import {
   statusCategories,
 } from "./columns.js";
 import { mapComments } from "./comments.js";
+import { historyTruncated, mapHistory } from "./history.js";
 import { createJiraHtmlToMarkdown } from "./html.js";
-import { mapLabels } from "./labels.js";
+import { mapLabels, usesSeveralIssueTypes } from "./labels.js";
 import { mapIssue } from "./mapping.js";
 import { mapRelations } from "./relations.js";
-import { mapVersions } from "./versions.js";
+import { droppedVersionsWarning, mapVersions } from "./versions.js";
 import { buildWarnings } from "./warnings.js";
 
 export type JiraProjectData = {
@@ -32,6 +34,10 @@ export type JiraProjectData = {
   boardUnavailable: boolean;
   issues: JiraIssue[];
   comments: ReadonlyMap<string, JiraComment[]>;
+  /** Every version of the project, used or not. */
+  versions?: readonly JiraVersion[];
+  /** Import status, assignee and fix version changes as dated entries. */
+  includeHistory?: boolean;
 };
 
 export function mapJiraProject(data: JiraProjectData): ImportedProject {
@@ -42,29 +48,42 @@ export function mapJiraProject(data: JiraProjectData): ImportedProject {
   const placed = sortByColumn(data.issues, plan, categories);
   const { relations, crossProject, external } = mapRelations(data.issues);
   const description = data.project.description?.trim();
+  const withType = usesSeveralIssueTypes(data.issues);
 
   return {
     name: data.project.name?.trim() || data.project.key,
     key: data.project.key,
     ...(description ? { description } : {}),
     columns: plan.columns,
-    labels: mapLabels(data.issues),
-    versions: mapVersions(data.issues),
+    labels: mapLabels(data.issues, withType),
+    versions: mapVersions(data.issues, data.versions),
     tasks: placed.map(({ issue, columnKey }) =>
       mapIssue(issue, {
+        baseUrl: data.baseUrl,
         columnKey,
-        comments: mapComments(data.comments.get(issue.id) ?? [], toMarkdown),
+        comments: byDate([
+          ...mapComments(data.comments.get(issue.id) ?? [], toMarkdown),
+          ...(data.includeHistory ? mapHistory(issue) : []),
+        ]),
         toMarkdown,
+        withType,
       }),
     ),
     relations,
     crossProjectRelations: crossProject,
     warnings: buildWarnings({
-      issuesWithAttachments: data.issues.filter(
-        (issue) => (issue.fields?.attachment?.length ?? 0) > 0,
-      ).length,
+      issuesWithAttachments: data.issues
+        .filter((issue) => (issue.fields?.attachment?.length ?? 0) > 0)
+        .map((issue) => issue.key),
       externalLinks: external,
       boardUnavailable: data.boardUnavailable,
+      finalColumns: plan.columns
+        .filter((column) => column.isFinal)
+        .map((column) => column.name),
+      truncatedHistories: data.includeHistory
+        ? data.issues.filter(historyTruncated).length
+        : 0,
+      droppedVersions: droppedVersionsWarning(data.issues),
     }),
   };
 }
@@ -108,4 +127,20 @@ function columnRank(
   rank: ReadonlyMap<string, number>,
 ): number {
   return columnKey === null ? -1 : (rank.get(columnKey) ?? rank.size);
+}
+
+function byDate(comments: ImportedComment[]): ImportedComment[] {
+  return comments
+    .map((comment, index) => ({ comment, index }))
+    .sort(
+      (a, b) =>
+        time(a.comment.createdAt) - time(b.comment.createdAt) ||
+        a.index - b.index,
+    )
+    .map(({ comment }) => comment);
+}
+
+function time(value: string | undefined): number {
+  const parsed = value ? Date.parse(value) : Number.NaN;
+  return Number.isNaN(parsed) ? 0 : parsed;
 }

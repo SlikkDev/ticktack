@@ -1680,7 +1680,7 @@
 				"clear": "Clear",
 				"back": "Back",
 				"commentsLabel": "Import comments",
-				"commentsDescription": "Keeps each comment's original author and date.",
+				"commentsDescription": "Keeps each comment's original author and date. From Jira, also brings each status, assignee and fix version change.",
 				"membersNote": "Assignees are matched to members of {{workspace}} by email. Invite your team first so their tasks stay assigned.",
 				"membersNoteTrello": "Assignees are matched to members of {{workspace}} by email, or by full name for Trello. Invite your team first so their tasks stay assigned.",
 				"membersNoteJira": "Assignees are matched to members of {{workspace}} by email, or by full name when Jira hides the email. Invite your team first so their tasks stay assigned.",

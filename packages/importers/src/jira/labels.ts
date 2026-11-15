@@ -21,16 +21,31 @@ export function labelColor(name: string): string {
   return LABEL_PALETTE[hash % LABEL_PALETTE.length] as string;
 }
 
-export function issueLabels(issue: JiraIssue): string[] {
-  const labels = (issue.fields?.labels ?? [])
+export function issueTypeName(issue: JiraIssue): string {
+  return issue.fields?.issuetype?.name?.trim() ?? "";
+}
+
+/** Issue types become labels when a project uses more than one, e.g. Bug and Task. */
+export function usesSeveralIssueTypes(issues: JiraIssue[]): boolean {
+  return new Set(issues.map(issueTypeName).filter(Boolean)).size > 1;
+}
+
+export function issueLabels(issue: JiraIssue, withType = false): string[] {
+  const type = withType ? issueTypeName(issue) : "";
+  const labels = [...(issue.fields?.labels ?? []), ...(type ? [type] : [])]
     .filter((label): label is string => typeof label === "string")
     .map((label) => label.trim())
     .filter(Boolean);
   return [...new Set(labels)];
 }
 
-export function mapLabels(issues: JiraIssue[]): ImportedLabel[] {
-  const names = new Set(issues.flatMap(issueLabels));
+export function mapLabels(
+  issues: JiraIssue[],
+  withType = false,
+): ImportedLabel[] {
+  const names = new Set(
+    issues.flatMap((issue) => issueLabels(issue, withType)),
+  );
   return [...names]
     .sort((a, b) => a.localeCompare(b))
     .map((name) => ({ key: name, name, color: labelColor(name) }));

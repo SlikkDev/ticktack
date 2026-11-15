@@ -1,6 +1,6 @@
 ---
 title: Import from Jira
-description: Move Jira Cloud or Jira Data Center projects into Kaneo, including board columns, issues, priorities, labels, fix versions, assignees, sub-tasks, issue links, and comments.
+description: Move Jira Cloud or Jira Data Center projects into Kaneo, including board columns, issues, issue types, priorities, labels, fix versions, assignees, sub-tasks, issue links, comments, and status history.
 ---
 
 Each Jira project becomes a Kaneo project. This works with Jira Cloud and Jira Data Center. Read [Import from other tools](/core/migrations) first for the rules that apply to every import.
@@ -33,23 +33,27 @@ If you run Kaneo yourself and Jira is on a private network, for example a Jira D
 | --- | --- |
 | Project | Project |
 | Project key, for example `PROJ` | Project key. If another project in the workspace uses it, Kaneo adds a suffix, for example `PROJ-2` |
-| Columns of the project's Jira Software board, or its statuses when there is no board Kaneo can read | Columns, in Jira's order. The last board column, and columns that only hold done statuses, become final columns. Issues in a **Backlog** column or status go to the project's **Backlog** instead of the board |
+| Columns of the project's Jira Software board, or its statuses when there is no board Kaneo can read | Columns, in Jira's order. The last board column, and columns that only hold done statuses, become final columns. Issues in a **Backlog** column or status go to the project's **Backlog** instead of the board. Without a board, each status gets its own column by name, ordered by Jira's status category, so check the order afterwards. When Jira files more than one status under Done, the report names those columns: Jira lets an admin put a status such as In Progress there by mistake, so turn off **final** for any that is still work in progress |
 | Issue | Task |
 | Issue number, for example `PROJ-123` | Task number, so `PROJ-123` stays `PROJ-123` |
 | Description | Task description, converted from Jira's rich text to Markdown |
 | Priority | The closest Kaneo priority. Highest, Blocker, and Critical become Urgent. High and Major become High. Medium stays Medium. Low, Lowest, Minor, and Trivial become Low. Other priorities become no priority |
 | Due date | Due date |
 | Labels | Labels. Jira labels have no colors, so Kaneo picks one for each |
-| Fix versions | Workspace [versions](/core/functional/manage-workspace-versions), with the release date and the released state. An issue with several fix versions keeps the first one listed. A version with the same name as one already in the workspace is reused |
+| Issue type, for example Bug or Story | A label with the type's name, when the project uses more than one type |
+| Fix versions | Workspace [versions](/core/functional/manage-workspace-versions), with the release date and the released state, including versions no issue uses yet. Archived versions come along only when an issue still uses them. A task has one version, so an issue with several keeps the one it was released in: a released version over an unreleased one, then the latest release date. The report lists each issue and the versions it dropped. Versions are shared by the workspace, so a version with the same name as one already in the workspace, or in another project of the import, is reused |
 | Assignee | Assignee, matched by email, or by full name when Jira hides the email |
 | Sub-tasks, and issues that have a parent issue such as an epic | Subtask relations |
 | Issue links | **Blocks** links stay blocks relations. Other links, such as **Relates**, become related relations |
 | Parent and issue links to issues in other projects | Kept when the other project is in the same import, or was imported into the workspace before. They are written after all projects of the import, so the order of the projects does not matter. The report says how many pointed at a project Kaneo does not have |
 | Comments | Comments, with the original author's name and date |
+| Status, assignee, and fix version changes | With comments on, one entry per change, such as `Changed status from "In Review" to "Approved" in Jira.`, under the name of the person who made it and dated when they did. Jira returns about the last 100 changes of an issue with a search, and the report says how many issues had more |
+| The issue's page in Jira | A link on the task, titled for example `Jira PROJ-123` |
 
 ## What doesn't
 
-- **Attachments.** Download anything you need from Jira before you stop using it.
+- **Attachments.** The report lists the issues that have any. Download anything you need from Jira before you stop using it.
+- **Other history**, such as changes to the title, description, or labels.
 - **Sprints.**
 - **Epics**, other than as parent issues. An epic is imported as a task, with its issues as subtasks.
 - **Components.**
