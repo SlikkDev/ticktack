@@ -30,6 +30,27 @@ paid runners and external notification integrations. Run validation locally and
 build the pinned image on the authorized VPS; do not enable those workflows
 without reviewing their cost and notification destinations.
 
+## Which commit is running
+
+`GET /api/health` answers `{"status":"ok","commit":"<sha>","version":"<name>"}`
+with the commit and release name baked into the image, or `null` when the image
+was built without them. Build the reviewed commit with both:
+
+```sh
+git checkout <reviewed commit>
+docker build -f Dockerfile.kaneo \
+  --build-arg SOURCE_COMMIT="$(git rev-parse HEAD)" \
+  --build-arg TICKTACK_VERSION="ticktack-$(git show -s --format=%cs HEAD)" \
+  -t "ticktack:$(git rev-parse --short=12 HEAD)" .
+```
+
+Use the same immutable tag as `TICKTACK_IMAGE`, then check the live site with
+`curl https://ticktack.slikk.io/api/health`. The image also carries the commit
+as the `org.opencontainers.image.revision` label. A site that answers only
+`{"status":"ok"}` runs an image built before this was added. The page date and
+the import screen do not show which commit runs; for an older image, compare
+the public `GET /api/openapi` paths with `apps/docs/openapi.json` at each commit.
+
 ## Mobile apps
 
 `apps/mobile` wraps the web app as Capacitor iOS and Android apps that use the

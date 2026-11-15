@@ -19,6 +19,7 @@ export const ISSUE_FIELDS = [
   "issuelinks",
   "fixVersions",
   "attachment",
+  "issuetype",
 ];
 
 export const RANK_ORDER = "ORDER BY Rank ASC";
@@ -47,7 +48,11 @@ export async function searchProjectIssues(
   try {
     return await searchAll(
       client,
-      { jql: `${scope} ${RANK_ORDER}`, fields },
+      {
+        jql: `${scope} ${RANK_ORDER}`,
+        fields,
+        changelog: options.includeComments,
+      },
       onPage,
     );
   } catch (error) {
@@ -61,7 +66,11 @@ export async function searchProjectIssues(
   }
   return searchAll(
     client,
-    { jql: `${scope} ${CREATED_ORDER}`, fields },
+    {
+      jql: `${scope} ${CREATED_ORDER}`,
+      fields,
+      changelog: options.includeComments,
+    },
     onPage,
   );
 }

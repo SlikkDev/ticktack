@@ -13,6 +13,7 @@ import { planImportTasks } from "./plan-import-tasks";
 import { writeImportColumns } from "./write-import-columns";
 import { writeImportComments } from "./write-import-comments";
 import { writeImportLabels } from "./write-import-labels";
+import { writeImportLinks } from "./write-import-links";
 import { writeImportRelations } from "./write-import-relations";
 import { writeImportTasks } from "./write-import-tasks";
 import { writeImportVersions } from "./write-import-versions";
@@ -86,6 +87,8 @@ export async function writeProjectContent(
     project.labels,
     tasks,
   );
+
+  await writeImportLinks(tx, tasks);
 
   const comments = includeComments
     ? await writeImportComments(tx, {

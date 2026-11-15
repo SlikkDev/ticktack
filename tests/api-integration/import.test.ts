@@ -120,6 +120,10 @@ function plankaProject(memberEmail: string): ImportedProject {
         description: "",
         priority: "urgent",
         labelKeys: ["l1"],
+        links: [
+          { url: "https://planka.example.com/cards/5", title: "Source card" },
+          { url: "javascript:alert(1)", title: "Not a web page" },
+        ],
         comments: [],
       },
     ],
@@ -543,6 +547,29 @@ describe("API integration: import from other tools", () => {
       ]),
     );
     expect(taskLabels).toHaveLength(3);
+
+    const links = await db
+      .select({
+        taskId: schema.externalLinkTable.taskId,
+        resourceType: schema.externalLinkTable.resourceType,
+        url: schema.externalLinkTable.url,
+        title: schema.externalLinkTable.title,
+      })
+      .from(schema.externalLinkTable)
+      .where(
+        inArray(
+          schema.externalLinkTable.taskId,
+          tasks.map((task) => task.id),
+        ),
+      );
+    expect(links).toEqual([
+      {
+        taskId: shipIt?.id,
+        resourceType: "url",
+        url: "https://planka.example.com/cards/5",
+        title: "Source card",
+      },
+    ]);
 
     const activities = await db
       .select()

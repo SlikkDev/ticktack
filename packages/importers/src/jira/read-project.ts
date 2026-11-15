@@ -1,6 +1,6 @@
 import { SourceHttpError } from "../http.js";
 import type { ImportedProject, ReadProjectOptions } from "../types.js";
-import type { JiraComment, JiraProject } from "./api-types.js";
+import type { JiraComment, JiraProject, JiraVersion } from "./api-types.js";
 import { readBoardColumns } from "./board.js";
 import type { JiraClient } from "./client.js";
 import { mapJiraProject } from "./project.js";
@@ -19,6 +19,7 @@ export async function readJiraProject(
   const project = await readProjectDetails(client, projectKey);
   const statusGroups = await client.projectStatuses(project.key);
   const board = await readBoardColumns(client, project.key);
+  const versions = await readProjectVersions(client, project.key);
 
   onProgress?.("Reading issues");
   const issues = await searchProjectIssues(client, project.key, {
@@ -39,7 +40,24 @@ export async function readJiraProject(
     boardUnavailable: board.unavailable,
     issues,
     comments,
+    versions,
+    includeHistory: options.includeComments,
   });
+}
+
+/** Versions need only browse access; without it, fall back to the issues' own. */
+async function readProjectVersions(
+  client: JiraClient,
+  projectKey: string,
+): Promise<JiraVersion[]> {
+  try {
+    return await client.projectVersions(projectKey);
+  } catch (error) {
+    if (error instanceof SourceHttpError && [403, 404].includes(error.status)) {
+      return [];
+    }
+    throw error;
+  }
 }
 
 async function readProjectDetails(

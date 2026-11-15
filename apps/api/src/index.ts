@@ -27,6 +27,7 @@ import billing from "./billing";
 import calendarFeed, { publicCalendarFeed } from "./calendar-feed";
 import column from "./column";
 import comment from "./comment";
+import { readBuildInfo } from "./build-info/read-build-info";
 import config from "./config";
 import customField from "./custom-field";
 import db, { getDatabase, schema } from "./database";
@@ -304,8 +305,9 @@ export function createApp() {
     },
   );
 
+  const build = readBuildInfo();
   api.get("/health", (c) => {
-    return c.json({ status: "ok" });
+    return c.json({ status: "ok", ...build });
   });
 
   api.openapi(

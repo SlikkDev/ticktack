@@ -228,6 +228,10 @@ function cloudRoutes(extra: Record<string, Handler | unknown> = {}) {
       description: "Core product",
     },
     "GET /rest/api/3/project/ABC/statuses": STATUS_GROUPS,
+    "GET /rest/api/3/project/ABC/versions": [
+      { id: "v3", name: "2.0" },
+      { id: "v4", name: "0.9", archived: true },
+    ],
     "GET /rest/agile/1.0/board": {
       values: [
         { id: 3, type: "scrum", location: { projectKey: "OPS" } },
@@ -463,7 +467,7 @@ describe("readProject on Jira Cloud", () => {
     expect(searches[0]?.body).toMatchObject({
       jql: 'project = "ABC" ORDER BY Rank ASC',
       maxResults: 100,
-      expand: "renderedFields",
+      expand: "renderedFields,changelog",
     });
     expect(searches[0]?.body?.fields).toEqual(
       expect.arrayContaining([
@@ -526,6 +530,12 @@ describe("readProject on Jira Cloud", () => {
       {
         key: "102",
         number: 2,
+        links: [
+          {
+            url: "https://acme.atlassian.net/browse/ABC-2",
+            title: "Jira ABC-2",
+          },
+        ],
         columnKey: null,
         title: "Issue 2",
         description: "",
@@ -537,6 +547,12 @@ describe("readProject on Jira Cloud", () => {
       {
         key: "101",
         number: 1,
+        links: [
+          {
+            url: "https://acme.atlassian.net/browse/ABC-1",
+            title: "Jira ABC-1",
+          },
+        ],
         columnKey: "column-3",
         title: "Issue 1",
         versionKey: "v1",
@@ -562,6 +578,12 @@ describe("readProject on Jira Cloud", () => {
       {
         key: "103",
         number: 3,
+        links: [
+          {
+            url: "https://acme.atlassian.net/browse/ABC-3",
+            title: "Jira ABC-3",
+          },
+        ],
         columnKey: "column-4",
         title: "Issue 3",
         versionKey: "v2",
@@ -591,6 +613,7 @@ describe("readProject on Jira Cloud", () => {
         releasedAt: "2024-03-01T00:00:00.000Z",
       },
       { key: "v2", name: "1.1" },
+      { key: "v3", name: "2.0" },
     ]);
     expect(
       project.tasks.map((task) => [task.key, task.versionKey ?? null]),
@@ -600,7 +623,8 @@ describe("readProject on Jira Cloud", () => {
       ["103", "v2"],
     ]);
     expect(project.warnings).toEqual([
-      "1 issue has attachments, which are not imported.",
+      "1 issue has attachments, which are not imported: ABC-2.",
+      "1 issue has several fix versions, and a task keeps one: the latest released (ABC-1 keeps 1.0, not 1.1).",
     ]);
   });
 
@@ -709,7 +733,9 @@ describe("readProject on Data Center", () => {
     expect(searches[0]?.url.searchParams.get("jql")).toBe(
       'project = "ABC" ORDER BY Rank ASC',
     );
-    expect(searches[0]?.url.searchParams.get("expand")).toBe("renderedFields");
+    expect(searches[0]?.url.searchParams.get("expand")).toBe(
+      "renderedFields,changelog",
+    );
     expect(searches[0]?.url.searchParams.get("fields")?.split(",")).toContain(
       "comment",
     );

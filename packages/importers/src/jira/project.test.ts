@@ -113,7 +113,7 @@ describe("mapJiraProject", () => {
       { sourceKey: "13", targetKey: "11", type: "blocks" },
     ]);
     expect(result.warnings).toEqual([
-      "1 issue has attachments, which are not imported.",
+      "1 issue has attachments, which are not imported: ABC-10.",
       "1 parent or issue link points to an issue Kaneo could not identify, so it was not imported.",
     ]);
   });
@@ -158,5 +158,63 @@ describe("mapJiraProject", () => {
     });
     expect(result.name).toBe("ABC");
     expect(result).not.toHaveProperty("description");
+  });
+
+  it("maps Retter's TECH statuses by name and flags In Progress filed under Done", () => {
+    const status = (id: string, name: string, key: string): JiraStatus => ({
+      id,
+      name,
+      statusCategory: { key },
+    });
+    const statuses = [
+      status("10020", "Approved", "indeterminate"),
+      status("10017", "Done", "done"),
+      status("10019", "In Review/Testing", "indeterminate"),
+      status("10015", "To Do", "new"),
+      status("10018", "Idea/Request", "new"),
+      status("10016", "In Progress", "done"),
+    ];
+    const [approved, done, review, , , inProgress] = statuses as [
+      JiraStatus,
+      JiraStatus,
+      JiraStatus,
+      JiraStatus,
+      JiraStatus,
+      JiraStatus,
+    ];
+    const result = project({
+      statusGroups: [{ name: "Task", statuses }],
+      boardColumns: null,
+      issues: [
+        issue("1", inProgress, { issuetype: { name: "Task" } }),
+        issue("2", review, { issuetype: { name: "Bug" } }),
+        issue("3", approved, { issuetype: { name: "Task" } }),
+        issue("4", done, { issuetype: { name: "Task" } }),
+      ],
+    });
+
+    const column = (id: string) =>
+      result.tasks.find((task) => task.key === id)?.columnKey;
+    expect(column("1")).toBe("10016");
+    expect(column("2")).toBe("10019");
+    expect(column("3")).toBe("10020");
+    expect(result.columns.filter((c) => c.isFinal).map((c) => c.name)).toEqual([
+      "Done",
+      "In Progress",
+    ]);
+    expect(result.warnings).toContain(
+      'Jira files 2 statuses under Done, so these columns count tasks as finished: Done, In Progress. Check each in the project\'s columns, and turn off "final" for any that is still work in progress.',
+    );
+    expect(result.labels.map((label) => label.name)).toEqual(["Bug", "Task"]);
+    expect(result.tasks.find((task) => task.key === "2")?.labelKeys).toEqual([
+      "Bug",
+    ]);
+  });
+
+  it("leaves the issue type out when every issue has the same one", () => {
+    const result = project({
+      issues: [issue("1", TODO, { issuetype: { name: "Task" } })],
+    });
+    expect(result.labels).toEqual([]);
   });
 });
